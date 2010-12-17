@@ -21,7 +21,7 @@ Basic GamePlay
 *Feature 5* : Dispensing resources to city and town. (Rate of production)
 
 = Iteration =
-[ Iteration1 | Iteration1 ]: displaying things on the screen. (View)
+[ NewPage]: displaying things on the screen. (View)
 Create a game structure and framework. (Controller)
 Create special data types for game. (Model)
 
