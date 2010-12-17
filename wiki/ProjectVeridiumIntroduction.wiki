@@ -8,10 +8,16 @@ Virtual World with ActionScript3.
 
 = Feature =
 
-*Feature 1* :
+Basic GamePlay
 
-*Feature 2* :
+*Feature 1* : Add/Remove building(s) to the city.
 
-*Feature 3* :
+*Feature 2* : Allocate population into different categories: Workers, Soldiers and Commoners.
+
+*Feature 3* : Capturing Towns.
+
+*Feature 4* : NPC in the Town object.
+
+*Feature 5* : Dispensing resources to city and town. (Rate of production)
 
 = Iteration =
