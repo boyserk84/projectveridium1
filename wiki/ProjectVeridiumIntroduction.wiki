@@ -21,3 +21,12 @@ Basic GamePlay
 *Feature 5* : Dispensing resources to city and town. (Rate of production)
 
 = Iteration =
+Iteration1: displaying things on the screen. (View)
+
+Iteration2: adding/remove graphic/sprite from the screen. (View)
+
+Iteration3: sorting algorithm for isometric view. (View)
+
+Iteration4:
+
+Iteration5:
