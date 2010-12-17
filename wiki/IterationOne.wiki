@@ -5,6 +5,13 @@
 - Create a game structure and framework. (Controller)
 - Create special data types for game. (Model)
 
+= View Design Concept =
+#1 Approach: Using adapter pattern.
+For example, "Building" is a game object, which is a model.
+We create an adapter called "sprite" to handle a view and representation of the building object. Sprite (adapter) will keep track of diffferent representation of building such as tent, fortress, barrack. Each representation is basically either sprite (graphic) or movie clip object. What Sprite (adapter) does is to get information from "Building" object such as type of building (barrack vs. fortress etc...) then create an object that has an image reprenstation of the type of building (barrack vs. fortress). Then feed "Sprite" to View to process.
+
+#2 Approach
+
 = Tasks =
 ||Task || Time spent || Description ||
 || Task A || || Draw part of image on moveclip ||
