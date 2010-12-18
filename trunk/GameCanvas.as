@@ -1,6 +1,9 @@
 ﻿package {
 	import flash.display.MovieClip;
 	import flash.display.Stage;
+	import flash.geom.Rectangle;
+	import flash.events.MouseEvent;
+	import classes.*;
 
 	/**
 	* gameCavas object
@@ -9,12 +12,18 @@
 	public class GameCanvas extends MovieClip
 	{
 		
+
+		var mcity:City;
+		var mbuilding:Building;
 		/**
 		* Load all contents to the canvas
 		*/
 		public function loadContents():void
 		{
 			trace("loadContents");
+			mcity=new City(0,0,100,100);
+			mbuilding=new Building(new Rectangle(0,0,10,10),1);
+			this.addEventListener(MouseEvent.CLICK,mouseEventListener);
 			//this.stage.addChild(/* Add entity here */);
 		}
 		
@@ -30,9 +39,22 @@
 		/**
 		* eventListner: I/O input and event listener.
 		*/
-		public function eventListener():void
+		public function mouseEventListener(event:MouseEvent):void
 		{
-			
+			var building:Building=new Building(new Rectangle(event.localX,event.localY,10,10));
+			mcity.addBuilding(building);
+			var buildingimage:TestSymbol=new TestSymbol();
+			buildingimage.x=event.localX;
+			buildingimage.y=event.localY;
+			this.addChild(buildingimage);
+		}
+		
+		/**
+		* Passes a list to the view in order to draw all of the entites on the screen
+		*/
+		public function Draw():void
+		{
+
 		}
 		
 		/**
