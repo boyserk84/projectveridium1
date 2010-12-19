@@ -23,7 +23,7 @@ We create an adapter called "sprite" to handle a view and representation of the 
 || Task D || || Moving the image object's location without mess up representational part of the image ||
 
 
-#What we actually implement:
+= #What we actually implement: =
 
 We're using "Strategy" design pattern. We have "SpriteSheet" object to manage all representation of the game object, "Building" object. Each representation is basically either sprite (graphic) or movie clip object. The "SpriteSheet" will keep track of how many images needed and what to be displayed based on type of the building.  
 Meanwhile, View object will act as an interface and controller of the view. Basically, we need to feed "Building" objects to "View" and then "View" will extract relevant information (such as X,Y coordinate and type of object) from each "Building" object and then create a "SpriteSheet" corresponding to type of the "Building" object.
