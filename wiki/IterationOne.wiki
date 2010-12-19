@@ -31,9 +31,10 @@ Meanwhile, View object will act as an interface and controller of the view. Basi
 In term of View Object, besides creating corresponding "SpriteSheet" and reprensentation of the "Building" object, it also controls how things should be displayed on the screen. In this case, we want all game objects to be displayed into an isometric perspective. Therefore, we need a sort algorithm in order to ensure everything being displayed correctly and also we need to make sure that it's fast enough.
 
 = Tasks =
-||Task || Time spent || Description ||
+|| Task   || Time spent || Description ||
 || Task A || 5 hours || Construct SpriteSheet object to manage all image objects ||
 || Task B || 2 hours || Integrate with Building and other game objects with View object ||
+
 = Tasks (View Object) =
 
 ||Task || Time spent || Description ||
