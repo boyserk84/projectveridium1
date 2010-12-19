@@ -35,5 +35,7 @@ In term of View Object, besides creating corresponding "SpriteSheet" and reprens
 || Task A || 5 hours || Construct SpriteSheet object to manage all image objects ||
 || Task B || 2 hours || Integrate with Building and other game objects with View object ||
 = Tasks (View Object) =
+
+||Task || Time spent || Description ||
 || Task C || || View: Sort algorithm based on game (X,Y) coordinate ||
 || Task D || || View: display in the correct order after add and remove ||
