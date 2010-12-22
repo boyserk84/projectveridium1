@@ -32,20 +32,21 @@
 			this.y = yLoc;
 			this.curr_image = Images.DEFAULT_INDEX;
 		
-			if (this.object_Type == 0)
+			if (this.object_Type == BuildingType.TILE)
 			{
 				// object_type deterime how many images needed
 				// also determine what type of object to be added
 				
 				// Allocate different type of object
 				// and put in the vector
-				this.children.push(new ImgBuilding(this.x,this.y));
+				//this.children.push(new ImgBuilding(this.x,this.y));
+				this.children.push(new Tile(this.x, this.y));
 			}
 			
 			// Barrack
 			if (this.object_Type == BuildingType.BARRACK)
 			{
-				this.children.push(new ImgBuilding2(this.x,this.y));
+				this.children.push(new ImgBuilding(this.x,this.y));
 			}
 			
 			//trace(this.children.length);

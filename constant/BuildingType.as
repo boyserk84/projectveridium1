@@ -6,6 +6,11 @@
 	*/
 	public class BuildingType {
 		/*
+		* Misc.stuff
+		*/
+		public static const TILE:int = 0;
+		
+		/*
 		* Military building 
 		*/
 		public static const BARRACK:int = 1;		// Integer represent barrack

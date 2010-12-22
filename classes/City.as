@@ -25,7 +25,8 @@
 		*/
 		public function constructBuilding(buildingIn:Building=null):Boolean
 		{
-			
+			// DUMMY VALUE
+			return true;
 		}
 		
 		/*
@@ -37,6 +38,9 @@
 		{
 			for(var i:int=0;i<buildings.Length;i++)
 			{
+			}
+			// DUMMY VALUE
+			return true;
 
 		}
 		/*
