@@ -49,6 +49,12 @@
 				this.children.push(new ImgBuilding(this.x,this.y));
 			}
 			
+			// Farm
+			if (this.object_Type == BuildingType.FARM)
+			{
+				this.children.push(new ImgBuilding2(this.x,this.y));
+			}
+			
 			//trace(this.children.length);
 		}
 		

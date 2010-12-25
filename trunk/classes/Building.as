@@ -47,6 +47,17 @@
 			return point;
 		}
 		
+		/**
+		* isSingleDim
+		* Checking if the building is only occupying one unit
+		*/
+		public function isSingleDim():Boolean
+		{
+			if (dimension.width > 1 || dimension.height > 1)
+			{
+				return false;
+			} else return true;
+		}
 		
 		
 		

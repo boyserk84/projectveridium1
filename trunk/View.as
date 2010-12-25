@@ -12,7 +12,8 @@
 	public class View extends MovieClip
 	{
 		// get hold of Building objects not only data objects
-		private var gameBuildingList:LinkedList;				// Actual building game object
+		//private var gameBuildingList:LinkedList;				// Actual building game object
+		private var gameSortedBuildingList:Array;				// Sorted Building List
 		
 		// Internal Structure
 		private var gameViewObjects:Vector.<SpriteSheet>;				// All game objects for view
@@ -29,6 +30,7 @@
 			this.gameViewObjects = new Vector.<SpriteSheet>;
 			this.gameViewPanel = new Vector.<SpriteSheet>;
 			this.gameTileObjects = new Vector.<SpriteSheet>;
+			this.gameSortedBuildingList = new Array();
 			this.viewStage = ref_stage;
 			this.createIsoTileView();
 		}
@@ -71,33 +73,75 @@
 						row*GameConfig.TILE_HEIGHT/2 + col*GameConfig.TILE_HEIGHT/2;
 		}
 		
+		
 		/**
-		* Add Vector/List of building objects from the game logic
-		* @param LinkedList list of building objects
+		* Comparator: compareTileValue using for sorting display
+		* @param a building object
+		* @param b building object
 		*/
-		public function addBuildingList(list:LinkedList)
+		private function compareTileValue(a:Building, b:Building)
 		{
-			this.gameBuildingList = list;
-			
-			//trace(list.Length);
-			
+			if ((a.Location.x + a.Location.y) < (b.Location.x + b.Location.y))
+			{
+				return -1;
+			} else if ((a.Location.x + a.Location.y) > (b.Location.x + b.Location.y))
+			{
+				return 1;
+			} else return 0;
+		}
+		
+		/**
+		* sortBuilding for isometric view
+		* @param list LinkedList of building objects
+		*/
+		private function sortBuilding(list:LinkedList)
+		{
+			// Add building into an array for sorting
 			for (var i:int=0; i < list.Length; ++i)
+			{
+				this.gameSortedBuildingList.push(Building(list.Get(i).data));
+			}
+			//Sort using comparator
+			this.gameSortedBuildingList.sort(this.compareTileValue);
+		}
+		
+		/**
+		* constructIsoView
+		* Constructing isometric view for all building objects
+		*/
+		private function constructIsoView()
+		{
+			for (var i:int=0; i < this.gameSortedBuildingList.length; ++i)
 			{
 				// (1) Extracting info from each building object
 				// x,y and type of building
-				var temp_building = Building(gameBuildingList.Get(i).data);
+				//var temp_building = Building(gameBuildingList.Get(i).data);
+				var temp_building = this.gameSortedBuildingList[i];
 				var temp_type:int = (temp_building.Type);
 				var temp_x:int = (temp_building.Location.x); 
 				var temp_y:int = (temp_building.Location.y);
 				
-				// (2) Construct spriteSheet based on type and isometrically transform game position (x,y)
+				// (2) Construct spriteSheet based on type and 
+				// (3) isometrically transform game position (x,y)
 				this.gameViewObjects.push(new SpriteSheet
 										  (temp_type,
-										   isometricTrans_X(temp_x,temp_y), 
+										   /* if one dimension minus 0, then minus WIDTH/2 */
+										   isometricTrans_X(temp_x ,temp_y) - (this.gameSortedBuildingList[i].isSingleDim()?0:GameConfig.TILE_WIDTH/2), 
 										   isometricTrans_Y(temp_x,temp_y)-GameConfig.TILE_HEIGHT/2)
 										  );
 				
+				//trace(this.gameViewObjects[i].x + "," + this.gameViewObjects[i].y);
 			}//for
+		}
+		
+		/**
+		* Add LinkedList of building objects from the game logic
+		* @param LinkedList list of building objects
+		*/
+		public function addBuildingList(list:LinkedList)
+		{
+			this.sortBuilding(list);
+			this.constructIsoView();
 		}
 		
 		/**
