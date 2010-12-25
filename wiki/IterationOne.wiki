@@ -40,6 +40,6 @@ In term of View Object, besides creating corresponding "SpriteSheet" and reprens
 
 ||Task || Time spent || Description ||
 || Task C || 2 hours || View: Display one block building in an isometric manner. ||
-|| Task D || || View: Display multi-blocks building in an isometric manner. ||
-|| Task E || || View: Sort algorithm based on game (X,Y) coordinate ||
-|| Task F || || View: display in the correct order after add and remove ||
+|| Task D || 1 hours || View: Display multi-blocks building in an isometric manner. ||
+|| Task E || 2 hours || View: Sort algorithm based on game (X,Y) coordinate ||
+|| Task F ||  || View: (Test) display in the correct order after add and remove ||
