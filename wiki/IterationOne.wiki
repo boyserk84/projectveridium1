@@ -2,8 +2,11 @@
 
 = Iteration1 : =
 - Displaying things on the screen. (View)
+
 - Create a game structure and framework. (Controller)
+
 - Create special data types for game. (Model)
+
 
 = View Design Concept =
 
@@ -29,7 +32,7 @@ We're using "Strategy" design pattern. We have "SpriteSheet" object to manage al
 
 Meanwhile, View object will act as an interface and controller of the view. Basically, we need to feed "Building" objects to "View" and then "View" will extract relevant information (such as X,Y coordinate and type of object) from each "Building" object and then create a "SpriteSheet" corresponding to type of the "Building" object.
 
-In term of View Object, besides creating corresponding "SpriteSheet" and reprensentation of the "Building" object, it also controls how things should be displayed on the screen. In this case, we want all game objects to be displayed into an isometric perspective. Therefore, we need a sort algorithm in order to ensure everything being displayed correctly and also we need to make sure that it's fast enough.
+In term of View Object, besides creating corresponding "SpriteSheet" and reprensentation of the "Building" object, it also controls how things should be displayed on the screen. In this case, we want all game objects to be displayed into an isometric perspective. Therefore, we need a sort algorithm in order to ensure everything being displayed correctly and also we need to make sure that it's fast enough. We decided to use a comparator to sort our list of game objects, "building". It is easier and faster if used in the earlier stage every time we add and remove new object into the view.
 
 = Tasks =
 || Task   || Time spent || Description ||
