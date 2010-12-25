@@ -5,7 +5,7 @@
 	import flash.display.Stage;
 	
 	/**
-	* ImgBuilding
+	* ImgBuilding2
 	*	Dummy class represents image or representation of each building.
 	*/
 	public class ImgBuilding2 extends MovieClip
@@ -15,6 +15,16 @@
 			this.x = x;
 			this.y = y;
 			//this(0);
+		}
+		
+		public function get X()
+		{
+			return this.x;
+		}
+		
+		public function get Y()
+		{
+			return this.y;
 		}
 	}
 }
