@@ -96,7 +96,7 @@
 		*/
 		private function sortBuilding(list:LinkedList)
 		{
-			// Add building into an array for sorting
+			// Add LinkedList building into an array for sorting
 			for (var i:int=0; i < list.Length; ++i)
 			{
 				this.gameSortedBuildingList.push(Building(list.Get(i).data));
@@ -144,6 +144,18 @@
 			this.constructIsoView();
 		}
 		
+		public function determineTileNumber(x:int,y:int):int
+		{
+			for (var i:int = 0; i < this.TotalTiles; ++i)
+			{
+				if (this.gameTileObjects[i].hitTestPoint(x,y,true))
+				{
+					return i;
+				}
+			}
+			return -1;
+		}
+		
 		/**
 		* return total numbers of Buildings object for display
 		*/
@@ -182,6 +194,7 @@
 		/**
 		* get nth spritesheet object with current index corresponding to the image
 		* @param n: nth object
+		* @return MovieClip object from spritesheet
 		*/
 		public function getCurGameObjOf(n:int)
 		{
@@ -215,7 +228,9 @@
 			}
 		}
 		
-		
+		/**
+		* Update everything in the "View"
+		*/
 		public function Update()
 		{
 			// update state of the building to draw or location
