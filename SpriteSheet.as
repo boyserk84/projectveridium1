@@ -3,6 +3,7 @@
 	import flash.display.Sprite; 
 	import flash.display.MovieClip;
 	import flash.display.Stage;
+	import flash.geom.ColorTransform;
 	import constant.*;
 	import contents.*;
 	
@@ -62,7 +63,7 @@
 		* Update (X,Y) Location
 		* @param x, y absolute location
 		*/
-		public function updateXYLoc(x:int, y:int)
+		public function updateXYLoc(x:int, y:int):void
 		{
 			this.x = x;
 			this.y = y;
@@ -81,7 +82,7 @@
 		* Manually get an actual image object corresponding to the index
 		*
 		*/
-		public function getImageIndexOf(index:int)
+		public function getImageIndexOf(index:int):MovieClip
 		{
 			return this.children[index];
 		}
@@ -89,7 +90,7 @@
 		/**
 		* get a current actual image object
 		*/
-		public function getCurrentImage()
+		public function getCurrentImage():MovieClip
 		{
 			return this.children[this.curr_image];
 		}
@@ -103,6 +104,16 @@
 			{
 				this.curr_image = index;
 			}
+		}
+		
+		/**
+		* SPIKE CODE // MAKE IT DISAPPEAR
+		*/
+		public function transformCurrImg()
+		{
+
+			getCurrentImage().visible = false;
+			
 		}
 		
 		
