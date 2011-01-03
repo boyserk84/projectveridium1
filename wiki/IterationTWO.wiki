@@ -25,4 +25,12 @@ What "gameCanvas" is just a basic controller for "city" and "worldmap" canvas. E
 || Task C || || Prevent adding a building into an occupied tile when click ||
 || Task D || || (View) Remove a building from a city by mouse clicking ||
 || Task E || || Highlight selected tile when mouse hover over or click ||
-|| Task F || || Implement a complete event handler/MOUSE I/O listener ||
+|| Task F || 2 hours || Implement a complete event handler/MOUSE I/O listener ||
+
+= Issues = 
+
+= #1 (SOLVED) Redesign event handler =
+We discovered that when we attached mouse event handler to the gamecanvas. It is only triggered when gamecanvas is actually clicked on. Therefore, all children (visual) that has been appended after won't be affected. For instance, when we have a gamecanvas and later we add a city to it. Suppose the city has a building located at (10,10) to (15,10). When we click at (12,10), the event handler does not respond (although it should). However, when we click at (9,9) it actually does respond. Therefore, we conclude that  the event handler only respond to the current and below level of the current object. Because of this issue, we redesign the event handler. We have created a class object called "IOHandler", which basically acts as an invisible mask, wrapping around the entire gamecanvas so that the event handler responds to all the triggered events.
+
+= #2 Determining the current tile based on (X,Y) of mouse click. =
+Feeding (X,Y) of the mouse click position still does not translate into a correct tile nth position.
