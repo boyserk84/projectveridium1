@@ -41,4 +41,4 @@ Basically, we draw a new shape of hit area and assign it to the core image objec
 Then we attach event handler such as mouse click to it to check if the event.target is the same as the shape we draw for hit area. The downside is that we have to restruct and duplciate method to all of our design for each image representation.
 
 Approach#2 Write an entire new collision detection. 
-Less work in term of restructuring the objects. Just focus on collision detection. However, the downside is that it will get more complicated in itself.
+Less work in term of restructuring the objects. Just focus on collision detection. However, the downside is that it will get more complicated in itself or have to try to find a work-around solution. We have tried to use "hittestPoint", the built-in collision detection by flash, and it works to some certain extents.
