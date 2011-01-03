@@ -21,6 +21,8 @@
 		private var gameTileObjects:Vector.<SpriteSheet>;
 		
 		private var viewStage:Stage;			// Stage management
+		
+		private var need_update:Boolean;
 		/**
 		* View Constructor
 		* @param ref_stage: stage of GameCanvas
@@ -33,6 +35,7 @@
 			this.gameSortedBuildingList = new Array();
 			this.viewStage = ref_stage;
 			this.createIsoTileView();
+			this.need_update = true;
 		}
 		
 		/**
@@ -142,14 +145,40 @@
 		{
 			this.sortBuilding(list);
 			this.constructIsoView();
+			this.need_update = true;
 		}
 		
+		
+		/**
+		* Collision Detection
+		* Checking if (x,y) actually does collide with the target or tile
+		* NEED: ISOMETRIC COLLIISION CHECKING, probably OVAL or SPHERE DETECTION
+		*/
+		private function isCollide(target:MovieClip, x:int,y:int)
+		{
+			return ((target.x + target.width < x) || (x < target.x))
+			&& ((target.y + target.height < y) || (y < target.y))
+			;
+			
+		}
+		
+		/**
+		* Determine which nth Tile is being on based on (X,Y)
+		* @param (X,Y) coordinate
+		* @return Nth tile number. Otherwise, -1 is returned.
+		*/
 		public function determineTileNumber(x:int,y:int):int
 		{
 			for (var i:int = 0; i < this.TotalTiles; ++i)
 			{
-				if (this.gameTileObjects[i].hitTestPoint(x,y,true))
+				
+				//if (isCollide(this.gameTileObjects[i],x,y))
+				// NEED BETTER COLLISION DETECTION
+				if (this.gameTileObjects[i].hitTestPoint(x,y, false))
 				{
+					//trace("Tile:" + this.gameTileObjects[i].x + "," +this.gameTileObjects[i].y);
+					trace (i);
+					this.gameTileObjects[i].transformCurrImg();
 					return i;
 				}
 			}
@@ -215,17 +244,21 @@
 		*/
 		public function drawAll()
 		{
-			// Draw tile
-			for (var i:int =0; i < this.TotalTiles; ++i)
+			if (this.need_update)
 			{
-				this.viewStage.addChild(this.getTileIndexOf(i));
+				// Draw tile
+				for (var i:int =0; i < this.TotalTiles; ++i)
+				{
+					this.viewStage.addChild(this.getTileIndexOf(i));
+				}
+				
+				// Draw building
+				for (var i:int =0; i < this.TotalBuildings; ++i)
+				{
+					this.viewStage.addChild(this.getCurGameObjOf(i));
+				}
 			}
-			
-			// Draw building
-			for (var i:int =0; i < this.TotalBuildings; ++i)
-			{
-				this.viewStage.addChild(this.getCurGameObjOf(i));
-			}
+			this.need_update = false;
 		}
 		
 		/**

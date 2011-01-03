@@ -3,6 +3,7 @@
 	import flash.display.Stage;
 	import flash.geom.Rectangle;
 	import flash.events.MouseEvent;
+	import flash.events.*;
 	import classes.*;
 	import constant.*;
 
@@ -14,6 +15,8 @@
 	{
 		
 		private var theView:View;
+		private var input:IOHandler;		// IO Handler
+		
 		var mcity:City;
 		var mbuilding:Building;
 		var mbuilding2:Building;
@@ -23,9 +26,9 @@
 		public function loadContents():void
 		{
 			trace("loadContents"); 
- 			//var curr:SpriteSheet = new SpriteSheet(0,100,200);
 			
-			this.theView = new View(this.stage);
+			this.theView = new View(this.stage);			
+			this.input = new IOHandler(this.stage.x,this.stage.y,GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
 			
 			//this.stage.addChild(curr.drawIndex(0));
 			
@@ -41,10 +44,15 @@
 			// update Building List everytime add or remove in the game object occurs
 			this.theView.addBuildingList(mcity.Buildings);
 			
-			trace(this.theView.determineTileNumber(265,86));
+			
 			
 			this.theView.Update();
-			//this.addEventListener(MouseEvent.CLICK,mouseEventListener);
+			this.addEventListener("enterFrame",gameLoop);
+			// Add Layer of I/O input device
+			this.stage.addChild(this.input);
+			
+			//this.addEventListener(MouseEvent.CLICK, testLoop);
+			
 			//this.stage.addChild(/* Add entity here */);
 			
 		}
@@ -52,9 +60,10 @@
 		/** 
 		* GameLoop: this is where things get updated!
 		*/
-		public function gameLoop():void
+		public function gameLoop(event:Event):void
 		{
-			trace("gameLoop");
+			this.theView.Update();
+			this.theView.determineTileNumber(this.input.X_click,this.input.Y_click);
 		}
 		
 		
@@ -87,7 +96,7 @@
 		{
 			trace("gameCanvas contructor is loaded!");
 			this.loadContents();
-			this.gameLoop();
+			//this.gameLoop();
 		}
 		
 		
