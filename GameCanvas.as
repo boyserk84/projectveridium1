@@ -23,7 +23,7 @@
 		public function loadContents():void
 		{
 			trace("loadContents"); 
- 			var curr:SpriteSheet = new SpriteSheet(0,100,200);
+ 			//var curr:SpriteSheet = new SpriteSheet(0,100,200);
 			
 			this.theView = new View(this.stage);
 			
@@ -38,7 +38,10 @@
 			mcity.addBuilding(mbuilding2);
 			mcity.addBuilding(mbuilding3);
 			
+			// update Building List everytime add or remove in the game object occurs
 			this.theView.addBuildingList(mcity.Buildings);
+			
+			trace(this.theView.determineTileNumber(265,86));
 			
 			this.theView.Update();
 			//this.addEventListener(MouseEvent.CLICK,mouseEventListener);
