@@ -14,8 +14,10 @@
 	public class GameCanvas extends MovieClip
 	{
 		
-		private var theView:View;
-		private var input:IOHandler;		// IO Handler
+		private var theView:View;			// View
+		private var input:IOHandler;		// IO Handler (receiving input)
+		
+		private var command:int;			// Current command of the mouse-click
 		
 		var mcity:City;
 		var mbuilding:Building;
@@ -29,6 +31,7 @@
 			
 			this.theView = new View(this.stage);			
 			this.input = new IOHandler(this.stage.x,this.stage.y,GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
+			this.command = GameConfig.COMM_REMOVE;
 			
 			//this.stage.addChild(curr.drawIndex(0));
 			
@@ -48,10 +51,11 @@
 			
 			this.theView.Update();
 			this.addEventListener("enterFrame",gameLoop);
+			
 			// Add Layer of I/O input device
 			this.stage.addChild(this.input);
+
 			
-			//this.addEventListener(MouseEvent.CLICK, testLoop);
 			
 			//this.stage.addChild(/* Add entity here */);
 			
@@ -62,11 +66,34 @@
 		*/
 		public function gameLoop(event:Event):void
 		{
-			this.theView.Update();
-			this.theView.checkClickedTile(this.input.X_click,this.input.Y_click);
-			this.theView.checkClickedBuilding(this.input.X_click, this.input.Y_click);
-		}
+			theView.Update();
+			if (this.command == GameConfig.COMM_REMOVE)
+			{
+				var xloc:int = input.X_click;
+				var yloc:int = input.Y_click;
+				if (theView.checkClickedBuilding(xloc, yloc)!=null)
+				{
+					
+					// CITY IS NOT ACTUALLY REMOVING BUILDINGS!!!!
+					// (1) (GameObject) Notify city what building to be removed
+					mcity.removeBuilding(theView.checkClickedBuilding(xloc, yloc));
+					
+					// PROB: NEED TO CHECK IF BUILDING IS ACTUALLY REMOVED
+					// CHECK LENGTH OF BUILDING INSIDE THE CITY
+					
+					// (2) Adjust View, delete a building from view
+					theView.setClickedBuildingInvisible(xloc,yloc);
+					// (3) Add new building list to View
+					theView.addBuildingList(mcity.Buildings);
+				}
+			} else 
+			if (this.command == GameConfig.COMM_ADD)
+			{
+				
+
+			}
 		
+		}
 		
 		/**
 		* eventListner: I/O input and event listener.

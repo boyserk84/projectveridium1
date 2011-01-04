@@ -27,7 +27,7 @@
 			this.y = y;
 			this.width = width;
 			this.height = height;
-			this.addEventListener(MouseEvent.CLICK,listener);
+			this.addEventListener(MouseEvent.CLICK,click_listener);
 			this.alpha = GameConfig.FULL_TRANSPARENT;
 			this.click_coordinate = new Point(0,0);
 		}
@@ -36,7 +36,7 @@
 		* Event listener to input device when specified event is triggered
 		* @return (X,Y) coordinate of mouse click
 		*/
-		public function listener(event:MouseEvent)
+		public function click_listener(event:MouseEvent)
 		{
 			trace(event.stageX + "," + event.stageY);
 			//trace(event.target);
