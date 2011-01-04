@@ -21,6 +21,7 @@
 		private var gameViewPanel:Vector.<SpriteSheet>;					// All panel/admin objects in the game
 		private var gameTileObjects:Vector.<SpriteSheet>;
 		
+		// Holding actual graphics
 		private var viewStage:Stage;			// Stage management
 		
 		private var need_update:Boolean;
@@ -36,6 +37,7 @@
 			this.viewStage = ref_stage;
 			this.createIsoTileView();
 			this.need_update = true;
+
 		}
 		
 		/**
@@ -144,8 +146,23 @@
 		*/
 		public function addBuildingList(list:LinkedList):void
 		{
+			// Refresh game contents
+			if (this.gameSortedBuildingList !=null )
+			{
+				deleteGameBuildings();
+				trace("Create");
+			}
+			
 			this.gameSortedBuildingList = new Array();
-			this.sortBuilding(list);
+			this.sortBuilding(list);	// sort
+			
+			// Refresh view contents
+			//if (this.ViewObject!=null)
+			//{
+				// NEED TO CHECK FOR DUPLICATE
+				//deleteViewOfBuildings();
+			//}
+			
 			this.constructIsoView();
 			this.need_update = true;
 		}
@@ -251,8 +268,7 @@
 					}
 				}
 			}//for
-			deleteViewOfBuildings();
-			deleteGameBuildings();
+			
 		}
 		
 		/**
@@ -260,12 +276,20 @@
 		*/
 		private function deleteViewOfBuildings()
 		{
+			var temp:MovieClip;
 			while(TotalBuildings>0)
 			{
-				this.ViewObject.pop();
+				temp = (this.ViewObject.pop().getCurrentImage());
+				if (this.viewStage.contains(temp))
+				{
+					this.viewStage.removeChild(temp);
+				}
 			}
 		}
 		
+		/**
+		* Delete all game buildings objects
+		*/
 		private function deleteGameBuildings()
 		{
 			while (TotalGameBuildings > 0)
@@ -337,18 +361,25 @@
 		}
 		
 		/**
+		* Draw all tiles to the stage screen
+		*/
+		private function drawTiles()
+		{
+			// Draw tile
+			for (var i:int =0; i < this.TotalTiles; ++i)
+			{
+				this.viewStage.addChild(this.getTileIndexOf(i));
+			}
+		}
+		
+		/**
 		* Draw everything that needs to be displayed
 		*/
 		public function drawAll()
 		{
 			if (this.need_update)
 			{
-				// Draw tile
-				for (var i:int =0; i < this.TotalTiles; ++i)
-				{
-					this.viewStage.addChild(this.getTileIndexOf(i));
-				}
-				
+				this.drawTiles();
 				// Draw building
 				for (var i:int =0; i < this.TotalBuildings; ++i)
 				{
