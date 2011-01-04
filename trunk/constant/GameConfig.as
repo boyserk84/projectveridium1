@@ -16,6 +16,9 @@
 		// Display value
 		public static const FULL_TRANSPARENT = 0;
 		
+		public static const MAX_CITY_COL = 5;
+		public static const MAX_CITY_ROW = 5;
+		
 	
 	}
 }

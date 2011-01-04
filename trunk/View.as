@@ -2,6 +2,7 @@
 	import flash.display.Sprite; 
 	import flash.display.MovieClip;
 	import flash.display.Stage;
+	import flash.geom.Point;
 	import classes.*;
 	import constant.*;
 	
@@ -141,7 +142,7 @@
 		* Add LinkedList of building objects from the game logic
 		* @param LinkedList list of building objects
 		*/
-		public function addBuildingList(list:LinkedList)
+		public function addBuildingList(list:LinkedList):void
 		{
 			this.sortBuilding(list);
 			this.constructIsoView();
@@ -154,31 +155,34 @@
 		* Checking if (x,y) actually does collide with the target or tile
 		* NEED: ISOMETRIC COLLIISION CHECKING, probably OVAL or SPHERE DETECTION
 		*/
-		private function isCollide(target:MovieClip, x:int,y:int)
+		private function isCollide(target:MovieClip, x:int,y:int):Boolean
 		{
+			return !((target.x + target.width)-target.width/4 < x || (target.x + target.width/4) < x)
+			&& ((target.y + target.height)-target.height/4 < y || (target.y + target.height/4) < y)
+			/**
 			return ((target.x + target.width < x) || (x < target.x))
 			&& ((target.y + target.height < y) || (y < target.y))
 			;
+			*/
 			
 		}
 		
 		/**
-		* Determine which nth Tile is being on based on (X,Y)
+		* Determine which nth Tile is being clicked on
 		* @param (X,Y) coordinate
 		* @return Nth tile number. Otherwise, -1 is returned.
 		*/
-		public function determineTileNumber(x:int,y:int):int
+		public function checkClickedTile(x:int,y:int):int
 		{
 			for (var i:int = 0; i < this.TotalTiles; ++i)
 			{
-				
-				//if (isCollide(this.gameTileObjects[i],x,y))
 				// NEED BETTER COLLISION DETECTION
+				//if (isCollide(this.gameTileObjects[i],x,y))
 				if (this.gameTileObjects[i].hitTestPoint(x,y, false))
 				{
 					//trace("Tile:" + this.gameTileObjects[i].x + "," +this.gameTileObjects[i].y);
-					trace (i);
-					this.gameTileObjects[i].transformCurrImg();
+					//trace (i);
+					//this.gameTileObjects[i].transformCurrImg();
 					return i;
 				}
 			}
@@ -186,9 +190,46 @@
 		}
 		
 		/**
+		* convert (X,Y) position on the screen to game location
+		* @param (X,Y) position on the screen
+		* @return (X,Y) position in the game
+		*/
+		private function convertToGameLoc(x:int, y:int):Point
+		{
+			var loc:int = checkClickedTile(x,y);
+			var gameLoc:Point = new Point(loc % GameConfig.MAX_CITY_COL,
+										  Math.floor(loc / GameConfig.MAX_CITY_ROW));
+			return gameLoc;
+		}
+		
+		/**
+		* checking which building object is being clicked on
+		* @param x,y (X,Y) Mouse position
+		* @return FOR NOW RETUNRING INDEX, but it's supposed to return Building Object
+		*/
+		public function checkClickedBuilding(x:int,y:int)
+		{
+			// Determining actual game location based on Tile Number
+			var col:int = convertToGameLoc(x,y).x;
+			var row:int = convertToGameLoc(x,y).y;
+
+			for (var i:int = 0; i < this.TotalBuildings; ++i)
+			{
+				if (col == this.gameSortedBuildingList[i].Location.x
+					&& row == this.gameSortedBuildingList[i].Location.y)
+				{
+					this.ViewObject[i].transformCurrImg();
+					return i;
+				}
+			}
+			
+			return -1;
+		}
+		
+		/**
 		* return total numbers of Buildings object for display
 		*/
-		public function get TotalBuildings()
+		public function get TotalBuildings():int
 		{
 			return this.gameViewObjects.length;
 		}
@@ -196,7 +237,7 @@
 		/**
 		* return total numbers of tiles for display
 		*/
-		public function get TotalTiles()
+		public function get TotalTiles():int
 		{
 			return this.gameTileObjects.length;
 		}

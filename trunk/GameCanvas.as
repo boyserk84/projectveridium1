@@ -63,7 +63,8 @@
 		public function gameLoop(event:Event):void
 		{
 			this.theView.Update();
-			this.theView.determineTileNumber(this.input.X_click,this.input.Y_click);
+			this.theView.checkClickedTile(this.input.X_click,this.input.Y_click);
+			this.theView.checkClickedBuilding(this.input.X_click, this.input.Y_click);
 		}
 		
 		
