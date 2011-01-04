@@ -20,7 +20,7 @@ What "gameCanvas" is just a basic controller for "city" and "worldmap" canvas. E
 = Tasks =
 
 || Tasks || Timespent || Description ||
-|| Task A || || (View) Translate (X,Y) of mouseclicking to nth tile ||
+|| Task A || 3 hours || (View) Translate (X,Y) of mouseclicking to nth tile ||
 || Task B || || (View) Add a building into a city by mouse clicking ||
 || Task C || || Prevent adding a building into an occupied tile when click ||
 || Task D || || (View) Remove a building from a city by mouse clicking ||
