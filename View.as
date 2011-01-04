@@ -30,10 +30,9 @@
 		*/
 		public function View(ref_stage:Stage)
 		{
-			this.gameViewObjects = new Vector.<SpriteSheet>;
 			this.gameViewPanel = new Vector.<SpriteSheet>;
 			this.gameTileObjects = new Vector.<SpriteSheet>;
-			this.gameSortedBuildingList = new Array();
+			
 			this.viewStage = ref_stage;
 			this.createIsoTileView();
 			this.need_update = true;
@@ -115,6 +114,7 @@
 		*/
 		private function constructIsoView()
 		{
+			this.gameViewObjects = new Vector.<SpriteSheet>;
 			for (var i:int=0; i < this.gameSortedBuildingList.length; ++i)
 			{
 				// (1) Extracting info from each building object
@@ -144,6 +144,7 @@
 		*/
 		public function addBuildingList(list:LinkedList):void
 		{
+			this.gameSortedBuildingList = new Array();
 			this.sortBuilding(list);
 			this.constructIsoView();
 			this.need_update = true;
@@ -176,13 +177,12 @@
 		{
 			for (var i:int = 0; i < this.TotalTiles; ++i)
 			{
-				// NEED BETTER COLLISION DETECTION
+				// NEED BETTER COLLISION DETECTION, BUT IT WORKS FOR NOW.
 				//if (isCollide(this.gameTileObjects[i],x,y))
 				if (this.gameTileObjects[i].hitTestPoint(x,y, false))
 				{
 					//trace("Tile:" + this.gameTileObjects[i].x + "," +this.gameTileObjects[i].y);
 					//trace (i);
-					//this.gameTileObjects[i].transformCurrImg();
 					return i;
 				}
 			}
@@ -190,8 +190,8 @@
 		}
 		
 		/**
-		* convert (X,Y) position on the screen to game location
-		* @param (X,Y) position on the screen
+		* convert (X,Y) screen position to actual game location
+		* @param (X,Y) screen position
 		* @return (X,Y) position in the game
 		*/
 		private function convertToGameLoc(x:int, y:int):Point
@@ -203,29 +203,85 @@
 		}
 		
 		/**
-		* checking which building object is being clicked on
+		* checking which building game object is being clicked on
 		* @param x,y (X,Y) Mouse position
-		* @return FOR NOW RETUNRING INDEX, but it's supposed to return Building Object
+		* @return Building object that being clicked on, Otherwise, null is returned!
 		*/
-		public function checkClickedBuilding(x:int,y:int)
+		public function checkClickedBuilding(x:int,y:int):Building
 		{
 			// Determining actual game location based on Tile Number
 			var col:int = convertToGameLoc(x,y).x;
 			var row:int = convertToGameLoc(x,y).y;
 
+			for (var i:int = 0; i < this.TotalGameBuildings; ++i)
+			{
+				if (col == this.gameSortedBuildingList[i].Location.x
+					&& row == this.gameSortedBuildingList[i].Location.y)
+				{
+					//if (this.ViewObject[i].isVisible())
+					//{
+						return this.gameSortedBuildingList[i];
+					//}
+				}
+			}
+			
+			return null;
+		}
+		
+		/**
+		* set clicked building to be invisible
+		* and remove it from the view
+		* @param (X,Y) click position
+		*
+		*/
+		public function setClickedBuildingInvisible(x:int, y:int):void
+		{
+			// Determining actual game location based on Tile Number
+			var col:int = convertToGameLoc(x,y).x;
+			var row:int = convertToGameLoc(x,y).y;
+			
 			for (var i:int = 0; i < this.TotalBuildings; ++i)
 			{
 				if (col == this.gameSortedBuildingList[i].Location.x
 					&& row == this.gameSortedBuildingList[i].Location.y)
 				{
-					this.ViewObject[i].transformCurrImg();
-					return i;
+					if (this.viewStage.contains(getCurGameObjOf(i)))
+					{
+						this.viewStage.removeChild(getCurGameObjOf(i));
+					}
 				}
-			}
-			
-			return -1;
+			}//for
+			deleteViewOfBuildings();
+			deleteGameBuildings();
 		}
 		
+		/**
+		* Delete all views of Building objects (SpriteSheet)
+		*/
+		private function deleteViewOfBuildings()
+		{
+			while(TotalBuildings>0)
+			{
+				this.ViewObject.pop();
+			}
+		}
+		
+		private function deleteGameBuildings()
+		{
+			while (TotalGameBuildings > 0)
+			{
+				this.gameSortedBuildingList.pop();
+			}
+		}
+		
+		/**
+		* return total numbers of Buildings object in the game
+		*/
+		public function get TotalGameBuildings():int
+		{
+			return this.gameSortedBuildingList.length;
+		}
+
 		/**
 		* return total numbers of Buildings object for display
 		*/

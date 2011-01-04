@@ -107,13 +107,19 @@
 		}
 		
 		/**
-		* SPIKE CODE // MAKE IT DISAPPEAR
+		* Set image invisible
 		*/
-		public function transformCurrImg()
+		public function setInvisible()
 		{
-
 			getCurrentImage().visible = false;
-			
+		}
+		
+		/**
+		* Check if the image is visible
+		*/
+		public function isVisible()
+		{
+			return getCurrentImage().visible;
 		}
 		
 		
