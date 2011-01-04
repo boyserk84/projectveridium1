@@ -22,6 +22,7 @@
 		var mcity:City;
 		var mbuilding:Building;
 		var mbuilding2:Building;
+		var test_update:Boolean = true;
 		/**
 		* Load all contents to the canvas
 		*/
@@ -34,7 +35,6 @@
 			this.command = GameConfig.COMM_REMOVE;
 			
 			//this.stage.addChild(curr.drawIndex(0));
-			
 			mcity=new City(0,0,100,100);
 			mbuilding=new Building(new Rectangle(1,0,1,1),1);
 			mbuilding2=new Building(new Rectangle(0,0,1,1),1);
@@ -44,9 +44,9 @@
 			mcity.addBuilding(mbuilding2);
 			mcity.addBuilding(mbuilding3);
 			
+			
 			// update Building List everytime add or remove in the game object occurs
 			this.theView.addBuildingList(mcity.Buildings);
-			
 			
 			
 			this.theView.Update();
@@ -67,10 +67,11 @@
 		public function gameLoop(event:Event):void
 		{
 			theView.Update();
+			var xloc:int = input.X_click;
+			var yloc:int = input.Y_click;
+			
 			if (this.command == GameConfig.COMM_REMOVE)
 			{
-				var xloc:int = input.X_click;
-				var yloc:int = input.Y_click;
 				if (theView.checkClickedBuilding(xloc, yloc)!=null)
 				{
 					
@@ -83,15 +84,30 @@
 					
 					// (2) Adjust View, delete a building from view
 					theView.setClickedBuildingInvisible(xloc,yloc);
+					
 					// (3) Add new building list to View
 					theView.addBuildingList(mcity.Buildings);
+					
+					this.stage.removeChild(this.input);
+					
 				}
 			} else 
 			if (this.command == GameConfig.COMM_ADD)
 			{
+				if (theView.checkClickedBuilding(xloc, yloc)==null)
+				{
+					// check with CITY if a particular space is occupied
+					
+					// if not occupied, addBuildingList to the game and view
+				}
+			} else 
+			if (this.command == GameConfig.COMM_SELECT)
+			{
 				
-
 			}
+			
+			
+			this.stage.addChild(this.input);
 		
 		}
 		
