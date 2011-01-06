@@ -157,11 +157,11 @@
 			this.sortBuilding(list);	// sort
 			
 			// Refresh view contents
-			//if (this.ViewObject!=null)
-			//{
+			if (this.ViewObject!=null)
+			{
 				// NEED TO CHECK FOR DUPLICATE
-				//deleteViewOfBuildings();
-			//}
+				deleteViewOfBuildings();
+			}
 			
 			this.constructIsoView();
 			this.need_update = true;
@@ -220,6 +220,14 @@
 		}
 		
 		/**
+		* same as ConvertToGameLoc
+		*/
+		public function getGamePos(x:int, y:int):Point
+		{
+			return convertToGameLoc(x,y);
+		}
+		
+		/**
 		* checking which building game object is being clicked on
 		* @param x,y (X,Y) Mouse position
 		* @return Building object that being clicked on, Otherwise, null is returned!
@@ -235,10 +243,10 @@
 				if (col == this.gameSortedBuildingList[i].Location.x
 					&& row == this.gameSortedBuildingList[i].Location.y)
 				{
-					//if (this.ViewObject[i].isVisible())
-					//{
+					if (this.viewStage.contains(getCurGameObjOf(i)))
+					{
 						return this.gameSortedBuildingList[i];
-					//}
+					}
 				}
 			}
 			

@@ -22,9 +22,9 @@
 		public static const MAX_CITY_ROW = 5;
 		
 		// Mouse click command
-		public static const COMM_ADD = 0;
-		public static const COMM_REMOVE = 1;
-		public static const COMM_SELECT = 2;
+		public static const COMM_ADD = 1;
+		public static const COMM_REMOVE = 2;
+		public static const COMM_SELECT = 3;
 		
 	
 	}
