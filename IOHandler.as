@@ -16,6 +16,8 @@
 	{
 		private var click_coordinate:Point;
 		
+		private var isMouse_Click:Boolean=false;
+		
 		/**
 		* Constructor
 		* @param x,y (X,Y) starting position
@@ -42,6 +44,23 @@
 			//trace(event.target);
 			this.click_coordinate.x = event.stageX;
 			this.click_coordinate.y = event.stageY;
+			this.isMouse_Click = true;
+		}
+		
+		/**
+		* Check if mouse is clicked.
+		*/
+		public function isClick()
+		{
+			return this.isMouse_Click;
+		}
+		
+		/**
+		* Set mouse to none-click state (flush)
+		*/
+		public function setNonClick()
+		{
+			this.isMouse_Click = false;
 		}
 		
 		/**

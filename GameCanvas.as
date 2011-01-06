@@ -17,6 +17,10 @@
 		private var theView:View;			// View
 		private var input:IOHandler;		// IO Handler (receiving input)
 		
+		private var addButton:TriggerButton;
+		private var removeButton:TriggerButton;
+		
+		
 		private var command:int;			// Current command of the mouse-click
 		
 		var mcity:City;
@@ -32,7 +36,9 @@
 			
 			this.theView = new View(this.stage);			
 			this.input = new IOHandler(this.stage.x,this.stage.y,GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
-			this.command = GameConfig.COMM_REMOVE;
+			this.command = GameConfig.COMM_ADD;
+			this.addButton = new TriggerButton(300, 320, GameConfig.COMM_ADD);
+			this.removeButton = new TriggerButton(450,320, GameConfig.COMM_REMOVE);
 			
 			//this.stage.addChild(curr.drawIndex(0));
 			mcity=new City(0,0,100,100);
@@ -51,15 +57,18 @@
 			
 			this.theView.Update();
 			this.addEventListener("enterFrame",gameLoop);
+			//this.addEventListener(MouseEvent.CLICK, addB);
 			
 			// Add Layer of I/O input device
-			this.stage.addChild(this.input);
-
+			//this.stage.addChild(this.input);
+			//this.stage.addChild(this.addButton);
+			//this.stage.addChild(this.removeButton);
 			
 			
 			//this.stage.addChild(/* Add entity here */);
 			
 		}
+		
 		
 		/** 
 		* GameLoop: this is where things get updated!
@@ -70,6 +79,7 @@
 			var xloc:int = input.X_click;
 			var yloc:int = input.Y_click;
 			
+			if (input.isClick()){
 			if (this.command == GameConfig.COMM_REMOVE)
 			{
 				if (theView.checkClickedBuilding(xloc, yloc)!=null)
@@ -85,29 +95,58 @@
 					// (2) Adjust View, delete a building from view
 					theView.setClickedBuildingInvisible(xloc,yloc);
 					
-					// (3) Add new building list to View
-					theView.addBuildingList(mcity.Buildings);
-					
 					this.stage.removeChild(this.input);
 					
 				}
 			} else 
+			
 			if (this.command == GameConfig.COMM_ADD)
 			{
+				// check if mouse-clicking is not on any building
 				if (theView.checkClickedBuilding(xloc, yloc)==null)
 				{
-					// check with CITY if a particular space is occupied
+					// Translate mouse position to game position
+					var x_pos:int = theView.getGamePos(xloc,yloc).x;
+					var y_pos:int = theView.getGamePos(xloc,yloc).y;
 					
-					// if not occupied, addBuildingList to the game and view
+					if (x_pos > -1 || y_pos > -1)
+					{
+						// add building to the city
+						mcity.addBuilding(new Building(new Rectangle(x_pos,y_pos,1,1),1));
+					
+						// (2) Add new building list to View
+						theView.addBuildingList(mcity.Buildings);
+					
+						this.stage.removeChild(this.input);
+	
+					}
 				}
 			} else 
 			if (this.command == GameConfig.COMM_SELECT)
 			{
 				
 			}
+			}
 			
 			
 			this.stage.addChild(this.input);
+			this.stage.addChild(this.addButton);
+			this.stage.addChild(this.removeButton);
+			
+			// Spike code for button
+			if (addButton.isClick())
+			{
+				trace("Add is clicked");
+				this.command = addButton.Command;
+			} else if (removeButton.isClick()){
+				trace("Remove is clicked");
+				this.command = removeButton.Command;
+			}
+			
+			// flush all I/O Buffer
+			this.addButton.setNonClick();
+			this.removeButton.setNonClick();
+			this.input.setNonClick();
 		
 		}
 		

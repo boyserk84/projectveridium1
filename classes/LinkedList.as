@@ -41,7 +41,7 @@
 			var node:Node=head;
 			while(node!=null)
 			{
-				if(node===objIn)
+				if(node.data===objIn)
 				{
 					node.prev.next=node.next;
 					node.next.prev=node.prev;
