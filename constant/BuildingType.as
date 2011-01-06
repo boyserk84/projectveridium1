@@ -14,6 +14,7 @@
 		* Military building 
 		*/
 		public static const BARRACK:int = 1;		// Integer represent barrack
+		public static const BARRACK_PLACE:int=2;
 			
 		
 		/**

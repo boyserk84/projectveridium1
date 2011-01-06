@@ -5,8 +5,12 @@
 	{
 		//The bounds of this City
 		private var bounds:Rectangle;
-		
+		//The name of this City for key purposes
+		private var name:String;
+		//The buildings in this City
 		private var buildings:LinkedList;
+		//The building's ghost that is going to be created
+		private var ghost:Building;
 		
 		/*
 		* Constructor creates a new city with a specified bounds
@@ -25,22 +29,58 @@
 		*/
 		public function constructBuilding(buildingIn:Building=null):Boolean
 		{
-			// DUMMY VALUE
+			if(isCollide(buildingIn))
+			{
+				return false;
+			}
+			
+			addBuilding(buildingIn);
 			return true;
+			
+			
+			
 		}
 		
+		public function updateGhostLocation(xIn:int=0,yIn:int=0):void
+		{
+			if(ghost!=null)
+			{
+				ghost.changeLocation(xIn,yIn);
+			}
+		}
+		
+		/*
+		* Updates what the ghost of the building that is to be created is
+		*/
+		public function updateGhost(buildingIn:Building=null):void
+		{
+			
+			ghost=buildingIn;
+			buildings.Add(ghost);
+		}
+		public function removeGhost():void
+		{
+			buildings.Remove(ghost);
+			ghost=null;
+			
+		}
 		/*
 		* Checks building collision against other buildings in the list
 		* @param1: buildingIn - The building to check collision against
 		* return: True if collide, False otherwise
 		*/
-		public function isCollide(buildingIn:Building):Boolean
+		public function isCollide(buildingIn:Building=null):Boolean
 		{
 			for(var i:int=0;i<buildings.Length;i++)
 			{
+				if(buildingIn.Bounds.intersects(Building(buildings.Get(0).data).Bounds))
+				{
+					trace("Collides");
+					return true;
+				}
 			}
-			// DUMMY VALUE
-			return true;
+			return false;
+			
 
 		}
 		/*
@@ -60,6 +100,7 @@
 		*/
 		public function removeBuilding(buildingIn:Building=null):void
 		{
+			trace("Were trying to remove from the city");
 			buildings.Remove(buildingIn);
 		}
 		
@@ -80,6 +121,11 @@
 		public function get Buildings():LinkedList
 		{
 			return buildings;
+		}
+		
+		public function get Ghost():Building
+		{
+			return ghost;
 		}
 		
 		

@@ -27,7 +27,7 @@
 			this.y = y;
 			this.width = width;
 			this.height = height;
-			this.addEventListener(MouseEvent.CLICK,click_listener);
+			//			this.addEventListener(MouseEvent.CLICK,click_listener);
 			this.alpha = GameConfig.FULL_TRANSPARENT;
 			this.click_coordinate = new Point(0,0);
 		}

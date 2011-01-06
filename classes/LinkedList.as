@@ -32,6 +32,8 @@
 			length+=1;
 		}
 		
+		
+		
 		/*
 		* Removes and item from the list and returns it, comparison through strict equality
 		* @param1: objIn - The object to be removed
@@ -39,10 +41,13 @@
 		public function Remove(objIn:*):*
 		{
 			var node:Node=head;
+			trace("Trying to remove from the list");
 			while(node!=null)
 			{
-				if(node===objIn)
+
+				if(node.data===objIn)
 				{
+					trace("Found what were looking for!");
 					node.prev.next=node.next;
 					node.next.prev=node.prev;
 					length-=1;

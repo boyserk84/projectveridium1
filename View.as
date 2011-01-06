@@ -22,14 +22,15 @@
 		private var gameTileObjects:Vector.<SpriteSheet>;
 		
 		// Holding actual graphics
-		private var viewStage:Stage;			// Stage management
+		private var viewStage:GameCanvas;			// Stage management
 		
 		private var need_update:Boolean;
 		/**
 		* View Constructor
 		* @param ref_stage: stage of GameCanvas
 		*/
-		public function View(ref_stage:Stage)
+		//Changed this
+		public function View(ref_stage:GameCanvas)
 		{
 			this.gameViewPanel = new Vector.<SpriteSheet>;
 			this.gameTileObjects = new Vector.<SpriteSheet>;
@@ -65,7 +66,7 @@
 		*/
 		private function isometricTrans_X(col:int, row:int):int
 		{
-			return GameConfig.TILE_INIT_X + GameConfig.TILE_WIDTH*col - row*GameConfig.TILE_WIDTH/2 - col*GameConfig.TILE_WIDTH/2;
+			return GameConfig.TILE_INIT_X + (GameConfig.TILE_WIDTH*col - row*GameConfig.TILE_WIDTH/2 - col*GameConfig.TILE_WIDTH/2);
 		}
 		
 		/**
@@ -129,13 +130,15 @@
 				
 				// (2) Construct spriteSheet based on type and 
 				// (3) isometrically transform game position (x,y)
-				this.gameViewObjects.push(new SpriteSheet
+				
+				this.gameViewObjects.push(new SpriteSheet(temp_type,temp_x,temp_y));
+				/*this.gameViewObjects.push(new SpriteSheet
 										  (temp_type,
-										   /* if one dimension minus 0, then minus WIDTH/2 */
+										   /* if one dimension minus 0, then minus WIDTH/2 
 										   isometricTrans_X(temp_x ,temp_y) - (this.gameSortedBuildingList[i].isSingleDim()?0:GameConfig.TILE_WIDTH/2), 
 										   isometricTrans_Y(temp_x,temp_y)-GameConfig.TILE_HEIGHT/2)
 										  );
-				
+				*/
 				//trace(this.gameViewObjects[i].x + "," + this.gameViewObjects[i].y);
 			}//for
 		}
@@ -211,12 +214,29 @@
 		* @param (X,Y) screen position
 		* @return (X,Y) position in the game
 		*/
-		private function convertToGameLoc(x:int, y:int):Point
+		public function convertToGameLoc(x:int, y:int):Point
 		{
 			var loc:int = checkClickedTile(x,y);
 			var gameLoc:Point = new Point(loc % GameConfig.MAX_CITY_COL,
 										  Math.floor(loc / GameConfig.MAX_CITY_ROW));
 			return gameLoc;
+		}
+		
+		public function otherCheck(xIn:int,yIn:int):Building
+		{
+			for (var i:int = 0; i < this.TotalGameBuildings; ++i)
+			{
+				if ((xIn >= getCurGameObjOf(i).x
+					&& xIn <= this.getCurGameObjOf(i).x+this.getCurGameObjOf(i).width)&&
+					(xIn >= this.getCurGameObjOf(i).y&& yIn <= this.getCurGameObjOf(i).y+this.getCurGameObjOf(i).height))
+				{
+					//if (this.ViewObject[i].isVisible())
+					//{
+						return this.gameSortedBuildingList[i];
+					//}
+				}
+			}
+			return null;
 		}
 		
 		/**
@@ -244,6 +264,35 @@
 			
 			return null;
 		}
+		
+		
+		public function removeBuildingSymbol(buildingIn:Building):void
+		{
+			this.viewStage.removeChild(getCurGameObjOf(gameSortedBuildingList.indexOf(buildingIn)));
+		}
+		
+		public function updateBuildingLocation(buildingIn:Building):void
+		{
+			getCurGameObjOf(gameSortedBuildingList.indexOf(buildingIn)).x=buildingIn.Location.x;
+			getCurGameObjOf(gameSortedBuildingList.indexOf(buildingIn)).y=buildingIn.Location.y;
+			
+		}
+		
+		public function removeSymbol(xIn:int,yIn:int):void
+		{
+			for(var i:int=0;i<this.TotalBuildings;++i)
+			{
+				if (xIn == this.gameSortedBuildingList[i].Location.x
+					&& yIn == this.gameSortedBuildingList[i].Location.y)
+				{
+					if (this.viewStage.contains(getCurGameObjOf(i)))
+					{
+						this.viewStage.removeChild(getCurGameObjOf(i));
+					}
+				}
+			}
+		}
+		
 		
 		/**
 		* set clicked building to be invisible

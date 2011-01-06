@@ -49,6 +49,12 @@
 			{
 				this.children.push(new ImgBuilding(this.x,this.y));
 			}
+			else if (this.object_Type == BuildingType.BARRACK_PLACE)
+			{
+				var temp:ImgBuilding=new ImgBuilding(this.x,this.y);
+				temp.alpha=.5;
+				this.children.push(temp);
+			}
 			
 			// Farm
 			if (this.object_Type == BuildingType.FARM)

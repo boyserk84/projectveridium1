@@ -41,6 +41,11 @@
 			return type;
 		}
 		
+		public function get Bounds():Rectangle
+		{
+			return dimension;
+		}
+		
 		public function get Location():Point
 		{
 			var point:Point=new Point(dimension.x,dimension.y);
