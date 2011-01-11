@@ -1,10 +1,21 @@
 #summary One-sentence summary of this page.
 
 = Iteration#3 =
+= Basic GamePlay Contents =
+- Finalize game contents (List of buildings).
 
-= Game Contents/Play and Advanced View=
+- Advanced Menu System: Choose what you can build from the list of buildings.
+
+- Resources calculation and allocation.
+
+- Design and implement "User Interface" with complete menu for city and worldmap. 
+
 
 = Tasks =
 
 || Tasks || Time spent || Description ||
-|| Task A || || ||
+|| Task A || || Finalize game contents (Design) ||
+|| Task B || || Advanced Menu System: Pagination of list of buildings ||
+|| Task C || || Advanced Menu System: Click at the building on the menu ||
+|| Task D || || Advanced Menu System: Prevent clicking if not enough resources ||
+|| Task E || || Advanced Menu System: Switch between menu ||
