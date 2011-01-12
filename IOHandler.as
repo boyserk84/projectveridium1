@@ -29,7 +29,7 @@
 			this.y = y;
 			this.width = width;
 			this.height = height;
-			this.addEventListener(MouseEvent.CLICK,click_listener);
+			//this.addEventListener(MouseEvent.CLICK,click_listener);
 			this.alpha = GameConfig.FULL_TRANSPARENT;
 			this.click_coordinate = new Point(0,0);
 		}
@@ -41,7 +41,7 @@
 		public function click_listener(event:MouseEvent)
 		{
 			trace(event.stageX + "," + event.stageY);
-			//trace(event.target);
+			trace(event.target);
 			this.click_coordinate.x = event.stageX;
 			this.click_coordinate.y = event.stageY;
 			this.isMouse_Click = true;

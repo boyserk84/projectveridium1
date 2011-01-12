@@ -22,19 +22,19 @@
 		private var gameTileObjects:Vector.<SpriteSheet>;
 		
 		// Holding actual graphics
-		private var viewStage:Stage;			// Stage management
+		private var viewStage:GameCanvas;			// Stage management
 		
 		private var need_update:Boolean;
 		/**
 		* View Constructor
 		* @param ref_stage: stage of GameCanvas
 		*/
-		public function View(ref_stage:Stage)
+		public function View(ref_stage:GameCanvas)
 		{
 			this.gameViewPanel = new Vector.<SpriteSheet>;
 			this.gameTileObjects = new Vector.<SpriteSheet>;
 			
-			this.viewStage = ref_stage;
+			//this = ref_stage;
 			this.createIsoTileView();
 			this.need_update = true;
 
@@ -65,6 +65,7 @@
 		*/
 		private function isometricTrans_X(col:int, row:int):int
 		{
+			
 			return GameConfig.TILE_INIT_X + GameConfig.TILE_WIDTH*col - row*GameConfig.TILE_WIDTH/2 - col*GameConfig.TILE_WIDTH/2;
 		}
 		
@@ -192,6 +193,7 @@
 		*/
 		public function checkClickedTile(x:int,y:int):int
 		{
+			/*
 			for (var i:int = 0; i < this.TotalTiles; ++i)
 			{
 				// NEED BETTER COLLISION DETECTION, BUT IT WORKS FOR NOW.
@@ -203,6 +205,16 @@
 					return i;
 				}
 			}
+			*/
+			
+			var gameLoc:Point=new Point();
+			var ymouse = ((2 * y - x) / 2);
+			var xmouse = (x+ y);
+			gameLoc.x= Math.round(ymouse / GameConfig.TILE_WIDTH);
+			gameLoc.y= Math.round(xmouse / GameConfig.TILE_WIDTH) - 1;
+			trace(gameLoc.x+","+gameLoc.y);
+			
+
 			return -1;
 		}
 		
@@ -213,9 +225,19 @@
 		*/
 		private function convertToGameLoc(x:int, y:int):Point
 		{
-			var loc:int = checkClickedTile(x,y);
-			var gameLoc:Point = new Point(loc % GameConfig.MAX_CITY_COL,
+			//var loc:int = checkClickedTile(x,y);
+			
+/*			var gameLoc:Point = new Point(loc % GameConfig.MAX_CITY_COL,
 										  Math.floor(loc / GameConfig.MAX_CITY_ROW));
+		*/
+			var gameLoc:Point=new Point();
+			var ymouse = ((2*(y-GameConfig.TILE_INIT_Y)-(x-GameConfig.TILE_INIT_X))/2);
+			var xmouse = ((x-GameConfig.TILE_INIT_X)+ymouse);
+			//find on which tile mouse is
+			gameLoc.y = Math.round(ymouse/GameConfig.TILE_HEIGHT);
+			gameLoc.x = Math.round(xmouse/GameConfig.TILE_HEIGHT)-1;
+			trace("Converting to gameLoc: "+gameLoc.x+","+gameLoc.y);
+
 			return gameLoc;
 		}
 		
@@ -243,7 +265,7 @@
 				if (col == this.gameSortedBuildingList[i].Location.x
 					&& row == this.gameSortedBuildingList[i].Location.y)
 				{
-					if (this.viewStage.contains(getCurGameObjOf(i)))
+					if (this.contains(getCurGameObjOf(i)))
 					{
 						return this.gameSortedBuildingList[i];
 					}
@@ -270,9 +292,9 @@
 				if (col == this.gameSortedBuildingList[i].Location.x
 					&& row == this.gameSortedBuildingList[i].Location.y)
 				{
-					if (this.viewStage.contains(getCurGameObjOf(i)))
+					if (this.contains(getCurGameObjOf(i)))
 					{
-						this.viewStage.removeChild(getCurGameObjOf(i));
+						this.removeChild(getCurGameObjOf(i));
 					}
 				}
 			}//for
@@ -288,9 +310,9 @@
 			while(TotalBuildings>0)
 			{
 				temp = (this.ViewObject.pop().getCurrentImage());
-				if (this.viewStage.contains(temp))
+				if (this.contains(temp))
 				{
-					this.viewStage.removeChild(temp);
+					this.removeChild(temp);
 				}
 			}
 		}
@@ -376,7 +398,7 @@
 			// Draw tile
 			for (var i:int =0; i < this.TotalTiles; ++i)
 			{
-				this.viewStage.addChild(this.getTileIndexOf(i));
+				this.addChild(this.getTileIndexOf(i));
 			}
 		}
 		
@@ -391,7 +413,7 @@
 				// Draw building
 				for (var i:int =0; i < this.TotalBuildings; ++i)
 				{
-					this.viewStage.addChild(this.getCurGameObjOf(i));
+					this.addChild(this.getCurGameObjOf(i));
 				}
 			}
 			this.need_update = false;

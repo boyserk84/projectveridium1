@@ -31,14 +31,14 @@
 			this.y = y;
 			this.button_type = type;
 			gotoAndStop(this.button_type);
-			this.addEventListener(MouseEvent.CLICK,click_listener);
+			//this.addEventListener(MouseEvent.CLICK,click_listener);
 			trace("Button Create");
 		}
 		
 		/**
 		* event listener for mouse-clicking
 		*/
-		public function click_listener(event:MouseEvent)
+/*		public function click_listener(event:MouseEvent)
 		{
 			trace("Click TriggerButton: " + this.command);
 			if (this.button_type == GameConfig.COMM_ADD)
@@ -48,7 +48,7 @@
 				this.command = GameConfig.COMM_REMOVE;
 			}
 			this.isMouse_Click = true;
-		}
+		}*/
 		
 		/**
 		* return specified command
