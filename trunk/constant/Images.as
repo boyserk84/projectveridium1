@@ -26,6 +26,6 @@
 		
 		public static const WIN_MIL_SUB:int = 1;		// Military sub menu
 		public static const WIN_CIVIL_SUB:int = 2;		// Civilian sub menu
-		public static const MAX_ICON_PER_PAGE:int = 6;
+		public static const MAX_ICON_PER_PAGE:int = 4;
 	}
 }
