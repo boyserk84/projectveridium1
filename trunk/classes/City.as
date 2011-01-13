@@ -6,6 +6,7 @@
 		//The bounds of this City
 		private var bounds:Rectangle;
 		
+		
 		private var buildings:LinkedList;
 		
 		/*
@@ -74,6 +75,16 @@
 			}
 		}
 		
+		/**
+		* Checks if a (x,y) coordinate pair is within the bounds of this city
+		* @param1: The x-coordinate to be checked
+		* @param2: The y-coordinate to be checked
+		**/
+		public function isValid(xIn:int=-1,yIn:int=-1):Boolean
+		{
+			return ((xIn>-1 && yIn>-1)&&(xIn<this.bounds.width && yIn<this.bounds.height));
+		}
+		
 		/*
 		* Returns the list of buildings
 		*/
@@ -81,6 +92,7 @@
 		{
 			return buildings;
 		}
+		
 		
 		
 		
