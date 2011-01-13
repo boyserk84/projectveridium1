@@ -1,12 +1,13 @@
-﻿package
-{
+﻿package classes {
 	
 	public class Player
 	{
 		//The "username" of this player
 		private var username:String;
 		//The actual name of this player
-		private var name:String;
+		private var myName:String;
+		//The city belonging to this player
+		private var city:City;
 		
 		//How much wood this player has on hand
 		private var wood:int;
@@ -32,12 +33,17 @@
 		
 		//How much money this player has on hand, there is no cap on money
 		private var money:int;
+
+		
+		
 		//How much population this player has on hand
 		private var population:int;
 		//The current population capacity this player's housing provides
 		private var populationCap:int;
 		//The extra population capacity this player's towns provide
-		private var extraPopCap:int;
+		private var extraPopulationCap:int;
+		
+		
 		//How many soldiers this player has on hand
 		private var soldiers:int;
 		//How many workers this player has on hand
@@ -46,10 +52,11 @@
 		//The regiment this player has
 		private var regiments:LinkedList;
 		
-		public Player(var nameIn:String="",var usernameIn:String="")
+		public function Player(nameIn:String="",usernameIn:String="")
 		{
 			username=usernameIn;
-			name=nameIn;
+			myName=nameIn;
+			regiments=new LinkedList();
 		}
 		
 		public function get Wood():int
@@ -87,7 +94,7 @@
 		{
 			return money;
 		}
-		
+		/*
 		public function get MoneyCap():int
 		{
 			return moneyCap;
@@ -97,7 +104,7 @@
 		{
 			return extraMoneyCap;
 		}
-		
+		*/
 		public function get Food():int
 		{
 			return food;
@@ -128,6 +135,66 @@
 			return extraPopulationCap;
 		}
 		
+		public function set Iron(value:int)
+		{
+			iron=value;
+		}
+		
+		public function set IronCap(value:int)
+		{
+			ironCap=value;
+		}
+		
+		public function set ExtraIronCap(value:int)
+		{
+			extraIronCap=value;
+		}
+		
+		public function set Money(value:int)
+		{
+			 money=value;
+		}
+		/*
+		public function set MoneyCap(value:int)
+		{
+			 moneyCap=value;
+		}
+		
+		public function set ExtraMoneyCap(value:int)
+		{
+			 extraMoneyCap=value;
+		}
+		*/
+		public function set Food(value:int)
+		{
+			 food=value;
+		}
+		
+		public function set FoodCap(value:int)
+		{
+			 foodCap=value;
+		}
+		
+		public function set ExtraFoodCap(value:int)
+		{
+			 extraFoodCap=value;
+		}
+		
+		public function set Population(value:int)
+		{
+			 population=value;
+		}
+		
+		public function set PopulationCap(value:int)
+		{
+			 populationCap=value;
+		}
+		
+		public function set ExtraPopulationCap(value:int)
+		{
+			 extraPopulationCap=value;
+		}
+		
 		public function get AmountSoldiers():int
 		{
 			return soldiers;
@@ -138,9 +205,20 @@
 			return workers;
 		}
 		
-		public function Regiments():LinkedList
+		public function get Regiments():LinkedList
 		{
 			return regiments;
+		}
+		
+		public function addRegiment(regimentIn:Regiment):void
+		{
+			regiments.Add(regimentIn);
+		}
+		
+		public function removeRegiment(regimentIn:Regiment):Regiment
+		{
+			return regiments.Remove(regimentIn);
+			
 		}
 		
 		
