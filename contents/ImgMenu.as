@@ -44,17 +44,21 @@
 			for (var i:int = 0; i < BuildingType.TOTAL_BUILD_TYPE; ++i)
 			{
 				temp_count = i % Images.MAX_ICON_PER_PAGE;
-				this.icon_children.push(new ImgBuildingIcon(10+(temp_count*72),12,BuildingType.BARRACK + i));
+				//trace("Location of Icon: " + temp_count);
+				this.icon_children.push(new ImgBuildingIcon(60+(temp_count*92),12,BuildingType.BARRACK + i));
 				this.icon_children[i].setInvisible();
+				this.addChild(icon_children[i]);
 				
 			}
 		
 			// Display icons on 1st page
+			setRegionVisible(0);
+			/*
 			for (var i:int = 0; i < Images.MAX_ICON_PER_PAGE; ++i)
 			{
-				this.addChild(this.icon_children[i]);
 				this.icon_children[i].setVisible();
 			}
+			*/
 		}
 		
 		/**
@@ -97,20 +101,25 @@
 		{
 			trace("Set Region");
 			setAllIconsInvisible();
-			var start:int, max:int;
+			var init_s:int, max:int;
+			
 			if (page > 0)
 			{
-				start = page*Images.MAX_ICON_PER_PAGE;
+				init_s = page*Images.MAX_ICON_PER_PAGE;
 				max = page*Images.MAX_ICON_PER_PAGE*2;
 			} else {
-				start = 0;
+				init_s= 0;
 				max = Images.MAX_ICON_PER_PAGE;
 			}
 			
-			for (var i:int = start; i < max; ++i)
+			if (max < BuildingType.TOTAL_BUILD_TYPE)
 			{
-				trace("Icon: " + i);
-				this.icon_children[i].setVisible();
+				for (var i:int = init_s; i < max; ++i)
+				{
+					trace("Icon: " + i);
+					this.icon_children[i].setVisible();
+					
+				}
 			}
 		}
 		

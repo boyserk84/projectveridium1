@@ -47,6 +47,11 @@
 			return point;
 		}
 		
+		public function get Dimension():Point
+		{
+			return new Point(dimension.width, dimension.height);
+		}
+		
 		/**
 		* isSingleDim
 		* Checking if the building is only occupying one unit

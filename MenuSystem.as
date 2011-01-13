@@ -28,6 +28,9 @@
 		private var index_removeButton:int;
 		private var index_changeButton:int;
 		private var index_nextButton:int;
+		private var index_prevButton:int;
+		
+		private var current_page:int = 0;
 		
 		private var ref_stage:Stage;
 		
@@ -104,7 +107,10 @@
 			this.children.push(all_icons);
 			index_nextButton = 3;
 			this.children.push(new TriggerButton(440,30, GameConfig.COMM_NEXT));
+			index_prevButton = 4;
+			this.children.push(new TriggerButton(15, 30, GameConfig.COMM_PREV));
 			addExtFuncTo(GameConfig.COMM_NEXT,MouseEvent.CLICK, nextPage );
+			addExtFuncTo(GameConfig.COMM_PREV,MouseEvent.CLICK, prevPage );
 		}
 		
 		/**
@@ -112,7 +118,17 @@
 		*/
 		private function nextPage(event:MouseEvent)
 		{
-			all_icons.nextPage(1);
+			trace("nextPage");
+			all_icons.nextPage(++current_page);
+		}
+		
+		/**
+		* Listener class for pagination (previous)
+		*/
+		private function prevPage(event:MouseEvent)
+		{
+			trace("Prev");
+			all_icons.nextPage(--current_page);
 		}
 		
 		/**
@@ -167,6 +183,9 @@
 					break;
 				case GameConfig.COMM_NEXT:
 					children[index_nextButton].addEventListener(add_event,func);
+					break;
+				case GameConfig.COMM_PREV:
+					children[index_prevButton].addEventListener(add_event,func);
 					break;
 				default:
 					// do something
