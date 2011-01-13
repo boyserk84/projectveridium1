@@ -20,6 +20,8 @@
 		
 		/** Farm **/
 		
-	
+		/** MENU SYSTEM **/
+		public static const WIN_WORLDMENU:int = 0;
+		public static const WIN_CITYMENU:int = 1;
 	}
 }

@@ -12,7 +12,7 @@
 		public static const SCREEN_HEIGHT:int = 440;
 		*/
 		public static const TILE_INIT_X:int = 200;
-		public static const TILE_INIT_Y:int = 0;
+		public static const TILE_INIT_Y:int = 50;
 		/*
 		public static const TILE_INIT_X:int = 260;
 		public static const TILE_INIT_Y:int = 100;
