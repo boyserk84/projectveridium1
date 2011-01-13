@@ -7,6 +7,9 @@
 	public class GameConfig {
 		public static const SCREEN_WIDTH:int = 471;
 		public static const SCREEN_HEIGHT:int = 343;
+		
+		public static const WORLD_INIT_X:int=0;
+		public static const WORLD_INIT_Y:int=0;
 
 /*		public static const SCREEN_WIDTH:int = 550;
 		public static const SCREEN_HEIGHT:int = 440;
@@ -36,6 +39,12 @@
 		public static const COMM_SELECT = 6;
 		public static const COMM_NEXT = 4;
 		public static const COMM_PREV = 5;
+		
+		//Frame for World Map
+		public static const WORLD_FRAME=2;
+		
+		//Frame for City Map
+		public static const CITY_FRAME=1;
 
 		
 	

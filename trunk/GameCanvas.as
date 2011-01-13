@@ -46,6 +46,7 @@
 			this.input = new IOHandler(this.stage.x,this.stage.y,this.stage.width, this.stage.height);
 			this.input.addEventListener(MouseEvent.CLICK,cityMouseClick);
 			this.input.addEventListener(MouseEvent.MOUSE_MOVE,cityMouseMove);
+
 //			this.command = GameConfig.COMM_ADD;
 			
 			/*
@@ -58,10 +59,12 @@
 			
 				//attach mouse cursor
 			mouse=new MouseCurs();
+			
 
 			this.menuBar.addExtFuncTo(GameConfig.COMM_ADD, MouseEvent.CLICK, addButtonClick);
 			this.menuBar.addExtFuncTo(GameConfig.COMM_REMOVE,MouseEvent.CLICK, removeButtonClick);
 			this.menuBar.addExtFuncTo(GameConfig.CHANGE_WORLD, MouseEvent.CLICK, worldButtonClick);
+			
 			
 			
 			//this.stage.addChild(curr.drawIndex(0));
@@ -107,7 +110,7 @@
 		*/
 		public function cityMouseMove(event:MouseEvent):void
 		{
-
+			
 			//convert mouse coordinates from isometric back to normal
 			var ymouse = ((2*(event.stageY-GameConfig.TILE_INIT_Y)-(event.stageX-GameConfig.TILE_INIT_X))/2);
 			var xmouse = ((event.stageX-GameConfig.TILE_INIT_X)+ymouse);
@@ -119,10 +122,12 @@
 			if (mcity.isValid(xmouse,ymouse))
 			{
 				trace("Move Coords: "+xmouse+" , "+ymouse);
-				this.mouse.x = ((xmouse-ymouse)*GameConfig.TILE_HEIGHT)+GameConfig.TILE_INIT_X;
-				this.mouse.y = ((xmouse+ymouse)*GameConfig.TILE_HEIGHT/2)+GameConfig.TILE_INIT_Y;
+				this.mouse.x = (((xmouse-ymouse)*GameConfig.TILE_HEIGHT)+GameConfig.TILE_INIT_X);
+				this.mouse.y = (((xmouse+ymouse)*GameConfig.TILE_HEIGHT/2)+GameConfig.TILE_INIT_Y);
 			}
+			
 		}
+		
 		
 		/**
 		* Add button event listener, sets the command to be add a building
@@ -151,7 +156,9 @@
 		public function worldButtonClick(event:MouseEvent):void
 		{
 			//changes the frame to world map view
-			trace("I'm doing something!");
+			trace("World button clicked!");
+			MovieClip(parent).gotoAndStop(GameConfig.WORLD_FRAME);
+			
 		}
 		
 		

@@ -16,6 +16,8 @@
 		//private var gameBuildingList:LinkedList;				// Actual building game object
 		private var gameSortedBuildingList:Array;				// Sorted Building List
 		
+		private var offset:Point;
+		
 		// Internal Structure
 		private var gameViewObjects:Vector.<SpriteSheet>;				// All game objects for view
 		private var gameViewPanel:Vector.<SpriteSheet>;					// All panel/admin objects in the game
@@ -37,12 +39,13 @@
 		{
 			this.gameViewPanel = new Vector.<SpriteSheet>;
 			this.gameTileObjects = new Vector.<SpriteSheet>;
-			
+			offset=new Point(0,0);
 			//this = ref_stage;
 			this.total_x_tile = new_city.Bounds.width;
 			this.total_y_tile = new_city.Bounds.height;
 			this.createIsoTileView();
 			this.need_update = true;
+
 
 		}
 		
@@ -72,7 +75,7 @@
 		private function isometricTrans_X(col:int, row:int):int
 		{
 			
-			return GameConfig.TILE_INIT_X + GameConfig.TILE_WIDTH*col - row*GameConfig.TILE_WIDTH/2 - col*GameConfig.TILE_WIDTH/2;
+			return (GameConfig.TILE_INIT_X + GameConfig.TILE_WIDTH*col - row*GameConfig.TILE_WIDTH/2 - col*GameConfig.TILE_WIDTH/2)+offset.x;
 		}
 		
 		/**
@@ -81,11 +84,19 @@
 		*/
 		private function isometricTrans_Y(col:int, row:int):int
 		{
-			return GameConfig.TILE_INIT_Y + GameConfig.TILE_HEIGHT*row - 
-						row*GameConfig.TILE_HEIGHT/2 + col*GameConfig.TILE_HEIGHT/2;
+			return(GameConfig.TILE_INIT_Y + GameConfig.TILE_HEIGHT*row - 
+						row*GameConfig.TILE_HEIGHT/2 + col*GameConfig.TILE_HEIGHT/2)+offset.y;
 		}
 		
+		public function get Offset():Point
+		{
+			return offset;
+		}
 		
+		public function updateOffset(changeIn:Point):void
+		{
+			offset.add(changeIn);
+		}
 		/**
 		* Comparator: compareTileValue using for sorting display
 		* @param a building object

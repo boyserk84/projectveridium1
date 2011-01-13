@@ -56,6 +56,11 @@
 				this.children.push(new ImgBuilding2(this.x,this.y));
 			}
 			
+			if(this.object_Type==WorldType.WORLD_MAP)
+			{
+//				this.children.push(new WorldMap());
+			}
+			
 			//trace(this.children.length);
 		}
 		

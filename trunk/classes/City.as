@@ -25,7 +25,7 @@
 			requirements=new Array(numberOfTypes);
 			for(var i:int=0;i<=numberOfTypes;++i)
 			{
-				requirements[i]=0;
+				requirements[i]=false;
 			}
 		}
 		
@@ -60,7 +60,7 @@
 		*/
 		public function addBuilding(buildingIn:Building=null):void
 		{
-			requirements[buildingIn.Type]=1;
+			requirements[buildingIn.Type]=true;
 			buildings.Add(buildingIn);
 			trace("Length of Buildings:" + buildings.Length);
 		}
