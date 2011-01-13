@@ -57,13 +57,16 @@
 			
 			//this.stage.addChild(curr.drawIndex(0));
 			mcity=new City(0,0,100,100);
-			mbuilding=new Building(new Rectangle(1,0,1,1),1);
-			mbuilding2=new Building(new Rectangle(0,0,1,1),1);
+			mbuilding=new Building(new Rectangle(1,0,1,1),BuildingType.BARRACK);
+			mbuilding2=new Building(new Rectangle(0,0,1,1),BuildingType.BARRACK);
 			var mbuilding3=new Building(new Rectangle(3,3,2,2),BuildingType.FARM);
+			
+
 			
 			mcity.addBuilding(mbuilding);
 			mcity.addBuilding(mbuilding2);
 			mcity.addBuilding(mbuilding3);
+			
 			
 			
 			// update Building List everytime add or remove in the game object occurs
