@@ -22,19 +22,25 @@
 		private var gameTileObjects:Vector.<SpriteSheet>;
 		
 		// Holding actual graphics
-		private var viewStage:GameCanvas;			// Stage management
+		//private var viewStage:GameCanvas;			// Stage management
 		
 		private var need_update:Boolean;
+		
+		private var total_x_tile:int;
+		private var total_y_tile:int;
+		
 		/**
 		* View Constructor
 		* @param ref_stage: stage of GameCanvas
 		*/
-		public function View(ref_stage:GameCanvas)
+		public function View(new_city:City)
 		{
 			this.gameViewPanel = new Vector.<SpriteSheet>;
 			this.gameTileObjects = new Vector.<SpriteSheet>;
 			
 			//this = ref_stage;
+			this.total_x_tile = new_city.Bounds.width;
+			this.total_y_tile = new_city.Bounds.height;
 			this.createIsoTileView();
 			this.need_update = true;
 
@@ -45,9 +51,9 @@
 		*/
 		private function createIsoTileView()
 		{
-			for (var row:int =0; row < 5; ++row)
+			for (var row:int =0; row < this.total_x_tile; ++row)
 			{
-				for (var col:int = 0; col < 5; ++ col)
+				for (var col:int = 0; col < this.total_y_tile; ++ col)
 				{
 					this.gameTileObjects.push
 					(new SpriteSheet(BuildingType.TILE,
@@ -151,7 +157,7 @@
 			if (this.gameSortedBuildingList !=null )
 			{
 				deleteGameBuildings();
-				trace("Create");
+				//trace("Create");
 			}
 			
 			this.gameSortedBuildingList = new Array();
@@ -160,7 +166,6 @@
 			// Refresh view contents
 			if (this.ViewObject!=null)
 			{
-				// NEED TO CHECK FOR DUPLICATE
 				deleteViewOfBuildings();
 			}
 			

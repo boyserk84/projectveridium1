@@ -39,7 +39,7 @@
 		{
 			trace("loadContents"); 
 			
-			this.theView = new View(this);			
+			//this.theView = new View(this);			
 			this.input = new IOHandler(this.stage.x,this.stage.y,GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
 			this.input.addEventListener(MouseEvent.CLICK,cityMouseClick);
 			this.input.addEventListener(MouseEvent.MOUSE_MOVE,cityMouseMove);
@@ -56,19 +56,17 @@
 			
 			
 			//this.stage.addChild(curr.drawIndex(0));
-			mcity=new City(0,0,100,100);
-			mbuilding=new Building(new Rectangle(1,0,1,1),BuildingType.BARRACK);
-			mbuilding2=new Building(new Rectangle(0,0,1,1),BuildingType.BARRACK);
+			mcity=new City(0,0,5,5);
+			mbuilding=new Building(new Rectangle(1,0,1,1),1);
+			mbuilding2=new Building(new Rectangle(0,0,1,1),1);
 			var mbuilding3=new Building(new Rectangle(3,3,2,2),BuildingType.FARM);
-			
-
 			
 			mcity.addBuilding(mbuilding);
 			mcity.addBuilding(mbuilding2);
 			mcity.addBuilding(mbuilding3);
 			
 			
-			
+			this.theView = new View(mcity);
 			// update Building List everytime add or remove in the game object occurs
 			this.theView.addBuildingList(mcity.Buildings);
 			
@@ -83,7 +81,7 @@
 			//this.stage.addChild(this.removeButton);
 			this.addChild(theView);
 			this.addChild(mouse);						
-			this.addChild(this.input);
+			this.addChild(this.input);	// IO Input
 			this.addChild(this.addButton);
 			this.addChild(this.removeButton);
 			this.addChild(this.worldButton);
@@ -92,7 +90,10 @@
 			
 		}
 		
-		
+		/**
+		* cityMouseMove: Locate cursor on the tile
+		* @param: The mouse event for move.
+		*/
 		public function cityMouseMove(event:MouseEvent):void
 		{
 
@@ -102,10 +103,14 @@
 			//find on which tile mouse is
 			ymouse = Math.round(ymouse/GameConfig.TILE_HEIGHT);
 			xmouse = Math.round(xmouse/GameConfig.TILE_HEIGHT)-1;
-			trace("Move Coords: "+xmouse+" , "+ymouse);
-			this.mouse.x = ((xmouse-ymouse)*GameConfig.TILE_HEIGHT)+GameConfig.TILE_INIT_X;
-			this.mouse.y = ((xmouse+ymouse)*GameConfig.TILE_HEIGHT/2)+GameConfig.TILE_INIT_Y;
-
+			
+			// If valid tile, then display cursor
+			if (mcity.isValid(xmouse,ymouse))
+			{
+				trace("Move Coords: "+xmouse+" , "+ymouse);
+				this.mouse.x = ((xmouse-ymouse)*GameConfig.TILE_HEIGHT)+GameConfig.TILE_INIT_X;
+				this.mouse.y = ((xmouse+ymouse)*GameConfig.TILE_HEIGHT/2)+GameConfig.TILE_INIT_Y;
+			}
 		}
 		
 		/**
@@ -178,14 +183,14 @@
 					// Translate mouse position to game position
 
 					
-					if (gamePos.x> -1 && gamePos.y > -1)
+					if (mcity.isValid(gamePos.x, gamePos.y))
 					{
 						// add building to the city
 						mcity.addBuilding(new Building(new Rectangle(gamePos.x,gamePos.y,1,1),1));
 						// (2) Add new building list to View
 						theView.addBuildingList(mcity.Buildings);
 						
-					}
+					}//if 
 				}
 			} else 
 			if (this.command == GameConfig.COMM_SELECT)
@@ -203,6 +208,7 @@
 			theView.Update();
 			/*
 			
+			
 			// Spike code for button
 			if (addButton.isClick())
 			{
@@ -217,20 +223,7 @@
 			this.addButton.setNonClick();
 			this.removeButton.setNonClick();
 			this.input.setNonClick();*/
-		
-		}
-		
-		/**
-		* eventListner: I/O input and event listener.
-		*/
-		public function mouseEventListener(event:MouseEvent):void
-		{
-			//var building:Building=new Building(new Rectangle(event.localX,event.localY,10,10));
-			//mcity.addBuilding(building);
-			//var buildingimage:TestSymbol=new TestSymbol();
-			//buildingimage.x=event.localX;
-			//buildingimage.y=event.localY;
-			//this.addChild(buildingimage);
+			
 		}
 		
 		/**
