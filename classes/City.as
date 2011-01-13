@@ -93,6 +93,14 @@
 			return buildings;
 		}
 		
+		/*
+		* Returns the bounds of this city's rectangle
+		*/
+		public function get Bounds():Rectangle
+		{
+			return bounds;
+		}
+		
 		
 		
 		
