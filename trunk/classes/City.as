@@ -6,8 +6,11 @@
 		//The bounds of this City
 		private var bounds:Rectangle;
 		
-		
+		//The buildings currently in this city
 		private var buildings:LinkedList;
+		
+		//The buildings this city has for requirement issues
+		private var requirements:Array;
 		
 		/*
 		* Constructor creates a new city with a specified bounds
@@ -17,6 +20,7 @@
 		{
 			bounds=new Rectangle(xIn,yIn,widthIn,heightIn);
 			buildings=new LinkedList();
+			requirements=new Array(14);
 		}
 		
 		/*
@@ -50,7 +54,7 @@
 		*/
 		public function addBuilding(buildingIn:Building=null):void
 		{
-			
+			requirements[buildingIn.Type]=1;
 			buildings.Add(buildingIn);
 			trace("Length of Buildings:" + buildings.Length);
 		}
@@ -101,6 +105,13 @@
 			return bounds;
 		}
 		
+		/*
+		* Returns the requirements array of this city
+		*/
+		public function get Requirements():Array
+		{
+			return requirements;
+		}
 		
 		
 		
