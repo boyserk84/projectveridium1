@@ -55,7 +55,7 @@
 			this.worldButton=new TriggerButton(400,320, GameConfig.CHANGE_WORLD);
 			*/
 			
-			this.menuBar = new MenuSystem(0,320,Images.WIN_CITYMENU);
+			this.menuBar = new MenuSystem(0,500,Images.WIN_CITYMENU);
 			
 				//attach mouse cursor
 			mouse=new MouseCurs();
