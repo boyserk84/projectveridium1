@@ -14,7 +14,7 @@
 					iron=0;
 					money=0;
 					population=0;
-					requirement=0;
+					requirement=BuildingType.TOWN_SQUARE;
 				break;
 				
 				case BuildingType.ARMORY:
@@ -121,6 +121,57 @@
 					population=0;
 					requirement=BuildingType.STABLES;
 				break;
+				
+				case BuildingType.HOUSE:
+					wood=10;
+					iron=0;
+					money=0;
+					population=0;
+					requirement=BuildingType.TOWN_SQUARE;
+				break;
+				
+				case BuildingType.FARM:
+					wood=10;
+					iron=0;
+					money=0;
+					population=0;
+					requirement=BuildingType.TOWN_SQUARE;
+				break;
+				case BuildingType.SAWMILL:
+					wood=10;
+					iron=0;
+					money=0;
+					population=0;
+					requirement=BuildingType.TOWN_SQUARE;
+				break;
+				case BuildingType.BLACKSMITH:
+					wood=10;
+					iron=0;
+					money=0;
+					population=0;
+					requirement=BuildingType.TOWN_SQUARE;
+				break;
+				case BuildingType.WAREHOUSE:
+					wood=10;
+					iron=0;
+					money=0;
+					population=0;
+					requirement=BuildingType.FARM;
+				break;
+				case BuildingType.STOCKPILE:
+					wood=10;
+					iron=0;
+					money=0;
+					population=0;
+					requirement=BuildingType.WAREHOUSE;
+				break;
+				case BuildingType.MARKET:
+					wood=10;
+					iron=0;
+					money=0;
+					population=0;
+					requirement=BuildingType.WAREHOUSE;
+				break; 
 				
 				default:
 					wood=0;

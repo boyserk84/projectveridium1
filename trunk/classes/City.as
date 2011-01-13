@@ -12,6 +12,8 @@
 		//The buildings this city has for requirement issues
 		private var requirements:Array;
 		
+		private const numberOfTypes:int=22;
+		
 		/*
 		* Constructor creates a new city with a specified bounds
 		* @param1: bounds - bounds of the rectangle by location and height and width
@@ -20,7 +22,11 @@
 		{
 			bounds=new Rectangle(xIn,yIn,widthIn,heightIn);
 			buildings=new LinkedList();
-			requirements=new Array(14);
+			requirements=new Array(numberOfTypes);
+			for(var i:int=0;i<=numberOfTypes;++i)
+			{
+				requirements[i]=0;
+			}
 		}
 		
 		/*
