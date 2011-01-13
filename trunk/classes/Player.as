@@ -135,6 +135,15 @@
 			return extraPopulationCap;
 		}
 		
+		public function set Wood(value:int)
+		{
+			wood = value;
+		}
+		public function set WoodCap(value:int)
+		{
+			woodCap = value;
+		}
+		
 		public function set Iron(value:int)
 		{
 			iron=value;
