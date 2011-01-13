@@ -14,8 +14,8 @@
 /*		public static const SCREEN_WIDTH:int = 550;
 		public static const SCREEN_HEIGHT:int = 440;
 		*/
-		public static const TILE_INIT_X:int = 250;
-		public static const TILE_INIT_Y:int = 50;
+		public static const TILE_INIT_X:int = 350;
+		public static const TILE_INIT_Y:int = 60;
 		/*
 		public static const TILE_INIT_X:int = 260;
 		public static const TILE_INIT_Y:int = 100;
