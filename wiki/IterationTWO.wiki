@@ -22,7 +22,7 @@ What "gameCanvas" is just a basic controller for "city" and "worldmap" canvas. E
 || Tasks || Timespent || Description ||
 || Task A || 3 hours || (View) Translate (X,Y) of mouseclicking to nth tile ||
 || Task B || 5 hours || (View) Add a building into a city by mouse clicking ||
-|| Task C || || Prevent adding a building into an occupied tile when click ||
+|| Task C || 1 hours || Prevent adding a building into an occupied tile when click ||
 || Task D || 3 hours || (View) Remove a building from a city by mouse clicking ||
 || Task E || || Highlight selected tile when mouse hover over or click ||
 || Task F || 2 hours || Implement a complete event handler/MOUSE I/O listener ||
