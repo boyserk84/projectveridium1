@@ -34,6 +34,8 @@
 		public static const WAY_POINT:int=13;
 		public static const AMBUSH:int=14;
 		
+		public static const TOTAL_MIL_TYPE:int = 13;
+		
 		/**
 		* Civilian building
 		*/
@@ -44,6 +46,10 @@
 		public static const STOCKPILE:int=19;
 		public static const MARKET:int=20;
 		public static const HOUSE:int=21;
+		
+		public static const TOTAL_CIVIL_TYPE:int = 8;
+		
+		public static const TOTAL_BUILD_TYPE:int = 22;
 		
 		
 		

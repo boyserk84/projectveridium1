@@ -20,9 +20,12 @@
 		private var theView:View;			// View
 		private var input:IOHandler;		// IO Handler (receiving input)
 		
+		/*
 		private var addButton:TriggerButton;
 		private var removeButton:TriggerButton;
 		private var worldButton:TriggerButton;
+		*/
+		private var menuBar:MenuSystem;
 		
 		
 		private var command:int;			// Current command of the mouse-click
@@ -39,24 +42,30 @@
 		{
 			trace("loadContents"); 
 			
-			//this.theView = new View(this);			
-			this.input = new IOHandler(this.stage.x,this.stage.y,GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
+			//this.theView = new View(this);
+			this.input = new IOHandler(this.stage.x,this.stage.y,this.stage.width, this.stage.height);
 			this.input.addEventListener(MouseEvent.CLICK,cityMouseClick);
 			this.input.addEventListener(MouseEvent.MOUSE_MOVE,cityMouseMove);
 //			this.command = GameConfig.COMM_ADD;
+			
+			/*
 			this.addButton = new TriggerButton(200, 320, GameConfig.COMM_ADD);
 			this.removeButton = new TriggerButton(300,320, GameConfig.COMM_REMOVE);
 			this.worldButton=new TriggerButton(400,320, GameConfig.CHANGE_WORLD);
+			*/
+			
+			this.menuBar = new MenuSystem(0,320,Images.WIN_CITYMENU);
+			
 				//attach mouse cursor
 			mouse=new MouseCurs();
 
-			addButton.addEventListener(MouseEvent.CLICK,addButtonClick);
-			removeButton.addEventListener(MouseEvent.CLICK,removeButtonClick);
-			worldButton.addEventListener(MouseEvent.CLICK,worldButtonClick);
+			this.menuBar.addExtFuncTo(GameConfig.COMM_ADD, MouseEvent.CLICK, addButtonClick);
+			this.menuBar.addExtFuncTo(GameConfig.COMM_REMOVE,MouseEvent.CLICK, removeButtonClick);
+			this.menuBar.addExtFuncTo(GameConfig.CHANGE_WORLD, MouseEvent.CLICK, worldButtonClick);
 			
 			
 			//this.stage.addChild(curr.drawIndex(0));
-			mcity=new City(0,0,5,5);
+			mcity=new City(0,0,8,8);
 			mbuilding=new Building(new Rectangle(1,0,1,1),1);
 			mbuilding2=new Building(new Rectangle(0,0,1,1),1);
 			var mbuilding3=new Building(new Rectangle(3,3,2,2),BuildingType.FARM);
@@ -82,9 +91,11 @@
 			this.addChild(theView);
 			this.addChild(mouse);						
 			this.addChild(this.input);	// IO Input
-			this.addChild(this.addButton);
-			this.addChild(this.removeButton);
-			this.addChild(this.worldButton);
+			
+			this.addChild(this.menuBar);	// Add Menu
+			//this.addChild(this.addButton);
+			//this.addChild(this.removeButton);
+			//this.addChild(this.worldButton);
 
 			//this.stage.addChild(/* Add entity here */);
 			

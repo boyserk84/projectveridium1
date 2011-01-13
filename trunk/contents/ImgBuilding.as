@@ -3,6 +3,7 @@
 	import flash.display.Sprite; 
 	import flash.display.MovieClip;
 	import flash.display.Stage;
+	import constant.*;
 	
 	/**
 	* ImgBuilding
@@ -14,6 +15,7 @@
 		{
 			this.x = x;
 			this.y = y;
+			trace(BuildingType.BARRACK);
 		}
 		
 		public function get X()

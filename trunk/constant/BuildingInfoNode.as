@@ -39,7 +39,7 @@
 			return population;
 		}
 		
-		public functio get Requirement():int
+		public function get Requirement()
 		{
 			return requirement;
 		}
