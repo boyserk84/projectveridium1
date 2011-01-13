@@ -17,5 +17,5 @@
 || Task A || || Finalize game contents (Design) ||
 || Task B || 6 hours || Advanced Menu System: Pagination of list of buildings ||
 || Task C || 3 hours || Advanced Menu System: Click at the building on the menu ||
-|| Task D || || Advanced Menu System: Prevent clicking if not enough resources ||
+|| Task D || 1.5 hours || Advanced Menu System: Prevent clicking if not enough resources ||
 || Task E || || Advanced Menu System: Switch between menu ||
