@@ -11,7 +11,7 @@
 /*		public static const SCREEN_WIDTH:int = 550;
 		public static const SCREEN_HEIGHT:int = 440;
 		*/
-		public static const TILE_INIT_X:int = 200;
+		public static const TILE_INIT_X:int = 250;
 		public static const TILE_INIT_Y:int = 50;
 		/*
 		public static const TILE_INIT_X:int = 260;
@@ -33,7 +33,9 @@
 		public static const COMM_ADD = 1;
 		public static const COMM_REMOVE = 2;
 		public static const CHANGE_WORLD = 3;
-		public static const COMM_SELECT = 4;
+		public static const COMM_SELECT = 6;
+		public static const COMM_NEXT = 4;
+		public static const COMM_PREV = 5;
 
 		
 	

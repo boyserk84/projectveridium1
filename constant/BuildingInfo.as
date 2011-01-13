@@ -5,7 +5,7 @@
 	{
 		public static function getInfo(buildingType:int):BuildingInfoNode
 		{
-			private var wood,iron,money,population;
+			var wood:int,iron:int,money:int,population:int, requirement:int;
 			
 			switch(buildingType)
 			{
