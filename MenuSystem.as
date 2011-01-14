@@ -146,12 +146,15 @@
 		*/
 		private function nextPage(event:MouseEvent)
 		{
+			//trace("Curr n page " + current_page);
 			//trace("nextPage");
 			if (!isValidNextPage(current_page))
 			{
+				//trace("decrement");
 				--current_page;
 			}
 			all_icons.nextPage(++current_page);
+			//trace("Curr n page now is " + current_page);
 		}
 		
 		/**
@@ -170,8 +173,13 @@
 		private function prevPage(event:MouseEvent)
 		{
 			//trace("Prev");
-			if (current_page < 0) current_page = 0;
-			all_icons.nextPage(current_page--);
+			//trace("Curr page " + current_page);
+			if (current_page <= 0) 
+			{
+				current_page = 1;
+			}
+			all_icons.prevPage(--current_page);
+			//trace("Curr prev page is now " + current_page);
 		}
 		
 		/**

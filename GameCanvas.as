@@ -230,18 +230,24 @@
 					if (mcity.isValid(gamePos.x, gamePos.y))
 					{
 						
-						// (1) add building to the city
-						mcity.addBuilding(new Building(new Rectangle(gamePos.x,gamePos.y,1,1),this.select_building));
+						// (1) Check resources if enough
+						if (BuildingManager.hasResourceToBuild(this.select_building,profile.Wood, profile.Iron, profile.Money, profile.Population))
+						{
+							// (2) add building to the city
+							mcity.addBuilding(new Building(new Rectangle(gamePos.x,gamePos.y,1,1),this.select_building));
+							
+							// (3) Add new building list to View
+							theView.addBuildingList(mcity.Buildings);
+							
+							// (4) Deduct resources
+							profile.changeWood(-BuildingInfo.getInfo(this.select_building).Wood);
+							profile.changeMoney(-BuildingInfo.getInfo(this.select_building).Money);
+							profile.changeIron(-BuildingInfo.getInfo(this.select_building).Iron);
+							profile.changePop(-BuildingInfo.getInfo(this.select_building).Population);
+							//profile.changeFood(BuildingInfo.getInfo(this.select_building));
+						}
 						
-						// (2) Add new building list to View
-						theView.addBuildingList(mcity.Buildings);
 						
-						// (3) Deduct resources
-						profile.changeWood(-BuildingInfo.getInfo(this.select_building).Wood);
-						profile.changeMoney(-BuildingInfo.getInfo(this.select_building).Money);
-						profile.changeIron(-BuildingInfo.getInfo(this.select_building).Iron);
-						profile.changePop(-BuildingInfo.getInfo(this.select_building).Population);
-						//profile.changeFood(BuildingInfo.getInfo(this.select_building));
 						
 						// (4) Update Menu Bar
 						menuBar.updateCityReq(BuildingManager.determineBuildingList(mcity));
