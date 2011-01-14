@@ -144,7 +144,7 @@
 				// Display
 				for (var i:int = init_s; i < max; ++i)
 				{
-					trace("Icon: " + i);
+					//trace("Icon: " + i);
 					
 					// Determine what can be displayed
 					if (this.icon_shown!=null)
