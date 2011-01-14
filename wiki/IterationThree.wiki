@@ -24,3 +24,4 @@
 || Task G || || Switch between category of the building ||
 || Task H || || Show buildings corresponding to each type || 
 || Task I || || Cancel button (Switch to select mode) ||
+|| Task J || || Stat Pop Up Windows (display pop. allocation ||
