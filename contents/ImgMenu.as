@@ -1,6 +1,7 @@
 ﻿package contents{
 	import flash.display.Bitmap;
-	import flash.display.Sprite; 
+	import flash.display.Sprite;
+	import flash.events.MouseEvent;
 	import flash.display.MovieClip;
 	import flash.display.Stage;
 	import constant.*;
@@ -18,20 +19,32 @@
 	{
 		private var icon_children:Array;			// Icon represents each building
 		
+		private var icon_shown:Array = null;				// which icon can be shown
 		/**
 		* Constructor
 		* @param x, y (X,Y) position on the screen
 		* @param type Type of Menu (Frame)
+		* @param type Requirement for building city;
 		*/
-		public function ImgMenu(x:Number, y:Number)
+		public function ImgMenu(x:Number, y:Number, cityreq:Array)
 		{
 			this.x = x;
 			this.y = y;
 			gotoAndStop(Images.WIN_MIL_SUB);
 			icon_children = new Array();
+			this.icon_shown = cityreq;
 			constructMIL_SUB();
 			
 			trace("Create a sub-menu");
+		}
+		
+		/**
+		* Update list of building to be shown
+		*/
+		public function updateCityReq(arr:Array)
+		{
+			this.icon_shown = arr;
+			setRegionVisible(0);
 		}
 		
 		/**
@@ -40,25 +53,19 @@
 		private function constructMIL_SUB():void
 		{	
 			var temp_count:int = 0;
-			// Construct icon of each building
+			
+			// Construct icon of each building (all type)
 			for (var i:int = 0; i < BuildingType.TOTAL_BUILD_TYPE; ++i)
 			{
 				temp_count = i % Images.MAX_ICON_PER_PAGE;
-				//trace("Location of Icon: " + temp_count);
-				this.icon_children.push(new ImgBuildingIcon(60+(temp_count*92),12,BuildingType.BARRACK + i));
+				this.icon_children.push(new ImgBuildingIcon(60+(temp_count*92),12,BuildingType.TOWN_SQUARE + i));
 				this.icon_children[i].setInvisible();
 				this.addChild(icon_children[i]);
-				
 			}
+			
 		
 			// Display icons on 1st page
 			setRegionVisible(0);
-			/*
-			for (var i:int = 0; i < Images.MAX_ICON_PER_PAGE; ++i)
-			{
-				this.icon_children[i].setVisible();
-			}
-			*/
 		}
 		
 		/**
@@ -69,6 +76,7 @@
 			for (var i:int = 0; i < BuildingType.TOTAL_BUILD_TYPE; ++i)
 			{
 				this.icon_children[i].setInvisible();
+				this.icon_children[i].alpha = GameConfig.OPAQUE;
 			}
 		}
 		
@@ -79,7 +87,6 @@
 		*/
 		public function nextPage(page:int):void
 		{
-			
 			setRegionVisible(page);
 		}
 		
@@ -94,34 +101,65 @@
 		}
 		
 		/**
+		* find a maximum index value at a specific page
+		* @param page: Specific page
+		* @return maximum index value
+		*/
+		private function findMaxIndexAtPage(page:int):int
+		{
+			var max:int = page*Images.MAX_ICON_PER_PAGE*2;
+				
+			// Upper bound check
+			if (max >= BuildingType.TOTAL_BUILD_TYPE)
+			{
+				max = BuildingType.TOTAL_BUILD_TYPE -1;
+			}
+			return max;
+		}
+		
+		/**
 		* (Pagination)
 		* set particular set of icons to be displayed
 		*/
 		private function setRegionVisible(page:int):void
 		{
 			trace("Set Region");
-			setAllIconsInvisible();
+			
 			var init_s:int, max:int;
 			
 			if (page > 0)
 			{
 				init_s = page*Images.MAX_ICON_PER_PAGE;
-				max = page*Images.MAX_ICON_PER_PAGE*2;
-			} else {
+				max = findMaxIndexAtPage(page);
+				//trace("start page" + init_s + " end page " + max);
+			} else { // Lower bound check
 				init_s= 0;
 				max = Images.MAX_ICON_PER_PAGE;
 			}
-			
-			if (max < BuildingType.TOTAL_BUILD_TYPE)
+
+			if (init_s < max)
 			{
+				setAllIconsInvisible();
+				
+				// Display
 				for (var i:int = init_s; i < max; ++i)
 				{
 					trace("Icon: " + i);
-					this.icon_children[i].setVisible();
 					
-				}
+					// Determine what can be displayed
+					if (this.icon_shown!=null)
+					{
+						this.icon_children[i].setVisible();
+						
+						if (!icon_shown[i])	// if not meeting requirement
+						{
+							this.icon_children[i].alpha = GameConfig.HALF_TRANSPARENT;
+						}
+					}
+				}//for
 			}
 		}
+		
 		
 		/**
 		* Add external function (listener) to all children (buttons)

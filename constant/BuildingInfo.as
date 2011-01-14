@@ -1,12 +1,13 @@
 ﻿package constant{
 	
+	
 	//A function to has a building type into its requirements
 	public class BuildingInfo
 	{
 		public static function getInfo(buildingType:int):BuildingInfoNode
 		{
 			var wood:int,iron:int,money:int,population:int, requirement:int;
-			
+			//trace("bbbbbbb" + buildingType);
 			switch(buildingType)
 			{
 				case BuildingType.BARRACK:
@@ -182,7 +183,8 @@
 				break;
 			} //End of the giant switch statement
 			
-			return new BuildingInfoNode(wood,iron,population,money);
+			//trace("ddd" + requirement);
+			return new BuildingInfoNode(wood,iron,population,money,requirement);
 		} //End of getInfo() function
 		
 		

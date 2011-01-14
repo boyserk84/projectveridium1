@@ -30,6 +30,9 @@
 		private var index_nextButton:int;
 		private var index_prevButton:int;
 		
+		/* game content reference */
+		private var buildable_icons:Array;
+		
 		private var current_page:int = 0;
 		
 		private var ref_stage:Stage;
@@ -50,6 +53,14 @@
 			//this.ref_stage = ref_stage;
 			//this.alpha = 0;
 			
+			
+		}
+		
+		/**
+		* Build Menu
+		*/
+		public function buildMenu()
+		{
 			switch (this.type)
 			{
 				case Images.WIN_CITYMENU:
@@ -65,6 +76,25 @@
 		}
 		
 		/**
+		* feed city requirement for icons creation
+		* @param arr (Boolean) array of buildings that can be built
+		*/
+		public function feedCityReqToIcons(arr:Array):void
+		{
+			this.buildable_icons = arr;
+		}
+		
+		/**
+		* Update city's requirement
+		* @param arr (Boolean) array of city
+		*/
+		public function updateCityReq(arr:Array)
+		{
+			this.all_icons.updateCityReq(arr);
+			//displayMenuSystem();
+		}
+		
+		/**
 		* Switch to sub menu type
 		*/
 		public function switchSubMenu(sub_menu:int)
@@ -72,8 +102,6 @@
 			switch(sub_menu)
 			{
 				case Images.WIN_MIL_SUB:
-					
-					
 					// 
 					break;
 				case Images.WIN_CIVIL_SUB:
@@ -103,7 +131,7 @@
 			this.children.push(new TriggerButton(450,30, GameConfig.CHANGE_WORLD));
 			
 			// Add building buttons/menu
-			this.all_icons = new ImgMenu(0,0)
+			this.all_icons = new ImgMenu(0,0,buildable_icons);
 			this.children.push(all_icons);
 			index_nextButton = 3;
 			this.children.push(new TriggerButton(440,30, GameConfig.COMM_NEXT));
@@ -118,8 +146,22 @@
 		*/
 		private function nextPage(event:MouseEvent)
 		{
-			trace("nextPage");
+			//trace("nextPage");
+			if (!isValidNextPage(current_page))
+			{
+				--current_page;
+			}
 			all_icons.nextPage(++current_page);
+		}
+		
+		/**
+		* Is a valid next page?
+		* @param current_page
+		* @return True if it is a valid next page
+		*/
+		private function isValidNextPage(current_page:int)
+		{
+			return !(current_page*Images.MAX_ICON_PER_PAGE*2 >= BuildingType.TOTAL_BUILD_TYPE);
 		}
 		
 		/**
@@ -127,8 +169,9 @@
 		*/
 		private function prevPage(event:MouseEvent)
 		{
-			trace("Prev");
-			all_icons.nextPage(--current_page);
+			//trace("Prev");
+			if (current_page < 0) current_page = 0;
+			all_icons.nextPage(current_page--);
 		}
 		
 		/**
@@ -140,25 +183,6 @@
 			for (var i:int = 0; i < this.children.length; ++i)
 			{
 				this.addChild(this.children[i]);
-			}
-		}
-		
-		/*
-		* TODO: Make sure display all building list is working first.
-		*/
-		public function determineCityMenu(city:City)
-		{
-			var icon_list:Array = BuildingManager.determineBuildingList(city);
-			
-			for (var i = 0; i < icon_list.length; ++i)
-			{
-				
-				if (icon_list[i])	// if met requirement
-				{
-					//this.removeChild();	// remove cross
-				} else {
-					//this.addChild(); // add cross
-				}
 			}
 		}
 		
@@ -210,6 +234,7 @@
 		{
 			return this.children.indexOf(all_icons);
 		}
+		
 	}
 
 }

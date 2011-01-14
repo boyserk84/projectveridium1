@@ -11,11 +11,11 @@
 	*/
 	public class ImgBuilding extends MovieClip
 	{
-		public function ImgBuilding(x:Number, y:Number)
+		public function ImgBuilding(x:Number, y:Number, type:int)
 		{
 			this.x = x;
 			this.y = y;
-			trace(BuildingType.BARRACK);
+			gotoAndStop(type+1);
 		}
 		
 		public function get X()
@@ -26,6 +26,22 @@
 		public function get Y()
 		{
 			return this.y;
+		}
+		
+		/**
+		* return building type of this image
+		*/
+		public function get getBuildingType()
+		{
+			return currentFrame-1;
+		}
+		
+		/**
+		* return actual frame index of image
+		*/
+		public function get currFrame()
+		{
+			return currentFrame;
 		}
 	}
 }
