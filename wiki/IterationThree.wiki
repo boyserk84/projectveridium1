@@ -19,3 +19,8 @@
 || Task C || 3 hours || Advanced Menu System: Click at the building on the menu ||
 || Task D || 1.5 hours || Advanced Menu System: Prevent clicking if not enough resources ||
 || Task E || || Advanced Menu System: Switch between menu ||
+|| Task E || || Advanced Menu System: Switch between menu ||
+|| Task F || || Tab of building category on the menu ||
+|| Task G || || Switch between category of the building ||
+|| Task H || || Show buildings corresponding to each type || 
+|| Task I || || Cancel button (Switch to select mode) ||
