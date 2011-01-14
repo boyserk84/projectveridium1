@@ -1,22 +1,30 @@
 ﻿package classes{
 	
 	import flash.geom.Point;
-	public class Regiment
+	import flash.display.MovieClip;
+	public class Regiment extends MovieClip
 	{
 		//The units in this platoon as represented by the "Soldier" class
 		private var units:LinkedList;
 		//The name of this Regiment
 		private var myName:String;
 		//The current Location of this Regiment
-		private var location:Point;
+		private var myLocation:Point;
 		//The current destination of this Regiment
 		private var destination:Point;
+		
+		private var distanceTraveled:Number;
+		
+		private var speed:int;
+		
+		private var travelSpeed:Number;
 		
 		
 		public function Regiment(nameIn:String="Unnamed")
 		{
 			myName=nameIn;
 			units=new LinkedList();
+			distanceTraveled=0;
 		}
 		
 		//Add a unit to this Platoon
@@ -94,6 +102,41 @@
 			units.Remove(unitIn);
 		}
 		
+		public function changeDistance(changeIn:Number):void
+		{
+			distanceTraveled+=changeIn;
+		}
+		
+		public function resetDistance():void
+		{
+			distanceTraveled=0;
+		}
+		
+		public function get DistanceTraveled():Number
+		{
+			return distanceTraveled;
+		}
+		
+		public function get Speed():int
+		{
+			return speed;
+		}
+		
+		public function set Speed(value:int):void
+		{
+			speed=value;
+		}
+		
+		public function get TravelSpeed():Number
+		{
+			return travelSpeed;
+		}
+		
+		public function set TravelSpeed(value:Number):void
+		{
+			travelSpeed=value;
+		}
+		
 		
 		
 		//Get the list for iteration
@@ -155,12 +198,12 @@
 		
 		public function get Location():Point
 		{
-			return location;
+			return myLocation;
 		}
 		
 		public function set Location(value:Point):void
 		{
-			location=value;
+			myLocation=value;
 		}
 		
 		public function get Destination():Point

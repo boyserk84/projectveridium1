@@ -7,6 +7,17 @@
 		public static const TOWN_WIDTH=32;
 		public static const TOWN_HEIGHT=16;
 		
+		public static const TOWN_INFO_OFFSET_X=-50;
+		public static const TOWN_INFO_OFFSET_Y=-125;
+		
+		public static const INPUT_WIDTH=766;
+		public static const INPUT_HEIGHT=612;
+		
+		public static const WORLD_INIT_X=382;
+		public static const WORLD_INIT_Y=32;
+		
+		
+		
 		public static function getTownInfo(townIn:int):Town
 		{
 			//Constructor for town
@@ -14,19 +25,19 @@
 			switch(townIn)
 			{
 				case 0:
-				return new Town(10,0,10,0,10,new Point(272,71));
+				return new Town(10,0,10,0,10,new Point(272,71),"Bristol");
 				
 				case 1:
-				return new Town(10,10,4,0,10,new Point(199,144));
+				return new Town(10,10,4,0,10,new Point(199,144),"Boston");
 				
 				case 2:
-				return new Town(10,0,0,0,0,new Point(202,223));
+				return new Town(10,0,0,0,0,new Point(202,223),"Jacksonville");
 				
 				case 3:
-				return new Town(10,0,30,1,0,new Point(170,444));
+				return new Town(10,0,30,1,0,new Point(170,444),"Philadelphia");
 				
 				case 4:
-				return new Town(3,100,5,10,100,new Point(32,522));
+				return new Town(3,100,5,10,100,new Point(32,522),"Atlanta");
 				
 				default:
 				return null;

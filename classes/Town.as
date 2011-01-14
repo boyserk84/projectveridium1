@@ -31,23 +31,26 @@
 		private var ironProduction:int;
 		//How much food this town produces
 		private var foodProduction:int;
+		//How much money in taxes this town produces
+		private var moneyProduction:int;
 		//The name of this town for identification purposes
 		private var myName:String;
 		
 		//The original Location of this town
 		private var myLocation:Point;
 		
-		public function Town(woodIn:int=0,stoneIn:int=0,popIn:int=0,ironIn:int=0,foodIn:int=0,locationIn:Point=null)
+		public function Town(woodIn:int=0,moneyIn:int=0,popIn:int=0,ironIn:int=0,foodIn:int=0,locationIn:Point=null,nameIn:String="None")
 		{
 			workers=0;
 			woodProduction=woodIn;
-			stoneProduction=stoneIn;
+			moneyProduction=moneyIn;
 			populationProduction=popIn;
 			ironProduction=ironIn;
 			foodProduction=foodIn;
 			this.x=locationIn.x;
 			this.y=locationIn.y;
 			myLocation=locationIn;
+			myName=nameIn;
 			
 		}
 		
@@ -56,9 +59,9 @@
 			return woodProduction;
 		}
 		
-		public function get Stone():int
+		public function get Money():int
 		{
-			return stoneProduction;			
+			return moneyProduction;			
 		}
 		
 		public function get Population():int
@@ -82,6 +85,11 @@
 		public function get Location():Point
 		{
 			return myLocation;
+		}
+		
+		public function get Name():String
+		{
+			return myName;
 		}
 			
 		

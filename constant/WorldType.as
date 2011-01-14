@@ -4,6 +4,7 @@
 	{
 		
 		public static const TOWN:int=100;
+		public static const REGIMENT:int=101;
 		
 		public static const WORLD_MAP:int=0;
 		
@@ -18,6 +19,7 @@
 		public static const RHODEISLAND:int=9;
 		public static const SOUTHCAROLINA:int=10;
 		public static const VIRGINIA:int=11;
+		
 		
 		
 			

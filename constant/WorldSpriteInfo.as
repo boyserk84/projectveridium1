@@ -8,55 +8,53 @@
 		{
 			switch(worldType)
 			{
-				case WorldType.WORLD_MAP:
-//					return new WorldMap();
-				break;
 				case WorldType.MAINE:
-				return new Maine();
+					return new Maine();
 				break;
 				
 				case WorldType.MARYLAND:
-				return new Maryland();
+					return new Maryland();
 				break;
+				
 				case WorldType.MASSACHUSETTS:
-				return new Massachusettes();
+					return new Massachusettes();
 				break;
 				
 				case WorldType.GEORGIA:
-				return new Georgia();
+					return new Georgia();
 				break;
 				
 				case WorldType.NEWHAMPSHIRE:
-				return new NewHampshire();
+					return new NewHampshire();
 				break;
 				
 				case WorldType.NEWYORK:
-				return new NewYork();
+					return new NewYork();
 				break;
 				
 				case WorldType.NORTHCAROLINA:
-				return new NorthCarolina();
+					return new NorthCarolina();
 				break;
 				
 				case WorldType.PENNSYLVANIA:
-				return new Pennsylvania();
+					return new Pennsylvania();
 				break;
 				
 				case WorldType.RHODEISLAND:
-				return new RhodeIsland();
+					return new RhodeIsland();
 				break;
 				
 				case WorldType.SOUTHCAROLINA:
-				return new SouthCarolina();
+					return new SouthCarolina();
 				break;
 				
 				case WorldType.VIRGINIA:
-				return new Virginia();
+					return new Virginia();
 				break;
 				
-				/*case WorldType.TOWN:
-					return new Town();
-				break;*/
+				case WorldType.REGIMENT:
+					//return new RegimentView();
+				break;
 			}
 			return null;
 		}
