@@ -49,7 +49,7 @@
 		
 		public static const TOTAL_CIVIL_TYPE:int = 8;
 		
-		public static const TOTAL_BUILD_TYPE:int = 22;
+		public static const TOTAL_BUILD_TYPE:int = 7;
 		
 		
 		

@@ -17,12 +17,7 @@
 		{
 			this.x = x;
 			this.y = y;
-			
-			try {
-				gotoAndStop(type);
-			} catch (error:Error)
-			{
-			}
+			gotoAndStop(type+1);
 		}
 		
 		/*
@@ -31,6 +26,13 @@
 		public function get Type():int
 		{
 			return currentFrame;
+		}
+		/**
+		* return type of the building
+		*/
+		public function get getBuildingType():int
+		{
+			return currentFrame-1;
 		}
 		
 		/*

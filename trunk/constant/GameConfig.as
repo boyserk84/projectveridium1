@@ -27,6 +27,8 @@
 		
 		// Display value
 		public static const FULL_TRANSPARENT = 0;
+		public static const HALF_TRANSPARENT = 0.50;
+		public static const OPAQUE = 1;
 		
 		// Game Map value
 		public static const MAX_CITY_COL = 5;

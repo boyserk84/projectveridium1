@@ -19,6 +19,7 @@
 		
 		private var theView:View;			// View
 		private var input:IOHandler;		// IO Handler (receiving input)
+		private var profile:Player;			// Player's profile
 		
 		/*
 		private var addButton:TriggerButton;
@@ -29,6 +30,7 @@
 		
 		
 		private var command:int;			// Current command of the mouse-click
+		private var select_building:int;	// Current building selected when mouse-click at the menu
 		
 		var mcity:City;
 		var mbuilding:Building;
@@ -41,6 +43,12 @@
 		public function loadContents():void
 		{
 			trace("loadContents"); 
+			profile = new Player("RealName", "UserName");
+			profile.Food = 2;
+			profile.Wood = 22;
+			profile.Iron = 10;
+			profile.Money = 10;
+			profile.Population = 10;
 			
 			//this.theView = new View(this);
 			this.input = new IOHandler(this.stage.x,this.stage.y,this.stage.width, this.stage.height);
@@ -61,21 +69,22 @@
 			mouse=new MouseCurs();
 			
 
+			
+			//this.stage.addChild(curr.drawIndex(0));
+			mcity=new City(0,0,8,8);
+			mbuilding=new Building(new Rectangle(1,0,1,1),BuildingType.TOWN_SQUARE);
+			mbuilding2=new Building(new Rectangle(0,0,1,1),BuildingType.TOWN_SQUARE);
+			//var mbuilding3=new Building(new Rectangle(3,3,2,2),BuildingType.FARM);
+			
+			mcity.addBuilding(mbuilding);
+			mcity.addBuilding(mbuilding2);
+			//mcity.addBuilding(mbuilding3);
+			this.menuBar.feedCityReqToIcons(BuildingManager.determineBuildingList(mcity));
+			this.menuBar.buildMenu();
 			this.menuBar.addExtFuncTo(GameConfig.COMM_ADD, MouseEvent.CLICK, addButtonClick);
 			this.menuBar.addExtFuncTo(GameConfig.COMM_REMOVE,MouseEvent.CLICK, removeButtonClick);
 			this.menuBar.addExtFuncTo(GameConfig.CHANGE_WORLD, MouseEvent.CLICK, worldButtonClick);
 			
-			
-			
-			//this.stage.addChild(curr.drawIndex(0));
-			mcity=new City(0,0,8,8);
-			mbuilding=new Building(new Rectangle(1,0,1,1),1);
-			mbuilding2=new Building(new Rectangle(0,0,1,1),1);
-			var mbuilding3=new Building(new Rectangle(3,3,2,2),BuildingType.FARM);
-			
-			mcity.addBuilding(mbuilding);
-			mcity.addBuilding(mbuilding2);
-			mcity.addBuilding(mbuilding3);
 			
 			
 			this.theView = new View(mcity);
@@ -121,7 +130,7 @@
 			// If valid tile, then display cursor
 			if (mcity.isValid(xmouse,ymouse))
 			{
-				trace("Move Coords: "+xmouse+" , "+ymouse);
+				//trace("Move Coords: "+xmouse+" , "+ymouse);
 				this.mouse.x = (((xmouse-ymouse)*GameConfig.TILE_HEIGHT)+GameConfig.TILE_INIT_X);
 				this.mouse.y = (((xmouse+ymouse)*GameConfig.TILE_HEIGHT/2)+GameConfig.TILE_INIT_Y);
 			}
@@ -137,6 +146,28 @@
 		{
 			trace("Add button clicked!");
 			this.command=GameConfig.COMM_ADD;
+			
+			// check requirement
+			var build_list:Array = BuildingManager.determineBuildingList(mcity);
+			
+			// if met basic requirement
+			if (build_list[event.currentTarget.getBuildingType])
+			{
+				// if met resources requirement
+				if (BuildingManager.hasResourceToBuild(event.currentTarget.getBuildingType,profile.Wood, profile.Iron, profile.Money, profile.Population))
+				{
+					this.select_building = event.currentTarget.getBuildingType;
+					trace("build now " + this.select_building);
+				} else {
+					trace("Not enough resources for " + this.select_building);
+					this.command = GameConfig.COMM_SELECT;
+				}
+			} else {
+				this.command = GameConfig.COMM_SELECT;
+			}
+			
+			//trace("Building clicked icon:" + this.select_building);
+			//this.select_building = event.currentTarget;
 		}
 		
 		/**
@@ -176,13 +207,8 @@
 			{
 				if (theView.checkClickedBuilding(xloc, yloc)!=null)
 				{
-					
-					// CITY IS NOT ACTUALLY REMOVING BUILDINGS!!!!
 					// (1) (GameObject) Notify city what building to be removed
 					mcity.removeBuilding(theView.checkClickedBuilding(xloc, yloc));
-					
-					// PROB: NEED TO CHECK IF BUILDING IS ACTUALLY REMOVED
-					// CHECK LENGTH OF BUILDING INSIDE THE CITY
 					
 					// (2) Adjust View, delete a building from view
 					theView.setClickedBuildingInvisible(xloc,yloc);
@@ -203,11 +229,25 @@
 					
 					if (mcity.isValid(gamePos.x, gamePos.y))
 					{
-						// add building to the city
-						mcity.addBuilding(new Building(new Rectangle(gamePos.x,gamePos.y,1,1),1));
+						
+						// (1) add building to the city
+						mcity.addBuilding(new Building(new Rectangle(gamePos.x,gamePos.y,1,1),this.select_building));
+						
 						// (2) Add new building list to View
 						theView.addBuildingList(mcity.Buildings);
 						
+						// (3) Deduct resources
+						profile.changeWood(-BuildingInfo.getInfo(this.select_building).Wood);
+						profile.changeMoney(-BuildingInfo.getInfo(this.select_building).Money);
+						profile.changeIron(-BuildingInfo.getInfo(this.select_building).Iron);
+						profile.changePop(-BuildingInfo.getInfo(this.select_building).Population);
+						//profile.changeFood(BuildingInfo.getInfo(this.select_building));
+						
+						// (4) Update Menu Bar
+						menuBar.updateCityReq(BuildingManager.determineBuildingList(mcity));
+						
+						
+						//trace ("WOoD later " + profile.Wood);
 					}//if 
 				}
 			} else 
@@ -224,23 +264,7 @@
 		public function gameLoop(event:Event):void
 		{
 			theView.Update();
-			/*
-			
-			
-			// Spike code for button
-			if (addButton.isClick())
-			{
-				trace("Add is clicked");
-				this.command = addButton.Command;
-			} else if (removeButton.isClick()){
-				trace("Remove is clicked");
-				this.command = removeButton.Command;
-			}
-			
-			// flush all I/O Buffer
-			this.addButton.setNonClick();
-			this.removeButton.setNonClick();
-			this.input.setNonClick();*/
+			//menuBar.updateCityReq(BuildingManager.determineBuildingList(mcity));
 			
 		}
 		

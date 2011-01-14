@@ -44,16 +44,44 @@
 				this.children.push(new Tile(this.x, this.y));
 			}
 			
-			// Barrack
-			if (this.object_Type == BuildingType.BARRACK)
+			switch (this.object_Type)
 			{
-				this.children.push(new ImgBuilding(this.x,this.y));
-			}
-			
-			// Farm
-			if (this.object_Type == BuildingType.FARM)
-			{
-				this.children.push(new ImgBuilding2(this.x,this.y));
+				case BuildingType.TOWN_SQUARE:
+					this.children.push(new ImgBuilding(this.x,this.y, BuildingType.TOWN_SQUARE));
+					break;
+	
+				case BuildingType.BARRACK:
+					this.children.push(new ImgBuilding(this.x,this.y, BuildingType.BARRACK));
+					break;
+				
+				case BuildingType.ARMORY:
+					this.children.push(new ImgBuilding(this.x,this.y, BuildingType.ARMORY));
+					break;
+				
+				case BuildingType.SNIPER_SCHOOL:
+					this.children.push(new ImgBuilding(this.x,this.y, BuildingType.SNIPER_SCHOOL));
+					break;
+				
+				case BuildingType.RANGE:
+					this.children.push(new ImgBuilding(this.x,this.y, BuildingType.RANGE));
+					break;
+					
+				case BuildingType.FORGE:
+					this.children.push(new ImgBuilding(this.x,this.y, BuildingType.FORGE));
+					break;
+				
+				case BuildingType.FOUNDRY:
+					break;
+					
+				case BuildingType.WORKSHOP:
+					this.children.push(new ImgBuilding(this.x,this.y, BuildingType.WORKSHOP));
+					break;
+					
+				case BuildingType.BOOT_CAMP:
+					break;
+				
+				case BuildingType.STABLES:
+					break;
 			}
 			
 			if(this.object_Type==WorldType.WORLD_MAP)
@@ -85,7 +113,6 @@
 		
 		/**
 		* Manually get an actual image object corresponding to the index
-		*
 		*/
 		public function getImageIndexOf(index:int):MovieClip
 		{
@@ -97,7 +124,9 @@
 		*/
 		public function getCurrentImage():MovieClip
 		{
+			//trace(this.children + this.children.length);
 			return this.children[this.curr_image];
+			//return this.children[this.curr_image];
 		}
 		
 		/**

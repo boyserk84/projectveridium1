@@ -230,7 +230,30 @@
 			
 		}
 		
+		public function changeWood(value:int)
+		{
+			wood += value;
+		}
 		
+		public function changeIron(value:int)
+		{
+			iron += value;
+		}
+		
+		public function changeMoney(value:int)
+		{
+			money += value;
+		}
+		
+		public function changePop(value:int)
+		{
+			population += value;
+		}
+		
+		public function changeFood(value:int)
+		{
+			food += value;
+		}
 		
 
 
