@@ -71,6 +71,7 @@
 		*/
 		public function removeBuilding(buildingIn:Building=null):void
 		{
+			requirements[buildingIn.Type] = false;
 			buildings.Remove(buildingIn);
 		}
 		

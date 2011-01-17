@@ -7,6 +7,7 @@
 		public static function getInfo(buildingType:int):BuildingInfoNode
 		{
 			var wood:int,iron:int,money:int,population:int, requirement:int;
+			var main_type:String;
 			//trace("bbbbbbb" + buildingType);
 			switch(buildingType)
 			{
@@ -16,6 +17,7 @@
 					money=0;
 					population=0;
 					requirement=BuildingType.TOWN_SQUARE;
+					main_type=BuildingType.MIL_TYPE;
 				break;
 				
 				case BuildingType.ARMORY:
@@ -24,6 +26,7 @@
 					money=0;
 					population=0;
 					requirement=BuildingType.BARRACK;
+					main_type=BuildingType.MIL_TYPE;
 				break;
 				
 				case BuildingType.RANGE:
@@ -32,6 +35,7 @@
 					money=0;
 					population=0;
 					requirement=BuildingType.ARMORY;
+					main_type=BuildingType.MIL_TYPE;
 				break;
 				
 				case BuildingType.SNIPER_SCHOOL:
@@ -40,6 +44,7 @@
 					money=0;
 					population=0;
 					requirement=BuildingType.RANGE;
+					main_type=BuildingType.MIL_TYPE;
 
 				break;
 				
@@ -49,6 +54,7 @@
 					money=0;
 					population=0;
 					requirement=BuildingType.BARRACK;
+					main_type=BuildingType.MIL_TYPE;
 				break;
 				
 				case BuildingType.WORKSHOP:
@@ -57,6 +63,7 @@
 					money=0;
 					population=0;
 					requirement=BuildingType.FORGE;
+					main_type=BuildingType.MIL_TYPE;
 				break;
 				
 				case BuildingType.FOUNDRY:
@@ -65,6 +72,7 @@
 					money=0;
 					population=0;
 					requirement=BuildingType.WORKSHOP;
+					main_type=BuildingType.MIL_TYPE;
 				break;
 				
 				case BuildingType.BOOT_CAMP:
@@ -73,6 +81,7 @@
 					money=0;
 					population=0;
 					requirement=BuildingType.BARRACK;
+					main_type=BuildingType.MIL_TYPE;
 				break;
 				
 				case BuildingType.STABLES:
@@ -81,6 +90,7 @@
 					money=0;
 					population=0;
 					requirement=BuildingType.BOOT_CAMP;
+					main_type=BuildingType.MIL_TYPE;
 				break;
 				
 				case BuildingType.OFFICER_SCHOOL:
@@ -89,6 +99,7 @@
 					money=0;
 					population=0;
 					requirement=BuildingType.STABLES;
+					main_type=BuildingType.MIL_TYPE;
 				break;
 				
 				case BuildingType.OUTPOST:
@@ -97,6 +108,7 @@
 					money=0;
 					population=0;
 					requirement=BuildingType.BARRACK;
+					main_type=BuildingType.MIL_TYPE;
 				break;
 				
 				case BuildingType.WATCH_TOWER:
@@ -105,6 +117,7 @@
 					money=0;
 					population=0;
 					requirement=BuildingType.RANGE;
+					main_type=BuildingType.MIL_TYPE;
 				break;
 				
 				case BuildingType.AMBUSH:
@@ -113,6 +126,7 @@
 					money=0;
 					population=0;
 					requirement=BuildingType.SNIPER_SCHOOL;
+					main_type=BuildingType.MIL_TYPE;
 				break;
 				
 				case BuildingType.WAY_POINT:
@@ -121,6 +135,7 @@
 					money=0;
 					population=0;
 					requirement=BuildingType.STABLES;
+					main_type=BuildingType.MIL_TYPE;
 				break;
 				
 				case BuildingType.HOUSE:
@@ -129,6 +144,7 @@
 					money=0;
 					population=0;
 					requirement=BuildingType.TOWN_SQUARE;
+					main_type=BuildingType.CIVIL_TYPE;
 				break;
 				
 				case BuildingType.FARM:
@@ -137,6 +153,7 @@
 					money=0;
 					population=0;
 					requirement=BuildingType.TOWN_SQUARE;
+					main_type=BuildingType.CIVIL_TYPE;
 				break;
 				case BuildingType.SAWMILL:
 					wood=10;
@@ -144,6 +161,7 @@
 					money=0;
 					population=0;
 					requirement=BuildingType.TOWN_SQUARE;
+					main_type=BuildingType.CIVIL_TYPE;
 				break;
 				case BuildingType.BLACKSMITH:
 					wood=10;
@@ -151,6 +169,7 @@
 					money=0;
 					population=0;
 					requirement=BuildingType.TOWN_SQUARE;
+					main_type=BuildingType.CIVIL_TYPE;
 				break;
 				case BuildingType.WAREHOUSE:
 					wood=10;
@@ -158,6 +177,7 @@
 					money=0;
 					population=0;
 					requirement=BuildingType.FARM;
+					main_type=BuildingType.CIVIL_TYPE;
 				break;
 				case BuildingType.STOCKPILE:
 					wood=10;
@@ -165,6 +185,7 @@
 					money=0;
 					population=0;
 					requirement=BuildingType.WAREHOUSE;
+					main_type=BuildingType.CIVIL_TYPE;
 				break;
 				case BuildingType.MARKET:
 					wood=10;
@@ -172,6 +193,7 @@
 					money=0;
 					population=0;
 					requirement=BuildingType.WAREHOUSE;
+					main_type=BuildingType.CIVIL_TYPE;
 				break; 
 				
 				default:
@@ -180,11 +202,12 @@
 					money=0;
 					population=0;
 					requirement=0;
+					main_type=BuildingType.CIVIL_TYPE;
 				break;
 			} //End of the giant switch statement
 			
 			//trace("ddd" + requirement);
-			return new BuildingInfoNode(wood,iron,population,money,requirement);
+			return new BuildingInfoNode(wood,iron,population,money,requirement,main_type);
 		} //End of getInfo() function
 		
 		

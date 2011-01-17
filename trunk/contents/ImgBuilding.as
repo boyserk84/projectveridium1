@@ -11,6 +11,11 @@
 	*/
 	public class ImgBuilding extends MovieClip
 	{
+		/**
+		* Constructor
+		* @param x,y (X,Y) displayed location
+		* @param type : Type of building
+		*/
 		public function ImgBuilding(x:Number, y:Number, type:int)
 		{
 			this.x = x;
