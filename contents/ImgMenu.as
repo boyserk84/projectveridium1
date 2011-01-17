@@ -8,6 +8,7 @@
 	
 	/**
 	* ImgMenu
+	*	Show list of all buildings.
 	*	Class object represents image or representation of a menu system.
 	*	It also determines what is shown on the screen.
 	* 	For City Menu,
@@ -17,23 +18,32 @@
 	*/
 	public class ImgMenu extends MovieClip
 	{
-		private var icon_children:Array;			// Icon represents each building
+		private var icon_children:Array;					// Icon represents each building
 		
 		private var icon_shown:Array = null;				// which icon can be shown
+		
+		// Internal Strucuture 
+		private var icon_mil:Array = null;		// Keep track of miltary building index
+		private var icon_civil:Array = null;	// Keep track of civil building index
+		private var bound:int = 0;				// Maximum bound for each type of building
+		
 		/**
 		* Constructor
 		* @param x, y (X,Y) position on the screen
-		* @param type Type of Menu (Frame)
-		* @param type Requirement for building city;
+		* @param citylist List of buildings that has been built from the city
 		*/
-		public function ImgMenu(x:Number, y:Number, cityreq:Array)
+		public function ImgMenu(x:Number, y:Number, citylist:Array)
 		{
 			this.x = x;
 			this.y = y;
+			this.icon_shown = citylist;
 			gotoAndStop(Images.WIN_MIL_SUB);
 			icon_children = new Array();
-			this.icon_shown = cityreq;
-			constructMIL_SUB();
+			icon_mil = new Array();
+			icon_civil = new Array();
+			constructBound();
+			constructSUBMENU();
+			
 			
 			trace("Create a sub-menu");
 		}
@@ -41,35 +51,74 @@
 		/**
 		* Update list of building to be shown
 		*/
-		public function updateCityReq(arr:Array)
+		public function updateCityBuiltList(arr:Array)
 		{
 			this.icon_shown = arr;
-			setRegionVisible(0);
+			goToPage(0);
 		}
 		
 		/**
-		* Construct military button sub-menu
+		* Construct all icons and set them all invisible
 		*/
-		private function constructMIL_SUB():void
-		{	
+		private function constructIcons():void
+		{
 			var temp_count:int = 0;
+			var mil_count = 0;
+			var civil_count = 0;
 			
 			// Construct icon of each building (all type)
+			// Locate where each should be displayed (in order).
 			for (var i:int = 0; i < BuildingType.TOTAL_BUILD_TYPE; ++i)
 			{
-				temp_count = i % Images.MAX_ICON_PER_PAGE;
-				this.icon_children.push(new ImgBuildingIcon(60+(temp_count*92),12,BuildingType.TOWN_SQUARE + i));
+				switch((BuildingInfo.getInfo(i)).Type)
+				{
+					case BuildingType.MIL_TYPE:
+						temp_count = mil_count % Images.MAX_ICON_PER_PAGE;
+						this.icon_children.push(new ImgBuildingIcon(60+(temp_count*92),35,BuildingType.TOWN_SQUARE + i));
+						++mil_count;
+						this.icon_mil.push(i);
+					break;
+					case BuildingType.CIVIL_TYPE:
+						temp_count = civil_count % Images.MAX_ICON_PER_PAGE;
+						this.icon_children.push(new ImgBuildingIcon(60+(temp_count*92),35,BuildingType.TOWN_SQUARE + i));
+						++civil_count;
+						this.icon_civil.push(i);
+					break;
+				}
+				
 				this.icon_children[i].setInvisible();
 				this.addChild(icon_children[i]);
 			}
-			
-		
-			// Display icons on 1st page
-			setRegionVisible(0);
 		}
 		
 		/**
-		* Set all icons invisible
+		* set boundary (maximum entry) for building type
+		*/
+		private function constructBound()
+		{
+			if (currentFrame == Images.WIN_MIL_SUB)
+			{
+				bound = BuildingType.TOTAL_MIL_TYPE;
+			} else if (currentFrame == Images.WIN_CIVIL_SUB) {
+				bound = BuildingType.TOTAL_CIVIL_TYPE;
+			} else {
+				bound = BuildingType.TOTAL_BUILD_TYPE;
+			}
+		}
+		
+		/**
+		* Construct sub-menu
+		*/
+		private function constructSUBMENU():void
+		{	
+			constructIcons();
+			goToPage(0);
+		}
+		
+
+		
+		/**
+		* Set all icons invisible and reset alpha to opaque value
 		*/
 		private function setAllIconsInvisible():void
 		{
@@ -87,7 +136,7 @@
 		*/
 		public function nextPage(page:int):void
 		{
-			setRegionVisible(page);
+			goToPage(page);
 		}
 		
 		/**
@@ -97,6 +146,17 @@
 		*/
 		public function prevPage(page:int):void
 		{
+			goToPage(page);
+		}
+		
+		/**
+		* Jump to a specific page with correct element and index
+		* @param page Specific page
+		*/
+		private function goToPage(page:int):void
+		{
+			setAllIconsInvisible();
+			updateDisplayList();
 			setRegionVisible(page);
 		}
 		
@@ -107,14 +167,35 @@
 		*/
 		private function findMaxIndexAtPage(page:int):int
 		{
-			var max:int = page*Images.MAX_ICON_PER_PAGE*2;
-				
-			// Upper bound check
-			if (max >= BuildingType.TOTAL_BUILD_TYPE)
+			var max:int = page*Images.MAX_ICON_PER_PAGE+4;
+			if (page==0)
 			{
-				max = BuildingType.TOTAL_BUILD_TYPE -1;
+				max = Images.MAX_ICON_PER_PAGE;
 			}
+			
+			//trace("Bound" + bound);
+			// Upper bound check
+			if (max >= bound)
+			{
+				max = bound ;
+			}
+			//trace("Maximum" + max);
 			return max;
+		}
+		
+		/**
+		* find a minimum index value at a specific page
+		* @param page Specific page
+		* @return min index value
+		*/
+		private function findMinIndexAtPage(page:int):int
+		{
+			if (page > 0)
+			{
+				return page*Images.MAX_ICON_PER_PAGE;
+			} else { 
+				return 0;
+			}
 		}
 		
 		/**
@@ -123,41 +204,69 @@
 		*/
 		private function setRegionVisible(page:int):void
 		{
-			trace("Set Region");
-			
+			//trace("Set Region");
 			var init_s:int, max:int;
+			init_s = findMinIndexAtPage(page);
+			max = findMaxIndexAtPage(page);
 			
-			if (page > 0)
-			{
-				init_s = page*Images.MAX_ICON_PER_PAGE;
-				max = findMaxIndexAtPage(page);
-				//trace("start page" + init_s + " end page " + max);
-			} else { // Lower bound check
-				init_s= 0;
-				max = Images.MAX_ICON_PER_PAGE;
-			}
-
+			//trace("start page" + init_s + " end page " + max);
+			
+			displayRegion(init_s,max);
+			
+		}
+		
+		/**
+		* Display a particular region set of icons to be displayed
+		* @param init_s : Starting index
+		* @param max : max index
+		*/
+		private function displayRegion(init_s:int, max:int):void
+		{
 			if (init_s < max)
 			{
-				setAllIconsInvisible();
-				
-				// Display
+				// Display a particular region
 				for (var i:int = init_s; i < max; ++i)
 				{
-					//trace("Icon: " + i);
-					
-					// Determine what can be displayed
-					if (this.icon_shown!=null)
+					if (currentFrame == Images.WIN_MIL_SUB)
 					{
-						this.icon_children[i].setVisible();
-						
-						if (!icon_shown[i])	// if not meeting requirement
-						{
-							this.icon_children[i].alpha = GameConfig.HALF_TRANSPARENT;
-						}
+						//trace(icon_mil.length + "A-->" + this.icon_mil[i] + " Alpha : " + this.icon_children[icon_mil[i]].alpha);
+						this.icon_children[this.icon_mil[i]].setVisible();
+					} else if (currentFrame == Images.WIN_CIVIL_SUB)
+					{
+						//trace(icon_civil.length + "C-->" + this.icon_civil[i]);
+						this.icon_children[this.icon_civil[i]].setVisible();
 					}
 				}//for
 			}
+		}
+		
+		/**
+		* Update list of building icons to be shown
+		* Determine what icons should be shown
+		*/
+		private function updateDisplayList():void
+		{
+			// Display
+			for (var i:int = 0; i < BuildingType.TOTAL_BUILD_TYPE; ++i)
+			{
+				// Determine what can be displayed
+				if (this.icon_shown!=null)
+				{
+					if (!icon_shown[i])	// if not meeting requirement
+					{
+						//trace("not shown at " + i);
+						this.icon_children[i].alpha = GameConfig.HALF_TRANSPARENT;
+					}
+				}
+			}//for
+		}
+		
+		/*
+		* return Maximum entry of icons of a particular building type
+		*/
+		public function get TOTAL_MAX_ENTRY()
+		{
+			return this.bound;
 		}
 		
 		
@@ -181,19 +290,20 @@
 		public function switchSubMenu(type:int)
 		{
 			gotoAndStop(type);
+			constructBound();
+			constructSUBMENU();
 		}
 		
-		//public function get BuildingType()
-		
-		public function get X()
+		/**
+		* return current menu being displayed
+		*/
+		public function get currentMenu():int
 		{
-			return this.x;
+			return currentFrame;
 		}
-		
-		public function get Y()
-		{
-			return this.y;
-		}
+	
+		public function get X() { return this.x; }
+		public function get Y() { return this.y; }
 		
 	}
 }

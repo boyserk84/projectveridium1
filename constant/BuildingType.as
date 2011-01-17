@@ -9,7 +9,8 @@
 		* Misc.stuff
 		*/
 		public static const TILE:int = 100;
-		
+		public static const CIVIL_TYPE:String = "CIVIL";
+		public static const MIL_TYPE:String = "MIL";
 		
 		
 		/*
@@ -34,7 +35,7 @@
 		public static const WAY_POINT:int=13;
 		public static const AMBUSH:int=14;
 		
-		public static const TOTAL_MIL_TYPE:int = 13;
+		public static const TOTAL_MIL_TYPE:int = 14;
 		
 		/**
 		* Civilian building
@@ -47,9 +48,9 @@
 		public static const MARKET:int=20;
 		public static const HOUSE:int=21;
 		
-		public static const TOTAL_CIVIL_TYPE:int = 8;
+		public static const TOTAL_CIVIL_TYPE:int = 2;
 		
-		public static const TOTAL_BUILD_TYPE:int = 7;
+		public static const TOTAL_BUILD_TYPE:int = 16;
 		
 		
 		

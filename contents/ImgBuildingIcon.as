@@ -21,7 +21,7 @@
 		}
 		
 		/*
-		* return currentFrame (Building Type)
+		* return currentFrame
 		*/
 		public function get Type():int
 		{

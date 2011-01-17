@@ -63,9 +63,9 @@
 			this.worldButton=new TriggerButton(400,320, GameConfig.CHANGE_WORLD);
 			*/
 			
-			this.menuBar = new MenuSystem(0,500,Images.WIN_CITYMENU);
+			this.menuBar = new MenuSystem(0,460,Images.WIN_CITYMENU);
 			
-				//attach mouse cursor
+			//attach mouse cursor
 			mouse=new MouseCurs();
 			
 
@@ -84,8 +84,7 @@
 			this.menuBar.addExtFuncTo(GameConfig.COMM_ADD, MouseEvent.CLICK, addButtonClick);
 			this.menuBar.addExtFuncTo(GameConfig.COMM_REMOVE,MouseEvent.CLICK, removeButtonClick);
 			this.menuBar.addExtFuncTo(GameConfig.CHANGE_WORLD, MouseEvent.CLICK, worldButtonClick);
-			
-			
+			this.menuBar.addExtFuncTo(GameConfig.COMM_CANCEL, MouseEvent.CLICK, cancelButtonClick);
 			
 			this.theView = new View(mcity);
 			// update Building List everytime add or remove in the game object occurs
@@ -105,11 +104,6 @@
 			this.addChild(this.input);	// IO Input
 			
 			this.addChild(this.menuBar);	// Add Menu
-			//this.addChild(this.addButton);
-			//this.addChild(this.removeButton);
-			//this.addChild(this.worldButton);
-
-			//this.stage.addChild(/* Add entity here */);
 			
 		}
 		
@@ -147,9 +141,10 @@
 			trace("Add button clicked!");
 			this.command=GameConfig.COMM_ADD;
 			
-			// check requirement
+			// check requirement, retrive info from city
 			var build_list:Array = BuildingManager.determineBuildingList(mcity);
 			
+			trace(event.currentTarget.getBuildingType);
 			// if met basic requirement
 			if (build_list[event.currentTarget.getBuildingType])
 			{
@@ -172,12 +167,20 @@
 		
 		/**
 		* Remove button event listener, sets the command to be Remove
-		* @param1: The mouse event for this click
+		* @param: The mouse event for this click
 		**/
 		public function removeButtonClick(event:MouseEvent):void
 		{
 			trace("Remove button clicked");
 			this.command=GameConfig.COMM_REMOVE;
+		}
+		
+		/**
+		* cancel a current command, and set it to select mode
+		*/
+		public function cancelButtonClick(event:MouseEvent):void
+		{
+			this.command = GameConfig.COMM_SELECT;
 		}
 		
 		/**
@@ -203,6 +206,7 @@
 			//do things with the click
 			var xloc:int=event.stageX;
 			var yloc:int=event.stageY;
+			
 			if (this.command == GameConfig.COMM_REMOVE)
 			{
 				if (theView.checkClickedBuilding(xloc, yloc)!=null)
@@ -213,6 +217,9 @@
 					// (2) Adjust View, delete a building from view
 					theView.setClickedBuildingInvisible(xloc,yloc);
 					
+					// (3) Update Menu Bar
+					menuBar.updateCityReq(BuildingManager.determineBuildingList(mcity));
+					
 				}
 			} else 
 			
@@ -222,14 +229,11 @@
 				// check if mouse-clicking is not on any building
 				if (theView.checkClickedBuilding(xloc, yloc)==null)
 				{
-					
-					var gamePos:Point=theView.getGamePos(xloc,yloc);
 					// Translate mouse position to game position
+					var gamePos:Point=theView.getGamePos(xloc,yloc);
 
-					
 					if (mcity.isValid(gamePos.x, gamePos.y))
 					{
-						
 						// (1) Check resources if enough
 						if (BuildingManager.hasResourceToBuild(this.select_building,profile.Wood, profile.Iron, profile.Money, profile.Population))
 						{
@@ -246,20 +250,16 @@
 							profile.changePop(-BuildingInfo.getInfo(this.select_building).Population);
 							//profile.changeFood(BuildingInfo.getInfo(this.select_building));
 						}
-						
-						
-						
+
 						// (4) Update Menu Bar
 						menuBar.updateCityReq(BuildingManager.determineBuildingList(mcity));
-						
-						
-						//trace ("WOoD later " + profile.Wood);
 					}//if 
 				}
 			} else 
 			if (this.command == GameConfig.COMM_SELECT)
 			{
-				
+				// Move stuff
+				// Also pop up menu
 			}
 			
 		}

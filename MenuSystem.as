@@ -29,13 +29,14 @@
 		private var index_changeButton:int;
 		private var index_nextButton:int;
 		private var index_prevButton:int;
+		private var index_milButton:int, index_civButton:int;
+		private var index_cancelButton:int;
 		
 		/* game content reference */
 		private var buildable_icons:Array;
 		
+		/* Pagination */
 		private var current_page:int = 0;
-		
-		private var ref_stage:Stage;
 		
 		/**
 		* Constructor
@@ -50,10 +51,7 @@
 			this.sub_type = Images.WIN_MIL_SUB;
 			gotoAndStop(this.type);
 			this.children = new Array();
-			//this.ref_stage = ref_stage;
 			//this.alpha = 0;
-			
-			
 		}
 		
 		/**
@@ -85,37 +83,12 @@
 		}
 		
 		/**
-		* Update city's requirement
+		* Update city's list of buildings that has been built
 		* @param arr (Boolean) array of city
 		*/
 		public function updateCityReq(arr:Array)
 		{
-			this.all_icons.updateCityReq(arr);
-			//displayMenuSystem();
-		}
-		
-		/**
-		* Switch to sub menu type
-		*/
-		public function switchSubMenu(sub_menu:int)
-		{
-			switch(sub_menu)
-			{
-				case Images.WIN_MIL_SUB:
-					// 
-					break;
-				case Images.WIN_CIVIL_SUB:
-				
-					break;
-			}
-		}
-		
-		/**
-		* Construct world-map menu
-		*/
-		private function construct_WorldMenu():void
-		{
-			
+			all_icons.updateCityBuiltList(arr);
 		}
 		
 		/**
@@ -134,11 +107,36 @@
 			this.all_icons = new ImgMenu(0,0,buildable_icons);
 			this.children.push(all_icons);
 			index_nextButton = 3;
-			this.children.push(new TriggerButton(440,30, GameConfig.COMM_NEXT));
+			this.children.push(new TriggerButton(440,55, GameConfig.COMM_NEXT));
 			index_prevButton = 4;
-			this.children.push(new TriggerButton(15, 30, GameConfig.COMM_PREV));
+			this.children.push(new TriggerButton(15, 55, GameConfig.COMM_PREV));
+			index_milButton = 5;
+			index_civButton = 6;
+			index_cancelButton = 7;
+			this.children.push(new TriggerButton(15, 10, GameConfig.COMM_MIL_LIST));
+			this.children.push(new TriggerButton(150, 10, GameConfig.COMM_CIV_LIST));
+			this.children.push(new TriggerButton(650,10, GameConfig.COMM_CANCEL));
+			// Add external function
 			addExtFuncTo(GameConfig.COMM_NEXT,MouseEvent.CLICK, nextPage );
 			addExtFuncTo(GameConfig.COMM_PREV,MouseEvent.CLICK, prevPage );
+			addExtFuncTo(GameConfig.COMM_MIL_LIST, MouseEvent.CLICK, switchSubMenu);
+			addExtFuncTo(GameConfig.COMM_CIV_LIST, MouseEvent.CLICK, switchSubMenu);
+		}
+		
+		/**
+		* Switch sub menu between civil and military building list
+		* @param event Mouseevent listener
+		*/
+		private function switchSubMenu(event:MouseEvent):void
+		{
+			var menu:int = this.children[IndexOfIcons].currentMenu;
+			if (menu == Images.WIN_MIL_SUB)
+			{
+				menu = Images.WIN_CIVIL_SUB;
+			} else {
+				menu = Images.WIN_MIL_SUB;
+			}
+			this.children[IndexOfIcons].switchSubMenu(menu);
 		}
 		
 		/**
@@ -148,13 +146,13 @@
 		{
 			//trace("Curr n page " + current_page);
 			//trace("nextPage");
-			if (!isValidNextPage(current_page))
+			
+			if (!isValidNextPage(++current_page))
 			{
-				//trace("decrement");
+				//trace("Start Max Index" + current_page*Images.MAX_ICON_PER_PAGE);
 				--current_page;
 			}
-			all_icons.nextPage(++current_page);
-			//trace("Curr n page now is " + current_page);
+			all_icons.nextPage(current_page);
 		}
 		
 		/**
@@ -164,7 +162,7 @@
 		*/
 		private function isValidNextPage(current_page:int)
 		{
-			return !(current_page*Images.MAX_ICON_PER_PAGE*2 >= BuildingType.TOTAL_BUILD_TYPE);
+			return !(current_page*Images.MAX_ICON_PER_PAGE >= all_icons.TOTAL_MAX_ENTRY + 1);
 		}
 		
 		/**
@@ -179,7 +177,6 @@
 				current_page = 1;
 			}
 			all_icons.prevPage(--current_page);
-			//trace("Curr prev page is now " + current_page);
 		}
 		
 		/**
@@ -218,6 +215,15 @@
 					break;
 				case GameConfig.COMM_PREV:
 					children[index_prevButton].addEventListener(add_event,func);
+					break;
+				case GameConfig.COMM_MIL_LIST:
+					children[index_milButton].addEventListener(add_event,func);
+					break;
+				case GameConfig.COMM_CIV_LIST:
+					children[index_civButton].addEventListener(add_event,func);
+					break;
+				case GameConfig.COMM_CANCEL:
+					children[index_cancelButton].addEventListener(add_event,func);
 					break;
 				default:
 					// do something
