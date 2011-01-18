@@ -34,7 +34,7 @@
 		public static const MAX_CITY_COL = 5;
 		public static const MAX_CITY_ROW = 5;
 		
-		// Mouse click command
+		// Mouse click commands and buttons
 		public static const COMM_ADD = 1;
 		public static const COMM_REMOVE = 2;
 		public static const CHANGE_WORLD = 3;
@@ -44,6 +44,7 @@
 		public static const COMM_MIL_LIST = 6;
 		public static const COMM_CIV_LIST = 7;
 		public static const COMM_CANCEL = 8;
+		public static const COMM_STAT_POP = 9;
 		
 		//Frame for World Map
 		public static const WORLD_FRAME=2;

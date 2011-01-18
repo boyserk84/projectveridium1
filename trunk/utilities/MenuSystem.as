@@ -1,4 +1,4 @@
-﻿package{
+﻿package utilities {
 	import flash.display.MovieClip;
 	import flash.display.Stage;
 	import flash.geom.Rectangle;
@@ -27,10 +27,10 @@
 		/* Internal Reference */
 		private var index_removeButton:int;
 		private var index_changeButton:int;
-		private var index_nextButton:int;
-		private var index_prevButton:int;
+		private var index_nextButton:int, index_prevButton:int;
 		private var index_milButton:int, index_civButton:int;
 		private var index_cancelButton:int;
+		private var index_statButton:int;
 		
 		/* game content reference */
 		private var buildable_icons:Array;
@@ -113,9 +113,12 @@
 			index_milButton = 5;
 			index_civButton = 6;
 			index_cancelButton = 7;
+			index_statButton = 8;
 			this.children.push(new TriggerButton(15, 10, GameConfig.COMM_MIL_LIST));
 			this.children.push(new TriggerButton(150, 10, GameConfig.COMM_CIV_LIST));
-			this.children.push(new TriggerButton(650,10, GameConfig.COMM_CANCEL));
+			this.children.push(new TriggerButton(650,50, GameConfig.COMM_CANCEL));
+			this.children.push(new TriggerButton(650,-10, GameConfig.COMM_STAT_POP));
+			
 			// Add external function
 			addExtFuncTo(GameConfig.COMM_NEXT,MouseEvent.CLICK, nextPage );
 			addExtFuncTo(GameConfig.COMM_PREV,MouseEvent.CLICK, prevPage );
@@ -224,6 +227,9 @@
 					break;
 				case GameConfig.COMM_CANCEL:
 					children[index_cancelButton].addEventListener(add_event,func);
+					break;
+				case GameConfig.COMM_STAT_POP:
+					children[index_statButton].addEventListener(add_event,func);
 					break;
 				default:
 					// do something

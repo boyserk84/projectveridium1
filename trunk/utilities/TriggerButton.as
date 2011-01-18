@@ -1,4 +1,4 @@
-﻿package{
+﻿package utilities {
 	import flash.display.MovieClip;
 	import flash.display.Stage;
 	import flash.geom.Rectangle;
