@@ -9,6 +9,7 @@
 	import flash.events.*;
 	import classes.*;
 	import constant.*;
+	import utilities.*;
 
 	/**
 	* gameCavas object
@@ -27,6 +28,8 @@
 		private var worldButton:TriggerButton;
 		*/
 		private var menuBar:MenuSystem;
+		private var headStat:HeaderInfo;
+		private var popUpStat:PopUpWindow;
 		
 		
 		private var command:int;			// Current command of the mouse-click
@@ -50,20 +53,13 @@
 			profile.Money = 10;
 			profile.Population = 10;
 			
-			//this.theView = new View(this);
 			this.input = new IOHandler(this.stage.x,this.stage.y,this.stage.width, this.stage.height);
 			this.input.addEventListener(MouseEvent.CLICK,cityMouseClick);
 			this.input.addEventListener(MouseEvent.MOUSE_MOVE,cityMouseMove);
-
-//			this.command = GameConfig.COMM_ADD;
-			
-			/*
-			this.addButton = new TriggerButton(200, 320, GameConfig.COMM_ADD);
-			this.removeButton = new TriggerButton(300,320, GameConfig.COMM_REMOVE);
-			this.worldButton=new TriggerButton(400,320, GameConfig.CHANGE_WORLD);
-			*/
 			
 			this.menuBar = new MenuSystem(0,460,Images.WIN_CITYMENU);
+			this.headStat = new HeaderInfo(profile);
+			this.popUpStat = new PopUpWindow(580,245,Images.POP_STAT);
 			
 			//attach mouse cursor
 			mouse=new MouseCurs();
@@ -79,12 +75,14 @@
 			mcity.addBuilding(mbuilding);
 			mcity.addBuilding(mbuilding2);
 			//mcity.addBuilding(mbuilding3);
+			
 			this.menuBar.feedCityReqToIcons(BuildingManager.determineBuildingList(mcity));
 			this.menuBar.buildMenu();
 			this.menuBar.addExtFuncTo(GameConfig.COMM_ADD, MouseEvent.CLICK, addButtonClick);
 			this.menuBar.addExtFuncTo(GameConfig.COMM_REMOVE,MouseEvent.CLICK, removeButtonClick);
 			this.menuBar.addExtFuncTo(GameConfig.CHANGE_WORLD, MouseEvent.CLICK, worldButtonClick);
 			this.menuBar.addExtFuncTo(GameConfig.COMM_CANCEL, MouseEvent.CLICK, cancelButtonClick);
+			this.menuBar.addExtFuncTo(GameConfig.COMM_STAT_POP, MouseEvent.CLICK, showStat);
 			
 			this.theView = new View(mcity);
 			// update Building List everytime add or remove in the game object occurs
@@ -93,18 +91,25 @@
 			
 			this.theView.Update();
 			this.addEventListener("enterFrame",gameLoop);
-			//this.addEventListener(MouseEvent.CLICK, addB);
 			
 			// Add Layer of I/O input device
-			//this.stage.addChild(this.input);
-			//this.stage.addChild(this.addButton);
-			//this.stage.addChild(this.removeButton);
 			this.addChild(theView);
-			this.addChild(mouse);						
+			this.addChild(mouse);		// Mouse cursor					
 			this.addChild(this.input);	// IO Input
 			
 			this.addChild(this.menuBar);	// Add Menu
+			this.addChild(this.headStat);	// Add Top Stat Bar
+			this.addChild(this.popUpStat);	// Add Pop-up windows
 			
+		}
+		
+		/**
+		* Show/Hide stat information
+		*/
+		public function showStat(event:MouseEvent):void
+		{
+			popUpStat.updateInfo(profile);
+			popUpStat.autoSwitch();
 		}
 		
 		/**
@@ -251,8 +256,9 @@
 							//profile.changeFood(BuildingInfo.getInfo(this.select_building));
 						}
 
-						// (4) Update Menu Bar
+						// (4) Update Menu Bar and update stat
 						menuBar.updateCityReq(BuildingManager.determineBuildingList(mcity));
+						headStat.updateInfo(profile);
 					}//if 
 				}
 			} else 

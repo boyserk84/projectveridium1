@@ -9,6 +9,7 @@
 	import flash.utils.Timer;
 	import flash.events.TimerEvent;
 	import contents.TownInfoPane;
+	import utilities.TriggerButton;
 	/**
 	* WorldMapCavas object
 	*	- handle all game logic and game contents for WorldMap
