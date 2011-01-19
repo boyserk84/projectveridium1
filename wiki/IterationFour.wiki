@@ -15,9 +15,12 @@ We will deal with contents and logic within a game.
 
 = Design on soldiers allocation =
 
-= Upgrade soldiers in a progressional manner =
+Approach#1 Upgrade soldiers in a progressional manner 
 
 All soldiers will initially have a "level#1" status, so called "minute-man". Then you can allocate a certain amount of "level#1" soldiers to "level#2". Let's say we have x amount of "level#2" soldiers after the upgrade. Then to be able to upgrade soldiers to "level#3", we can only upgrade for x amount, which is the amount of "level#2" soldiers. Basically, each soldier must be going through level#1 and so on before reaching the highest level.
+
+Approach#2 Command and Conquer soldiers allocation style
+Basically, once certain type of buildings is built, a certain type of soliders is enabled to be trained/drafted. For instance, "barrack" allows a player to train a minute-man. Once, "forge" is built, the player can train a higher level soldier immediately without having soldiers been through "minute-man" status like approach#1.
 
 = Enable soldiers to be able to be upgraded =
 
