@@ -144,13 +144,14 @@
 		**/
 		public function addButtonClick(event:MouseEvent):void
 		{
-			trace("Add button clicked!");
+			//trace("Add button clicked!");
 			this.command=GameConfig.COMM_ADD;
 			
 			// check requirement, retrive info from city
 			var build_list:Array = BuildingManager.determineBuildingList(mcity);
 			
-			trace(event.currentTarget.getBuildingType);
+			//trace(event.currentTarget.getBuildingType);
+			
 			// if met basic requirement
 			if (build_list[event.currentTarget.getBuildingType])
 			{
@@ -272,23 +273,12 @@
 		}
 		
 		/** 
-		* GameLoop: this is where things get updated!
+		* GameLoop: this is where things get updated constantly!
 		*/
 		public function gameLoop(event:Event):void
 		{
 			theView.Update();
 			headStat.updateTimerInfo(timer.stringCountDown);
-			
-			//menuBar.updateCityReq(BuildingManager.determineBuildingList(mcity));
-			
-		}
-		
-		/**
-		* Passes a list to the view in order to draw all of the entites on the screen
-		*/
-		public function Draw():void
-		{
-
 		}
 		
 		/**

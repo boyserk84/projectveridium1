@@ -60,7 +60,7 @@
 		*/
 		public function addBuilding(buildingIn:Building=null):void
 		{
-			requirements[buildingIn.Type]=true;
+			requirements[buildingIn.Type]=++requirements[buildingIn.Type];
 			buildings.Add(buildingIn);
 			trace("Length of Buildings:" + buildings.Length);
 		}
@@ -71,7 +71,7 @@
 		*/
 		public function removeBuilding(buildingIn:Building=null):void
 		{
-			requirements[buildingIn.Type] = false;
+			requirements[buildingIn.Type] = --requirements[buildingIn.Type];
 			buildings.Remove(buildingIn);
 		}
 		
