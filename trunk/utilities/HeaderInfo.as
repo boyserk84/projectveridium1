@@ -31,6 +31,11 @@
 			this.ironInfo.text = profile.Iron.toString();
 			this.foodInfo.text = profile.Food.toString();
 		}
+		
+		public function updateTimerInfo(timer:String):void
+		{
+			this.timerInfo.text = timer;
+		}
 	}
 }
 	

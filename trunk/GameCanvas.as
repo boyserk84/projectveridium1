@@ -19,6 +19,7 @@
 	{
 		
 		private var theView:View;			// View
+		private var timer:CountDown;
 		private var input:IOHandler;		// IO Handler (receiving input)
 		private var profile:Player;			// Player's profile
 		
@@ -57,6 +58,7 @@
 			this.input.addEventListener(MouseEvent.CLICK,cityMouseClick);
 			this.input.addEventListener(MouseEvent.MOUSE_MOVE,cityMouseMove);
 			
+			this.timer = new CountDown(1);
 			this.menuBar = new MenuSystem(0,460,Images.WIN_CITYMENU);
 			this.headStat = new HeaderInfo(profile);
 			this.popUpStat = new PopUpWindow(580,245,Images.POP_STAT);
@@ -100,7 +102,6 @@
 			this.addChild(this.menuBar);	// Add Menu
 			this.addChild(this.headStat);	// Add Top Stat Bar
 			this.addChild(this.popUpStat);	// Add Pop-up windows
-			
 		}
 		
 		/**
@@ -276,6 +277,8 @@
 		public function gameLoop(event:Event):void
 		{
 			theView.Update();
+			headStat.updateTimerInfo(timer.stringCountDown);
+			
 			//menuBar.updateCityReq(BuildingManager.determineBuildingList(mcity));
 			
 		}
@@ -296,6 +299,7 @@
 		{
 			trace("gameCanvas contructor is loaded!");
 			this.loadContents();
+			headStat.updateTimerInfo(timer.stringCountDown);
 			//this.gameLoop();
 		}
 		
