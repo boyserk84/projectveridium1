@@ -23,7 +23,8 @@
 || Task G || 3 hours || Show buildings corresponding to each type once tab is clicked. || 
 || Task H || 0.5 hours || Cancel button (Switch to select mode) ||
 || Task I || 0.5 hours || Stat Pop Up Windows (Stat of population allocaiton) ||
+\\ 
 || Task J || 0.5 hours || Display player's profile (resources) on the screen ||
 || Task K || || Pop-Up Window: increase/decrease player's pop ||
 || Task L || || Pop-Up Window: New windows for allocate soldiers (type)||
-|| Task M || || Pop-Up Window: New windows for allocate workers (type) ||
+|| Task M || || Pop-Up Window: New windows for allocate workers (type) || Task N || || Determine battlefield formula (prob and statistic) ||
