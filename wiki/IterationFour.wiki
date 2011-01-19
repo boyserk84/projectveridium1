@@ -21,7 +21,7 @@ All soldiers will initially have a "level#1" status, so called "minute-man". The
 
 To be able to upgrade soldiers, each player must build certain types of buildings. Some higher level buildings will enable each player to train soldiers to higher level. 
 
-= Battlefield =
+= Battlefield algorithm/formula =
 Defenders who will die during the battle field
 is equal to || (# of attackers) x ( (# of attackers) x attack value ) / (# of defenders x defense value) ||
 
