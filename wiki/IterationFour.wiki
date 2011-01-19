@@ -31,6 +31,10 @@ To be able to upgrade soldiers, each player must build certain types of building
 Defenders who will die during the battle field
 is equal to || (# of attackers) x ( (# of attackers) x attack value ) / (# of defenders x defense value) ||
 
+
+= Soldier (Unit) design =
+
+Each soldier will have attack and defense values. Each type of soliders will have different attack and defense values.
 = Tasks =
 || Task || Time Spent || Description ||
 || Task A || 3 hours || Battlefield formula/algorithm: attacker and defender ||
