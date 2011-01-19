@@ -1,0 +1,14 @@
+#summary One-sentence summary of this page.
+
+= Iteration#4 =
+We will deal with contents and logic within a game.
+- Battlefield gameplay (how to determine winner and looser)
+- Allocation and deallocation of different type of soldiers
+- Allocation and deallocation of different type of workers
+- Resources distribution and reproduction within a period of time
+-
+
+
+
+= Tasks =
+|| Task || Time Spent || Description ||
