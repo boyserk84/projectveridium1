@@ -11,9 +11,13 @@ We will deal with contents and logic within a game.
 
 - Resources distribution and reproduction within a period of time
 
--
 
 
 
 = Tasks =
 || Task || Time Spent || Description ||
+|| Task A || || Battlefield formula/algorithm: attacker and defender ||
+|| Task B || || Different type of soldiers allocation: set different attack and defense values based on type of soldiers ||
+|| Task C || || ||
+|| Task D || || ||
+|| Task E || || ||
