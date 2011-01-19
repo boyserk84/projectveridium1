@@ -28,7 +28,7 @@ is equal to || (# of attackers) x ( (# of attackers) x attack value ) / (# of de
 = Tasks =
 || Task || Time Spent || Description ||
 || Task A || || Battlefield formula/algorithm: attacker and defender ||
-|| Task B || || Different type of soldiers allocation: set different attack and defense values based on type of soldiers ||
+|| Task B || || Determine different attack and defense values based on type of soldiers ||
 || Task C || || ||
 || Task D || || ||
 || Task E || || ||
