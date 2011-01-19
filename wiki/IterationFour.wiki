@@ -11,6 +11,8 @@ We will deal with contents and logic within a game.
 
 - Resources distribution and reproduction within a period of time
 
+- Timer and how often you get resources (5 minutes)
+
 = Design on soldiers allocation =
 
 = Upgrade soldiers in a progressional manner =
@@ -29,6 +31,6 @@ is equal to || (# of attackers) x ( (# of attackers) x attack value ) / (# of de
 || Task || Time Spent || Description ||
 || Task A || || Battlefield formula/algorithm: attacker and defender ||
 || Task B || || Determine different attack and defense values based on type of soldiers ||
-|| Task C || || ||
+|| Task C || || Implement count-down timer for every 5 mins ||
 || Task D || || ||
 || Task E || || ||
