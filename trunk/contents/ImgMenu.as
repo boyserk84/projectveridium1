@@ -252,7 +252,7 @@
 				// Determine what can be displayed
 				if (this.icon_shown!=null)
 				{
-					if (!icon_shown[i])	// if not meeting requirement
+					if (icon_shown[i]<=0)	// if not meeting requirement
 					{
 						//trace("not shown at " + i);
 						this.icon_children[i].alpha = GameConfig.HALF_TRANSPARENT;
