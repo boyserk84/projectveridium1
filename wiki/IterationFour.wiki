@@ -23,6 +23,7 @@ Approach#2 Command and Conquer soldiers allocation style
 
 Basically, once certain type of buildings is built, a certain type of soliders is enabled to be trained/drafted. For instance, "barrack" allows a player to train a minute-man. Once, "forge" is built, the player can train a higher level soldier immediately without having soldiers been through "minute-man" status like approach#1.
 
+We decided to use Approach#2.
 = Enable soldiers to be able to be upgraded =
 
 To be able to upgrade soldiers, each player must build certain types of buildings. Some higher level buildings will enable each player to train soldiers to higher level. 
