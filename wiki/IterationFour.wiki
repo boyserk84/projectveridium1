@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary Addition of most major gameplay mechanics.
 
 = Iteration#4 =
 We will deal with contents and logic within a game.
@@ -26,6 +26,17 @@ Basically, once certain type of buildings is built, a certain type of soliders i
 = Enable soldiers to be able to be upgraded =
 
 To be able to upgrade soldiers, each player must build certain types of buildings. Some higher level buildings will enable each player to train soldiers to higher level. 
+
+= Soldier type ideas =
+
+-Minute-Man: Most basic soldier, supposed to be used as fodder.
+-Sharp-Shooter: A high attack soldier with very little defense, relatively expensive to build, supposed to sprinkle in ranks to increase losses of other side.
+-Officer: Decreases marching times as well as food consumption of armies, i.e. high skill rating.  Supposed usage is to allow armies to march farther and faster
+-Calvary: Fast unit for fast hits.
+-Cannon: High attack with relatively high defense, allows for more than 1-1 kills in the case of breaking defense.
+-Scout: low attack and defense, allows to scout the strength of forces in towns
+-Agent: Can collect the resources from enemy towns without having to own, although steals from enemy so they can find out.
+-Politician: Can collect the resources from friendly towns without having to own.
 
 = Battlefield algorithm/formula =
 Defenders who will die during the battle field
