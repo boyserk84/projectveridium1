@@ -57,6 +57,6 @@ Each soldier will have attack and defense values. Each type of soliders will hav
 || Task || Time Spent || Description ||
 || Task A || 3 hours || Battlefield formula/algorithm: attacker and defender ||
 || Task B || || Determine different attack and defense values based on type of soldiers ||
-|| Task C || || Implement count-down timer for every 5 mins ||
-|| Task D || || ||
-|| Task E || || ||
+|| Task C || 2 hours || Implement count-down timer for every 5 mins ||
+|| Task D || 1 hour || Display resources given within the city ||
+|| Task E || 1 hour || Give out resources every 5 minute and set maximum capacity if resources exceed their limit ||
