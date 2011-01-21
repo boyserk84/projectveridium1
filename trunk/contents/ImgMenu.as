@@ -43,8 +43,6 @@
 			icon_civil = new Array();
 			constructBound();
 			constructSUBMENU();
-			
-			
 			trace("Create a sub-menu");
 		}
 		
@@ -90,6 +88,7 @@
 				this.addChild(icon_children[i]);
 				
 			}
+			//trace("Total icon civl" + this.icon_civil.length);
 		}
 		
 		/**
@@ -113,6 +112,14 @@
 		private function constructSUBMENU():void
 		{	
 			constructIcons();
+			goToPage(0);
+		}
+		
+		/**
+		* Enable current menu to be displayed and hide the others
+		*/
+		private function enableCurrentMenu():void
+		{
 			goToPage(0);
 		}
 		
@@ -291,7 +298,8 @@
 		{
 			gotoAndStop(type);
 			constructBound();
-			constructSUBMENU();
+			enableCurrentMenu();
+			//constructSUBMENU(); // this will cause reallocate of mem than it should.
 		}
 		
 		/**

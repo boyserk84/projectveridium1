@@ -36,7 +36,7 @@
 		/**
 		* return building type of this image
 		*/
-		public function get getBuildingType()
+		public function get getBuildingType():int
 		{
 			return currentFrame-1;
 		}
@@ -44,9 +44,17 @@
 		/**
 		* return actual frame index of image
 		*/
-		public function get currFrame()
+		public function get currFrame():int
 		{
 			return currentFrame;
+		}
+		
+		/*
+		* changing type of building
+		*/
+		public function changeType(type:int):void
+		{
+			gotoAndStop(type+1);
 		}
 	}
 }

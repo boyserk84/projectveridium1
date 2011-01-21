@@ -99,9 +99,9 @@
 			
 			// Main button
 			index_removeButton = 0;
-			this.children.push(new TriggerButton(450,0, GameConfig.COMM_REMOVE));
+			this.children.push(new TriggerButton(500,0, GameConfig.COMM_REMOVE));
 			index_changeButton = 1;
-			this.children.push(new TriggerButton(450,30, GameConfig.CHANGE_WORLD));
+			this.children.push(new TriggerButton(650,30, GameConfig.CHANGE_WORLD));
 			
 			// Add building buttons/menu
 			this.all_icons = new ImgMenu(0,0,buildable_icons);
@@ -116,7 +116,7 @@
 			index_statButton = 8;
 			this.children.push(new TriggerButton(15, 10, GameConfig.COMM_MIL_LIST));
 			this.children.push(new TriggerButton(150, 10, GameConfig.COMM_CIV_LIST));
-			this.children.push(new TriggerButton(650,50, GameConfig.COMM_CANCEL));
+			this.children.push(new TriggerButton(500,50, GameConfig.COMM_CANCEL));
 			this.children.push(new TriggerButton(650,-10, GameConfig.COMM_STAT_POP));
 			
 			// Add external function
