@@ -51,6 +51,10 @@
 		
 		//Frame for City Map
 		public static const CITY_FRAME=1;
+		
+		//Sides for the game
+		public static const BRITISH=1;
+		public static const AMERICAN=2;
 
 		
 	

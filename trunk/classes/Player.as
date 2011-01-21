@@ -10,6 +10,9 @@
 		//The city belonging to this player
 		private var city:City;
 		
+		//The side this player is on
+		private var side:int;
+		
 		//How much wood this player has on hand
 		private var wood:int;
 		//The current wood capacity this player's tech level allows
@@ -50,18 +53,27 @@
 		//How many workers this player has on hand
 		private var workers:int;
 		
+		//The towns you own
+		private var towns:LinkedList;
+		
 		//The regiment this player has
 		private var regiments:LinkedList;
 		
-		public function Player(nameIn:String="",usernameIn:String="")
+		public function Player(nameIn:String="",usernameIn:String="",sideIn:int=1)
 		{
 			username=usernameIn;
 			myName=nameIn;
 			regiments=new LinkedList();
+			side=sideIn;
 			populationCap = BuildingType.POP_CAP_INIT;
 			foodCap = BuildingType.FOOD_CAP_INIT;
 			ironCap = BuildingType.IRON_CAP_INIT;
 			woodCap = BuildingType.WOOD_CAP_INIT;
+		}
+		
+		public function get Name():String
+		{
+			return username;
 		}
 		
 		public function addCity(city:City):void
@@ -226,6 +238,11 @@
 			if (food + value < FoodCap)
 			food += value;
 			else food = FoodCap;
+		}
+		
+		public function get Side():int
+		{
+			return side;
 		}
 		
 		/**

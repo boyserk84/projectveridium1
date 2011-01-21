@@ -2,6 +2,7 @@
 	
 	import flash.geom.Point;
 	import flash.display.MovieClip;
+	import constant.WorldConfig;
 	public class Regiment extends MovieClip
 	{
 		//The units in this platoon as represented by the "Soldier" class
@@ -12,6 +13,13 @@
 		private var myLocation:Point;
 		//The current destination of this Regiment
 		private var destination:Point;
+		//The username of the owner of this regiment
+		private var owner:String;
+		//The side this regiment is on
+		private var side:int;
+		//What the regiment is intending to do what it reaches its destination
+		private var intention:int;
+		
 		
 		private var distanceTraveled:Number;
 		
@@ -20,11 +28,22 @@
 		private var travelSpeed:Number;
 		
 		
-		public function Regiment(nameIn:String="Unnamed")
+		public function Regiment(nameIn:String="Unnamed",ownerIn:String="Rogue",sideIn:int=1)
 		{
 			myName=nameIn;
 			units=new LinkedList();
 			distanceTraveled=0;
+			owner=ownerIn;
+			side=sideIn;
+			intention=WorldConfig.NONE;
+		}
+		
+		public function addRegiment(regIn:Regiment):void
+		{
+			for(var i:int=0;i<regIn.Units.Length;++i)
+			{
+				addUnit(regIn.Units.Get(i).data);
+			}
 		}
 		
 		//Add a unit to this Platoon
@@ -33,7 +52,7 @@
 
 			for(var i:int=0;i<units.Length;++i)
 			{
-				if(compareWeaponLevel(units.Get(i).data,unitIn)&&compareArmorLevel(units.Get(i).data,unitIn)&&compareSkillLevel(units.Get(i).data,unitIn))
+				if(units.Get(i).data.Type==unitIn.Type)
 				{
 					units.Get(i).data.Amount+=unitIn.Amount;
 					return;
@@ -43,53 +62,12 @@
 			units.Add(unitIn);
 		}
 		
-		
-		/**
-		* Helper functions to compare the Weapon, Armor, and Skill levels of two soldiers
-		**/
-		private function compareWeaponLevel(unit1:Soldier,unit2:Soldier):Boolean
-		{
-			if(unit1.WeaponLevel==unit2.WeaponLevel)
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
-		
-		
-		private function compareArmorLevel(unit1:Soldier,unit2:Soldier):Boolean
-		{
-			if(unit1.ArmorLevel==unit2.ArmorLevel)
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
-		
-		private function compareSkillLevel(unit1:Soldier,unit2:Soldier):Boolean
-		{
-			if(unit1.SkillLevel==unit2.SkillLevel)
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
-		
 		//Remove a unit from this Platoon
 		public function removeUnit(unitIn:Soldier):void
 		{
 			for(var i:int=0;i<units.Length;++i)
 			{
-				if(compareWeaponLevel(units.Get(i).data,unitIn)&&compareArmorLevel(units.Get(i).data,unitIn)&&compareSkillLevel(units.Get(i).data,unitIn))
+				if(units.Get(i).data.Type==unitIn.Type)
 				{
 					units.Get(i).data.Amount-=unitIn.Amount;
 					if(units.Get(i).data.Amount<=0)
@@ -99,8 +77,36 @@
 					return;
 				}
 			}
-			units.Remove(unitIn);
 		}
+		
+		
+		
+		//Here is the problem!
+		public function incurLosses(amountIn:int):void
+		{
+			while(amountIn>0)
+			{
+				
+					if(amountIn>=units.Get(0).data.Amount)
+					{
+						amountIn-=units.Get(0).data.Amount;
+						units.Remove(units.Get(0).data);
+						if(units.Length==0)
+						{
+							amountIn=0;
+						}
+					}
+					else
+					{
+						units.Get(0).data.Amount-=amountIn;
+						amountIn=0;
+					}
+				
+				
+			}
+		}
+		
+		
 		
 		public function changeDistance(changeIn:Number):void
 		{
@@ -137,6 +143,14 @@
 			travelSpeed=value;
 		}
 		
+		public function get Intention():int
+		{
+			return intention;
+		}
+		public function set Intention(value:int):void
+		{
+			intention=value;
+		}
 		
 		
 		//Get the list for iteration
@@ -160,7 +174,7 @@
 			var total:int=0;
 			for(var i:int=0;i<units.Length;++i)
 			{
-				total+=(units.Get(i).data.Amount*units.Get(i).data.WeaponLevel);
+				total+=(units.Get(i).data.Amount*units.Get(i).data.AttackLevel);
 			}
 			return total;
 		}
@@ -214,6 +228,16 @@
 		public function set Destination(value:Point):void
 		{
 			destination=value;
+		}
+		
+		public function get Owner():String
+		{
+			return owner;
+		}
+		
+		public function get Side():int
+		{
+			return side;
 		}
 		
 		

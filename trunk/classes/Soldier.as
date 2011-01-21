@@ -1,5 +1,7 @@
 ﻿package classes {
 	
+	import constant.SoldierType;
+	
 	public class Soldier
 	{
 		//How many individual soldiers this unit represents
@@ -13,21 +15,27 @@
 		//The level of upgrade on this units training
 		//Training will determine the movement speed of this particular unit as well as a small modification to attack and defense
 		private var skillLevel:int;
+		//The type of this soldier, as found in SoldierInfo
+		//Different types of soldiers will have different abilities
+		private var type:int;
 		
-		public function Soldier(amountIn:int=0,weaponIn:int=1,armorIn:int=1,skillIn:int=1)
+		
+		public function Soldier(amountIn:int=0,weaponIn:int=1,armorIn:int=1,skillIn:int=1,typeIn:int=1)
 		{
 			amount=amountIn;
 			weaponLevel=weaponIn;
 			armorLevel=armorIn;
 			skillLevel=skillIn;
+			type=typeIn;
+			
 		}
 		
-		public function get ArmorLevel():int
+		public function get DefenseLevel():int
 		{
 			return armorLevel;
 		}
 		
-		public function get WeaponLevel():int
+		public function get AttackLevel():int
 		{
 			return weaponLevel;
 		}
@@ -40,6 +48,11 @@
 		public function get Amount():int
 		{
 			return amount;
+		}
+		
+		public function get Type():int
+		{
+			return type;
 		}
 
 		public function set Amount(value:int):void

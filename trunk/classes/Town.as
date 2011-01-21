@@ -2,6 +2,7 @@
 {
 	import flash.geom.Point;
 	import flash.display.MovieClip;
+	import constant.*;
 	
 	public class Town extends MovieClip
 	{
@@ -10,6 +11,7 @@
 		private var myDistrict:District;
 		
 		
+		private var owner:String;
 		
 		
 		
@@ -23,14 +25,28 @@
 		private var workers:int;
 		//How much wood this town produces per tick
 		private var woodProduction:int;
-		//How much stone this town produces per tick
-		private var stoneProduction:int;
+		//How much total wood this town is capable of producing
+		private var woodCap:int;
+		//How much extra capacity this town gives to your city
+		private var extraWoodCap:int;
 		//How much population this town produces
 		private var populationProduction:int;
-		//How much iron this town produces?
+		//How much population this town is capable of producing
+		private var populationCap:int;
+		//How much extra population capacity this town gives a city
+		private var extraPopCap:int;
+		//How much iron this town produces
 		private var ironProduction:int;
+		//How much iron this town is capable of producing
+		private var ironCap:int;
+		//How much extra iron capacity this town provides your city
+		private var extraIronCap:int;
 		//How much food this town produces
 		private var foodProduction:int;
+		//How much food this town is capable of producing
+		private var foodCap:int;
+		//How much extra food capacity this town gives you
+		private var extraFoodCap:int;
 		//How much money in taxes this town produces
 		private var moneyProduction:int;
 		//The name of this town for identification purposes
@@ -39,7 +55,10 @@
 		//The original Location of this town
 		private var myLocation:Point;
 		
-		public function Town(woodIn:int=0,moneyIn:int=0,popIn:int=0,ironIn:int=0,foodIn:int=0,locationIn:Point=null,nameIn:String="None")
+		//The occupying force
+		private var occupier:Regiment;
+		
+		public function Town(woodIn:int=0,moneyIn:int=0,popIn:int=0,ironIn:int=0,foodIn:int=0,locationIn:Point=null,nameIn:String="None",ownerIn:String="Renegade")
 		{
 			workers=0;
 			woodProduction=woodIn;
@@ -51,6 +70,8 @@
 			this.y=locationIn.y;
 			myLocation=locationIn;
 			myName=nameIn;
+			owner=ownerIn;
+			occupier=null;
 			
 		}
 		
@@ -58,7 +79,14 @@
 		{
 			return woodProduction;
 		}
-		
+		public function get WoodCap():int
+		{
+			return woodCap;
+		}
+		public function get ExtraWoodCap():int
+		{
+			return extraWoodCap;
+		}
 		public function get Money():int
 		{
 			return moneyProduction;			
@@ -68,13 +96,26 @@
 		{
 			return populationProduction;
 		}
+		
+		public function get ExtraPopulationCap():int
+		{
+			return extraPopCap;
+		}
 		public function get Food():int
 		{
 			return foodProduction;
 		}
+		public function get ExtraFoodCap():int
+		{
+			return extraFoodCap;
+		}
 		public function get Iron():int
 		{
 			return ironProduction;
+		}
+		public function get ExtraIronCap():int
+		{
+			return extraIronCap;
 		}
 		
 		public function modifyWorkers(change:int=0):void
@@ -87,11 +128,47 @@
 			return myLocation;
 		}
 		
+		//The current owner of this Town.  What is the player key for the database going to be, names?
+		public function get Owner():String
+		{
+			return owner;
+		}
+		
+		public function set Owner(value:String):void
+		{
+			owner=value;
+		}
+		
 		public function get Name():String
 		{
 			return myName;
 		}
+		
+		public function get Occupier():Regiment
+		{
+			return occupier;
+		}
+		
+		public function set Occupier(value:Regiment):void
+		{
+			occupier=value;
+		}
 			
+			
+		public function conquer(owner:String,side:int):void
+		{
+			this.owner=owner;
+			if(side==GameConfig.BRITISH)
+			{
+				gotoAndStop(WorldConfig.BRITISH_OCCUPANCY);
+			}
+			else
+			{
+				gotoAndStop(WorldConfig.AMERICAN_OCCUPANCY);
+			}
+			
+		}
+		
 		
 	}
 	
