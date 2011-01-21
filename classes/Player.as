@@ -1,4 +1,5 @@
 ﻿package classes {
+	import constant.BuildingType;
 	
 	public class Player
 	{
@@ -57,6 +58,15 @@
 			username=usernameIn;
 			myName=nameIn;
 			regiments=new LinkedList();
+			populationCap = BuildingType.POP_CAP_INIT;
+			foodCap = BuildingType.FOOD_CAP_INIT;
+			ironCap = BuildingType.IRON_CAP_INIT;
+			woodCap = BuildingType.WOOD_CAP_INIT;
+		}
+		
+		public function addCity(city:City):void
+		{
+			this.city = city;
 		}
 		
 		public function get Wood():int
@@ -135,34 +145,12 @@
 			return extraPopulationCap;
 		}
 		
-		public function set Wood(value:int)
-		{
-			wood = value;
-		}
-		public function set WoodCap(value:int)
-		{
-			woodCap = value;
-		}
-		
-		public function set Iron(value:int)
-		{
-			iron=value;
-		}
-		
-		public function set IronCap(value:int)
-		{
-			ironCap=value;
-		}
-		
-		public function set ExtraIronCap(value:int)
-		{
-			extraIronCap=value;
-		}
-		
-		public function set Money(value:int)
-		{
-			 money=value;
-		}
+		public function set Wood(value:int) { wood = value; }
+		public function set WoodCap(value:int){ woodCap = value;}
+		public function set Iron(value:int) { iron=value; }
+		public function set IronCap(value:int) { ironCap=value;}
+		public function set ExtraIronCap(value:int){ extraIronCap=value; }
+		public function set Money(value:int) { money=value;}
 		/*
 		public function set MoneyCap(value:int)
 		{
@@ -174,35 +162,12 @@
 			 extraMoneyCap=value;
 		}
 		*/
-		public function set Food(value:int)
-		{
-			 food=value;
-		}
-		
-		public function set FoodCap(value:int)
-		{
-			 foodCap=value;
-		}
-		
-		public function set ExtraFoodCap(value:int)
-		{
-			 extraFoodCap=value;
-		}
-		
-		public function set Population(value:int)
-		{
-			 population=value;
-		}
-		
-		public function set PopulationCap(value:int)
-		{
-			 populationCap=value;
-		}
-		
-		public function set ExtraPopulationCap(value:int)
-		{
-			 extraPopulationCap=value;
-		}
+		public function set Food(value:int) { food = value;}
+		public function set FoodCap(value:int) { foodCap=value;}
+		public function set ExtraFoodCap(value:int) { extraFoodCap=value; }
+		public function set Population(value:int){ population=value; }
+		public function set PopulationCap(value:int){ populationCap=value; }
+		public function set ExtraPopulationCap(value:int){ extraPopulationCap=value;}
 		
 		public function get AmountSoldiers():int
 		{
@@ -232,12 +197,16 @@
 		
 		public function changeWood(value:int)
 		{
+			if (wood + value < WoodCap)
 			wood += value;
+			else wood = WoodCap;
 		}
 		
 		public function changeIron(value:int)
 		{
+			if (iron + value < IronCap)
 			iron += value;
+			else iron = IronCap;
 		}
 		
 		public function changeMoney(value:int)
@@ -247,14 +216,28 @@
 		
 		public function changePop(value:int)
 		{
+			if (population + value < PopulationCap)
 			population += value;
+			else population = PopulationCap;
 		}
 		
 		public function changeFood(value:int)
 		{
+			if (food + value < FoodCap)
 			food += value;
+			else food = FoodCap;
 		}
 		
+		/**
+		* Update maximum capacity of all resources
+		*/
+		public function updateResourcesCapacity()
+		{
+			FoodCap = BuildingType.FOOD_CAP_INIT + city.ExtraStorage + extraFoodCap;
+			WoodCap = BuildingType.WOOD_CAP_INIT + city.ExtraStorage + extraWoodCap; 
+			IronCap = BuildingType.IRON_CAP_INIT + city.ExtraStorage + extraIronCap;
+			populationCap = BuildingType.POP_CAP_INIT + city.ExtraPop + extraPopulationCap;
+		}
 
 
 	}

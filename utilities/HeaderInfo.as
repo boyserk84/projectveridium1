@@ -25,11 +25,11 @@
 		*/
 		public function updateInfo(profile:Player):void
 		{
-			this.popInfo.text = profile.Population.toString();
-			this.woodInfo.text = profile.Wood.toString();
-			this.moneyInfo.text = profile.Money.toString();
-			this.ironInfo.text = profile.Iron.toString();
-			this.foodInfo.text = profile.Food.toString();
+			this.popInfo.text = profile.Population.toString() + "/" + profile.PopulationCap.toString();
+			this.woodInfo.text = profile.Wood.toString() + "/" + profile.WoodCap.toString();
+			this.moneyInfo.text = profile.Money.toString() ;
+			this.ironInfo.text = profile.Iron.toString() + "/" + profile.IronCap.toString();
+			this.foodInfo.text = profile.Food.toString() + "/" + profile.FoodCap.toString();
 		}
 		
 		public function updateTimerInfo(timer:String):void

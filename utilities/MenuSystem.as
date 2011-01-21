@@ -122,8 +122,8 @@
 			// Add external function
 			addExtFuncTo(GameConfig.COMM_NEXT,MouseEvent.CLICK, nextPage );
 			addExtFuncTo(GameConfig.COMM_PREV,MouseEvent.CLICK, prevPage );
-			addExtFuncTo(GameConfig.COMM_MIL_LIST, MouseEvent.CLICK, switchSubMenu);
-			addExtFuncTo(GameConfig.COMM_CIV_LIST, MouseEvent.CLICK, switchSubMenu);
+			addExtFuncTo(GameConfig.COMM_MIL_LIST, MouseEvent.CLICK, switchToMILSUB);
+			addExtFuncTo(GameConfig.COMM_CIV_LIST, MouseEvent.CLICK, switchToCIVILSUB);
 		}
 		
 		/**
@@ -139,7 +139,20 @@
 			} else {
 				menu = Images.WIN_MIL_SUB;
 			}
+			current_page = 0;
 			this.children[IndexOfIcons].switchSubMenu(menu);
+		}
+		
+		private function switchToMILSUB(event:MouseEvent):void
+		{
+			current_page = 0;
+			this.children[IndexOfIcons].switchSubMenu(Images.WIN_MIL_SUB);
+		}
+		
+		private function switchToCIVILSUB(envet:MouseEvent):void
+		{
+			current_page = 0;
+			this.children[IndexOfIcons].switchSubMenu(Images.WIN_CIVIL_SUB);
 		}
 		
 		/**
@@ -165,7 +178,8 @@
 		*/
 		private function isValidNextPage(current_page:int)
 		{
-			return !(current_page*Images.MAX_ICON_PER_PAGE >= all_icons.TOTAL_MAX_ENTRY + 1);
+			// If next leads to you to unexpected page, LOOK OVERHERE
+			return !(current_page*Images.MAX_ICON_PER_PAGE >= all_icons.TOTAL_MAX_ENTRY );
 		}
 		
 		/**

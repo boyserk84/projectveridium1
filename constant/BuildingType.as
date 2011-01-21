@@ -12,11 +12,24 @@
 		public static const CIVIL_TYPE:String = "CIVIL";
 		public static const MIL_TYPE:String = "MIL";
 		
-		
-		/*
-		* TOWN SQUARE
+		/* Rate of production of buildings within the city
 		*/
-		public static const TOWN_SQUARE:int=0;
+		public static const IRON_PRODUCT:int = 5;
+		public static const FOOD_PRODUCT:int = 15;
+		public static const WOOD_PRODUCT:int = 10;
+		public static const POP_PRODUCT:int = 5;
+		
+		/* Incremental value of max. (cap) storage value per building */
+		public static const EXTRA_STORAGE= 5;
+		public static const EXTRA_POP_STORAGE = 10;
+		
+		/* Initial maximum storages of each type of resources */
+		public static const IRON_CAP_INIT:int = 40;
+		public static const FOOD_CAP_INIT:int = 40;
+		public static const WOOD_CAP_INIT:int = 40;
+		public static const POP_CAP_INIT:int = 100;
+		
+
 		/*
 		* Military building 
 		*/		
@@ -40,6 +53,8 @@
 		/**
 		* Civilian building
 		*/
+
+		public static const TOWN_SQUARE:int=0;
 		public static const FARM:int = 15;
 		public static const SAWMILL:int=16;
 		public static const BLACKSMITH:int=17;
@@ -48,9 +63,9 @@
 		public static const MARKET:int=20;
 		public static const HOUSE:int=21;
 		
-		public static const TOTAL_CIVIL_TYPE:int = 2;
+		public static const TOTAL_CIVIL_TYPE:int = 8;
 		
-		public static const TOTAL_BUILD_TYPE:int = 16;
+		public static const TOTAL_BUILD_TYPE:int = 22;
 		
 		
 		
