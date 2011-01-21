@@ -20,7 +20,7 @@
 	{
 		
 		private var theView:View;			// View
-		private var timer:CountDown;
+		private var timer:CountDown;		// Timer
 		private var input:IOHandler;		// IO Handler (receiving input)
 		private var profile:Player;			// Player's profile
 		
@@ -40,6 +40,28 @@
 		var mouse:MouseCurs;
 		var update_resources:Boolean = true;
 		
+		
+		/**
+		* initalize mouse cursor
+		*/
+		private function initialize_MOUSE():void
+		{
+			mouse=new MouseCurs();
+			build_cursor = new ImgBuilding(0,0,BuildingType.TOWN_SQUARE);
+			build_cursor.visible = false;
+			build_cursor.alpha = GameConfig.HALF_TRANSPARENT;
+		}
+		
+		/**
+		* initialize I/O Handler
+		*/
+		private function initialize_IO():void
+		{
+			this.input = new IOHandler(0,0, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
+			this.input.addEventListener(MouseEvent.CLICK,cityMouseClick);
+			this.input.addEventListener(MouseEvent.MOUSE_MOVE,cityMouseMove);
+		}
+		
 		/**
 		* Load all contents to the canvas
 		*/
@@ -54,22 +76,9 @@
 			profile.Population = 10;
 			this.command = GameConfig.COMM_SELECT;
 		
-			//this.input = new IOHandler(this.stage.x,this.stage.y,this.stage.width, this.stage.height);
-			this.input = new IOHandler(0,0, 766, 612);
-			
-			this.input.addEventListener(MouseEvent.CLICK,cityMouseClick);
-			this.input.addEventListener(MouseEvent.MOUSE_MOVE,cityMouseMove);
-			
-			this.timer = new CountDown(1);
-			this.menuBar = new MenuSystem(0,460,Images.WIN_CITYMENU);
-			this.headStat = new HeaderInfo(profile);
-			this.popUpStat = new PopUpWindow(580,245,Images.POP_STAT);
-			
-			//attach mouse cursor
-			mouse=new MouseCurs();
-			build_cursor = new ImgBuilding(0,0,BuildingType.TOWN_SQUARE);
-			build_cursor.visible = false;
-			build_cursor.alpha = GameConfig.HALF_TRANSPARENT;
+			initialize_IO();
+			initialize_StatBar(profile);
+			initialize_MOUSE();
 
 			mcity=new City(0,0,8,8);
 			mbuilding=new Building(new Rectangle(1,0,1,1),BuildingType.TOWN_SQUARE);
@@ -77,6 +86,30 @@
 
 			profile.addCity(mcity);
 			
+			initialize_MenuBar(mcity);
+			initialize_GameView();
+			this.addEventListener("enterFrame",gameLoop);
+			initialize_Layers();	
+			
+			
+		}
+		
+		/**
+		* Load status bar with user's profile
+		*/
+		private function initialize_StatBar(profile:Player):void
+		{
+			this.timer = new CountDown(GameConfig.TIME_MINS_RESPAWN);
+			this.menuBar = new MenuSystem(0,460,Images.WIN_CITYMENU);
+			this.headStat = new HeaderInfo(profile);
+			this.popUpStat = new PopUpWindow(580,245,Images.POP_STAT);
+		}
+		
+		/**
+		* create a menu bar and add external functions (listeners) to it
+		*/
+		private function initialize_MenuBar(mcity:City):void
+		{
 			this.menuBar.feedCityReqToIcons(BuildingManager.determineBuildingList(mcity));
 			this.menuBar.buildMenu();
 			this.menuBar.addExtFuncTo(GameConfig.COMM_ADD, MouseEvent.CLICK, addButtonClick);
@@ -84,15 +117,23 @@
 			this.menuBar.addExtFuncTo(GameConfig.CHANGE_WORLD, MouseEvent.CLICK, worldButtonClick);
 			this.menuBar.addExtFuncTo(GameConfig.COMM_CANCEL, MouseEvent.CLICK, cancelButtonClick);
 			this.menuBar.addExtFuncTo(GameConfig.COMM_STAT_POP, MouseEvent.CLICK, showStat);
-			
+		}
+		
+		/**
+		* Initialize game into view
+		*/
+		private function initialize_GameView():void
+		{
 			this.theView = new View(mcity);
-			
-			// update Building List everytime add or remove in the game object occurs
 			this.theView.addBuildingList(mcity.Buildings);
-			
 			this.theView.Update();
-			this.addEventListener("enterFrame",gameLoop);
-			
+		}
+		
+		/**
+		* Initialize layers of display
+		*/
+		private function initialize_Layers():void
+		{
 			// Add Layer of I/O input device
 			this.addChild(theView);
 			this.addChild(mouse);			// Mouse cursor	
@@ -102,8 +143,8 @@
 			this.addChild(this.menuBar);	// Add Menu
 			this.addChild(this.headStat);	// Add Top Stat Bar
 			this.addChild(this.popUpStat);	// Add Pop-up windows
-			
 		}
+		
 		
 		/**
 		* Show/Hide stat information
@@ -175,12 +216,10 @@
 				{
 					this.select_building = event.currentTarget.getBuildingType;
 					trace("build now " + this.select_building);
-					// give out ghost building
-					//trace(event.currentTarget.getBuildingType);
-					//this.build_cursor.visible = true;
+					
 					this.build_cursor.changeType(event.currentTarget.getBuildingType);
 					this.mouse.visible= false;
-					//trace("Error here?");
+					
 					
 				} else {
 					trace("Not enough resources for " + this.select_building);
