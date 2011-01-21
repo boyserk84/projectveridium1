@@ -10,6 +10,7 @@
 	import classes.*;
 	import constant.*;
 	import utilities.*;
+	import contents.ImgBuilding;
 
 	/**
 	* gameCavas object
@@ -31,6 +32,8 @@
 		private var command:int;			// Current command of the mouse-click
 		private var select_building:int;	// Current building selected when mouse-click at the menu
 		
+		private var build_cursor:ImgBuilding;	// Cursor of building image
+		
 		var mcity:City;
 		var mbuilding:Building;
 		var mbuilding2:Building;
@@ -49,6 +52,7 @@
 			profile.Iron = 10;
 			profile.Money = 10;
 			profile.Population = 10;
+			this.command = GameConfig.COMM_SELECT;
 		
 			//this.input = new IOHandler(this.stage.x,this.stage.y,this.stage.width, this.stage.height);
 			this.input = new IOHandler(0,0, 766, 612);
@@ -63,18 +67,14 @@
 			
 			//attach mouse cursor
 			mouse=new MouseCurs();
-			
+			build_cursor = new ImgBuilding(0,0,BuildingType.TOWN_SQUARE);
+			build_cursor.visible = false;
+			build_cursor.alpha = GameConfig.HALF_TRANSPARENT;
 
-			
-			//this.stage.addChild(curr.drawIndex(0));
 			mcity=new City(0,0,8,8);
 			mbuilding=new Building(new Rectangle(1,0,1,1),BuildingType.TOWN_SQUARE);
-			mbuilding2=new Building(new Rectangle(0,0,1,1),BuildingType.TOWN_SQUARE);
-			//var mbuilding3=new Building(new Rectangle(3,3,2,2),BuildingType.FARM);
-			
 			mcity.addBuilding(mbuilding);
-			mcity.addBuilding(mbuilding2);
-			//mcity.addBuilding(mbuilding3);
+
 			profile.addCity(mcity);
 			
 			this.menuBar.feedCityReqToIcons(BuildingManager.determineBuildingList(mcity));
@@ -86,6 +86,7 @@
 			this.menuBar.addExtFuncTo(GameConfig.COMM_STAT_POP, MouseEvent.CLICK, showStat);
 			
 			this.theView = new View(mcity);
+			
 			// update Building List everytime add or remove in the game object occurs
 			this.theView.addBuildingList(mcity.Buildings);
 			
@@ -94,8 +95,9 @@
 			
 			// Add Layer of I/O input device
 			this.addChild(theView);
-			this.addChild(mouse);		// Mouse cursor					
-			this.addChild(this.input);	// IO Input
+			this.addChild(mouse);			// Mouse cursor	
+			this.addChild(build_cursor);	// Mouse cursor (for building)
+			this.addChild(this.input);		// IO Input
 			
 			this.addChild(this.menuBar);	// Add Menu
 			this.addChild(this.headStat);	// Add Top Stat Bar
@@ -122,6 +124,7 @@
 			//convert mouse coordinates from isometric back to normal
 			var ymouse = ((2*(event.stageY-GameConfig.TILE_INIT_Y)-(event.stageX-GameConfig.TILE_INIT_X))/2);
 			var xmouse = ((event.stageX-GameConfig.TILE_INIT_X)+ymouse);
+			
 			//find on which tile mouse is
 			ymouse = Math.round(ymouse/GameConfig.TILE_HEIGHT);
 			xmouse = Math.round(xmouse/GameConfig.TILE_HEIGHT)-1;
@@ -129,10 +132,23 @@
 			// If valid tile, then display cursor
 			if (mcity.isValid(xmouse,ymouse))
 			{
-				//trace("Move Coords: "+xmouse+" , "+ymouse);
-				this.mouse.x = (((xmouse-ymouse)*GameConfig.TILE_HEIGHT)+GameConfig.TILE_INIT_X);
-				this.mouse.y = (((xmouse+ymouse)*GameConfig.TILE_HEIGHT/2)+GameConfig.TILE_INIT_Y);
+				if (this.command == GameConfig.COMM_SELECT || this.command == GameConfig.COMM_REMOVE)
+				{
+					//trace("Move Coords: "+xmouse+" , "+ymouse);
+					this.mouse.visible = true;
+					this.mouse.x = (((xmouse-ymouse)*GameConfig.TILE_HEIGHT)+GameConfig.TILE_INIT_X);
+					this.mouse.y = (((xmouse+ymouse)*GameConfig.TILE_HEIGHT/2)+GameConfig.TILE_INIT_Y);
+				} else 
+				if (this.command == GameConfig.COMM_ADD)
+				{
+					this.build_cursor.visible = true;
+					//trace("Move Coords: "+xmouse+" , "+ymouse);
+					this.build_cursor.x = (((xmouse-ymouse)*GameConfig.TILE_HEIGHT)+GameConfig.TILE_INIT_X);
+					this.build_cursor.y = (((xmouse+ymouse)*GameConfig.TILE_HEIGHT/2)-(GameConfig.TILE_HEIGHT/2)+GameConfig.TILE_INIT_Y);
+					
+				}
 			}
+			
 			
 		}
 		
@@ -143,7 +159,7 @@
 		**/
 		public function addButtonClick(event:MouseEvent):void
 		{
-			//trace("Add button clicked!");
+			trace("Add button clicked!");
 			this.command=GameConfig.COMM_ADD;
 			
 			// check requirement, retrive info from city
@@ -159,6 +175,13 @@
 				{
 					this.select_building = event.currentTarget.getBuildingType;
 					trace("build now " + this.select_building);
+					// give out ghost building
+					//trace(event.currentTarget.getBuildingType);
+					//this.build_cursor.visible = true;
+					this.build_cursor.changeType(event.currentTarget.getBuildingType);
+					this.mouse.visible= false;
+					//trace("Error here?");
+					
 				} else {
 					trace("Not enough resources for " + this.select_building);
 					this.command = GameConfig.COMM_SELECT;
@@ -178,6 +201,7 @@
 		public function removeButtonClick(event:MouseEvent):void
 		{
 			trace("Remove button clicked");
+			this.build_cursor.visible = false;
 			this.command=GameConfig.COMM_REMOVE;
 		}
 		
@@ -186,6 +210,7 @@
 		*/
 		public function cancelButtonClick(event:MouseEvent):void
 		{
+			this.build_cursor.visible = false;
 			this.command = GameConfig.COMM_SELECT;
 		}
 		
@@ -263,11 +288,14 @@
 						// (4) Update Menu Bar and update stat
 						menuBar.updateCityReq(BuildingManager.determineBuildingList(mcity));
 						headStat.updateInfo(profile);
+						build_cursor.visible = false;
+						this.command = GameConfig.COMM_SELECT;
 					}//if 
 				}
 			} else 
 			if (this.command == GameConfig.COMM_SELECT)
 			{
+				this.mouse.visible = true;
 				// Move stuff
 				// Also pop up menu
 			}
