@@ -49,8 +49,10 @@
 			profile.Iron = 10;
 			profile.Money = 10;
 			profile.Population = 10;
+		
+			//this.input = new IOHandler(this.stage.x,this.stage.y,this.stage.width, this.stage.height);
+			this.input = new IOHandler(0,0, 766, 612);
 			
-			this.input = new IOHandler(this.stage.x,this.stage.y,this.stage.width, this.stage.height);
 			this.input.addEventListener(MouseEvent.CLICK,cityMouseClick);
 			this.input.addEventListener(MouseEvent.MOUSE_MOVE,cityMouseMove);
 			
@@ -87,7 +89,6 @@
 			// update Building List everytime add or remove in the game object occurs
 			this.theView.addBuildingList(mcity.Buildings);
 			
-			
 			this.theView.Update();
 			this.addEventListener("enterFrame",gameLoop);
 			
@@ -99,6 +100,7 @@
 			this.addChild(this.menuBar);	// Add Menu
 			this.addChild(this.headStat);	// Add Top Stat Bar
 			this.addChild(this.popUpStat);	// Add Pop-up windows
+			
 		}
 		
 		/**
@@ -195,7 +197,8 @@
 		{
 			//changes the frame to world map view
 			trace("World button clicked!");
-			MovieClip(parent).gotoAndStop(GameConfig.WORLD_FRAME);
+			//MovieClip(parent).gotoAndStop(GameConfig.WORLD_FRAME);
+			MovieClip(parent).switchGame();
 		}
 		
 		
