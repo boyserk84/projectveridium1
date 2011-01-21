@@ -103,7 +103,7 @@
 		public function cityButtonClick(event:MouseEvent):void
 		{
 			
-			MovieClip(parent).gotoAndStop(GameConfig.CITY_FRAME);
+			//MovieClip(parent).gotoAndStop(GameConfig.CITY_FRAME);
 			MovieClip(parent).switchGame();
 		}
 		
