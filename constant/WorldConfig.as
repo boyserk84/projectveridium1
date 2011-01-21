@@ -16,6 +16,16 @@
 		public static const WORLD_INIT_X=382;
 		public static const WORLD_INIT_Y=32;
 		
+		//What frames to goto for towns for either occupancy to illustrate on the world map
+		public static const AMERICAN_OCCUPANCY=2;
+		public static const BRITISH_OCCUPANCY=3;
+		
+		//Intention of regiments
+		public static const NONE=0;
+		public static const ATTACK=1;
+		public static const REINFORCE=2;
+		
+		
 		
 		
 		public static function getTownInfo(townIn:int):Town

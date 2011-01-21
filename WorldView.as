@@ -90,6 +90,18 @@
 				this.removeChild(townInfoPane);
 			}
 		}
+		
+		public function townInfoAttack():void
+		{
+			townInfoPane.attackButton.enabled=true;
+			townInfoPane.reinforceButton.enabled=false;
+
+		}
+		public function townInfoReinforce():void
+		{
+			townInfoPane.reinforceButton.enabled=true;
+			townInfoPane.attackButton.enabled=false;
+		}
 		public function draw(clip:*,index:int,array:Array):void
 		{
 			clip=MovieClip(clip);
