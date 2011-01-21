@@ -5,11 +5,13 @@
 	* This is where game constant/configuration value is defined.
 	*/
 	public class GameConfig {
-		public static const SCREEN_WIDTH:int = 471;
-		public static const SCREEN_HEIGHT:int = 343;
+		public static const SCREEN_WIDTH:int = 766 /*471*/;
+		public static const SCREEN_HEIGHT:int = 612 /*343*/;
 		
 		public static const WORLD_INIT_X:int=0;
 		public static const WORLD_INIT_Y:int=0;
+		
+		public static const TIME_MINS_RESPAWN:int = 1;
 
 /*		public static const SCREEN_WIDTH:int = 550;
 		public static const SCREEN_HEIGHT:int = 440;
