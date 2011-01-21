@@ -23,14 +23,9 @@
 		private var input:IOHandler;		// IO Handler (receiving input)
 		private var profile:Player;			// Player's profile
 		
-		/*
-		private var addButton:TriggerButton;
-		private var removeButton:TriggerButton;
-		private var worldButton:TriggerButton;
-		*/
-		private var menuBar:MenuSystem;
-		private var headStat:HeaderInfo;
-		private var popUpStat:PopUpWindow;
+		private var menuBar:MenuSystem;		// Menu System
+		private var headStat:HeaderInfo;	// Header Info
+		private var popUpStat:PopUpWindow;	// Pop Up Stat menu
 		
 		
 		private var command:int;			// Current command of the mouse-click
@@ -40,7 +35,8 @@
 		var mbuilding:Building;
 		var mbuilding2:Building;
 		var mouse:MouseCurs;
-		var test_update:Boolean = true;
+		var update_resources:Boolean = true;
+		
 		/**
 		* Load all contents to the canvas
 		*/
@@ -77,6 +73,7 @@
 			mcity.addBuilding(mbuilding);
 			mcity.addBuilding(mbuilding2);
 			//mcity.addBuilding(mbuilding3);
+			profile.addCity(mcity);
 			
 			this.menuBar.feedCityReqToIcons(BuildingManager.determineBuildingList(mcity));
 			this.menuBar.buildMenu();
@@ -199,7 +196,6 @@
 			//changes the frame to world map view
 			trace("World button clicked!");
 			MovieClip(parent).gotoAndStop(GameConfig.WORLD_FRAME);
-			
 		}
 		
 		
@@ -256,6 +252,9 @@
 							profile.changeIron(-BuildingInfo.getInfo(this.select_building).Iron);
 							profile.changePop(-BuildingInfo.getInfo(this.select_building).Population);
 							//profile.changeFood(BuildingInfo.getInfo(this.select_building));
+							
+							// (5) Extra update maximum capacity
+							profile.updateResourcesCapacity();
 						}
 
 						// (4) Update Menu Bar and update stat
@@ -279,6 +278,24 @@
 		{
 			theView.Update();
 			headStat.updateTimerInfo(timer.stringCountDown);
+			
+			if (timer.stringCountDown==timer.MIN_MINS_STRING() && update_resources)
+			{
+				// GET INFO. FROM TOWN!!!!
+				profile.changeWood(mcity.Wood);
+				profile.changeIron(mcity.Iron);
+				profile.changeFood(mcity.Food);
+				profile.changePop(mcity.Pop);
+				//
+				headStat.updateInfo(profile);
+				update_resources = false;
+			}
+			
+			if (timer.stringCountDown==timer.MAX_MINS_STRING()) 
+			{
+				update_resources = true;
+			}
+			
 		}
 		
 		/**

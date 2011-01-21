@@ -88,6 +88,7 @@
 				
 				this.icon_children[i].setInvisible();
 				this.addChild(icon_children[i]);
+				
 			}
 		}
 		
@@ -102,7 +103,7 @@
 			} else if (currentFrame == Images.WIN_CIVIL_SUB) {
 				bound = BuildingType.TOTAL_CIVIL_TYPE;
 			} else {
-				bound = BuildingType.TOTAL_BUILD_TYPE;
+				//bound = BuildingType.TOTAL_BUILD_TYPE;
 			}
 		}
 		
@@ -114,8 +115,6 @@
 			constructIcons();
 			goToPage(0);
 		}
-		
-
 		
 		/**
 		* Set all icons invisible and reset alpha to opaque value
@@ -177,7 +176,7 @@
 			// Upper bound check
 			if (max >= bound)
 			{
-				max = bound ;
+				max = bound;
 			}
 			//trace("Maximum" + max);
 			return max;
@@ -210,7 +209,6 @@
 			max = findMaxIndexAtPage(page);
 			
 			//trace("start page" + init_s + " end page " + max);
-			
 			displayRegion(init_s,max);
 			
 		}
@@ -246,6 +244,7 @@
 		*/
 		private function updateDisplayList():void
 		{
+			//trace(icon_shown.length + " " + BuildingType.TOTAL_BUILD_TYPE);
 			// Display
 			for (var i:int = 0; i < BuildingType.TOTAL_BUILD_TYPE; ++i)
 			{
@@ -266,6 +265,7 @@
 		*/
 		public function get TOTAL_MAX_ENTRY()
 		{
+			//trace(bound);
 			return this.bound;
 		}
 		

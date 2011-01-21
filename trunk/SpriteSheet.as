@@ -71,6 +71,7 @@
 					break;
 				
 				case BuildingType.FOUNDRY:
+					this.children.push(new ImgBuilding(this.x, this.y, BuildingType.FOUNDRY));
 					break;
 					
 				case BuildingType.WORKSHOP:
@@ -78,9 +79,33 @@
 					break;
 					
 				case BuildingType.BOOT_CAMP:
+					this.children.push(new ImgBuilding(this.x, this.y, BuildingType.BOOT_CAMP));
 					break;
 				
 				case BuildingType.STABLES:
+					this.children.push(new ImgBuilding(this.x, this.y, BuildingType.STABLES));
+					break;
+				case BuildingType.FARM:
+					this.children.push(new ImgBuilding(this.x,this.y, BuildingType.FARM));
+					break;
+					
+				case BuildingType.SAWMILL:
+					this.children.push(new ImgBuilding(this.x, this.y, BuildingType.SAWMILL));
+					break;
+				case BuildingType.BLACKSMITH:
+					this.children.push(new ImgBuilding(this.x, this.y, BuildingType.BLACKSMITH));
+					break;
+				case BuildingType.WAREHOUSE:
+					this.children.push(new ImgBuilding(this.x, this.y, BuildingType.WAREHOUSE));
+					break;
+				case BuildingType.STOCKPILE:
+					this.children.push(new ImgBuilding(this.x, this.y, BuildingType.STOCKPILE));
+					break;
+				case BuildingType.MARKET:
+					this.children.push(new ImgBuilding(this.x, this.y, BuildingType.MARKET));
+					break;
+				case BuildingType.HOUSE:
+					this.children.push(new ImgBuilding(this.x, this.y, BuildingType.HOUSE));
 					break;
 			}
 			
@@ -89,7 +114,6 @@
 //				this.children.push(new WorldMap());
 			}
 			
-			//trace(this.children.length);
 		}
 		
 		/**

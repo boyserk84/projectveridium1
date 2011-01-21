@@ -32,6 +32,7 @@
 		*/
 		private function convertMinsToSeconds(min:int):int
 		{
+			//return 10;
 			return min * 60;
 		}
 		
@@ -94,5 +95,21 @@
 			return sMinutes + ":" + sSeconds;
 		}
 		
+		/**
+		* return maximum minutes in string format
+		*/
+		public function MAX_MINS_STRING():String
+		{
+			//return "0:10";
+			return max_min + ":00";
+		}
+		
+		/**
+		* return min minute in string format
+		*/
+		public function MIN_MINS_STRING():String
+		{
+			return "0:01";
+		}
 	}
 }

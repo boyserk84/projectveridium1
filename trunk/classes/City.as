@@ -1,6 +1,7 @@
 ﻿package classes
 {
 	import flash.geom.Rectangle;
+	import constant.BuildingType;
 	public class City
 	{
 		//The bounds of this City
@@ -120,8 +121,47 @@
 			return requirements;
 		}
 		
+		/*
+		* return amount of population produced in this city
+		*/
+		public function get Pop():int
+		{
+			return BuildingType.POP_PRODUCT;
+		}
 		
+		/*
+		* return amount of irons can be produced in this city
+		*/
+		public function get Iron():int
+		{
+			return requirements[BuildingType.BLACKSMITH] * BuildingType.IRON_PRODUCT;
+		}
 		
+		public function get Wood():int
+		{
+			return requirements[BuildingType.SAWMILL] * BuildingType.WOOD_PRODUCT;
+		}
+		
+		public function get Food():int
+		{
+			return requirements[BuildingType.FARM] * BuildingType.FOOD_PRODUCT;
+		}
+		
+		/**
+		* Increase storage value
+		*/
+		public function get ExtraStorage():int
+		{
+			return requirements[BuildingType.WAREHOUSE] * BuildingType.EXTRA_STORAGE;
+		}
+		
+		/*
+		* Increase maximum capacity of population
+		*/
+		public function get ExtraPop():int
+		{
+			return requirements[BuildingType.HOUSE] * BuildingType.EXTRA_POP_STORAGE;
+		}
 		
 	}
 }
