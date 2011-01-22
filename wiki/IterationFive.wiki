@@ -9,7 +9,7 @@
 || Task D || || Display soldiers allocation menu when mouse over a specific military building. ||
 || Task E || || Disable resources given until required building is completed. ||
 || Task F || 1 hour || Change image from construction to normal once it finishes building. ||
-
+|| Task G || || Update the correct values of requirement when building is complete. ||
 
 - Allocate different type of soldiers
 
