@@ -15,7 +15,7 @@ Timer (Count-Down) is used for measuring how length it would take to build each 
 || Task E || 3 hours || Disable resources given until required building is completed. ||
 || Task F || 1 hour || Change image from construction to normal once it finishes building. ||
 || Task G || 3 hours || Update the correct values of requirement when building is complete. ||
-|| Task H || || Update the capacity when certain buildings are finished ||
+|| Task H || 1 hour || Update the capacity when certain buildings are finished ||
 
 - Allocate different type of soldiers
 
