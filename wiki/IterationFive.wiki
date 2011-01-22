@@ -2,11 +2,13 @@
 = Iteration#5 =
 
 - Building a building on a city.
+Timer (Count-Down) is used for measuring how length it would take to build each building. Once the building is done constructed, the flag will set and give out a permission to requirement list in the city.
+
 || Task || Time Spent || Description ||
 || Task A || 3 hours || Taking times to build a building. ||
 || Task B || 1 hours (c) || Display building requirement when mouse over. ||
 || Task C || || Display remaining time before building is finished when mouse over. ||
-|| Task D || || Display soldiers allocation menu when mouse over a specific military building. ||
+|| Task D || || Display soldiers allocation menu when mouse clicking at a specific military building. ||
 || Task E || 3 hours || Disable resources given until required building is completed. ||
 || Task F || 1 hour || Change image from construction to normal once it finishes building. ||
 || Task G || 3 hours || Update the correct values of requirement when building is complete. ||
