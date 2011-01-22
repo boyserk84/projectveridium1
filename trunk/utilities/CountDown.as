@@ -2,6 +2,7 @@
 	
 	import flash.utils.Timer;
 	import flash.events.TimerEvent;
+	import classes.City;
 	
 	/**
 	* CountDown class (Utilities)
@@ -14,6 +15,8 @@
 		private var max_min:int;				// maximum minute value
 		private var resultVal:String;			// String format representing min:sec
 		
+		private var obj_Update:Array;			// Array of objects that need to be updated every second
+		
 		/**
 		* Constructor
 		* @param min: minute
@@ -21,7 +24,9 @@
 		public function CountDown(min:int)
 		{
 			time = new Timer(1000, convertMinsToSeconds(min));
+			obj_Update = new Array();
 			time.addEventListener(TimerEvent.TIMER, initiateCount);
+			time.addEventListener(TimerEvent.TIMER, updateObjects);
 			max_min = min;
 			time.start();
 		}
@@ -50,6 +55,28 @@
 			}
 			
 			secondsLeft =  convertMinsToSeconds(max_min)  - event.currentTarget.currentCount;
+		}
+		
+		/**
+		* Run update function inside each objects every second
+		* @param event: Timer event
+		*/
+		private function updateObjects(event:TimerEvent):void
+		{
+			for (var i:int = 0; i < obj_Update.length; ++i)
+			{
+				//trace("run " + i);
+				obj_Update[i].Update();
+			}
+		}
+		
+		/**
+		* add object that has Update() function
+		*/
+		public function addObjectWithUpdate(obj:Object):void
+		{
+			//trace("Call");
+			obj_Update.push((obj));
 		}
 		
 		/**
@@ -111,5 +138,6 @@
 		{
 			return "0:01";
 		}
+		
 	}
 }

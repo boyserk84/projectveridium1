@@ -33,16 +33,16 @@
 			this.y = yLoc;
 			this.curr_image = Images.DEFAULT_INDEX;
 		
-			if (this.object_Type == BuildingType.TILE)
-			{
+		//	if (this.object_Type == BuildingType.TILE)
+		//	{
 				// object_type deterime how many images needed
 				// also determine what type of object to be added
 				
 				// Allocate different type of object
 				// and put in the vector
 				//this.children.push(new ImgBuilding(this.x,this.y));
-				this.children.push(new Tile(this.x, this.y));
-			}
+				//this.children.push(new Tile(this.x, this.y));
+		//	}
 			
 			switch (this.object_Type)
 			{
@@ -107,6 +107,9 @@
 				case BuildingType.HOUSE:
 					this.children.push(new ImgBuilding(this.x, this.y, BuildingType.HOUSE));
 					break;
+				default:
+					this.children.push(new Tile(this.x, this.y));
+					break;
 			}
 			
 			if(this.object_Type==WorldType.WORLD_MAP)
@@ -114,8 +117,26 @@
 //				this.children.push(new WorldMap());
 			}
 			
+			
+			// Create construction display of building
+			if (this.object_Type!=BuildingType.TILE)
+			{
+				var node:BuildingInfoNode = BuildingInfo.getInfo(children[children.length-1].getBuildingType);
+				if (node.Type == BuildingType.CIVIL_TYPE)
+				{
+					children[children.length-1].changeType(BuildingType.CIVIL_CONSTRUCT);
+				} else if (node.Type == BuildingType.MIL_TYPE)
+				{
+					children[children.length-1].changeType(BuildingType.MIL_CONSTRUCT);
+				}
+			}
+
 		}
 		
+		public function changeToMainImage()
+		{
+			children[children.length-1].changeType(object_Type);
+		}
 		/**
 		* Update (X,Y) Location
 		* @param x, y absolute location

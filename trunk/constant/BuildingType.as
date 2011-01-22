@@ -28,7 +28,13 @@
 		public static const FOOD_CAP_INIT:int = 40;
 		public static const WOOD_CAP_INIT:int = 40;
 		public static const POP_CAP_INIT:int = 100;
-		
+
+
+		/*
+		* Construction building
+		*/
+		public static const MIL_CONSTRUCT:int = 22;
+		public static const CIVIL_CONSTRUCT:int = 23;
 
 		/*
 		* Military building 
@@ -48,6 +54,22 @@
 		public static const WAY_POINT:int=13;
 		public static const AMBUSH:int=14;
 		
+		/* Time it takes to build each military building */
+		public static const SEC_BARRACK:int = 120;
+		public static const SEC_ARMORY:int = 180;
+		public static const SEC_RANGE:int = 180;
+		public static const SEC_SNIPER_SCHOOL:int = 240;
+		public static const SEC_FORGE:int = 240;
+		public static const SEC_WORKSHOP:int = 300;
+		public static const SEC_FOUNDRY:int = 300;
+		public static const SEC_BOOT_CAMP:int = 300;
+		public static const SEC_STABLES:int = 300;
+		public static const SEC_OFFICER_SCHOOL:int = 360;
+		public static const SEC_OUTPOST:int = 120;
+		public static const SEC_WATCH_TOWER:int = 120;
+		public static const SEC_WAY_POINT:int = 180;
+		public static const SEC_AMBUSH:int = 120;
+		
 		public static const TOTAL_MIL_TYPE:int = 14;
 		
 		/**
@@ -62,6 +84,16 @@
 		public static const STOCKPILE:int=19;
 		public static const MARKET:int=20;
 		public static const HOUSE:int=21;
+		
+		/* Time it takes to build each civilian building*/
+		public static const SEC_TOWN_SQUARE:int = 60;
+		public static const SEC_FARM:int = 30;
+		public static const SEC_SAWMILL:int = 120;
+		public static const SEC_BLACKSMITH:int = 300;
+		public static const SEC_WAREHOUSE:int = 180;
+		public static const SEC_STOCKPILE:int = 240;
+		public static const SEC_MARKET:int = 180;
+		public static const SEC_HOUSE:int = 30;
 		
 		public static const TOTAL_CIVIL_TYPE:int = 8;
 		
