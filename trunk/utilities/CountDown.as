@@ -6,7 +6,8 @@
 	
 	/**
 	* CountDown class (Utilities)
-	* This class will create a count-down timer for using in the game.
+	* This class will create a count-down timer for using in the game
+	* as well as update function that needs to be executed periodically (every sec).
 	*/
 	public class CountDown
 	{
@@ -58,7 +59,8 @@
 		}
 		
 		/**
-		* Run update function inside each objects every second
+		* Run update function that needs to be executed periodically (ever sec)
+		* inside each objects every second
 		* @param event: Timer event
 		*/
 		private function updateObjects(event:TimerEvent):void
@@ -71,11 +73,11 @@
 		}
 		
 		/**
-		* add object that has Update() function
+		* add object that has Update() function to be executed every second.
+		* @param obj: Generic object that has update function.	
 		*/
 		public function addObjectWithUpdate(obj:Object):void
 		{
-			//trace("Call");
 			obj_Update.push((obj));
 		}
 		
