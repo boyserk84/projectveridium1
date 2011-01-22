@@ -12,6 +12,7 @@
 		
 		//The buildings this city has for requirement issues
 		private var requirements:Array;
+		private var temp_req:Array;
 		
 		private const numberOfTypes:int=22;
 		
@@ -24,9 +25,10 @@
 			bounds=new Rectangle(xIn,yIn,widthIn,heightIn);
 			buildings=new LinkedList();
 			requirements=new Array(numberOfTypes);
+			temp_req = new Array(numberOfTypes);
 			for(var i:int=0;i<=numberOfTypes;++i)
 			{
-				requirements[i]=false;
+				requirements[i]=0;
 			}
 		}
 		
@@ -61,7 +63,10 @@
 		*/
 		public function addBuilding(buildingIn:Building=null):void
 		{
-			requirements[buildingIn.Type]=++requirements[buildingIn.Type];
+			requirements[0] = 1;
+			//requirements[buildingIn.Type]=++requirements[buildingIn.Type];
+			temp_req[buildingIn.Type]=++temp_req[buildingIn.Type];
+			
 			buildings.Add(buildingIn);
 			trace("Length of Buildings:" + buildings.Length);
 		}
@@ -81,10 +86,19 @@
 		*/
 		public function Update():void
 		{
+			
 			for(var i:int=0;i<buildings.Length;i++)
 			{
-				buildings[i].Update();
-			}
+				//trace("Itration " + i);
+				buildings.Get(i).data.Update();	// decrement time to build
+				
+				// if done, update the requirement list
+				if (buildings.Get(i).data.isBuildingDone())
+				{
+					var index:int = buildings.Get(i).data.Type;
+					requirements[index]+=buildings.Get(i).data.releaseBuildingToCity();
+				}
+			}//for
 		}
 		
 		/**

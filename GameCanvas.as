@@ -1,7 +1,7 @@
 ﻿package {
 	import flash.display.MovieClip;
 	import flash.display.Stage;
-	
+	import flash.utils.Timer;
 	import flash.geom.Rectangle;
 	import flash.geom.Point;
 	import flash.events.MouseEvent;
@@ -20,7 +20,7 @@
 	{
 		
 		private var theView:View;			// View
-		private var timer:CountDown;		// Timer
+		private var timer:CountDown;		// Count Down Timer
 		private var input:IOHandler;		// IO Handler (receiving input)
 		private var profile:Player;			// Player's profile
 		
@@ -40,6 +40,8 @@
 		var mouse:MouseCurs;
 		var update_resources:Boolean = true;
 		
+		
+		//var clockSec:Timer = new Timer(1000);
 		
 		/**
 		* initalize mouse cursor
@@ -89,9 +91,8 @@
 			initialize_MenuBar(mcity);
 			initialize_GameView();
 			this.addEventListener("enterFrame",gameLoop);
+			timer.addObjectWithUpdate(mcity);
 			initialize_Layers();	
-			
-			
 		}
 		
 		/**
@@ -176,6 +177,18 @@
 				if (this.command == GameConfig.COMM_SELECT || this.command == GameConfig.COMM_REMOVE)
 				{
 					//trace("Move Coords: "+xmouse+" , "+ymouse);
+					
+					// Check if mouse over building
+					if (theView.checkClickedBuilding(event.stageX, event.stageY)!=null)
+					{
+						// if building is not done 
+						if (!theView.checkClickedBuilding(event.stageX, event.stageY).isBuildingDone())
+						{
+							// enable view of time building
+							trace(theView.checkClickedBuilding(event.stageX, event.stageY).currentProgress());
+						}
+					}
+					
 					this.mouse.visible = true;
 					this.mouse.x = (((xmouse-ymouse)*GameConfig.TILE_HEIGHT)+GameConfig.TILE_INIT_X);
 					this.mouse.y = (((xmouse+ymouse)*GameConfig.TILE_HEIGHT/2)+GameConfig.TILE_INIT_Y);
@@ -187,7 +200,7 @@
 					this.build_cursor.x = (((xmouse-ymouse)*GameConfig.TILE_HEIGHT)+GameConfig.TILE_INIT_X);
 					this.build_cursor.y = (((xmouse+ymouse)*GameConfig.TILE_HEIGHT/2)-(GameConfig.TILE_HEIGHT/2)+GameConfig.TILE_INIT_Y);
 					
-				}
+				} 
 			}
 			
 			
@@ -320,8 +333,9 @@
 							profile.changePop(-BuildingInfo.getInfo(this.select_building).Population);
 							//profile.changeFood(BuildingInfo.getInfo(this.select_building));
 							
-							// (5) Extra update maximum capacity
-							profile.updateResourcesCapacity();
+							//!!!!!!!!!!! ONLY WHEN BUILDING IS FINISHED
+							// (5) Extra update maximum capacity only when finished
+							
 						}
 
 						// (4) Update Menu Bar and update stat
@@ -351,20 +365,32 @@
 			
 			if (timer.stringCountDown==timer.MIN_MINS_STRING() && update_resources)
 			{
-				// GET INFO. FROM TOWN!!!!
+				
 				profile.changeWood(mcity.Wood);
+				
 				profile.changeIron(mcity.Iron);
+				
 				profile.changeFood(mcity.Food);
+				
 				profile.changePop(mcity.Pop);
-				//
+				
+				// ISSUE
+				// Capacity need to be updated only when building is finished
+				profile.updateResourcesCapacity();
+				
+				
 				headStat.updateInfo(profile);
+				popUpStat.updateInfo(profile);
+				
+				
 				update_resources = false;
 			}
 			
-			if (timer.stringCountDown==timer.MAX_MINS_STRING()) 
+			if (timer.stringCountDown==timer.MAX_MINS_STRING()) // Reset Counting
 			{
 				update_resources = true;
 			}
+			
 			
 		}
 		
@@ -376,7 +402,7 @@
 		{
 			trace("gameCanvas contructor is loaded!");
 			this.loadContents();
-			headStat.updateTimerInfo(timer.stringCountDown);
+			//headStat.updateTimerInfo(timer.stringCountDown);
 			//this.gameLoop();
 		}
 		

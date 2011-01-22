@@ -442,6 +442,15 @@
 		{
 			// update state of the building to draw or location
 			this.drawAll();
+			
+			for (var i:int = 0; i < this.TotalBuildings; ++i)
+			{
+				// Check if building is complete, if so change to normal
+				if (gameSortedBuildingList[i].isBuildingDone())
+				{
+					ViewObject[i].changeToMainImage();
+				}
+			}
 		}
 		
 		

@@ -8,6 +8,7 @@
 		{
 			var wood:int,iron:int,money:int,population:int, requirement:int;
 			var main_type:String;
+			var time_sec_build:int; 
 			//trace("bbbbbbb" + buildingType);
 			switch(buildingType)
 			{
@@ -18,6 +19,7 @@
 					population=0;
 					requirement=BuildingType.TOWN_SQUARE;
 					main_type=BuildingType.MIL_TYPE;
+					time_sec_build = BuildingType.SEC_BARRACK;
 				break;
 				
 				case BuildingType.ARMORY:
@@ -27,6 +29,7 @@
 					population=0;
 					requirement=BuildingType.BARRACK;
 					main_type=BuildingType.MIL_TYPE;
+					time_sec_build = BuildingType.SEC_ARMORY;
 				break;
 				
 				case BuildingType.RANGE:
@@ -36,6 +39,7 @@
 					population=0;
 					requirement=BuildingType.ARMORY;
 					main_type=BuildingType.MIL_TYPE;
+					time_sec_build = BuildingType.SEC_RANGE;
 				break;
 				
 				case BuildingType.SNIPER_SCHOOL:
@@ -45,7 +49,7 @@
 					population=0;
 					requirement=BuildingType.RANGE;
 					main_type=BuildingType.MIL_TYPE;
-
+					time_sec_build = BuildingType.SEC_SNIPER_SCHOOL;
 				break;
 				
 				case BuildingType.FORGE:
@@ -55,6 +59,7 @@
 					population=0;
 					requirement=BuildingType.BARRACK;
 					main_type=BuildingType.MIL_TYPE;
+					time_sec_build = BuildingType.SEC_FORGE;
 				break;
 				
 				case BuildingType.WORKSHOP:
@@ -64,6 +69,7 @@
 					population=0;
 					requirement=BuildingType.FORGE;
 					main_type=BuildingType.MIL_TYPE;
+					time_sec_build = BuildingType.SEC_WORKSHOP;
 				break;
 				
 				case BuildingType.FOUNDRY:
@@ -73,6 +79,7 @@
 					population=0;
 					requirement=BuildingType.WORKSHOP;
 					main_type=BuildingType.MIL_TYPE;
+					time_sec_build = BuildingType.SEC_FOUNDRY;
 				break;
 				
 				case BuildingType.BOOT_CAMP:
@@ -82,6 +89,7 @@
 					population=0;
 					requirement=BuildingType.BARRACK;
 					main_type=BuildingType.MIL_TYPE;
+					time_sec_build = BuildingType.SEC_BOOT_CAMP;
 				break;
 				
 				case BuildingType.STABLES:
@@ -91,6 +99,7 @@
 					population=0;
 					requirement=BuildingType.BOOT_CAMP;
 					main_type=BuildingType.MIL_TYPE;
+					time_sec_build = BuildingType.SEC_STABLES;
 				break;
 				
 				case BuildingType.OFFICER_SCHOOL:
@@ -100,6 +109,7 @@
 					population=0;
 					requirement=BuildingType.STABLES;
 					main_type=BuildingType.MIL_TYPE;
+					time_sec_build = BuildingType.SEC_OFFICER_SCHOOL;
 				break;
 				
 				case BuildingType.OUTPOST:
@@ -109,6 +119,7 @@
 					population=0;
 					requirement=BuildingType.BARRACK;
 					main_type=BuildingType.MIL_TYPE;
+					time_sec_build = BuildingType.SEC_OUTPOST;
 				break;
 				
 				case BuildingType.WATCH_TOWER:
@@ -118,6 +129,7 @@
 					population=0;
 					requirement=BuildingType.RANGE;
 					main_type=BuildingType.MIL_TYPE;
+					time_sec_build = BuildingType.SEC_WATCH_TOWER;
 				break;
 				
 				case BuildingType.AMBUSH:
@@ -127,6 +139,7 @@
 					population=0;
 					requirement=BuildingType.SNIPER_SCHOOL;
 					main_type=BuildingType.MIL_TYPE;
+					time_sec_build = BuildingType.SEC_AMBUSH;
 				break;
 				
 				case BuildingType.WAY_POINT:
@@ -136,6 +149,7 @@
 					population=0;
 					requirement=BuildingType.STABLES;
 					main_type=BuildingType.MIL_TYPE;
+					time_sec_build = BuildingType.SEC_WAY_POINT;
 				break;
 				
 				case BuildingType.HOUSE:
@@ -145,6 +159,7 @@
 					population=0;
 					requirement=BuildingType.TOWN_SQUARE;
 					main_type=BuildingType.CIVIL_TYPE;
+					time_sec_build = BuildingType.SEC_HOUSE;
 				break;
 				
 				case BuildingType.FARM:
@@ -154,6 +169,7 @@
 					population=0;
 					requirement=BuildingType.TOWN_SQUARE;
 					main_type=BuildingType.CIVIL_TYPE;
+					time_sec_build = BuildingType.SEC_FARM;
 				break;
 				case BuildingType.SAWMILL:
 					wood=10;
@@ -162,6 +178,7 @@
 					population=0;
 					requirement=BuildingType.TOWN_SQUARE;
 					main_type=BuildingType.CIVIL_TYPE;
+					time_sec_build = BuildingType.SEC_SAWMILL;
 				break;
 				case BuildingType.BLACKSMITH:
 					wood=10;
@@ -170,6 +187,7 @@
 					population=0;
 					requirement=BuildingType.TOWN_SQUARE;
 					main_type=BuildingType.CIVIL_TYPE;
+					time_sec_build = BuildingType.SEC_BLACKSMITH;
 				break;
 				case BuildingType.WAREHOUSE:
 					wood=10;
@@ -178,6 +196,7 @@
 					population=0;
 					requirement=BuildingType.FARM;
 					main_type=BuildingType.CIVIL_TYPE;
+					time_sec_build = BuildingType.SEC_WAREHOUSE;
 				break;
 				case BuildingType.STOCKPILE:
 					wood=10;
@@ -186,6 +205,7 @@
 					population=0;
 					requirement=BuildingType.WAREHOUSE;
 					main_type=BuildingType.CIVIL_TYPE;
+					time_sec_build = BuildingType.SEC_STOCKPILE;
 				break;
 				case BuildingType.MARKET:
 					wood=10;
@@ -194,6 +214,7 @@
 					population=0;
 					requirement=BuildingType.WAREHOUSE;
 					main_type=BuildingType.CIVIL_TYPE;
+					time_sec_build = BuildingType.SEC_MARKET;
 				break; 
 				
 				default:
@@ -203,11 +224,12 @@
 					population=0;
 					requirement=0;
 					main_type=BuildingType.CIVIL_TYPE;
+					time_sec_build = 0;
 				break;
 			} //End of the giant switch statement
 			
 			//trace("ddd" + requirement);
-			return new BuildingInfoNode(wood,iron,population,money,requirement,main_type);
+			return new BuildingInfoNode(wood,iron,population,money,requirement,main_type,time_sec_build);
 		} //End of getInfo() function
 		
 		
