@@ -1,12 +1,16 @@
 #Advanced Game Mechanics and Features.
 = Iteration#5 =
 
-- Building a building on a city.
+= Building a building on a city. =
+
+All advanced city gameplay mechanic and user interface will be implemented on this iteration.
 
 Note:
 
 Timer (Count-Down) is used for measuring how long it would take to build each building. Once the building is done constructed, the flag will set and give out a permission to requirement list in the city.
 For the building type that increases city's capacity, the flag will set out and cap(s) is updated immediately.
+
+
 
 || Task || Time Spent || Description ||
 || Task A || 3 hours || Taking times to build a building. ||
