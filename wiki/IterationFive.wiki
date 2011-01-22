@@ -2,6 +2,7 @@
 = Iteration#5 =
 
 - Building a building on a city.
+Note:
 Timer (Count-Down) is used for measuring how length it would take to build each building. Once the building is done constructed, the flag will set and give out a permission to requirement list in the city.
 
 || Task || Time Spent || Description ||
