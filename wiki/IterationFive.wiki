@@ -3,11 +3,13 @@
 
 - Building a building on a city.
 || Task || Time Spent || Description ||
-|| Task A || || Taking times to build a building. ||
-|| Task B || || Display building requirement when mouse over. ||
+|| Task A || 3 hours || Taking times to build a building. ||
+|| Task B || 1 hours (c)|| Display building requirement when mouse over. ||
 || Task C || || Display remaining time before building is finished when mouse over. ||
 || Task D || || Display soldiers allocation menu when mouse over a specific military building. ||
 || Task E || || Disable resources given until required building is completed. ||
+|| Task F || || Change image from construction to normal once it finishes building. ||
+
 
 - Allocate different type of soldiers
 
