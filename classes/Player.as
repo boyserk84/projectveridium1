@@ -116,6 +116,11 @@
 		{
 			return money;
 		}
+		
+		public function getCity():City
+		{
+			return city;
+		}
 		/*
 		public function get MoneyCap():int
 		{
@@ -238,6 +243,26 @@
 			if (food + value < FoodCap)
 			food += value;
 			else food = FoodCap;
+		}
+		
+		public function changeExtraFoodCap(value:int)
+		{
+			if (extraFoodCap + value >=0) extraFoodCap += value;
+		}
+		
+		public function changeExtraWoodCap(value:int)
+		{ 
+			if (extraWoodCap + value >=0) extraWoodCap += value;
+		}
+		
+		public function changeExtraIronCap(value:int)
+		{ 
+			if (extraIronCap + value >=0) extraIronCap += value;
+		}
+		
+		public function changeExtraPop(value:int)
+		{ 
+			if (extraPopulationCap + value >=0) extraPopulationCap += value;
 		}
 		
 		public function get Side():int

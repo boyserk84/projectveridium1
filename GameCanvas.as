@@ -33,12 +33,14 @@
 		private var select_building:int;	// Current building selected when mouse-click at the menu
 		
 		private var build_cursor:ImgBuilding;	// Cursor of building image
+		private var mouse:MouseCurs;
+		private var update_resources:Boolean = true;
 		
-		var mcity:City;
-		var mbuilding:Building;
-		var mbuilding2:Building;
-		var mouse:MouseCurs;
-		var update_resources:Boolean = true;
+		// Game Contents
+		private var mcity:City;
+/*		var mbuilding:Building;
+		var mbuilding2:Building;*/
+		
 		
 		
 		//var clockSec:Timer = new Timer(1000);
@@ -70,23 +72,23 @@
 		public function loadContents():void
 		{
 			trace("loadContents"); 
-			profile = new Player("RealName", "UserName");
+/*			profile = new Player("RealName", "UserName");
 			profile.Food = 2;
 			profile.Wood = 22;
 			profile.Iron = 10;
 			profile.Money = 10;
-			profile.Population = 10;
+			profile.Population = 10;*/
 			this.command = GameConfig.COMM_SELECT;
 		
 			initialize_IO();
 			initialize_StatBar(profile);
 			initialize_MOUSE();
 
-			mcity=new City(0,0,8,8);
+	/*		mcity=new City(0,0,8,8);
 			mbuilding=new Building(new Rectangle(1,0,1,1),BuildingType.TOWN_SQUARE);
 			mcity.addBuilding(mbuilding);
 
-			profile.addCity(mcity);
+			profile.addCity(mcity);*/
 			
 			initialize_MenuBar(mcity);
 			initialize_GameView();
@@ -363,26 +365,23 @@
 			theView.Update();
 			headStat.updateTimerInfo(timer.stringCountDown);
 			
+			// Update city's capacity when specific types of building are finished.
+			if (mcity.Requirements[BuildingType.WAREHOUSE] > 0 ||
+				mcity.Requirements[BuildingType.HOUSE] > 0 )
+			{
+				profile.updateResourcesCapacity();
+				headStat.updateInfo(profile);
+			}
+			
+			// Give out and update resources periodically
 			if (timer.stringCountDown==timer.MIN_MINS_STRING() && update_resources)
 			{
-				
 				profile.changeWood(mcity.Wood);
-				
 				profile.changeIron(mcity.Iron);
-				
 				profile.changeFood(mcity.Food);
-				
 				profile.changePop(mcity.Pop);
-				
-				// ISSUE
-				// Capacity need to be updated only when building is finished
-				profile.updateResourcesCapacity();
-				
-				
 				headStat.updateInfo(profile);
 				popUpStat.updateInfo(profile);
-				
-				
 				update_resources = false;
 			}
 			
@@ -398,9 +397,11 @@
 		*	Constructor
 		*   This is the first thing that gets called when start a game.
 		*/
-		public function GameCanvas():void
+		public function GameCanvas(user:Player):void
 		{
 			trace("gameCanvas contructor is loaded!");
+			this.profile = user;
+			this.mcity = profile.getCity();
 			this.loadContents();
 			//headStat.updateTimerInfo(timer.stringCountDown);
 			//this.gameLoop();

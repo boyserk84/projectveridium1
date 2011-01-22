@@ -86,7 +86,7 @@
 		*/
 		public function Update():void
 		{
-			
+			// for each building in the linked list
 			for(var i:int=0;i<buildings.Length;i++)
 			{
 				//trace("Itration " + i);
@@ -96,6 +96,7 @@
 				if (buildings.Get(i).data.isBuildingDone())
 				{
 					var index:int = buildings.Get(i).data.Type;
+					// set flag to building and add to requirement list
 					requirements[index]+=buildings.Get(i).data.releaseBuildingToCity();
 				}
 			}//for
