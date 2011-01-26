@@ -3,7 +3,8 @@
 	public class SoldierType
 	{
 		public static const NONE=0;
-		public static const MINUTEMAN=1;
+		public static const WORKER=1;
+		public static const MINUTEMAN=2;
 
 
 		public static function getSoldierInfo(soldierType:int):SoldierInfoNode
@@ -23,6 +24,15 @@
 					skill=10;
 					requirement=SoldierType.NONE;
 					type=SoldierType.MINUTEMAN;
+					break;
+				}
+				case WORKER:
+				{
+					weapon=0;
+					armor=0;
+					skill=0;
+					requirement=SoldierType.NONE;
+					type=SoldierType.WORKER;
 					break;
 				}
 			}
