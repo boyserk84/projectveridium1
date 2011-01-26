@@ -10,13 +10,16 @@
 		//District this Town belongs too
 		private var myDistrict:District;
 		
-		
+		//The name of the player who owns this town
 		private var owner:String;
+		
+		//The side this town currently is on
+		private var side:int;
 		
 		
 		
 		//The player who owns this town
-	//		private var owner:Player;
+
 		
 		
 		//How are we going to do battle?
@@ -58,6 +61,7 @@
 		//The occupying force
 		private var occupier:Regiment;
 		
+		
 		public function Town(woodIn:int=0,moneyIn:int=0,popIn:int=0,ironIn:int=0,foodIn:int=0,locationIn:Point=null,nameIn:String="None",ownerIn:String="Renegade")
 		{
 			workers=0;
@@ -72,6 +76,7 @@
 			myName=nameIn;
 			owner=ownerIn;
 			occupier=null;
+			side=0;
 			
 		}
 		
@@ -139,6 +144,11 @@
 			owner=value;
 		}
 		
+		public function get Side():int
+		{
+			return side;
+		}
+		
 		public function get Name():String
 		{
 			return myName;
@@ -153,18 +163,24 @@
 		{
 			occupier=value;
 		}
+		
+		public function get Workers():int
+		{
+			return workers;
+		}
 			
-			
-		public function conquer(owner:String,side:int):void
+		public function conquer(owner:String,sideIn:int):void
 		{
 			this.owner=owner;
-			if(side==GameConfig.BRITISH)
+			if(sideIn==GameConfig.BRITISH)
 			{
 				gotoAndStop(WorldConfig.BRITISH_OCCUPANCY);
+				side=sideIn;
 			}
 			else
 			{
 				gotoAndStop(WorldConfig.AMERICAN_OCCUPANCY);
+				side=sideIn;
 			}
 			
 		}

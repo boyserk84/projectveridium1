@@ -9,6 +9,7 @@
 	import flash.utils.Timer;
 	import flash.events.TimerEvent;
 	import contents.TownInfoPane;
+	import contents.TownInfoBar;
 	import utilities.TriggerButton;
 	/**
 	* WorldMapCavas object
@@ -27,6 +28,8 @@
 		private var gameTimer:Timer;
 		
 		private var regiments:LinkedList;
+		private var currTown:Town;
+		private var townInfoBar:TownInfoBar;
 		
 		
 		//The old position of the mouse for the sake of movement distance
@@ -37,6 +40,9 @@
 		public function loadContents():void
 		{
 			this.worldView=new WorldView();
+			this.townInfoBar=new TownInfoBar();
+			townInfoBar.x=GameConfig.SCREEN_WIDTH-275;
+			townInfoBar.y=0;
 			myMap=new Map();
 			gameTimer=new Timer(100,0);
 			gameTimer.addEventListener(TimerEvent.TIMER,gameLoop);
@@ -73,8 +79,11 @@
 			myPlayer.addRegiment(reg);
 			enemyPlayer.addRegiment(reg2);
 			
-			this.worldView.TownInfo.attackButton.addEventListener(MouseEvent.CLICK,townAttackButtonClick);
-			this.worldView.TownInfo.reinforceButton.addEventListener(MouseEvent.CLICK,townReinforceButtonClick);
+			this.worldView.TownInfo.economicButton.addEventListener(MouseEvent.CLICK,townEconomicButtonClick);
+			this.worldView.TownInfo.militaryButton.addEventListener(MouseEvent.CLICK,townMilitaryButtonClick);
+
+
+			
 			
 			
 			this.worldView.addAssets(myMap.Towns);
@@ -93,7 +102,9 @@
 
 			this.addChild(input);			
 			this.addChild(worldView);
+			this.addChild(townInfoBar);
 			this.addChild(cityButton);
+			
 			gameTimer.start();
 			
 			
@@ -107,9 +118,81 @@
 			MovieClip(parent).switchGame();
 		}
 		
+		public function townEconomicButtonClick(event:MouseEvent):void
+		{
+			//Do military things
+			townInfoBarEconomic(currTown);
+			
+			
+		}
+		
+		public function townInfoBarEconomic(town:Town):void
+		{
+			changeTownInfoBar(WorldConfig.TOWN_BAR_ECONOMIC);
+			this.townInfoBar.sendWorkersButton.addEventListener(MouseEvent.CLICK,townSendWorkersButtonClick);
+			townInfoBar.updateAttributesEconomic(currTown);
+			
+			
+		}
+		
+		public function townMilitaryButtonClick(event:MouseEvent):void
+		{
+			//Do military things
+			townInfoBarMilitary(currTown);
+		}
+		
+		public function townInfoBarMilitary(town:Town):void
+		{
+			changeTownInfoBar(WorldConfig.TOWN_BAR_MILITARY);
+			this.townInfoBar.attackButton.addEventListener(MouseEvent.CLICK,townAttackButtonClick);
+			this.townInfoBar.reinforceButton.addEventListener(MouseEvent.CLICK,townReinforceButtonClick);
+			if(currTown.Owner==myPlayer.Name)
+			{
+				townInfoReinforce();
+			}
+			else
+			{
+				townInfoAttack();
+			}
+			this.townInfoBar.updateAttributesMilitary(currTown);
+			
+		}
+		
+		
+		public function townInfoAttack():void
+		{
+			
+			townInfoBar.attackButton.enabled=true;
+			townInfoBar.attackButton.visible=true;
+			townInfoBar.reinforceButton.enabled=false;
+			townInfoBar.reinforceButton.visible=false;
+
+		}
+		public function townInfoReinforce():void
+		{
+			
+			townInfoBar.reinforceButton.enabled=true;
+			townInfoBar.reinforceButton.visible=true;
+			townInfoBar.attackButton.enabled=false;
+			townInfoBar.attackButton.visible=false;
+		}
+		
+		public function clearTownBar():void
+		{
+			changeTownInfoBar(WorldConfig.TOWN_BAR_BLANK);
+		}
+		
+		public function changeTownInfoBar(frameIn:int):void
+		{
+			townInfoBar.gotoAndStop(frameIn);
+		}
+		
+		
+		
+		
 		public function townAttackButtonClick(event:MouseEvent):void
 		{
-			//do things
+			//Set the state to be attacking, then allow clicking on a town for deciding what troops to send.
 			myPlayer.Regiments.Get(0).data.Destination=event.currentTarget.parent.Location;
 			myPlayer.Regiments.Get(0).data.x=myPlayer.Regiments.Get(0).data.Location.x;
 			myPlayer.Regiments.Get(0).data.y=myPlayer.Regiments.Get(0).data.Location.y;
@@ -121,14 +204,17 @@
 		public function townReinforceButtonClick(event:MouseEvent):void
 		{
 			//Do other things
-						//do things
-						trace("Clicked");
 			myPlayer.Regiments.Get(0).data.Destination=event.currentTarget.parent.Location;
 			myPlayer.Regiments.Get(0).data.x=myPlayer.Regiments.Get(0).data.Location.x;
 			myPlayer.Regiments.Get(0).data.y=myPlayer.Regiments.Get(0).data.Location.y;
 			myPlayer.Regiments.Get(0).data.Intention=WorldConfig.REINFORCE;
 			regiments.Add(myPlayer.Regiments.Get(0).data);
 			worldView.addAsset(myPlayer.Regiments.Get(0).data);
+		}
+		
+		public function townSendWorkersButtonClick(event:MouseEvent):void
+		{
+			//Do worker things
 		}
 		
 		
@@ -177,19 +263,10 @@
 		public function worldMouseClick(event:MouseEvent):void		
 		{
 			
-			var town:Town=myMap.findTownByLocation((event.stageX+worldView.Offset.x),(event.stageY+worldView.Offset.y));
-			if(town!=null)
+			currTown=myMap.findTownByLocation((event.stageX+worldView.Offset.x),(event.stageY+worldView.Offset.y));
+			if(currTown!=null)
 			{
-				if(town.Owner==myPlayer.Name)
-				{
-					worldView.townInfoReinforce();
-				}
-				else
-				{
-					worldView.townInfoAttack();
-				}
-				worldView.showTownInfo(town);
-				
+				worldView.showTownInfo(currTown);
 			}
 			else
 			{
