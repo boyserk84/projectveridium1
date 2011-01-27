@@ -1,0 +1,26 @@
+#Server side and Client integration
+= Iteration#6 =
+This iteration will deal with the following features:
+
+- Integrate a game into FACEBOOK Apps
+
+- Fetching data from MYSQL
+
+- Writing dynamically created data from game to MYSQL
+
+- Multiplayer integration
+
+= FaceBook API Tasks =
+
+|| Task || Time Spent || Description ||
+|| Task A || 2 hours|| Fetch basic information from facebook profile ||
+|| Task B || 1 hour || Embedded request invitation page to facebook app ||
+|| Task C || 1 hour || Authentication using facebook API ||
+|| Task D || || ||
+
+= Database/Server: Client/Server =
+
+|| Task || Time Spent || Description ||
+|| Task A || || Fetch data from DB and add to game (AS3) ||
+|| Task B || || Write data from game to DB ||
+|| Task C || || Design DB corresponding to game data ||
