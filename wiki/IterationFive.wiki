@@ -21,8 +21,6 @@ For the building type that increases city's capacity, the flag will set out and 
 || Task F || 1 hour || Change image from construction to normal once it finishes building. ||
 || Task G || 3 hours || Update the correct values of requirement when building is complete. ||
 || Task H || 1 hour || Update the capacity when certain buildings are finished ||
-|| Task I || || Mouseover and show requirement for each building type ||
-
 - Allocate different type of soldiers
 
 - Allocate workers via stat bar
