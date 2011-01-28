@@ -7,6 +7,7 @@
 	import classes.*;
 	import constant.*;
 	import contents.TownInfoPane;
+	import contents.WorkerManagementScreen;
 
 	
 	public class WorldView extends MovieClip
@@ -15,12 +16,14 @@
 		private var gameViewObjects:Array;
 		private var offset:Point;
 		private var townInfoPane:TownInfoPane;
+		private var workerManagement:WorkerManagementScreen;
 		
 		public function WorldView()
 		{
 			offset=new Point(0,0);
 			gameViewObjects=new Array();
 			townInfoPane=new TownInfoPane();
+			workerManagement=new WorkerManagementScreen();
 			//Build the District map
 			for(var i:int=1;i<12;++i)
 			{
@@ -38,6 +41,11 @@
 		public function get TownInfo():TownInfoPane
 		{
 			return townInfoPane;
+		}
+		
+		public function get WorkerManagement():WorkerManagementScreen
+		{
+			return workerManagement;
 		}
 		
 		public function addAssets(assetsIn:Array):void
@@ -83,12 +91,29 @@
 			this.addChild(townInfoPane);			
 		}
 		
+		public function showWorkerManagement(townIn:Town):void
+		{
+			workerManagement.updateAttributes(townIn);
+			workerManagement.x=(townIn.x)+WorldConfig.TOWN_INFO_OFFSET_X;
+			workerManagement.y=(townIn.y)+WorldConfig.TOWN_INFO_OFFSET_Y;
+			this.addChild(workerManagement);			
+		}
+		
 		public function hideTownInfo():void
 		{
 			if(this.contains(townInfoPane))
 			{
 				this.removeChild(townInfoPane);
 			}
+		}
+		
+		public function hideWorkerManagement():void
+		{
+			if(this.contains(workerManagement))
+			{
+				this.removeChild(workerManagement);
+			}
+											  
 		}
 		
 		

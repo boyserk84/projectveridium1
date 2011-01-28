@@ -46,6 +46,14 @@
 			}
 		}
 		
+		public function removeRegiment(regIn:Regiment):void
+		{
+			for(var i:int=0;i<regIn.Units.Length;++i)
+			{
+				removeUnit(regIn.Units.Get(i).data);
+			}
+		}
+		
 		//Add a unit to this Platoon
 		public function addUnit(unitIn:Soldier):void
 		{
@@ -247,6 +255,11 @@
 		public function get Owner():String
 		{
 			return owner;
+		}
+		
+		public function set Owner(value:String):void
+		{
+			owner=value;
 		}
 		
 		public function get Side():int

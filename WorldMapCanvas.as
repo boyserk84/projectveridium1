@@ -30,8 +30,9 @@
 		
 		private var regiments:LinkedList;
 		private var currTown:Town;
+		private var currentTarget:Town;
 		private var townInfoBar:TownInfoBar;
-		private var armySelectionScreen:ArmySelectionScreen;
+		private var armyManagementScreen:ArmySelectionScreen;
 		private var currentState:int;
 		
 		
@@ -44,7 +45,7 @@
 		{
 			this.worldView=new WorldView();
 			this.townInfoBar=new TownInfoBar();
-			this.armySelectionScreen=new ArmySelectionScreen();
+			this.armyManagementScreen=new ArmySelectionScreen();
 			townInfoBar.x=GameConfig.SCREEN_WIDTH-275;
 			townInfoBar.y=0;
 			myMap=new Map();
@@ -66,12 +67,12 @@
 			
 			var reg:Regiment=new Regiment("Regiment 1",myPlayer.Name,myPlayer.Side);
 			var reg2:Regiment=new Regiment("Enemies",enemyPlayer.Name,enemyPlayer.Side);
-			var temp:SoldierInfoNode=SoldierType.getSoldierInfo(SoldierType.MINUTEMAN);
-			reg.addUnit(new Soldier(20,temp.Weapon,temp.Armor,temp.Skill,temp.Type));
+			reg.addUnit(new Soldier(25,SoldierType.MINUTEMAN));
 			
-			reg2.addUnit(new Soldier(20,temp.Weapon,temp.Armor,temp.Skill,temp.Type));
+			reg2.addUnit(new Soldier(20,SoldierType.MINUTEMAN));
 			reg.Location=myMap.Towns[0].Location;
-			myMap.Towns[0].Occupier=reg;			
+			myMap.Towns[0].Occupier=reg;
+			myMap.Towns[0].modifyWorkers(10);
 			myMap.Towns[0].conquer(myPlayer.Name,myPlayer.Side);
 			myMap.Towns[1].conquer(enemyPlayer.Name,enemyPlayer.Side);
 			reg2.Location=myMap.Towns[1].Location;
@@ -85,6 +86,12 @@
 			
 			this.worldView.TownInfo.economicButton.addEventListener(MouseEvent.CLICK,townEconomicButtonClick);
 			this.worldView.TownInfo.militaryButton.addEventListener(MouseEvent.CLICK,townMilitaryButtonClick);
+			this.worldView.WorkerManagement.acceptButton.addEventListener(MouseEvent.CLICK,workerManagementAcceptButtonClick);
+			this.worldView.WorkerManagement.cancelButton.addEventListener(MouseEvent.CLICK,workerManagementCancelButtonClick);
+			
+			armyManagementScreen.acceptButton.addEventListener(MouseEvent.CLICK,armyManagementAcceptButtonClick);
+			armyManagementScreen.cancelButton.addEventListener(MouseEvent.CLICK,armyManagementCancelButtonClick);
+
 
 
 			
@@ -133,8 +140,20 @@
 		public function townInfoBarEconomic(town:Town):void
 		{
 			changeTownInfoBar(WorldConfig.TOWN_BAR_ECONOMIC);
+			
 			this.townInfoBar.sendWorkersButton.addEventListener(MouseEvent.CLICK,townSendWorkersButtonClick);
 			townInfoBar.updateAttributesEconomic(currTown);
+			if(currTown.Owner==myPlayer.Name)
+			{
+				
+				this.townInfoBar.sendWorkersButton.visible=true;
+				this.townInfoBar.sendWorkersButton.enabled=true;
+			}
+			else
+			{
+				this.townInfoBar.sendWorkersButton.visible=false;
+				this.townInfoBar.sendWorkersButton.enabled=false;
+			}
 			
 			
 		}
@@ -197,12 +216,15 @@
 		public function townAttackButtonClick(event:MouseEvent):void
 		{
 			//Set the state to be attacking, then allow clicking on a town for deciding what troops to send.
+			currentState=WorldConfig.STATE_ATTACK;
+			/*
 			myPlayer.Regiments.Get(0).data.Destination=event.currentTarget.parent.Location;
 			myPlayer.Regiments.Get(0).data.x=myPlayer.Regiments.Get(0).data.Location.x;
 			myPlayer.Regiments.Get(0).data.y=myPlayer.Regiments.Get(0).data.Location.y;
 			myPlayer.Regiments.Get(0).data.Intention=WorldConfig.ATTACK;
 			regiments.Add(myPlayer.Regiments.Get(0).data);
 			worldView.addAsset(myPlayer.Regiments.Get(0).data);
+			*/
 		}
 		
 		public function townReinforceButtonClick(event:MouseEvent):void
@@ -210,19 +232,77 @@
 			//Do other things
 			currentState=WorldConfig.STATE_REINFORCE;
 			/*
-			myPlayer.Regiments.Get(0).data.Destination=event.currentTarget.parent.Location;
-			myPlayer.Regiments.Get(0).data.x=myPlayer.Regiments.Get(0).data.Location.x;
-			myPlayer.Regiments.Get(0).data.y=myPlayer.Regiments.Get(0).data.Location.y;
-			myPlayer.Regiments.Get(0).data.Intention=WorldConfig.REINFORCE;
-			regiments.Add(myPlayer.Regiments.Get(0).data);
-			worldView.addAsset(myPlayer.Regiments.Get(0).data);
+
 			*/
+		}
+		
+		public function sendRegiment(regiment:Regiment):void
+		{
+			regiment.x=regiment.Location.x;
+			regiment.y=regiment.Location.y;
+			regiments.Add(regiment);
+			worldView.addAsset(regiment);
+			
 		}
 		
 		public function townSendWorkersButtonClick(event:MouseEvent):void
 		{
 			//Do worker things
+			currentState=WorldConfig.STATE_WORKERS;
 		}
+		
+		public function workerManagementAcceptButtonClick(event:MouseEvent):void
+		{	
+			var reg:Regiment = new Regiment("","",myPlayer.Side);
+			reg.addUnit(new Soldier(worldView.WorkerManagement.numWorkers(),SoldierType.WORKER));
+			currTown.modifyWorkers(-worldView.WorkerManagement.numWorkers());
+			reg.Destination=currentTarget.Location;
+			reg.Location=currTown.Location;
+			reg.Intention=WorldConfig.WORKER;
+			sendRegiment(reg);
+			worldView.hideWorkerManagement();
+			currentState=WorldConfig.STATE_NONE;
+		}
+
+		public function workerManagementCancelButtonClick(event:MouseEvent):void
+		{
+			worldView.hideWorkerManagement();
+			currentState=WorldConfig.STATE_NONE;
+		}
+
+		
+		public function armyManagementAcceptButtonClick(event:MouseEvent):void
+		{
+			if(this.contains(armyManagementScreen))
+			{
+				this.removeChild(armyManagementScreen);
+			}
+			//Do other army things based on state
+			var reg:Regiment = new Regiment("","",myPlayer.Side);
+			var node:SoldierInfoNode=SoldierType.getSoldierInfo(SoldierType.MINUTEMAN);
+			
+			//Build up the regiment with the necesary amounts and unit types
+			reg.addUnit(new Soldier(armyManagementScreen.numMinutemen(),SoldierType.MINUTEMAN));
+			reg.Destination=currentTarget.Location;
+			currTown.removeOccupationAmount(reg);
+			reg.Location=currTown.Location;
+			reg.Owner=myPlayer.Name;
+			reg.Intention=armyManagementScreen.Intention;
+			sendRegiment(reg);
+			
+			
+			currentState=WorldConfig.STATE_NONE;
+		}
+		
+		public function armyManagementCancelButtonClick(event:MouseEvent):void
+		{
+			if(this.contains(armyManagementScreen))
+			{
+				this.removeChild(armyManagementScreen);
+			}
+			currentState=WorldConfig.STATE_NONE;
+		}
+		
 		
 		
 		
@@ -269,20 +349,38 @@
 		
 		public function worldMouseClick(event:MouseEvent):void		
 		{
-			
-			currTown=myMap.findTownByLocation((event.stageX+worldView.Offset.x),(event.stageY+worldView.Offset.y));
+			if(currentState!=WorldConfig.STATE_SELECTING)
+			{
+				currTown=myMap.findTownByLocation((event.stageX+worldView.Offset.x),(event.stageY+worldView.Offset.y));
+			}
+
 			if(currTown!=null)
 			{
 				if(currentState==WorldConfig.STATE_NONE)
 				{
+					currentTarget=currTown;
 					worldView.showTownInfo(currTown);
-				}
-				if(currentState==WorldConfig.STATE_REINFORCE)
-				{
-					armySelectionScreen.updateAttributes(currTown);
-					this.addChild(armySelectionScreen);
 
 				}
+				else if(currentState==WorldConfig.STATE_REINFORCE)
+				{
+					armyManagementScreen.updateAttributes(currTown,WorldConfig.REINFORCE);
+					currentState=WorldConfig.STATE_SELECTING;
+					this.addChild(armyManagementScreen);
+
+				}
+				else if(currentState==WorldConfig.STATE_ATTACK)
+				{
+					armyManagementScreen.updateAttributes(currTown,WorldConfig.ATTACK);
+					currentState=WorldConfig.STATE_SELECTING;
+					this.addChild(armyManagementScreen);
+				}
+				else if(currentState==WorldConfig.STATE_WORKERS)
+				{
+					worldView.showWorkerManagement(currTown);
+					currentState=WorldConfig.STATE_SELECTING;
+				}
+				
 			}
 			else
 			{
@@ -379,8 +477,7 @@
 							town.Occupier=attacker;
 						}
 					}
-					else 
-					if(reg.Intention==WorldConfig.REINFORCE)
+					else if(reg.Intention==WorldConfig.REINFORCE)
 					{
 						if(town.Occupier!=null)
 						{
@@ -391,6 +488,10 @@
 						{
 							town.Occupier=reg;
 						}
+					}
+					else if(reg.Intention==WorldConfig.WORKER)
+					{
+						town.modifyWorkers(reg.TotalAmount);
 					}
 					//reg.Destination=new Point(0,0);
 					regiments.Remove(reg);
