@@ -164,6 +164,14 @@
 			occupier=value;
 		}
 		
+		public function removeOccupationAmount(reg:Regiment):void
+		{
+			if(occupier!=null)
+			{
+				occupier.removeRegiment(reg);
+			}
+		}
+		
 		public function get Workers():int
 		{
 			return workers;

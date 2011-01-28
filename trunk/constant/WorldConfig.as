@@ -24,6 +24,7 @@
 		public static const NONE=0;
 		public static const ATTACK=1;
 		public static const REINFORCE=2;
+		public static const WORKER=3;
 		
 		//Town info bar frame numbers
 		public static const TOWN_BAR_BLANK=1;
@@ -35,6 +36,7 @@
 		public static const STATE_REINFORCE=1;
 		public static const STATE_ATTACK=2;
 		public static const STATE_WORKERS=3;
+		public static const STATE_SELECTING=4;
 		
 		
 		

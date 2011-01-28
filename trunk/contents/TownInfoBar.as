@@ -56,7 +56,6 @@
 			townLocation=town.Location;
 			nameText.text=town.Name.toString();
 			ownerText.text=town.Owner.toString();
-			trace(town.Side);
 			switch(town.Side)
 			{
 				case GameConfig.BRITISH:

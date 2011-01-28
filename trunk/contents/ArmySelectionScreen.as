@@ -12,7 +12,7 @@
 	{
 		
 		
-		private var townLocation:Point;
+		private var intention:int;
 		
 		
 		public function ArmySelectionScreen()
@@ -23,9 +23,10 @@
 			this.minuteMenText.addEventListener(Event.CHANGE,textChangedEvent);
 		}
 		
-		public function updateAttributes(town:Town):void
+		public function updateAttributes(town:Town,intentionIn:int):void
 		{
 			this.totalMinuteMenText.text=town.occupierType(SoldierType.MINUTEMAN).toString();
+			this.intention=intentionIn;
 			
 			
 		}
@@ -63,6 +64,16 @@
 				event.currentTarget.text=0;
 			}
 			
+		}
+		
+		public function get Intention():int
+		{
+			return intention;
+		}
+		
+		public function numMinutemen():int
+		{
+			return int(minuteMenText.text);
 		}
 		
 	}
