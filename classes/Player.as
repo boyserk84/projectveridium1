@@ -55,6 +55,7 @@
 		
 		//The towns you own
 		private var towns:LinkedList;
+		private var total_towns:int;		// Number of towns you currently have
 		
 		//The regiment this player has
 		private var regiments:LinkedList;
@@ -64,7 +65,10 @@
 			username=usernameIn;
 			myName=nameIn;
 			regiments=new LinkedList();
+			regiments.Add(new Regiment("",nameIn,sideIn));
 			side=sideIn;
+			total_towns = 0;
+			towns = new LinkedList();
 			populationCap = BuildingType.POP_CAP_INIT;
 			foodCap = BuildingType.FOOD_CAP_INIT;
 			ironCap = BuildingType.IRON_CAP_INIT;
@@ -191,6 +195,20 @@
 			return soldiers;
 		}
 		
+		public function changeSoldiers(value:int):void
+		{
+			if (soldiers+value >= 0 && soldiers+value+population <= populationCap){
+				soldiers += value;
+			} 
+		}
+		
+		public function changeWorkers(value:int):void
+		{
+			if (value+workers >= 0 && value+workers+population <= populationCap){
+				workers +=value;
+			}
+		}
+		
 		public function get AmountWorkers():int
 		{
 			return workers;
@@ -210,6 +228,42 @@
 		{
 			return regiments.Remove(regimentIn);
 			
+		}
+		
+		/**
+		* Add and reclaim town
+		*/
+		public function addTown(newTown:Town):void
+		{
+			towns.Add(newTown);
+			towns.Get(towns.Length-1).data.conquer(username,side);
+		}
+		
+		/**
+		* Remove/Pop Town from the LinkedLiist
+		* @return the town to be reclaimed by other who conquered it
+		*/
+		public function removeTown(removeTown:Town):Town
+		{
+			return towns.Remove(removeTown);
+		}
+		
+		/**
+		* Add a soldier to main regiment
+		* @param: unit Soldier object
+		*/
+		public function addSoldierToRegiment(unit:Soldier):void
+		{
+			Regiments.Get(0).data.addUnit(unit);
+		}
+		
+		/**
+		* Remove a soldier from main regiment
+		* @param unit Soldier to be removed
+		*/
+		public function removeSoldierFromRegiment(unit:Soldier):void
+		{
+			Regiments.Get(0).data.removeUnit(unit);
 		}
 		
 		public function changeWood(value:int)
@@ -271,10 +325,19 @@
 		}
 		
 		/**
+		* return available population (Commoners)
+		*/
+		public function get AvailablePop():int
+		{
+			return Population - (AmountSoldiers + AmountWorkers);
+		}
+		
+		/**
 		* Update maximum capacity of all resources
 		*/
 		public function updateResourcesCapacity()
 		{
+			updateAllTownCapacity();
 			FoodCap = BuildingType.FOOD_CAP_INIT + city.ExtraStorage + extraFoodCap;
 			WoodCap = BuildingType.WOOD_CAP_INIT + city.ExtraStorage + extraWoodCap; 
 			IronCap = BuildingType.IRON_CAP_INIT + city.ExtraStorage + extraIronCap;
@@ -293,6 +356,46 @@
 			}
 			return total;
 		}
+		
+		/**
+		* Update all towns' capacity
+		*/
+		private function updateAllTownCapacity():void
+		{
+			var w_cap:int, i_cap:int, f_cap:int, p_cap:int;
+			for (var i:int = 0; i < towns.Length ;++i)
+			{
+				w_cap += towns.Get(i).data.WoodCap;
+				i_cap += towns.Get(i).data.IronCap;
+				f_cap += towns.Get(i).data.FoodCap;
+				p_cap += towns.Get(i).data.ExtraPopulationCap;
+			}
+			extraWoodCap = w_cap;
+			extraIronCap = i_cap;
+			extraFoodCap = f_cap;
+			extraPopulationCap = p_cap;
+		}
+		
+		/**
+		* Update all towns' resources
+		*/
+		private function updateAllTownResources():void
+		{
+			var w:int,i:int,f:int,p:int;
+			for (var i:int = 0; i < towns.Length ;++i)
+			{
+				w += towns.Get(i).data.Wood;
+				i += towns.Get(i).data.Iron;
+				f += towns.Get(i).data.Food;
+				p += towns.Get(i).data.Population;
+			}
+			changeWood(w);
+			changeIron(i);
+			changeFood(f);
+			changePop(p);
+		}
+		
+		
 
 
 	}

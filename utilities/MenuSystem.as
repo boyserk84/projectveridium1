@@ -119,6 +119,7 @@
 			this.children.push(new TriggerButton(500,50, GameConfig.COMM_CANCEL));
 			this.children.push(new TriggerButton(650,-10, GameConfig.COMM_STAT_POP));
 			
+			
 			// Add external function
 			addExtFuncTo(GameConfig.COMM_NEXT,MouseEvent.CLICK, nextPage );
 			addExtFuncTo(GameConfig.COMM_PREV,MouseEvent.CLICK, prevPage );

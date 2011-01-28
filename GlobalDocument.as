@@ -34,6 +34,7 @@
 			loadProfile();
 			game = new GameCanvas(profile);
 			this.addChild(game);
+			
 			worldgame = new WorldMapCanvas;
 			this.addChild(worldgame);
 			enableCity();
@@ -59,6 +60,7 @@
 			// Set Town
 			
 			// Set Regiment
+			
 		}
 		
 		/**

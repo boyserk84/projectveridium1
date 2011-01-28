@@ -55,7 +55,7 @@
 		public static const AMBUSH:int=14;
 		
 		/* Time it takes to build each military building */
-		public static const SEC_BARRACK:int = 120;
+		public static const SEC_BARRACK:int = 10;
 		public static const SEC_ARMORY:int = 180;
 		public static const SEC_RANGE:int = 180;
 		public static const SEC_SNIPER_SCHOOL:int = 240;

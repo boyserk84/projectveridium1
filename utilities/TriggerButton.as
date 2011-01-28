@@ -32,7 +32,7 @@
 			this.button_type = type;
 			gotoAndStop(this.button_type);
 			//this.addEventListener(MouseEvent.CLICK,click_listener);
-			trace("Button Create");
+			//trace("Button Create");
 		}
 		
 		/**

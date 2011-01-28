@@ -47,6 +47,9 @@
 		public static const COMM_CIV_LIST = 7;
 		public static const COMM_CANCEL = 8;
 		public static const COMM_STAT_POP = 9;
+		public static const COMM_PLUS_SIGN = 10;
+		public static const COMM_MINUS_SIGN = 11;
+		public static const COMM_SWITCH_STAT = 12;
 		
 		//Frame for World Map
 		public static const WORLD_FRAME=2;
