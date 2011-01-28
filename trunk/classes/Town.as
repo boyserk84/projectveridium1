@@ -185,6 +185,19 @@
 			
 		}
 		
+		public function occupierType(type:int):int
+		{
+			if(occupier!=null)
+			{
+				return occupier.totalType(type);
+			}
+			else
+			{
+				return 0;
+			}
+		}
+		
+		
 		
 	}
 	

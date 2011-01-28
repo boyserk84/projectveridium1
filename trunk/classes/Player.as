@@ -280,6 +280,19 @@
 			IronCap = BuildingType.IRON_CAP_INIT + city.ExtraStorage + extraIronCap;
 			populationCap = BuildingType.POP_CAP_INIT + city.ExtraPop + extraPopulationCap;
 		}
+		
+		/*
+		* Returns the total amount of a certain type of unit this player has
+		*/
+		public function soldierAmount(type:int):int
+		{
+			var total:int=0;
+			for(var i:int=0;i<regiments.Length;++i)
+			{
+				total+=regiments.Get(i).data.totalType(type);
+			}
+			return total;
+		}
 
 
 	}

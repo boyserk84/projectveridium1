@@ -2,94 +2,68 @@
 	
 	import flash.display.MovieClip;
 	import flash.geom.Point;
+	import flash.events.MouseEvent;
+	import flash.events.Event;
 	import classes.Town;
+	import constant.SoldierType;
 	import constant.GameConfig;
 	
-	public class TownInfoBar extends MovieClip
+	public class ArmySelectionScreen extends MovieClip
 	{
 		
 		
 		private var townLocation:Point;
 		
 		
-		public function TownInfoBar()
+		public function ArmySelectionScreen()
 		{
+			this.minuteMenText.text="0";
+			this.plusButton.addEventListener(MouseEvent.CLICK,plusButtonClick);
+			this.minusButton.addEventListener(MouseEvent.CLICK,minusButtonClick);
+			this.minuteMenText.addEventListener(Event.CHANGE,textChangedEvent);
 		}
 		
-		public function updateAttributesMilitary(town:Town):void
+		public function updateAttributes(town:Town):void
 		{
+			this.totalMinuteMenText.text=town.occupierType(SoldierType.MINUTEMAN).toString();
 			
-			townLocation=town.Location;
-			nameText.text=town.Name;
-			ownerText.text=town.Owner;
-			switch(town.Side)
-			{
-				case GameConfig.BRITISH:
-				{
-					sideText.text="British";
-					break;
-				}
-				case GameConfig.AMERICAN:
-				{
-					sideText.text="American";
-					break;
-				}
-				default:
-				{
-					sideText.text="Renegade";
-					break;
-				}
-			}
-			if(town.Occupier!=null)
-			{
-				minutemenText.text=town.Occupier.TotalAmount.toString();
-			}
-			else
-			{
-				minutemenText.text="0";
-			}
 			
 		}
 		
-		public function updateAttributesEconomic(town:Town):void
+		public function plusButtonClick(event:MouseEvent):void
 		{
-			townLocation=town.Location;
-			nameText.text=town.Name.toString();
-			ownerText.text=town.Owner.toString();
-			trace(town.Side);
-			switch(town.Side)
+			var num:int=int(this.minuteMenText.text)+1;
+			if(num>int(totalMinuteMenText.text))
 			{
-				case GameConfig.BRITISH:
-				{
-					sideText.text="British";
-					break;
-				}
-				case GameConfig.AMERICAN:
-				{
-					sideText.text="American";
-					break;
-				}
-				default:
-				{
-					sideText.text="Renegade";
-					break;
-				}
+				num=int(totalMinuteMenText.text);
 			}
-			workersText.text=town.Workers.toString();
-			ironText.text=town.Iron.toString();
-			woodText.text=town.Wood.toString();
-			moneyText.text=town.Money.toString();
-			populationText.text=town.Population.toString();
-
+			this.minuteMenText.text=num.toString();
+			
 		}
 		
-		public function get Location():Point
+		public function minusButtonClick(event:MouseEvent):void
 		{
-			return townLocation;
+			var num:int=int(this.minuteMenText.text)-1;
+			if(num<0)
+			{
+				num=0;
+			}
+			this.minuteMenText.text=num.toString();
 		}
 		
-		
-		
+		public function textChangedEvent(event:Event):void
+		{
+			var num:int=int(event.currentTarget.text);
+			if(num>int(totalMinuteMenText.text))
+			{
+				event.currentTarget.text=totalMinuteMenText.text;
+			}
+			if(num<0)
+			{
+				event.currentTarget.text=0;
+			}
+			
+		}
 		
 	}
 }
