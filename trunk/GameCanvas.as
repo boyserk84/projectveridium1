@@ -105,7 +105,7 @@
 			this.timer = new CountDown(GameConfig.TIME_MINS_RESPAWN);
 			this.menuBar = new MenuSystem(0,460,Images.WIN_CITYMENU);
 			this.headStat = new HeaderInfo(profile);
-			this.popUpStat = new PopUpWindow(580,245,Images.POP_STAT);
+			this.popUpStat = new PopUpWindow(580,245,Images.POP_STAT_MIL);
 		}
 		
 		/**
@@ -120,6 +120,10 @@
 			this.menuBar.addExtFuncTo(GameConfig.CHANGE_WORLD, MouseEvent.CLICK, worldButtonClick);
 			this.menuBar.addExtFuncTo(GameConfig.COMM_CANCEL, MouseEvent.CLICK, cancelButtonClick);
 			this.menuBar.addExtFuncTo(GameConfig.COMM_STAT_POP, MouseEvent.CLICK, showStat);
+			this.popUpStat.addExtFuncToButtons(GameConfig.COMM_PLUS_SIGN, MouseEvent.CLICK,addToStat);
+			this.popUpStat.addExtFuncToButtons(GameConfig.COMM_MINUS_SIGN, MouseEvent.CLICK, removeFromStat);
+			this.popUpStat.addExtFuncToButtons(GameConfig.COMM_SWITCH_STAT, MouseEvent.CLICK, switchStat);
+			
 		}
 		
 		/**
@@ -156,6 +160,66 @@
 		{
 			popUpStat.updateInfo(profile);
 			popUpStat.autoSwitch();
+		}
+		
+		/**
+		* Switch to different stat menu
+		*/
+		public function switchStat(event:MouseEvent):void
+		{
+			popUpStat.autoSwitchStatMenu();
+			popUpStat.updateInfo(profile);
+		}
+		
+		/**
+		* Add button in stat pop up (Adding soldiers for each type)
+		*/
+		public function addToStat(event:MouseEvent):void
+		{
+			// Determine type
+			var unit_type:int = popUpStat.identifyButton(event.currentTarget.y);
+			var node:SoldierInfoNode = SoldierType.getSoldierInfo(unit_type);
+			// Check requirement
+			if (mcity.Requirements[node.Requirement] > 0)
+			{
+				// check if there is enough population to allocate
+				if (profile.AvailablePop > 0)
+				{
+					// check if enough resources
+					if (SoldierType.enoughToTrain(profile.Money, profile.Wood, profile.Iron, profile.Food,unit_type))
+					{
+						if (unit_type==SoldierType.WORKER)
+						{
+							profile.changeWorkers(1);
+						} else {
+							profile.addSoldierToRegiment(new Soldier(1,unit_type));
+							profile.changeSoldiers(1);
+						}
+						profile.changeMoney(-node.Money);
+						profile.changeFood(-node.Food);
+						profile.changeWood(-node.Wood);
+						profile.changeIron(-node.Iron);
+						popUpStat.updateInfo(profile);
+						headStat.updateInfo(profile);
+					}
+				}
+			}
+		}
+		
+		/**
+		* Remove button in stat pop up
+		*/
+		public function removeFromStat(event:MouseEvent):void
+		{
+			var unit_type:int = popUpStat.identifyButton(event.currentTarget.y);
+			if (unit_type==SoldierType.WORKER)
+			{
+				profile.changeWorkers(-1);
+			} else {
+				profile.removeSoldierFromRegiment(new Soldier(1, unit_type ));
+				profile.changeSoldiers(-1);
+			}
+			popUpStat.updateInfo(profile);
 		}
 		
 		/**
