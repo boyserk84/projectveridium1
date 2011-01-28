@@ -30,6 +30,12 @@
 		public static const TOWN_BAR_ECONOMIC=2;
 		public static const TOWN_BAR_MILITARY=3;
 		
+		//WorldCanvas states
+		public static const STATE_NONE=0;
+		public static const STATE_REINFORCE=1;
+		public static const STATE_ATTACK=2;
+		public static const STATE_WORKERS=3;
+		
 		
 		
 		

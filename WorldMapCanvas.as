@@ -10,6 +10,7 @@
 	import flash.events.TimerEvent;
 	import contents.TownInfoPane;
 	import contents.TownInfoBar;
+	import contents.ArmySelectionScreen;
 	import utilities.TriggerButton;
 	/**
 	* WorldMapCavas object
@@ -30,6 +31,8 @@
 		private var regiments:LinkedList;
 		private var currTown:Town;
 		private var townInfoBar:TownInfoBar;
+		private var armySelectionScreen:ArmySelectionScreen;
+		private var currentState:int;
 		
 		
 		//The old position of the mouse for the sake of movement distance
@@ -41,6 +44,7 @@
 		{
 			this.worldView=new WorldView();
 			this.townInfoBar=new TownInfoBar();
+			this.armySelectionScreen=new ArmySelectionScreen();
 			townInfoBar.x=GameConfig.SCREEN_WIDTH-275;
 			townInfoBar.y=0;
 			myMap=new Map();
@@ -204,12 +208,15 @@
 		public function townReinforceButtonClick(event:MouseEvent):void
 		{
 			//Do other things
+			currentState=WorldConfig.STATE_REINFORCE;
+			/*
 			myPlayer.Regiments.Get(0).data.Destination=event.currentTarget.parent.Location;
 			myPlayer.Regiments.Get(0).data.x=myPlayer.Regiments.Get(0).data.Location.x;
 			myPlayer.Regiments.Get(0).data.y=myPlayer.Regiments.Get(0).data.Location.y;
 			myPlayer.Regiments.Get(0).data.Intention=WorldConfig.REINFORCE;
 			regiments.Add(myPlayer.Regiments.Get(0).data);
 			worldView.addAsset(myPlayer.Regiments.Get(0).data);
+			*/
 		}
 		
 		public function townSendWorkersButtonClick(event:MouseEvent):void
@@ -266,7 +273,16 @@
 			currTown=myMap.findTownByLocation((event.stageX+worldView.Offset.x),(event.stageY+worldView.Offset.y));
 			if(currTown!=null)
 			{
-				worldView.showTownInfo(currTown);
+				if(currentState==WorldConfig.STATE_NONE)
+				{
+					worldView.showTownInfo(currTown);
+				}
+				if(currentState==WorldConfig.STATE_REINFORCE)
+				{
+					armySelectionScreen.updateAttributes(currTown);
+					this.addChild(armySelectionScreen);
+
+				}
 			}
 			else
 			{

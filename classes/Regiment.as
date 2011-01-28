@@ -159,6 +159,20 @@
 			return units;
 		}
 		
+		public function totalType(type:int):int
+		{
+			var total:int=0;
+			for(var i:int=0;i<units.Length;++i)
+			{
+				if(units.Get(i).data.Type==type)
+				{
+					return units.Get(i).data.Amount;
+				}
+				
+			}
+			return 0;
+		}
+		
 		public function get TotalAmount():int
 		{
 			var total:int=0;
