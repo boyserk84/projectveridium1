@@ -20,14 +20,18 @@
 		private var type:int;
 		
 		
-		public function Soldier(amountIn:int=0,weaponIn:int=1,armorIn:int=1,skillIn:int=1,typeIn:int=1)
+		/**
+		* Constructor
+		* @param amountIn: Amount of soldiers allocated
+		* @param typeIn: Type of soldiers
+		*/
+		public function Soldier(amountIn:int=0,typeIn:int=1)
 		{
 			amount=amountIn;
-			weaponLevel=weaponIn;
-			armorLevel=armorIn;
-			skillLevel=skillIn;
+			weaponLevel=SoldierType.getSoldierInfo(typeIn).Weapon;
+			armorLevel=SoldierType.getSoldierInfo(typeIn).Armor;
+			skillLevel=SoldierType.getSoldierInfo(typeIn).Skill;
 			type=typeIn;
-			
 		}
 		
 		public function get DefenseLevel():int
@@ -75,6 +79,9 @@
 			skillLevel+=skillIn;
 		}
 		
+		/**
+		* Add extra soldiers to this unit of soldiers
+		*/
 		public function modifyAmount(amountIn:int=0):void
 		{
 			amount+=amountIn;
