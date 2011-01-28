@@ -40,6 +40,41 @@
 		
 		
 		
+		public static function getTownDistrict(townIn:int):int
+		{
+			switch(townIn)
+			{
+				case 0:
+				{
+					//Maine
+					return WorldType.MAINE;
+				}
+				case 1:
+				{
+					//New York
+					return WorldType.NEWYORK;
+				}
+				case 2:
+				{
+					//New Hampshire
+					return WorldType.NEWHAMPSHIRE;
+				}
+				case 3:
+				{
+					//Virginia
+					return WorldType.NORTHCAROLINA;
+				}
+				case 4:
+				{
+					//Georgia
+					return WorldType.GEORGIA;
+				}
+				default:
+				{
+					return townIn;
+				}
+			}
+		}
 		
 		public static function getTownInfo(townIn:int):Town
 		{

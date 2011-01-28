@@ -24,14 +24,7 @@
 			gameViewObjects=new Array();
 			townInfoPane=new TownInfoPane();
 			workerManagement=new WorkerManagementScreen();
-			//Build the District map
-			for(var i:int=1;i<12;++i)
-			{
-				var clip:MovieClip=WorldSpriteInfo.getSprite(i);
-				clip.x=WorldConfig.getInfo(i).x;
-				clip.y=WorldConfig.getInfo(i).y;
-				gameViewObjects.push(clip);
-			}
+			
 			
 			//Grab all of the cities from the server with their current owners
 			
