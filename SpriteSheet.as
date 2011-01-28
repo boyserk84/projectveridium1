@@ -112,10 +112,7 @@
 					break;
 			}
 			
-			if(this.object_Type==WorldType.WORLD_MAP)
-			{
-//				this.children.push(new WorldMap());
-			}
+		
 			
 			
 			// Create construction display of building

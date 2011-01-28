@@ -176,6 +176,15 @@
 		{
 			return workers;
 		}
+		
+		public function get MyDistrict():District
+		{
+			return myDistrict;
+		}
+		public function set MyDistrict(value:District):void
+		{
+			myDistrict=value;
+		}
 			
 		public function conquer(owner:String,sideIn:int):void
 		{
@@ -183,13 +192,16 @@
 			if(sideIn==GameConfig.BRITISH)
 			{
 				gotoAndStop(WorldConfig.BRITISH_OCCUPANCY);
-				side=sideIn;
+
 			}
 			else
 			{
 				gotoAndStop(WorldConfig.AMERICAN_OCCUPANCY);
-				side=sideIn;
+
 			}
+			side=sideIn;
+			trace(side);
+			myDistrict.checkOwnership();
 			
 		}
 		

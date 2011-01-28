@@ -26,6 +26,11 @@
 			return towns;
 		}
 		
+		public function get Districts():Array
+		{
+			return districts;
+		}
+		
 		public function findTownByLocation(xIn:int=0,yIn:int=0):Town
 		{
 			for(var i:int=0;i<towns.length;++i)

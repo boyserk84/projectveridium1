@@ -52,15 +52,31 @@
 			gameTimer=new Timer(100,0);
 			gameTimer.addEventListener(TimerEvent.TIMER,gameLoop);
 			regiments=new LinkedList();
-			
-			
+
+			//Build the District map
+			for(var i:int=0;i<11;++i)
+			{
+				var clip:MovieClip=WorldSpriteInfo.getSprite(i);
+
+				clip.x=WorldConfig.getInfo(i).x;
+				clip.y=WorldConfig.getInfo(i).y;
+				myMap.addDistrict(District(clip));
+			}
+									
+
+					
 			//Will read all of the towns of the server in order to get them!
 			for(var i:int=0;i<5;++i)
 			{
 				var temp2:Town=WorldConfig.getTownInfo(i);
 				myMap.addTown(temp2);
+				temp2.MyDistrict=myMap.Districts[WorldConfig.getTownDistrict(i)];
+				temp2.MyDistrict.addTown(temp2);
+				
 				
 			}
+			//time for districts too!
+			
 			
 			enemyPlayer=new Player("Steve","Steve The Great!",GameConfig.BRITISH);
 			myPlayer=new Player("Rob","Robtacular",GameConfig.AMERICAN);
@@ -93,10 +109,8 @@
 			armyManagementScreen.cancelButton.addEventListener(MouseEvent.CLICK,armyManagementCancelButtonClick);
 
 
-
 			
-			
-			
+			this.worldView.addAssets(myMap.Districts);			
 			this.worldView.addAssets(myMap.Towns);
 			this.input = new IOHandler(0,0,WorldConfig.INPUT_WIDTH, WorldConfig.INPUT_HEIGHT);
 			worldView.addEventListener(MouseEvent.MOUSE_DOWN,worldMouseDown);
