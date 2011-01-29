@@ -14,7 +14,7 @@
 		private var requirements:Array;
 		private var temp_req:Array;
 		
-		private const numberOfTypes:int=22;
+		private const numberOfTypes:int=BuildingType.TOTAL_BUILD_TYPE;
 		
 		/*
 		* Constructor creates a new city with a specified bounds
@@ -26,10 +26,21 @@
 			buildings=new LinkedList();
 			requirements=new Array(numberOfTypes);
 			temp_req = new Array(numberOfTypes);
+			
 			for(var i:int=0;i<=numberOfTypes;++i)
 			{
 				requirements[i]=0;
 			}
+			constructMainBuilding();
+		}
+		
+		/**
+		* Construct main building (using after default constructor is called)
+		*/
+		public function constructMainBuilding()
+		{
+			buildings.Add(new Building(new Rectangle(1,0,1,1),BuildingType.TOWN_SQUARE));
+			requirements[BuildingType.TOWN_SQUARE] = buildings.Get(0).data.releaseBuildingToCity();
 		}
 		
 		/*
@@ -63,7 +74,6 @@
 		*/
 		public function addBuilding(buildingIn:Building=null):void
 		{
-			requirements[0] = 1;
 			//requirements[buildingIn.Type]=++requirements[buildingIn.Type];
 			temp_req[buildingIn.Type]=++temp_req[buildingIn.Type];
 			
@@ -77,7 +87,9 @@
 		*/
 		public function removeBuilding(buildingIn:Building=null):void
 		{
+			trace(requirements[buildingIn.Type] + "Before");
 			requirements[buildingIn.Type] = --requirements[buildingIn.Type];
+			trace(requirements[buildingIn.Type] + "left");
 			buildings.Remove(buildingIn);
 		}
 		
@@ -110,6 +122,16 @@
 		public function isValid(xIn:int=-1,yIn:int=-1):Boolean
 		{
 			return ((xIn>-1 && yIn>-1)&&(xIn<this.bounds.width && yIn<this.bounds.height));
+		}
+		
+		/**
+		* Does city have more than one town square?
+		* @return True if the city has more than one town square
+		*/
+		public function hasMoreTownSquare():Boolean
+		{
+			if (requirements[BuildingType.TOWN_SQUARE] > 1) return true;
+			else return false;
 		}
 		
 		/*

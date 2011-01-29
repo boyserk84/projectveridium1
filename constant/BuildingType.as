@@ -54,6 +54,23 @@
 		public static const WAY_POINT:int=13;
 		public static const AMBUSH:int=14;
 		
+		/* Name corresponding to each miltary building */
+		public static const N_BARRACK:String = "Barrack";
+		public static const N_ARMORY:String = "Armory";
+		public static const N_RANGE:String ="Shooting Range";
+		public static const N_SNIPER_SCHOOL:String = "Sniper School";
+		public static const N_FORGE:String = "Forge";
+		public static const N_WORKSHOP:String = "Workshop";
+		public static const N_FOUNDRY:String= "Foundry";
+		public static const N_BOOT_CAMP:String= "Boot camp";
+		public static const N_STABLES:String = "Stables";
+		public static const N_OFFICER_SCHOOL:String= "Officer Academy";
+		public static const N_OUTPOST:String="Outpost";
+		public static const N_WATCH_TOWER:String="Watch Tower";
+		public static const N_WAY_POINT:String="Way point";
+		public static const N_AMBUSH:String="Ambush";
+		
+		
 		/* Time it takes to build each military building */
 		public static const SEC_BARRACK:int = 10;
 		public static const SEC_ARMORY:int = 180;
@@ -86,7 +103,7 @@
 		public static const HOUSE:int=21;
 		
 		/* Time it takes to build each civilian building*/
-		public static const SEC_TOWN_SQUARE:int = 60;
+		public static const SEC_TOWN_SQUARE:int = 5;
 		public static const SEC_FARM:int = 30;
 		public static const SEC_SAWMILL:int = 120;
 		public static const SEC_BLACKSMITH:int = 300;
@@ -94,6 +111,16 @@
 		public static const SEC_STOCKPILE:int = 240;
 		public static const SEC_MARKET:int = 180;
 		public static const SEC_HOUSE:int = 30;
+		
+		/* Name corresponding to each civilian building */
+		public static const N_TOWN_SQUARE:String = "Town Square";
+		public static const N_FARM:String = "Farm";
+		public static const N_SAWMILL:String = "Sawmill";
+		public static const N_BLACKSMITH:String = "Blacksmith";
+		public static const N_WAREHOUSE:String = "Warehouse";
+		public static const N_STOCKPILE:String = "Stockpile";
+		public static const N_MARKET:String = "Market";
+		public static const N_HOUSE:String = "House";
 		
 		public static const TOTAL_CIVIL_TYPE:int = 8;
 		

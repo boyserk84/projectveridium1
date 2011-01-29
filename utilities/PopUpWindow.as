@@ -38,6 +38,10 @@
 			this.x = x;
 			this.y = y;
 			createAddMinusButtons();
+			if (type == Images.POP_STAT)
+			{
+				icon_switch.y = AT_ALLOCATE;
+			}
 			switchToWin(type);
 			deactivate();
 		}
@@ -193,9 +197,9 @@
 				}
 				add_worker.addEventListener(event_trigger, func);
 			} else if(command==GameConfig.COMM_MINUS_SIGN) {
-				for (var i:int = 0; i < icons_minus.length; ++i)
+				for (var j:int = 0; j < icons_minus.length; ++j)
 				{
-					icons_minus[i].addEventListener(event_trigger,func);
+					icons_minus[j].addEventListener(event_trigger,func);
 				}
 				remove_worker.addEventListener(event_trigger, func);
 			} else if (command==GameConfig.COMM_SWITCH_STAT)

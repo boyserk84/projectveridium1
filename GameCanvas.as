@@ -24,26 +24,22 @@
 		private var input:IOHandler;		// IO Handler (receiving input)
 		private var profile:Player;			// Player's profile
 		
-		private var menuBar:MenuSystem;		// Menu System
-		private var headStat:HeaderInfo;	// Header Info
-		private var popUpStat:PopUpWindow;	// Pop Up Stat menu
+		private var menuBar:MenuSystem;				// Menu System
+		private var headStat:HeaderInfo;			// Header Info
+		private var popUpStat:PopUpWindow;			// Pop Up Stat menu
+		private var pop_buildingInfo:popupInfo		// Pop Up building info
 		
 		
 		private var command:int;			// Current command of the mouse-click
 		private var select_building:int;	// Current building selected when mouse-click at the menu
 		
-		private var build_cursor:ImgBuilding;	// Cursor of building image
-		private var mouse:MouseCurs;
-		private var update_resources:Boolean = true;
+		private var build_cursor:ImgBuilding;			// Cursor of building image
+		private var mouse:MouseCurs;					// Mouse cursor on tile
+		private var update_resources:Boolean = true;	// Notifier when need to update
 		
 		// Game Contents
 		private var mcity:City;
-/*		var mbuilding:Building;
-		var mbuilding2:Building;*/
-		
-		
-		
-		//var clockSec:Timer = new Timer(1000);
+
 		
 		/**
 		* initalize mouse cursor
@@ -64,6 +60,17 @@
 			this.input = new IOHandler(0,0, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
 			this.input.addEventListener(MouseEvent.CLICK,cityMouseClick);
 			this.input.addEventListener(MouseEvent.MOUSE_MOVE,cityMouseMove);
+			this.input.addEventListener(MouseEvent.ROLL_OVER,cityMouseMove);
+			this.input.addEventListener(MouseEvent.ROLL_OUT, hoverOutaddButton);
+		}
+		
+		/**
+		* initialize building info pop up
+		*/
+		private function initialize_buildingInfoPopUp():void
+		{
+			pop_buildingInfo = new popupInfo();
+			pop_buildingInfo.visible = false;
 		}
 		
 		/**
@@ -72,29 +79,20 @@
 		public function loadContents():void
 		{
 			trace("loadContents"); 
-/*			profile = new Player("RealName", "UserName");
-			profile.Food = 2;
-			profile.Wood = 22;
-			profile.Iron = 10;
-			profile.Money = 10;
-			profile.Population = 10;*/
+
 			this.command = GameConfig.COMM_SELECT;
-		
+			
+			initialize_buildingInfoPopUp();
 			initialize_IO();
 			initialize_StatBar(profile);
 			initialize_MOUSE();
-
-	/*		mcity=new City(0,0,8,8);
-			mbuilding=new Building(new Rectangle(1,0,1,1),BuildingType.TOWN_SQUARE);
-			mcity.addBuilding(mbuilding);
-
-			profile.addCity(mcity);*/
 			
 			initialize_MenuBar(mcity);
 			initialize_GameView();
 			this.addEventListener("enterFrame",gameLoop);
-			timer.addObjectWithUpdate(mcity);
-			initialize_Layers();	
+			timer.addObjectWithUpdate(mcity);	// Feed object that needs timer
+			initialize_Layers();
+			
 		}
 		
 		/**
@@ -105,7 +103,7 @@
 			this.timer = new CountDown(GameConfig.TIME_MINS_RESPAWN);
 			this.menuBar = new MenuSystem(0,460,Images.WIN_CITYMENU);
 			this.headStat = new HeaderInfo(profile);
-			this.popUpStat = new PopUpWindow(580,245,Images.POP_STAT_MIL);
+			this.popUpStat = new PopUpWindow(580,245,Images.POP_STAT);
 		}
 		
 		/**
@@ -116,6 +114,8 @@
 			this.menuBar.feedCityReqToIcons(BuildingManager.determineBuildingList(mcity));
 			this.menuBar.buildMenu();
 			this.menuBar.addExtFuncTo(GameConfig.COMM_ADD, MouseEvent.CLICK, addButtonClick);
+			this.menuBar.addExtFuncTo(GameConfig.COMM_ADD, MouseEvent.ROLL_OVER, hoverOveraddButton);
+			this.menuBar.addExtFuncTo(GameConfig.COMM_ADD, MouseEvent.ROLL_OUT, hoverOutaddButton);
 			this.menuBar.addExtFuncTo(GameConfig.COMM_REMOVE,MouseEvent.CLICK, removeButtonClick);
 			this.menuBar.addExtFuncTo(GameConfig.CHANGE_WORLD, MouseEvent.CLICK, worldButtonClick);
 			this.menuBar.addExtFuncTo(GameConfig.COMM_CANCEL, MouseEvent.CLICK, cancelButtonClick);
@@ -150,6 +150,7 @@
 			this.addChild(this.menuBar);	// Add Menu
 			this.addChild(this.headStat);	// Add Top Stat Bar
 			this.addChild(this.popUpStat);	// Add Pop-up windows
+			this.addChild(pop_buildingInfo);// Add Pop-up building Info
 		}
 		
 		
@@ -172,6 +173,18 @@
 		}
 		
 		/**
+		* Pop Up Alert Notification when resource needed in game
+		* @param x,y: event.stage (X,Y) location
+		*/
+		private function alertPopUpNotify(x:Number, y:Number):void
+		{
+			pop_buildingInfo.visible = true;
+			pop_buildingInfo.x = x - 100;
+			pop_buildingInfo.y = y - 65;
+			pop_buildingInfo.gotoAndStop(Images.POP_REQUIRE_BUILD);
+		}
+		
+		/**
 		* Add button in stat pop up (Adding soldiers for each type)
 		*/
 		public function addToStat(event:MouseEvent):void
@@ -179,9 +192,12 @@
 			// Determine type
 			var unit_type:int = popUpStat.identifyButton(event.currentTarget.y);
 			var node:SoldierInfoNode = SoldierType.getSoldierInfo(unit_type);
+			
 			// Check requirement
 			if (mcity.Requirements[node.Requirement] > 0)
 			{
+				
+				
 				// check if there is enough population to allocate
 				if (profile.AvailablePop > 0)
 				{
@@ -192,17 +208,36 @@
 						{
 							profile.changeWorkers(1);
 						} else {
-							profile.addSoldierToRegiment(new Soldier(1,unit_type));
 							profile.changeSoldiers(1);
 						}
+						
+						// Update profile
+						profile.addSoldierToRegiment(new Soldier(1,unit_type));
 						profile.changeMoney(-node.Money);
 						profile.changeFood(-node.Food);
 						profile.changeWood(-node.Wood);
 						profile.changeIron(-node.Iron);
+						
+						// Update Stat
 						popUpStat.updateInfo(profile);
 						headStat.updateInfo(profile);
+					} else {
+						// If not enough resource, notify a player
+						alertPopUpNotify(event.stageX, event.stageY);
+						pop_buildingInfo.reqInfo.text = "Not enough ".concat(
+							SoldierType.resourceNeed(profile.Money, profile.Wood, profile.Iron, profile.Food,unit_type)
+							);
+						
 					}
+				} else {
+					// If not enough population, notify a player
+					alertPopUpNotify(event.stageX, event.stageY);
+					pop_buildingInfo.reqInfo.text = ("Not enough population!");
 				}
+			} else {
+				// Notify a player when required building has not been built
+				alertPopUpNotify(event.stageX, event.stageY);
+				pop_buildingInfo.reqInfo.text = (BuildingInfo.getBuildingName(node.Requirement).concat(" required!"));
 			}
 		}
 		
@@ -216,9 +251,9 @@
 			{
 				profile.changeWorkers(-1);
 			} else {
-				profile.removeSoldierFromRegiment(new Soldier(1, unit_type ));
 				profile.changeSoldiers(-1);
 			}
+			profile.removeSoldierFromRegiment(new Soldier(1, unit_type ));
 			popUpStat.updateInfo(profile);
 		}
 		
@@ -244,16 +279,31 @@
 				{
 					//trace("Move Coords: "+xmouse+" , "+ymouse);
 					
+					var clickedBuilding:Building = theView.checkClickedBuilding(event.stageX, event.stageY);
 					// Check if mouse over building
-					if (theView.checkClickedBuilding(event.stageX, event.stageY)!=null)
+					if (clickedBuilding!=null)
 					{
+						// Enable Pop-up building info
+						pop_buildingInfo.visible = true;
+						pop_buildingInfo.x = event.stageX + 20;
+						pop_buildingInfo.y = event.stageY + 20;
+						
 						// if building is not done 
-						if (!theView.checkClickedBuilding(event.stageX, event.stageY).isBuildingDone())
+						if (!clickedBuilding.isBuildingDone())
 						{
-							// enable view of time building
-							trace(theView.checkClickedBuilding(event.stageX, event.stageY).currentProgress());
+							var remain:int = clickedBuilding.currentProgress();
+							
+							// Enable view of time remaining
+							pop_buildingInfo.gotoAndStop(Images.POP_TIME_REMAIN);
+							pop_buildingInfo.remainTime.text = CountDown.formatTimeFromNumber(remain);
+						} else {
+							// Enable view of building's name
+							pop_buildingInfo.gotoAndStop(Images.POP_NAME);
+							pop_buildingInfo.buildInfo.text = BuildingInfo.getBuildingName(clickedBuilding.Type);
 						}
-					}
+					} else {
+							pop_buildingInfo.visible = false;
+					}// if mouse over building
 					
 					this.mouse.visible = true;
 					this.mouse.x = (((xmouse-ymouse)*GameConfig.TILE_HEIGHT)+GameConfig.TILE_INIT_X);
@@ -294,22 +344,61 @@
 				if (BuildingManager.hasResourceToBuild(event.currentTarget.getBuildingType,profile.Wood, profile.Iron, profile.Money, profile.Population))
 				{
 					this.select_building = event.currentTarget.getBuildingType;
-					trace("build now " + this.select_building);
-					
+					//trace("build now " + this.select_building);					
 					this.build_cursor.changeType(event.currentTarget.getBuildingType);
 					this.mouse.visible= false;
-					
-					
+
 				} else {
-					trace("Not enough resources for " + this.select_building);
+					alertPopUpNotify(event.stageX,event.stageY);
+					pop_buildingInfo.reqInfo.text = "Not enough resources";
 					this.command = GameConfig.COMM_SELECT;
 				}
 			} else {
 				this.command = GameConfig.COMM_SELECT;
 			}
+		}
+		
+		/**
+		* mouse over (hover over) add button
+		*/
+		public function hoverOveraddButton(event:MouseEvent):void
+		{
+			// check requirement, retrive info from city
+			var build_list:Array = BuildingManager.determineBuildingList(mcity);
+			// get requirement node
+			var node:BuildingInfoNode = BuildingInfo.getInfo(event.currentTarget.getBuildingType);
 			
-			//trace("Building clicked icon:" + this.select_building);
-			//this.select_building = event.currentTarget;
+			// Set where to be displayed
+			pop_buildingInfo.x = event.stageX + 10;
+			pop_buildingInfo.y = event.stageY - 20;
+			
+			// if met basic requirement
+			if (build_list[event.currentTarget.getBuildingType])
+			{
+				// show resources needed
+				pop_buildingInfo.gotoAndStop(Images.POP_REQUIRE);
+				pop_buildingInfo.buildName.text = BuildingInfo.getBuildingName(event.currentTarget.getBuildingType);
+				pop_buildingInfo.woodInfo.text = node.Wood.toString();
+				pop_buildingInfo.ironInfo.text = node.Iron.toString();
+				pop_buildingInfo.moneyInfo.text = node.Money.toString();
+				pop_buildingInfo.popInfo.text = node.Population.toString();
+				
+			} else {
+				// show building requirement
+				pop_buildingInfo.gotoAndStop(Images.POP_REQUIRE_BUILD);
+				var req_build:int = node.Requirement;
+				pop_buildingInfo.reqInfo.text = BuildingInfo.getBuildingName(req_build).concat(" is required!");
+			}
+			
+			pop_buildingInfo.visible = true;
+		}
+		
+		/**
+		* mouse out of add button area
+		*/
+		public function hoverOutaddButton(event:MouseEvent):void
+		{
+			pop_buildingInfo.visible = false;
 		}
 		
 		/**
@@ -351,8 +440,6 @@
 		**/
 		public function cityMouseClick(event:MouseEvent):void
 		{
-
-			//do things with the click
 			var xloc:int=event.stageX;
 			var yloc:int=event.stageY;
 			
@@ -360,21 +447,28 @@
 			{
 				if (theView.checkClickedBuilding(xloc, yloc)!=null)
 				{
-					// (1) (GameObject) Notify city what building to be removed
-					mcity.removeBuilding(theView.checkClickedBuilding(xloc, yloc));
-					
-					// (2) Adjust View, delete a building from view
-					theView.setClickedBuildingInvisible(xloc,yloc);
-					
-					// (3) Update Menu Bar
-					menuBar.updateCityReq(BuildingManager.determineBuildingList(mcity));
-					
+					// Preventing remove one remainning town square
+					if (mcity.hasMoreTownSquare() || theView.checkClickedBuilding(xloc, yloc).Type != BuildingType.TOWN_SQUARE)
+					{
+						// Only remove the building that has not been underconstruction
+						if (theView.checkClickedBuilding(xloc, yloc).isBuildingDone())
+						{
+							// (1) (GameObject) Notify city what building to be removed
+							mcity.removeBuilding(theView.checkClickedBuilding(xloc, yloc));
+						
+							// (2) Adjust View, delete a building from view
+							theView.setClickedBuildingInvisible(xloc,yloc);
+						
+							// (3) Update Menu Bar
+							menuBar.updateCityReq(BuildingManager.determineBuildingList(mcity));
+						}
+					}
 				}
 			} else 
 			
 			if (this.command == GameConfig.COMM_ADD)
 			{
-				trace("X: "+xloc+" ,y: "+yloc);
+				//trace("X: "+xloc+" ,y: "+yloc);
 				// check if mouse-clicking is not on any building
 				if (theView.checkClickedBuilding(xloc, yloc)==null)
 				{
@@ -399,9 +493,6 @@
 							profile.changePop(-BuildingInfo.getInfo(this.select_building).Population);
 							//profile.changeFood(BuildingInfo.getInfo(this.select_building));
 							
-							//!!!!!!!!!!! ONLY WHEN BUILDING IS FINISHED
-							// (5) Extra update maximum capacity only when finished
-							
 						}
 
 						// (4) Update Menu Bar and update stat
@@ -415,8 +506,6 @@
 			if (this.command == GameConfig.COMM_SELECT)
 			{
 				this.mouse.visible = true;
-				// Move stuff
-				// Also pop up menu
 			}
 			
 		}

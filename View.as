@@ -228,7 +228,7 @@
 			var xmouse = (x+ y);
 			gameLoc.x= Math.round(ymouse / GameConfig.TILE_WIDTH);
 			gameLoc.y= Math.round(xmouse / GameConfig.TILE_WIDTH) - 1;
-			trace(gameLoc.x+","+gameLoc.y);
+			//trace(gameLoc.x+","+gameLoc.y);
 			
 
 			return -1;
@@ -252,7 +252,7 @@
 			//find on which tile mouse is
 			gameLoc.y = Math.round(ymouse/GameConfig.TILE_HEIGHT);
 			gameLoc.x = Math.round(xmouse/GameConfig.TILE_HEIGHT)-1;
-			trace("Converting to gameLoc: "+gameLoc.x+","+gameLoc.y);
+			//trace("Converting to gameLoc: "+gameLoc.x+","+gameLoc.y);
 
 			return gameLoc;
 		}
