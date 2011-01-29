@@ -112,9 +112,6 @@
 					break;
 			}
 			
-		
-			
-			
 			// Create construction display of building
 			if (this.object_Type!=BuildingType.TILE)
 			{
@@ -130,6 +127,9 @@
 
 		}
 		
+		/**
+		* Switch back to main building image once it 's done
+		*/
 		public function changeToMainImage()
 		{
 			children[children.length-1].changeType(object_Type);

@@ -1,8 +1,12 @@
 ﻿package constant{
 	
+	/**
+	* SoldierType
+	* This class handle information related to population unit such as worker and soldier.
+	*/
 	public class SoldierType
 	{
-		// Constant Soldier Type
+		// Constant Soldier & Worker Type
 		
 		public static const WORKER:int=1;
 		public static const NONE:int=0;
@@ -17,6 +21,8 @@
 		public static const POLITICIAN:int=9;
 		
 		public static const TOTAL_SOLDIERS_TYPE:int = 8;
+		
+		public static const CITY_REGIMENT_INDEX:int = 0;
 
 		
 		/**
@@ -38,6 +44,25 @@
 			return true;
 			
 		}
+		
+		/**
+		* return what resource need in case of insufficient resources
+		* @param money: Money you have
+		* @param wood: Wood you have
+		* @param iron: Iron you have
+		* @param food: Food you have
+		* @return String indicating which resource is insufficient
+		*/
+		public static function resourceNeed(money:int, wood:int, iron:int, food:int, soldierType:int):String
+		{
+			var node:SoldierInfoNode = getSoldierInfo(soldierType);
+			if (money - node.Money < 0) return "Money";
+			if (wood - node.Wood < 0) return "Wood";
+			if (iron - node.Iron < 0) return "Iron";
+			if (food - node.Food < 0) return "Food";
+			
+			return "";
+		}
 
 		public static function getSoldierInfo(soldierType:int):SoldierInfoNode
 		{
@@ -56,7 +81,7 @@
 					armor=10;
 					skill=10;
 					requirement=BuildingType.BARRACK;
-					food=5;
+					food=1;
 					money=1;
 					wood=1;
 					iron=1;

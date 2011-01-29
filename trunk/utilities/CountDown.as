@@ -103,6 +103,16 @@
 		*/
 		private function formatTime(seconds:Number):String
 		{
+			return formatTimeFromNumber(seconds);
+		}
+		
+		/**
+		* Static function Convert seconds to Time format Min:Sec in String
+		* @param seconds: Seconds
+		* @return String of time in format Min:Sec
+		*/
+		public static function formatTimeFromNumber(seconds:Number):String
+		{
 			var sMinutes:String="";
 			var sSeconds:String="";
 			

@@ -47,15 +47,16 @@
 		{
 			// Set resources
 			profile = new Player("RealName", "UserName");
-			profile.Food = 2;
-			profile.Wood = 22;
-			profile.Iron = 10;
-			profile.Money = 10;
+			profile.Food = 200; /* 2 */
+			profile.Wood = 220; /* 22 */
+			profile.Iron = 11; /* 10 */
+			profile.Money = 11; /* 10 */
 			profile.Population = 10;
 			
 			// Set City			
 			profile.addCity(new City(0,0,8,8));
-			profile.getCity().addBuilding(new Building(new Rectangle(1,0,1,1),BuildingType.TOWN_SQUARE));
+			//profile.getCity().constructMainBuilding();
+			//profile.getCity().addBuilding(new Building(new Rectangle(1,0,1,1),BuildingType.TOWN_SQUARE));
 		
 			// Set Town
 			

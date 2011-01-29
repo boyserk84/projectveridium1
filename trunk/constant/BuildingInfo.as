@@ -4,6 +4,112 @@
 	//A function to has a building type into its requirements
 	public class BuildingInfo
 	{
+		
+		/**
+		* get a building's name in String format
+		* @param type: Building Type
+		* @return Name in string format corresponding to the building type
+		*/
+		public static function getBuildingName(type:int):String
+		{
+			switch (type)
+			{
+				case BuildingType.BARRACK:
+					return BuildingType.N_BARRACK;
+				break;
+				
+				case BuildingType.ARMORY:
+					return BuildingType.N_ARMORY;
+				break;
+				
+				case BuildingType.RANGE:
+					return BuildingType.N_RANGE;
+				break;
+				
+				case BuildingType.SNIPER_SCHOOL:
+					return BuildingType.N_SNIPER_SCHOOL
+				break;
+				
+				case BuildingType.FORGE:
+					return BuildingType.N_FORGE;
+				break;
+				
+				case BuildingType.WORKSHOP:
+					return BuildingType.N_WORKSHOP;
+				break;
+				
+				case BuildingType.FOUNDRY:
+					return BuildingType.N_FOUNDRY;
+				break;
+				
+				case BuildingType.BOOT_CAMP:
+					return BuildingType.N_BOOT_CAMP;
+				break;
+				
+				case BuildingType.STABLES:
+					return BuildingType.N_STABLES;
+				break;
+				
+				case BuildingType.OFFICER_SCHOOL:
+					return BuildingType.N_OFFICER_SCHOOL;
+				break;
+				
+				case BuildingType.OUTPOST:
+					return BuildingType.N_OUTPOST;
+				break;
+				
+				case BuildingType.WATCH_TOWER:
+					return BuildingType.N_WATCH_TOWER;
+				break;
+				
+				case BuildingType.AMBUSH:
+					return BuildingType.N_AMBUSH;
+				break;
+				
+				case BuildingType.WAY_POINT:
+					return BuildingType.N_WAY_POINT;
+				break;
+				
+				case BuildingType.HOUSE:
+					return BuildingType.N_HOUSE;
+				break;
+				
+				case BuildingType.FARM:
+					return BuildingType.N_FARM;
+				break;
+				case BuildingType.SAWMILL:
+					return BuildingType.N_SAWMILL;
+				break;
+				case BuildingType.BLACKSMITH:
+					return BuildingType.N_BLACKSMITH;
+				break;
+				case BuildingType.WAREHOUSE:
+					return BuildingType.N_WAREHOUSE;
+				break;
+				case BuildingType.STOCKPILE:
+					return BuildingType.N_STOCKPILE;
+				break;
+				case BuildingType.MARKET:
+					return BuildingType.N_MARKET;
+				break; 
+				
+				case BuildingType.TOWN_SQUARE:
+					return BuildingType.N_TOWN_SQUARE;
+				break;
+				
+				default:
+					return "NONE";
+				break;
+			}
+		}
+	
+	
+	
+		/**
+		* get Information about building type
+		* @param buildingType: Type of building (int)
+		* @return BuildingInfo Node with information about the specific building type
+		*/
 		public static function getInfo(buildingType:int):BuildingInfoNode
 		{
 			var wood:int,iron:int,money:int,population:int, requirement:int;

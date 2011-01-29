@@ -1,5 +1,6 @@
 ﻿package classes {
 	import constant.BuildingType;
+	import constant.SoldierType;
 	
 	public class Player
 	{
@@ -209,15 +210,8 @@
 			}
 		}
 		
-		public function get AmountWorkers():int
-		{
-			return workers;
-		}
-		
-		public function get Regiments():LinkedList
-		{
-			return regiments;
-		}
+		public function get AmountWorkers():int { return workers;}
+		public function get Regiments():LinkedList { return regiments;}
 		
 		public function addRegiment(regimentIn:Regiment):void
 		{
@@ -254,7 +248,7 @@
 		*/
 		public function addSoldierToRegiment(unit:Soldier):void
 		{
-			Regiments.Get(0).data.addUnit(unit);
+			Regiments.Get(SoldierType.CITY_REGIMENT_INDEX).data.addUnit(unit);
 		}
 		
 		/**
@@ -263,7 +257,7 @@
 		*/
 		public function removeSoldierFromRegiment(unit:Soldier):void
 		{
-			Regiments.Get(0).data.removeUnit(unit);
+			Regiments.Get(SoldierType.CITY_REGIMENT_INDEX).data.removeUnit(unit);
 		}
 		
 		public function changeWood(value:int)
@@ -333,6 +327,15 @@
 		}
 		
 		/**
+		* return available workers in the city ready for allocate.
+		*/
+		public function get AvailableWorkers():int
+		{
+			// Basically, amount of workers in Regiement#0
+			return regiments.Get(SoldierType.CITY_REGIMENT_INDEX).data.totalType(SoldierType.WORKER);
+		}
+		
+		/**
 		* Update maximum capacity of all resources
 		*/
 		public function updateResourcesCapacity()
@@ -381,16 +384,16 @@
 		*/
 		private function updateAllTownResources():void
 		{
-			var w:int,i:int,f:int,p:int;
+			var w:int,iron:int,f:int,p:int;
 			for (var i:int = 0; i < towns.Length ;++i)
 			{
 				w += towns.Get(i).data.Wood;
-				i += towns.Get(i).data.Iron;
+				iron += towns.Get(i).data.Iron;
 				f += towns.Get(i).data.Food;
 				p += towns.Get(i).data.Population;
 			}
 			changeWood(w);
-			changeIron(i);
+			changeIron(iron);
 			changeFood(f);
 			changePop(p);
 		}
