@@ -120,6 +120,7 @@
 			this.menuBar.addExtFuncTo(GameConfig.CHANGE_WORLD, MouseEvent.CLICK, worldButtonClick);
 			this.menuBar.addExtFuncTo(GameConfig.COMM_CANCEL, MouseEvent.CLICK, cancelButtonClick);
 			this.menuBar.addExtFuncTo(GameConfig.COMM_STAT_POP, MouseEvent.CLICK, showStat);
+			this.menuBar.addExtFuncTo(GameConfig.COMM_HELP, MouseEvent.CLICK, helpButtonClick );
 			this.popUpStat.addExtFuncToButtons(GameConfig.COMM_PLUS_SIGN, MouseEvent.CLICK,addToStat);
 			this.popUpStat.addExtFuncToButtons(GameConfig.COMM_MINUS_SIGN, MouseEvent.CLICK, removeFromStat);
 			this.popUpStat.addExtFuncToButtons(GameConfig.COMM_SWITCH_STAT, MouseEvent.CLICK, switchStat);
@@ -318,8 +319,6 @@
 					
 				} 
 			}
-			
-			
 		}
 		
 		
@@ -330,8 +329,9 @@
 		public function addButtonClick(event:MouseEvent):void
 		{
 			trace("Add button clicked!");
+
 			this.command=GameConfig.COMM_ADD;
-			
+
 			// check requirement, retrive info from city
 			var build_list:Array = BuildingManager.determineBuildingList(mcity);
 			
@@ -356,6 +356,7 @@
 			} else {
 				this.command = GameConfig.COMM_SELECT;
 			}
+
 		}
 		
 		/**
@@ -368,26 +369,41 @@
 			// get requirement node
 			var node:BuildingInfoNode = BuildingInfo.getInfo(event.currentTarget.getBuildingType);
 			
-			// Set where to be displayed
-			pop_buildingInfo.x = event.stageX + 10;
-			pop_buildingInfo.y = event.stageY - 20;
-			
-			// if met basic requirement
-			if (build_list[event.currentTarget.getBuildingType])
+			// Regular Mode
+			if (this.command!=GameConfig.COMM_HELP)
 			{
-				// show resources needed
-				pop_buildingInfo.gotoAndStop(Images.POP_REQUIRE);
-				pop_buildingInfo.buildName.text = BuildingInfo.getBuildingName(event.currentTarget.getBuildingType);
-				pop_buildingInfo.woodInfo.text = node.Wood.toString();
-				pop_buildingInfo.ironInfo.text = node.Iron.toString();
-				pop_buildingInfo.moneyInfo.text = node.Money.toString();
-				pop_buildingInfo.popInfo.text = node.Population.toString();
+				// Set where to be displayed
+				pop_buildingInfo.x = event.stageX + 10;
+				pop_buildingInfo.y = event.stageY - 20;
 				
+				// if met basic requirement
+				if (build_list[event.currentTarget.getBuildingType])
+				{
+					// show resources needed
+					pop_buildingInfo.gotoAndStop(Images.POP_REQUIRE);
+					pop_buildingInfo.buildName.text = BuildingInfo.getBuildingName(event.currentTarget.getBuildingType);
+					pop_buildingInfo.woodInfo.text = node.Wood.toString();
+					pop_buildingInfo.ironInfo.text = node.Iron.toString();
+					pop_buildingInfo.moneyInfo.text = node.Money.toString();
+					pop_buildingInfo.popInfo.text = node.Population.toString();
+					
+				} else {
+					// show building requirement
+					pop_buildingInfo.gotoAndStop(Images.POP_REQUIRE_BUILD);
+					var req_build:int = node.Requirement;
+					pop_buildingInfo.reqInfo.text = BuildingInfo.getBuildingName(req_build).concat(" is required!");
+				}
 			} else {
-				// show building requirement
-				pop_buildingInfo.gotoAndStop(Images.POP_REQUIRE_BUILD);
-				var req_build:int = node.Requirement;
-				pop_buildingInfo.reqInfo.text = BuildingInfo.getBuildingName(req_build).concat(" is required!");
+				// Help Mode
+				
+				/* Show Help/Tutorial pop up windows
+				 Set where to be displayed
+				 */
+				pop_buildingInfo.x = event.stageX + 100;
+				pop_buildingInfo.y = event.stageY - 100;
+				pop_buildingInfo.gotoAndStop(Images.POP_HELP_BUILD);
+				pop_buildingInfo.buildName.text = BuildingInfo.getBuildingName(event.currentTarget.getBuildingType);
+				pop_buildingInfo.desInfo.text = BuildingInfo.getDescription(event.currentTarget.getBuildingType);
 			}
 			
 			pop_buildingInfo.visible = true;
@@ -419,6 +435,15 @@
 		{
 			this.build_cursor.visible = false;
 			this.command = GameConfig.COMM_SELECT;
+		}
+		
+		/**
+		* Help button, and set it to help mode
+		*/
+		public function helpButtonClick(event:MouseEvent):void
+		{
+			this.build_cursor.visible = false;
+			this.command = GameConfig.COMM_HELP;
 		}
 		
 		/**
@@ -506,6 +531,10 @@
 			if (this.command == GameConfig.COMM_SELECT)
 			{
 				this.mouse.visible = true;
+			} else if (this.command==GameConfig.COMM_HELP)
+			{
+				// Back to select mode
+				this.command = GameConfig.COMM_SELECT;
 			}
 			
 		}

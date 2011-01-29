@@ -29,7 +29,7 @@
 		private var index_changeButton:int;
 		private var index_nextButton:int, index_prevButton:int;
 		private var index_milButton:int, index_civButton:int;
-		private var index_cancelButton:int;
+		private var index_cancelButton:int, index_helpButton:int;
 		private var index_statButton:int;
 		
 		/* game content reference */
@@ -114,10 +114,12 @@
 			index_civButton = 6;
 			index_cancelButton = 7;
 			index_statButton = 8;
+			index_helpButton = 9;
 			this.children.push(new TriggerButton(15, 10, GameConfig.COMM_MIL_LIST));
 			this.children.push(new TriggerButton(150, 10, GameConfig.COMM_CIV_LIST));
 			this.children.push(new TriggerButton(500,50, GameConfig.COMM_CANCEL));
 			this.children.push(new TriggerButton(650,-10, GameConfig.COMM_STAT_POP));
+			this.children.push(new TriggerButton(550,50, GameConfig.COMM_HELP));
 			
 			
 			// Add external function
@@ -245,6 +247,9 @@
 					break;
 				case GameConfig.COMM_STAT_POP:
 					children[index_statButton].addEventListener(add_event,func);
+					break;
+				case GameConfig.COMM_HELP:
+					children[index_helpButton].addEventListener(add_event,func);
 					break;
 				default:
 					// do something
