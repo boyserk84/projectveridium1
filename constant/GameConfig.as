@@ -50,6 +50,7 @@
 		public static const COMM_PLUS_SIGN = 10;
 		public static const COMM_MINUS_SIGN = 11;
 		public static const COMM_SWITCH_STAT = 12;
+		public static const COMM_HELP = 13;
 		
 		//Frame for World Map
 		public static const WORLD_FRAME=2;

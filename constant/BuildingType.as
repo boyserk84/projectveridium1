@@ -70,6 +70,22 @@
 		public static const N_WAY_POINT:String="Way point";
 		public static const N_AMBUSH:String="Ambush";
 		
+		/* Description of each miltary building */
+		public static const D_BARRACK:String = "Training soldiers";
+		public static const D_ARMORY:String = "Training Armory";
+		public static const D_RANGE:String ="Training Shooting Range";
+		public static const D_SNIPER_SCHOOL:String = "Training Sniper School";
+		public static const D_FORGE:String = "Training Forge";
+		public static const D_WORKSHOP:String = "Training Workshop";
+		public static const D_FOUNDRY:String= "Training Foundry";
+		public static const D_BOOT_CAMP:String= "Training Boot camp";
+		public static const D_STABLES:String = "Training Stables";
+		public static const D_OFFICER_SCHOOL:String= "Training Officer Academy";
+		public static const D_OUTPOST:String="Training Outpost";
+		public static const D_WATCH_TOWER:String="Training Watch Tower";
+		public static const D_WAY_POINT:String="Training Way point";
+		public static const D_AMBUSH:String="Training Ambush";
+		
 		
 		/* Time it takes to build each military building */
 		public static const SEC_BARRACK:int = 10;
@@ -121,6 +137,16 @@
 		public static const N_STOCKPILE:String = "Stockpile";
 		public static const N_MARKET:String = "Market";
 		public static const N_HOUSE:String = "House";
+		
+		/* Description corresponding to each civilian building */
+		public static const D_TOWN_SQUARE:String = "Your capital city.";
+		public static const D_FARM:String = "Provide food for your city.";
+		public static const D_SAWMILL:String = "Provide wood for your city.";
+		public static const D_BLACKSMITH:String = "Provide iron for your city";
+		public static const D_WAREHOUSE:String = "Increase over capacity of resrouces.";
+		public static const D_STOCKPILE:String = "Provide Stockpile";
+		public static const D_MARKET:String = "Exchange and trade with your neighbors. More money.";
+		public static const D_HOUSE:String = "Provide housing for your people to prevent overcrowding.";
 		
 		public static const TOTAL_CIVIL_TYPE:int = 8;
 		

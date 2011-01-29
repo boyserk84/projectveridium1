@@ -102,6 +102,104 @@
 				break;
 			}
 		}
+		
+		/**
+		* get a building's description of what it does
+		* @param type: Building Type
+		* @return description of building
+		*/
+		public static function getDescription(type:int):String
+		{
+			switch (type)
+			{
+				case BuildingType.BARRACK:
+					return BuildingType.D_BARRACK;
+				break;
+				
+				case BuildingType.ARMORY:
+					return BuildingType.D_ARMORY;
+				break;
+				
+				case BuildingType.RANGE:
+					return BuildingType.D_RANGE;
+				break;
+				
+				case BuildingType.SNIPER_SCHOOL:
+					return BuildingType.D_SNIPER_SCHOOL
+				break;
+				
+				case BuildingType.FORGE:
+					return BuildingType.D_FORGE;
+				break;
+				
+				case BuildingType.WORKSHOP:
+					return BuildingType.D_WORKSHOP;
+				break;
+				
+				case BuildingType.FOUNDRY:
+					return BuildingType.D_FOUNDRY;
+				break;
+				
+				case BuildingType.BOOT_CAMP:
+					return BuildingType.D_BOOT_CAMP;
+				break;
+				
+				case BuildingType.STABLES:
+					return BuildingType.D_STABLES;
+				break;
+				
+				case BuildingType.OFFICER_SCHOOL:
+					return BuildingType.D_OFFICER_SCHOOL;
+				break;
+				
+				case BuildingType.OUTPOST:
+					return BuildingType.D_OUTPOST;
+				break;
+				
+				case BuildingType.WATCH_TOWER:
+					return BuildingType.D_WATCH_TOWER;
+				break;
+				
+				case BuildingType.AMBUSH:
+					return BuildingType.D_AMBUSH;
+				break;
+				
+				case BuildingType.WAY_POINT:
+					return BuildingType.D_WAY_POINT;
+				break;
+				
+				case BuildingType.HOUSE:
+					return BuildingType.D_HOUSE;
+				break;
+				
+				case BuildingType.FARM:
+					return BuildingType.D_FARM;
+				break;
+				case BuildingType.SAWMILL:
+					return BuildingType.D_SAWMILL;
+				break;
+				case BuildingType.BLACKSMITH:
+					return BuildingType.D_BLACKSMITH;
+				break;
+				case BuildingType.WAREHOUSE:
+					return BuildingType.D_WAREHOUSE;
+				break;
+				case BuildingType.STOCKPILE:
+					return BuildingType.D_STOCKPILE;
+				break;
+				case BuildingType.MARKET:
+					return BuildingType.D_MARKET;
+				break; 
+				
+				case BuildingType.TOWN_SQUARE:
+					return BuildingType.D_TOWN_SQUARE;
+				break;
+				
+				default:
+					return "NO DESCRIPTION";
+				break;
+			}
+		}
 	
 	
 	

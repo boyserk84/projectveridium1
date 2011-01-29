@@ -34,5 +34,6 @@
 		public static const POP_NAME:int = 2;
 		public static const POP_REQUIRE:int = 3;
 		public static const POP_REQUIRE_BUILD:int = 4;
+		public static const POP_HELP_BUILD:int = 5;
 	}
 }
