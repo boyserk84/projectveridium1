@@ -16,11 +16,15 @@ This iteration will deal with the following features:
 || Task A || 2 hours|| Fetch basic information from facebook profile ||
 || Task B || 1 hour || Embedded request invitation page to facebook app ||
 || Task C || 1 hour || Authentication using facebook API ||
-|| Task D || || ||
 
-= Database/Server: Client/Server =
+= Network/Socket: Setup game server and server script =
+|| Task A || 2 hours || Setup local testing server with Linux ||
+|| Task B || 4 hours || Setup basic server scripts to handle incoming and outgoing connections ||
+|| Task C || || Design protocol of package sent/receive ||
+
+= Database/Server: Client/Server Interaction =
 
 || Task || Time Spent || Description ||
-|| Task A || || Fetch data from DB and add to game (AS3) ||
-|| Task B || || Write data from game to DB ||
-|| Task C || || Design DB corresponding to game data ||
+|| Task A || || Design DB corresponding to game data ||
+|| Task B || || Fetch data from DB via Php add to game (AS3) ||
+|| Task C || || Write data from game to DB ||
