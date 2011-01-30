@@ -28,3 +28,7 @@ This iteration will deal with the following features:
 || Task A || || Design DB corresponding to game data ||
 || Task B || || Fetch data from DB via Php add to game (AS3) ||
 || Task C || || Write data from game to DB ||
+
+= Multiplayer/Network Game Components =
+|| Task A || || Integrate socket and command protocol into a city-game ||
+|| Task B || || Integrate socket and command protocal into a worldmap-game ||
