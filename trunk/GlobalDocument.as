@@ -8,6 +8,7 @@
 	import contents.*;
 	import constant.GameConfig;
 	import flash.geom.Rectangle;
+	import network.*;
 	
 	/**
 	* GlobalDocument
@@ -24,6 +25,9 @@
 		public var game:GameCanvas;
 		public var worldgame:WorldMapCanvas;
 		
+		/* Network Component */
+		public var client:ConnectGame;
+		
 		/*
 		* Default constructor
 		*/
@@ -37,6 +41,7 @@
 			
 			worldgame = new WorldMapCanvas;
 			this.addChild(worldgame);
+			 
 			enableCity();
 		}
 		
@@ -45,6 +50,9 @@
 		*/
 		private function loadProfile():void
 		{
+			//var configuration:NetConst = new NetConst();
+			//client = new ConnectGame(configuration);
+								  
 			// Set resources
 			profile = new Player("RealName", "UserName");
 			profile.Food = 200; /* 2 */
@@ -71,6 +79,10 @@
 		private function loadFromDB():Boolean
 		{
 			// TODO: IMPLEMENT
+							
+			// Test Network
+			//client.sendRequest("999");
+
 			return true;
 		}
 		

@@ -11,6 +11,7 @@
 	/**
 	* PopUpWindow GUI
 	* This class will handle and process information to display on the popup-screen.
+	* In this case, stat-popup screen.
 	*/
 	public class PopUpWindow extends MovieClip
 	{
@@ -54,6 +55,7 @@
 			//trace("AddPlus Button");
 			icons_add = new Array();
 			icons_minus = new Array();
+			
 			for (var i:int = 0; i < SoldierType.TOTAL_SOLDIERS_TYPE; ++i)
 			{
 				icons_add.push(new TriggerButton(ADD_LOCATE_X,27+i*22, GameConfig.COMM_PLUS_SIGN));
@@ -61,12 +63,24 @@
 				this.addChild(icons_add[i]);
 				this.addChild(icons_minus[i]);
 			}
-			icon_switch = new TriggerButton(ADD_LOCATE_X, TOP_RIGHT, GameConfig.COMM_SWITCH_STAT);
-			this.addChild(icon_switch);
+			
+			constructSwitchIcon();
+			
+			/* For stat screen */
 			add_worker = new TriggerButton(ADD_LOCATE_X, 30, GameConfig.COMM_PLUS_SIGN);
 			remove_worker = new TriggerButton(REMOVE_LOCATE_Y, 30, GameConfig.COMM_MINUS_SIGN);
+			
 			this.addChild(add_worker);
 			this.addChild(remove_worker);
+		}
+		
+		/*
+		* Construct switching-menu icon
+		*/
+		private function constructSwitchIcon():void
+		{
+			icon_switch = new TriggerButton(ADD_LOCATE_X, TOP_RIGHT, GameConfig.COMM_SWITCH_STAT);
+			this.addChild(icon_switch);
 		}
 		
 		/**

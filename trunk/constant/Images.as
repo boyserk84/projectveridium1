@@ -29,6 +29,9 @@
 		public static const POP_STAT:int = 1;
 		public static const POP_STAT_MIL:int = 2;
 		
+		/** NOTIFICATION WINDOW **/
+		public static const PANEL_CONFIRM:int = 1;
+		
 		/** POP UP BUILDING INFO WINDOW **/
 		public static const POP_TIME_REMAIN:int = 1;
 		public static const POP_NAME:int = 2;
