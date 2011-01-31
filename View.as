@@ -318,6 +318,26 @@
 		}
 		
 		/**
+		* set a building to be invisible at a particular location
+		* and remove it from the view
+		* @param col, row: Column and row in the actual game location
+		*/
+		public function removeBuildingInvisibleAt(col:int, row:int):void
+		{
+			for (var i:int = 0; i < this.TotalBuildings; ++i)
+			{
+				if (col == this.gameSortedBuildingList[i].Location.x
+					&& row == this.gameSortedBuildingList[i].Location.y)
+				{
+					if (this.contains(getCurGameObjOf(i)))
+					{
+						this.removeChild(getCurGameObjOf(i));
+					}
+				}
+			}//for
+		}
+		
+		/**
 		* Delete all views of Building objects (SpriteSheet)
 		*/
 		private function deleteViewOfBuildings()

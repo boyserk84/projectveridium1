@@ -28,7 +28,9 @@
 		private var headStat:HeaderInfo;			// Header Info
 		private var popUpStat:PopUpWindow;			// Pop Up Stat menu
 		private var pop_buildingInfo:popupInfo		// Pop Up building info
+		private var notifyWin:NotifyWindow;			// Notification window
 		
+
 		
 		private var command:int;			// Current command of the mouse-click
 		private var select_building:int;	// Current building selected when mouse-click at the menu
@@ -39,6 +41,7 @@
 		
 		// Game Contents
 		private var mcity:City;
+		private var tempBuilding:Building;		// Temporary game object
 
 		
 		/**
@@ -85,6 +88,7 @@
 			initialize_buildingInfoPopUp();
 			initialize_IO();
 			initialize_StatBar(profile);
+			initialize_windows();
 			initialize_MOUSE();
 			
 			initialize_MenuBar(mcity);
@@ -103,7 +107,12 @@
 			this.timer = new CountDown(GameConfig.TIME_MINS_RESPAWN);
 			this.menuBar = new MenuSystem(0,460,Images.WIN_CITYMENU);
 			this.headStat = new HeaderInfo(profile);
+		}
+		
+		private function initialize_windows():void
+		{
 			this.popUpStat = new PopUpWindow(580,245,Images.POP_STAT);
+			this.notifyWin = new NotifyWindow(GameConfig.SCREEN_WIDTH/4, GameConfig.SCREEN_HEIGHT/4,1);
 		}
 		
 		/**
@@ -124,7 +133,26 @@
 			this.popUpStat.addExtFuncToButtons(GameConfig.COMM_PLUS_SIGN, MouseEvent.CLICK,addToStat);
 			this.popUpStat.addExtFuncToButtons(GameConfig.COMM_MINUS_SIGN, MouseEvent.CLICK, removeFromStat);
 			this.popUpStat.addExtFuncToButtons(GameConfig.COMM_SWITCH_STAT, MouseEvent.CLICK, switchStat);
-			
+			this.notifyWin.addEventToConfirmButton(MouseEvent.CLICK, proceedRemove);
+			this.notifyWin.addEventToCancelButton(MouseEvent.CLICK, disableNotifyWin);
+		}
+		
+
+		
+		/**
+		* Remove a building from a game
+		* @param tempBuilding: Building that needs to be removed
+		*/
+		private function removeGameBuilding(tempBuilding:Building)
+		{
+			// (1) (GameObject) Notify city what building to be removed
+			mcity.removeBuilding(tempBuilding);
+						
+			// (2) Adjust View, delete a building from view
+			theView.removeBuildingInvisibleAt(tempBuilding.Location.x,tempBuilding.Location.y);
+						
+			// (3) Update Menu Bar
+			menuBar.updateCityReq(BuildingManager.determineBuildingList(mcity));
 		}
 		
 		/**
@@ -152,8 +180,8 @@
 			this.addChild(this.headStat);	// Add Top Stat Bar
 			this.addChild(this.popUpStat);	// Add Pop-up windows
 			this.addChild(pop_buildingInfo);// Add Pop-up building Info
+			this.addChild(notifyWin);
 		}
-		
 		
 		/**
 		* Show/Hide stat information
@@ -331,6 +359,7 @@
 			trace("Add button clicked!");
 
 			this.command=GameConfig.COMM_ADD;
+			this.mouse.gotoAndStop(GameConfig.CURSOR_SELECT);
 
 			// check requirement, retrive info from city
 			var build_list:Array = BuildingManager.determineBuildingList(mcity);
@@ -410,7 +439,7 @@
 		}
 		
 		/**
-		* mouse out of add button area
+		* mouse out of add button area (Hide pop up info)
 		*/
 		public function hoverOutaddButton(event:MouseEvent):void
 		{
@@ -426,6 +455,7 @@
 			trace("Remove button clicked");
 			this.build_cursor.visible = false;
 			this.command=GameConfig.COMM_REMOVE;
+			this.mouse.gotoAndStop(GameConfig.CURSOR_REMOVE);
 		}
 		
 		/**
@@ -435,6 +465,7 @@
 		{
 			this.build_cursor.visible = false;
 			this.command = GameConfig.COMM_SELECT;
+			this.mouse.gotoAndStop(GameConfig.CURSOR_SELECT);
 		}
 		
 		/**
@@ -458,6 +489,23 @@
 			MovieClip(parent).switchGame();
 		}
 		
+				/*
+		* Hide notification windows when clicked cancel
+		*/
+		private function disableNotifyWin(event:Event)
+		{
+			this.notifyWin.visible = false;
+		}
+		
+		/**
+		* Confirm to remove when click
+		*/
+		private function proceedRemove(event:Event)
+		{
+			this.notifyWin.visible = false;
+			removeGameBuilding(tempBuilding);
+		}
+		
 		
 		/**
 		* Event listener for this canvas' mouse click
@@ -478,22 +526,44 @@
 						// Only remove the building that has not been underconstruction
 						if (theView.checkClickedBuilding(xloc, yloc).isBuildingDone())
 						{
-							// (1) (GameObject) Notify city what building to be removed
-							mcity.removeBuilding(theView.checkClickedBuilding(xloc, yloc));
+							// Refer building to be removed
+							this.tempBuilding = theView.checkClickedBuilding(xloc, yloc);
+							
+							// Show confirmation window
+							this.notifyWin.visible = true;
+							this.notifyWin.modifyMessage("Confirmation", 
+														 "Are you sure you want to remove "
+														 .concat(
+															BuildingInfo.getBuildingName(tempBuilding.Type).concat(" Building?")
+															)
+														 );
+							
+							/** OLD VERSION
+								// (1) (GameObject) Notify city what building to be removed
+								mcity.removeBuilding(theView.checkClickedBuilding(xloc, yloc));
 						
-							// (2) Adjust View, delete a building from view
-							theView.setClickedBuildingInvisible(xloc,yloc);
+								// (2) Adjust View, delete a building from view
+								theView.setClickedBuildingInvisible(xloc,yloc);
 						
-							// (3) Update Menu Bar
-							menuBar.updateCityReq(BuildingManager.determineBuildingList(mcity));
+								// (3) Update Menu Bar
+								menuBar.updateCityReq(BuildingManager.determineBuildingList(mcity));
+							**/
 						}
+					} else {
+						// Alert, reason for not be able to remove a building
+						alertPopUpNotify(event.stageX, event.stageY);
+						
+						if (theView.checkClickedBuilding(xloc, yloc).Type == BuildingType.TOWN_SQUARE)
+						{
+							pop_buildingInfo.reqInfo.text = ("Town square must remain!");
+						}
+						this.command = GameConfig.COMM_SELECT;
 					}
 				}
 			} else 
 			
 			if (this.command == GameConfig.COMM_ADD)
 			{
-				//trace("X: "+xloc+" ,y: "+yloc);
 				// check if mouse-clicking is not on any building
 				if (theView.checkClickedBuilding(xloc, yloc)==null)
 				{
