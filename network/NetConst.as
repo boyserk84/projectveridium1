@@ -20,7 +20,7 @@
 		
 		/* XML Loader*/
 		private var xmlLoader:URLLoader = new URLLoader(); 
-		private var xmlData:XML = new XML(); 
+		private var xmlData:XML; 
 		
 		private var FLAG:Boolean = false;
 		
@@ -29,8 +29,8 @@
 		*/
 		public function NetConst()
 		{
-			xmlLoader.addEventListener(Event.COMPLETE, LoadXML); 
 			xmlLoader.load(new URLRequest("network/host.xml")); 
+			xmlLoader.addEventListener(Event.COMPLETE, LoadXML); 
 		}
 		
 		/**
@@ -39,9 +39,10 @@
 		private function LoadXML(e:Event):void 
 		{ 
 			xmlData = new XML(e.target.data); 
-			HOST = xmlData.host;
-			PORT = xmlData.port;
-			FLAG = true;
+			this.HOST = xmlData.host;
+			this.PORT = xmlData.port;
+			this.FLAG = true;
+			xmlLoader.removeEventListener(Event.COMPLETE, LoadXML);
 		}
 		
 		/*
@@ -52,7 +53,7 @@
 			return FLAG;
 		}
 		
-		public function getHost():String { return HOST; }
+		public function getHost():String { trace(HOST); return HOST; }
 		public function getPort():int { return PORT; }
 		
 	}
