@@ -50,6 +50,7 @@
 		private function initialize_MOUSE():void
 		{
 			mouse=new MouseCurs();
+			mouse.gotoAndStop(GameConfig.CURSOR_SELECT);
 			build_cursor = new ImgBuilding(0,0,BuildingType.TOWN_SQUARE);
 			build_cursor.visible = false;
 			build_cursor.alpha = GameConfig.HALF_TRANSPARENT;

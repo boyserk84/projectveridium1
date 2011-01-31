@@ -2,6 +2,7 @@
 	
 	import flash.display.MovieClip;
 	import flash.display.Stage;
+	import flash.events.*;
 	import utilities.CountDown;
 	import classes.*;
 	import constant.BuildingType;
@@ -27,6 +28,9 @@
 		
 		/* Network Component */
 		public var client:ConnectGame;
+		private var configuration:NetConst;
+		
+		
 		
 		/*
 		* Default constructor
@@ -34,6 +38,43 @@
 		public function GlobalDocument()
 		{
 			trace("Create GlobalDocument");
+			configuration = new NetConst(); // Load Network Configuration info
+			
+			// Loader menu
+			this.addEventListener(Event.ENTER_FRAME, handleProgress);
+		}
+		
+		/**
+		* Pre-loader screen (Event listener)
+		*
+		*/
+		private function handleProgress(event:Event):void
+		{
+			trace(stage.loaderInfo.bytesLoaded);
+			
+			// Check client's side
+			if (stage.loaderInfo.bytesTotal <= stage.loaderInfo.bytesLoaded)
+			{
+				// Check network configuration
+				if (configuration.loadComplete())
+				{
+					trace("Network:" + configuration.HOST);
+					loadContents();
+					this.removeEventListener(Event.ENTER_FRAME, handleProgress);
+				} else {
+					// Update count
+					trace("Loading");
+				}
+			}
+
+		}
+		
+		/**
+		* Load and initialize game contents
+		*
+		*/
+		private function loadContents():void
+		{
 			gotoAndStop(GameConfig.CITY_FRAME);
 			loadProfile();
 			game = new GameCanvas(profile);
@@ -43,6 +84,7 @@
 			this.addChild(worldgame);
 			 
 			enableCity();
+			
 		}
 		
 		/**
