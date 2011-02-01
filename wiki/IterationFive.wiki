@@ -22,4 +22,4 @@ For the building type that increases city's capacity, the flag will set out and 
 || Task G || 3 hours || Update the correct values of requirement when building is complete. ||
 || Task H || 1 hour || Update the capacity when certain buildings are finished ||
 || Task J || 1 hour || Prevent user from remove only last remaining town square. ||
-|| Task K || || Confirmation on remove building from the city ||
+|| Task K || 1 hour || Confirmation on remove building from the city ||
