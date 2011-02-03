@@ -76,7 +76,7 @@
 				}
 				default:
 				{
-					return townIn;
+					return 0;
 				}
 			}
 		}
@@ -84,23 +84,141 @@
 		public static function getTownInfo(townIn:int):Town
 		{
 			//Constructor for town
-			//wood,stone,pop,iron,food,location
+			//wood,stone,pop,iron,food,location,name
 			switch(townIn)
 			{
+				//Maine
 				case 0:
-				return new Town(10,0,10,0,10,new Point(2117,552),"Bristol");
-				
+					return new Town(3,100,5,10,100,new Point(2088,550),"0");
 				case 1:
-				return new Town(10,10,4,0,10,new Point(1864,874),"Boston");
-				
+					return new Town(3,100,5,10,100,new Point(2023,488),"1");
 				case 2:
-				return new Town(10,0,0,0,0,new Point(1598,1523),"Fairfax");
-				
+					return new Town(3,100,5,10,100,new Point(2011,557),"2");
 				case 3:
-				return new Town(10,0,30,1,0,new Point(1555,1068),"Philadelphia");
-				
+				return new Town(3,100,5,10,100,new Point(1918,592),"3");
 				case 4:
-				return new Town(3,100,5,10,100,new Point(1271,1876),"Atlanta");
+				return new Town(3,100,5,10,100,new Point(1972,638),"4");
+				
+				//NewHampshire/Connnecticut?
+				case 5:
+				return new Town(3,100,5,10,100,new Point(1883,690),"5");
+				case 6:
+				return new Town(3,100,5,10,100,new Point(1919,766),"6");
+				case 7:
+				return new Town(3,100,5,10,100,new Point(1866,766),"7");
+				
+				//Massachusettes
+				case 8:
+				return new Town(3,100,5,10,100,new Point(1921,843),"8");
+				case 9:
+				return new Town(3,100,5,10,100,new Point(1830,871),"9");
+				
+				//Random place below Mass
+				case 10:
+				return new Town(3,100,5,10,100,new Point(1890,913),"10");
+				case 11:
+				return new Town(3,100,5,10,100,new Point(1835,940),"11");
+				
+				//New York
+				case 12:
+				return new Town(3,100,5,10,100,new Point(1790,671),"12");
+				case 13:
+				return new Town(3,100,5,10,100,new Point(1775,779),"13");
+				case 14:
+				return new Town(3,100,5,10,100,new Point(1739,856),"14");
+				case 15:
+				return new Town(3,100,5,10,100,new Point(1686,706),"15");
+				case 16:
+				return new Town(3,100,5,10,100,new Point(1645,806),"16");
+				case 17:
+				return new Town(3,100,5,10,100,new Point(1736,927),"17");
+				case 18:
+				return new Town(3,100,5,10,100,new Point(1777,970),"18");
+				case 19:
+				return new Town(3,100,5,10,100,new Point(1593,893),"19");
+				case 20:
+				return new Town(3,100,5,10,100,new Point(1469,947),"20");
+				
+				//Rhode Island
+				case 21:
+				return new Town(3,100,5,10,100,new Point(1766,1032),"21");
+				case 22:
+				return new Town(3,100,5,10,100,new Point(1765,1147),"22");
+				
+				//PEnnsylvania
+				case 23:
+				return new Town(3,100,5,10,100,new Point(1691,1059),"23");
+				case 24:
+				return new Town(3,100,5,10,100,new Point(1623,999),"24");
+				case 25:
+				return new Town(3,100,5,10,100,new Point(1599,1126),"25");
+				case 26:
+				return new Town(3,100,5,10,100,new Point(1526,1068),"26");
+				case 27:
+				return new Town(3,100,5,10,100,new Point(1433,1161),"27");
+				case 28:
+				return new Town(3,100,5,10,100,new Point(1422,1034),"28");
+				
+				//Maryland
+				case 29:
+				return new Town(3,100,5,10,100,new Point(1622,1201),"29");
+				case 30:
+				return new Town(3,100,5,10,100,new Point(1725,1220),"30");
+				case 31:
+				return new Town(3,100,5,10,100,new Point(1751,1270),"31");
+				
+				//Virginia
+				case 32:
+				return new Town(3,100,5,10,100,new Point(1615,1332),"32");
+				case 33:
+				return new Town(3,100,5,10,100,new Point(1566,1426),"33");
+				case 34:
+				return new Town(3,100,5,10,100,new Point(1531,1242),"34");
+				case 35:
+				return new Town(3,100,5,10,100,new Point(1480,1360),"35");
+				case 36:
+				return new Town(3,100,5,10,100,new Point(1406,1259),"36");
+				case 37:
+				return new Town(3,100,5,10,100,new Point(1327,1382),"37");
+				case 38:
+				return new Town(3,100,5,10,100,new Point(1364,1453),"38");
+				
+				//North Carolina
+				case 39:
+				return new Town(3,100,5,10,100,new Point(1684,1532),"39");
+				case 40:
+				return new Town(3,100,5,10,100,new Point(1628,1653),"40");
+				case 41:
+				return new Town(3,100,5,10,100,new Point(1520,1500),"41");
+				case 42:
+				return new Town(3,100,5,10,100,new Point(1472,1609),"42");
+				case 43:
+				return new Town(3,100,5,10,100,new Point(1316,1605),"43");
+				
+				//South Carolina
+				case 44:
+				return new Town(3,100,5,10,100,new Point(1497,1687),"44");
+				case 45:
+				return new Town(3,100,5,10,100,new Point(1549,1730),"45");
+				case 46:
+				return new Town(3,100,5,10,100,new Point(1482,1784),"46");
+				case 47:
+				return new Town(3,100,5,10,100,new Point(1370,1712),"47");
+				
+				//Georgia
+				case 48:
+				return new Town(3,100,5,10,100,new Point(1315,1801),"48");
+				case 49:
+				return new Town(3,100,5,10,100,new Point(1400,1907),"49");
+				case 50:
+				return new Town(3,100,5,10,100,new Point(1251,1858),"50");
+				case 51:
+				return new Town(3,100,5,10,100,new Point(1367,2017),"51");
+				case 52:
+				return new Town(3,100,5,10,100,new Point(1229,1970),"52");
+
+
+
 				
 				default:
 				return null;

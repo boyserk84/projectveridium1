@@ -99,25 +99,13 @@
 		
 		public function get Iron():int{	return iron;}
 		
-		public function get IronCap():int
-		{
-			return ironCap;
-		}
+		public function get IronCap():int{	return ironCap;}
 		
-		public function get ExtraIronCap():int
-		{
-			return extraIronCap;
-		}
+		public function get ExtraIronCap():int{	return extraIronCap;}
 		
-		public function get Money():int
-		{
-			return money;
-		}
+		public function get Money():int{	return money;}
 		
-		public function getCity():City
-		{
-			return city;
-		}
+		public function getCity():City{	return city;}
 		/*
 		public function get MoneyCap():int
 		{
@@ -129,35 +117,18 @@
 			return extraMoneyCap;
 		}
 		*/
-		public function get Food():int
-		{
-			return food;
-		}
+		public function get Food():int{	return food;}
+		public function get FoodCap():int{	return foodCap;}
+		public function get ExtraFoodCap():int{	return extraFoodCap;}
+		public function get Population():int{	return population;}
+		public function get PopulationCap():int{	return populationCap;}
+		public function get ExtraPopulationCap():int{	return extraPopulationCap;}
+		public function get Agents():int{	return agents;}
+		public function get Politicians():int{	return politicians;}
+		public function get AgentsCap():int{	return agentsCap;}
+		public function get PoliticiansCap():int{	return politiciansCap;}
 		
-		public function get FoodCap():int
-		{
-			return foodCap;
-		}
-		
-		public function get ExtraFoodCap():int
-		{
-			return extraFoodCap;
-		}
-		
-		public function get Population():int
-		{
-			return population;
-		}
-		
-		public function get PopulationCap():int
-		{
-			return populationCap;
-		}
-		
-		public function get ExtraPopulationCap():int
-		{
-			return extraPopulationCap;
-		}
+
 		
 		public function set Wood(value:int) { wood = value; }
 		public function set WoodCap(value:int){ woodCap = value;}
@@ -210,6 +181,8 @@
 		public function get AmountWorkers():int { return workers;}
 		public function get Regiments():LinkedList { return regiments;}
 		
+		public function get HalfTowns():LinkedList { return halfTowns;}
+		
 		public function addRegiment(regimentIn:Regiment):void
 		{
 			regiments.Add(regimentIn);
@@ -252,7 +225,7 @@
 		*/
 		public function removeHalfTown(removeTown:Town):Town
 		{
-			return halfTowns.Remove(removeTown);
+			return halfTowns.Remove(removeTown).data;
 		}
 		
 		/**
