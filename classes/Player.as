@@ -53,10 +53,19 @@
 		private var soldiers:int;
 		//How many workers this player has on hand
 		private var workers:int;
+		//How many agents this player has
+		private var agents:int;
+		//How many politicians this player has
+		private var politicians:int;
+		//How many total agents and politicians this player can have
+		private var agentsCap:int;
+		private var politiciansCap:int;
 		
 		//The towns you own
 		private var towns:LinkedList;
 		private var total_towns:int;		// Number of towns you currently have
+		//These towns only give you half resources and you can't send workers
+		private var halfTowns:LinkedList;
 		
 		//The regiment this player has
 		private var regiments:LinkedList;
@@ -70,42 +79,25 @@
 			side=sideIn;
 			total_towns = 0;
 			towns = new LinkedList();
+			halfTowns=new LinkedList();
 			populationCap = BuildingType.POP_CAP_INIT;
 			foodCap = BuildingType.FOOD_CAP_INIT;
 			ironCap = BuildingType.IRON_CAP_INIT;
 			woodCap = BuildingType.WOOD_CAP_INIT;
 		}
 		
-		public function get Name():String
-		{
-			return username;
-		}
+		public function get Name():String{	return username;}
 		
-		public function addCity(city:City):void
-		{
-			this.city = city;
-		}
+		public function addCity(city:City):void	{	this.city = city;}
 		
-		public function get Wood():int
-		{
-			return wood;
-		}
+		public function get Wood():int{	return wood;}
 		
-		public function get WoodCap():int
-		{
-			return woodCap;
-		}
+		public function get WoodCap():int{	return woodCap;}
 		
-		public function get ExtraWoodCap():int
-		{
-			return extraWoodCap;
-		}
+		public function get ExtraWoodCap():int{	return extraWoodCap;}
 		
 		
-		public function get Iron():int
-		{
-			return iron;
-		}
+		public function get Iron():int{	return iron;}
 		
 		public function get IronCap():int
 		{
@@ -173,6 +165,8 @@
 		public function set IronCap(value:int) { ironCap=value;}
 		public function set ExtraIronCap(value:int){ extraIronCap=value; }
 		public function set Money(value:int) { money=value;}
+		public function set Agents(value:int){agents=value;}
+		public function set Politicians(value:int) { politicians=value;}
 		/*
 		public function set MoneyCap(value:int)
 		{
@@ -190,6 +184,9 @@
 		public function set Population(value:int){ population=value; }
 		public function set PopulationCap(value:int){ populationCap=value; }
 		public function set ExtraPopulationCap(value:int){ extraPopulationCap=value;}
+		public function set AgentCap(value:int){ agentsCap=value;}
+		public function set PoliticiansCap(value:int) { politiciansCap=value;}
+		
 		
 		public function get AmountSoldiers():int
 		{
@@ -234,12 +231,28 @@
 		}
 		
 		/**
+		* Add a town that only earns half resources
+		*/
+		public function addHalfTown(newTown:Town):void
+		{
+			halfTowns.Add(newTown);
+		}
+		
+		/**
 		* Remove/Pop Town from the LinkedLiist
 		* @return the town to be reclaimed by other who conquered it
 		*/
 		public function removeTown(removeTown:Town):Town
 		{
 			return towns.Remove(removeTown);
+		}
+		
+		/**
+		* Remove half town
+		*/
+		public function removeHalfTown(removeTown:Town):Town
+		{
+			return halfTowns.Remove(removeTown);
 		}
 		
 		/**

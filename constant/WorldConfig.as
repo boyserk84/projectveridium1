@@ -25,6 +25,9 @@
 		public static const ATTACK=1;
 		public static const REINFORCE=2;
 		public static const WORKER=3;
+		public static const AGENT=4;
+		public static const POLITICIAN=5;
+		public static const SCOUT=6;
 		
 		//Town info bar frame numbers
 		public static const TOWN_BAR_BLANK=1;
@@ -37,6 +40,8 @@
 		public static const STATE_ATTACK=2;
 		public static const STATE_WORKERS=3;
 		public static const STATE_SELECTING=4;
+		public static const STATE_AGENTS=5;
+		public static const STATE_POLITICIANS=6;
 		
 		
 		
@@ -83,19 +88,19 @@
 			switch(townIn)
 			{
 				case 0:
-				return new Town(10,0,10,0,10,new Point(272,71),"Bristol");
+				return new Town(10,0,10,0,10,new Point(2117,552),"Bristol");
 				
 				case 1:
-				return new Town(10,10,4,0,10,new Point(199,144),"Boston");
+				return new Town(10,10,4,0,10,new Point(1864,874),"Boston");
 				
 				case 2:
-				return new Town(10,0,0,0,0,new Point(202,223),"Jacksonville");
+				return new Town(10,0,0,0,0,new Point(1598,1523),"Fairfax");
 				
 				case 3:
-				return new Town(10,0,30,1,0,new Point(170,444),"Philadelphia");
+				return new Town(10,0,30,1,0,new Point(1555,1068),"Philadelphia");
 				
 				case 4:
-				return new Town(3,100,5,10,100,new Point(32,522),"Atlanta");
+				return new Town(3,100,5,10,100,new Point(1271,1876),"Atlanta");
 				
 				default:
 				return null;

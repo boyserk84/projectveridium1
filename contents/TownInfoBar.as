@@ -4,6 +4,7 @@
 	import flash.geom.Point;
 	import classes.Town;
 	import constant.GameConfig;
+	import constant.SoldierType;
 	
 	public class TownInfoBar extends MovieClip
 	{
@@ -16,7 +17,7 @@
 		{
 		}
 		
-		public function updateAttributesMilitary(town:Town):void
+		public function updateAttributesMilitary(town:Town,side:int):void
 		{
 			
 			townLocation=town.Location;
@@ -40,18 +41,40 @@
 					break;
 				}
 			}
-			if(town.Occupier!=null)
+			if(side==town.Side)
 			{
-				minutemenText.text=town.Occupier.TotalAmount.toString();
+				if(town.Occupier!=null)
+				{
+					minutemenText.text=town.Occupier.totalType(SoldierType.MINUTEMAN).toString();
+					sharpshootersText.text=town.Occupier.totalType(SoldierType.SHARPSHOOTER).toString();
+					cannonsText.text=town.Occupier.totalType(SoldierType.CANNON).toString();
+					officersText.text=town.Occupier.totalType(SoldierType.OFFICER).toString();
+					agentsText.text=town.Occupier.totalType(SoldierType.AGENT).toString();
+					politiciansText.text=town.Occupier.totalType(SoldierType.POLITICIAN).toString();
+				}
+				else
+				{
+					minutemenText.text="0";
+					sharpshootersText.text="0";
+					cannonsText.text="0";
+					officersText.text="0";
+					agentsText.text="0";
+					politiciansText.text="0";
+				}
 			}
 			else
 			{
-				minutemenText.text="0";
+				minutemenText.text="?";
+				sharpshootersText.text="?";
+				cannonsText.text="?";
+				officersText.text="?";
+				agentsText.text="?";
+				politiciansText.text="?";
 			}
 			
 		}
 		
-		public function updateAttributesEconomic(town:Town):void
+		public function updateAttributesEconomic(town:Town,side:int):void
 		{
 			townLocation=town.Location;
 			nameText.text=town.Name.toString();
@@ -74,7 +97,14 @@
 					break;
 				}
 			}
-			workersText.text=town.Workers.toString();
+			if(side==town.Side)
+			{
+				workersText.text=town.Workers.toString();
+			}
+			else
+			{
+				workersText.text="?";
+			}
 			ironText.text=town.Iron.toString();
 			woodText.text=town.Wood.toString();
 			moneyText.text=town.Money.toString();

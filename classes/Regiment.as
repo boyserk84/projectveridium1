@@ -3,6 +3,7 @@
 	import flash.geom.Point;
 	import flash.display.MovieClip;
 	import constant.WorldConfig;
+	import constant.SoldierType;
 	public class Regiment extends MovieClip
 	{
 		//The units in this platoon as represented by the "Soldier" class
@@ -20,11 +21,11 @@
 		//What the regiment is intending to do what it reaches its destination
 		private var intention:int;
 		
-		
+		//How far the regiment has traveled
 		private var distanceTraveled:Number;
-		
+		//How fast the regiment travels
 		private var speed:int;
-		
+		//The travel speed as a number for the calculation
 		private var travelSpeed:Number;
 		
 		
@@ -36,6 +37,7 @@
 			owner=ownerIn;
 			side=sideIn;
 			intention=WorldConfig.NONE;
+			speed=1;
 		}
 		
 		public function addRegiment(regIn:Regiment):void
@@ -131,14 +133,29 @@
 			return distanceTraveled;
 		}
 		
-		public function get Speed():int
-		{
-			return speed;
-		}
-		
 		public function set Speed(value:int):void
 		{
 			speed=value;
+		}
+		
+		public function get Speed():int
+		{
+			var leastSkill:int=100;
+			if(totalType(SoldierType.OFFICER)>0)
+			{
+				leastSkill=SoldierType.getSoldierInfo(SoldierType.OFFICER).Skill;
+			}
+			else
+			{
+				for(var i:int=0;i<units.Length;++i)
+				{
+					if(units.Get(i).data.Skill<leastSkill)
+					{
+						leastSkill=units.Get(i).data.Skill;
+					}
+				}
+			}
+			return leastSkill;
 		}
 		
 		public function get TravelSpeed():Number
@@ -159,6 +176,7 @@
 		{
 			intention=value;
 		}
+		
 		
 		
 		//Get the list for iteration

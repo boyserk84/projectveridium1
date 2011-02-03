@@ -8,7 +8,6 @@
 	import constant.*;
 	import flash.utils.Timer;
 	import flash.events.TimerEvent;
-	import contents.TownInfoPane;
 	import contents.TownInfoBar;
 	import contents.ArmySelectionScreen;
 	import utilities.TriggerButton;
@@ -41,8 +40,9 @@
 		/**
 		* Load all contents to the canvas
 		*/
-		public function loadContents():void
+		public function loadContents(playerIn:Player=null):void
 		{
+			this.input = new IOHandler(0,0,WorldConfig.INPUT_WIDTH, WorldConfig.INPUT_HEIGHT);
 			this.worldView=new WorldView();
 			this.townInfoBar=new TownInfoBar();
 			this.armyManagementScreen=new ArmySelectionScreen();
@@ -52,8 +52,16 @@
 			gameTimer=new Timer(100,0);
 			gameTimer.addEventListener(TimerEvent.TIMER,gameLoop);
 			regiments=new LinkedList();
+			myPlayer=playerIn;
+			if(myPlayer==null)
+			{
+				myPlayer=new Player("Rob","Robtacular",GameConfig.AMERICAN);
+			}
+			
+			
 
 			//Build the District map
+			
 			for(var i:int=0;i<11;++i)
 			{
 				var clip:MovieClip=WorldSpriteInfo.getSprite(i);
@@ -62,6 +70,7 @@
 				clip.y=WorldConfig.getInfo(i).y;
 				myMap.addDistrict(District(clip));
 			}
+			
 									
 
 					
@@ -79,13 +88,19 @@
 			
 			
 			enemyPlayer=new Player("Steve","Steve The Great!",GameConfig.BRITISH);
-			myPlayer=new Player("Rob","Robtacular",GameConfig.AMERICAN);
+
 			
 			var reg:Regiment=new Regiment("Regiment 1",myPlayer.Name,myPlayer.Side);
 			var reg2:Regiment=new Regiment("Enemies",enemyPlayer.Name,enemyPlayer.Side);
 			reg.addUnit(new Soldier(25,SoldierType.MINUTEMAN));
+			reg.addUnit(new Soldier(3,SoldierType.OFFICER));			
+			reg.addUnit(new Soldier(10,SoldierType.SHARPSHOOTER));
+			reg.addUnit(new Soldier(1,SoldierType.CANNON));
+			reg.addUnit(new Soldier(1,SoldierType.AGENT));
+			reg.addUnit(new Soldier(1,SoldierType.POLITICIAN));
 			
 			reg2.addUnit(new Soldier(20,SoldierType.MINUTEMAN));
+
 			reg.Location=myMap.Towns[0].Location;
 			myMap.Towns[0].Occupier=reg;
 			myMap.Towns[0].modifyWorkers(10);
@@ -110,23 +125,36 @@
 
 
 			
-			this.worldView.addAssets(myMap.Districts);			
+			//this.worldView.addAssets(myMap.Districts);	
+			trace("Hello!");
+			var worldMap:MovieClip=new WorldMap();
+			trace("ow?");
+
+			trace("or here");
+			//worldMap.x=-1892;
+			//worldMap.y=-679;
+			this.worldView.addAsset(worldMap);
+			
 			this.worldView.addAssets(myMap.Towns);
-			this.input = new IOHandler(0,0,WorldConfig.INPUT_WIDTH, WorldConfig.INPUT_HEIGHT);
+			
 			worldView.addEventListener(MouseEvent.MOUSE_DOWN,worldMouseDown);
 			worldView.addEventListener(MouseEvent.MOUSE_UP,worldMouseUp);
-			input.addEventListener(MouseEvent.MOUSE_DOWN,worldMouseDown);
+			worldView.addEventListener(MouseEvent.CLICK,worldMouseClick);
+			worldView.addEventListener(MouseEvent.MOUSE_OUT,worldMouseOut);
+
+			/*input.addEventListener(MouseEvent.MOUSE_DOWN,worldMouseDown);
 			input.addEventListener(MouseEvent.MOUSE_UP,worldMouseUp);
 			input.addEventListener(MouseEvent.MOUSE_OUT,worldMouseOut);
-			input.addEventListener(MouseEvent.CLICK,worldMouseClick);
-			worldView.addEventListener(MouseEvent.CLICK,worldMouseClick);
+			input.addEventListener(MouseEvent.CLICK,worldMouseClick);*/
+			
 			cityButton=new TriggerButton(640,526, GameConfig.CHANGE_WORLD);
 			cityButton.addEventListener(MouseEvent.CLICK,cityButtonClick);
 
 			
-
-			this.addChild(input);			
 			this.addChild(worldView);
+			//this.addChild(input);			
+
+
 			this.addChild(townInfoBar);
 			this.addChild(cityButton);
 			
@@ -156,18 +184,39 @@
 			changeTownInfoBar(WorldConfig.TOWN_BAR_ECONOMIC);
 			
 			this.townInfoBar.sendWorkersButton.addEventListener(MouseEvent.CLICK,townSendWorkersButtonClick);
-			townInfoBar.updateAttributesEconomic(currTown);
+			this.townInfoBar.sendAgentsButton.addEventListener(MouseEvent.CLICK,townSendAgentsButtonClick);
+			this.townInfoBar.sendPoliticiansButton.addEventListener(MouseEvent.CLICK,townSendPoliticiansButtonClick);
+			townInfoBar.updateAttributesEconomic(currTown,myPlayer.Side);
 			if(currTown.Owner==myPlayer.Name)
 			{
+				this.townInfoBar.sendAgentsButton.visible=false;
+				this.townInfoBar.sendAgentsButton.enabled=false;
+				this.townInfoBar.sendPoliticiansButton.visible=false;
+				this.townInfoBar.sendPoliticiansButton.enabled=false;
 				
 				this.townInfoBar.sendWorkersButton.visible=true;
 				this.townInfoBar.sendWorkersButton.enabled=true;
 			}
 			else
 			{
+				if(currTown.Side==myPlayer.Side)
+				{
+					this.townInfoBar.sendAgentsButton.visible=false;
+					this.townInfoBar.sendAgentsButton.enabled=false;
+					this.townInfoBar.sendPoliticiansButton.visible=true;
+					this.townInfoBar.sendPoliticiansButton.enabled=true;
+				}
+				else
+				{
+					this.townInfoBar.sendAgentsButton.visible=true;
+					this.townInfoBar.sendAgentsButton.enabled=true;
+					this.townInfoBar.sendPoliticiansButton.visible=false;
+					this.townInfoBar.sendPoliticiansButton.enabled=false;
+				}
 				this.townInfoBar.sendWorkersButton.visible=false;
 				this.townInfoBar.sendWorkersButton.enabled=false;
 			}
+			
 			
 			
 		}
@@ -191,7 +240,7 @@
 			{
 				townInfoAttack();
 			}
-			this.townInfoBar.updateAttributesMilitary(currTown);
+			this.townInfoBar.updateAttributesMilitary(currTown,myPlayer.Side);
 			
 		}
 		
@@ -265,6 +314,18 @@
 			currentState=WorldConfig.STATE_WORKERS;
 		}
 		
+		public function townSendAgentsButtonClick(event:MouseEvent):void
+		{
+			//Send agents to this town
+			currentState=WorldConfig.STATE_AGENTS;
+		}
+		
+		public function townSendPoliticiansButtonClick(event:MouseEvent):void
+		{
+			//Send politicians to this town			
+			currentState=WorldConfig.STATE_POLITICIANS;
+		}
+		
 		public function workerManagementAcceptButtonClick(event:MouseEvent):void
 		{	
 			var reg:Regiment = new Regiment("","",myPlayer.Side);
@@ -296,7 +357,28 @@
 			var node:SoldierInfoNode=SoldierType.getSoldierInfo(SoldierType.MINUTEMAN);
 			
 			//Build up the regiment with the necesary amounts and unit types
-			reg.addUnit(new Soldier(armyManagementScreen.numMinutemen(),SoldierType.MINUTEMAN));
+			//Minutemen
+			if(armyManagementScreen.numMinutemen()>0)
+			{
+				reg.addUnit(new Soldier(armyManagementScreen.numMinutemen(),SoldierType.MINUTEMAN));
+			}
+			//Sharpshooters
+			if(armyManagementScreen.numSharpshooters()>0)
+			{
+				reg.addUnit(new Soldier(armyManagementScreen.numSharpshooters(),SoldierType.SHARPSHOOTER));
+			}
+			//Cannoneers
+			if(armyManagementScreen.numCannons()>0)
+			{
+				reg.addUnit(new Soldier(armyManagementScreen.numCannons(),SoldierType.CANNON));
+			}
+			//Officers
+			if(armyManagementScreen.numOfficers()>0)
+			{
+				reg.addUnit(new Soldier(armyManagementScreen.numOfficers(),SoldierType.OFFICER));
+			}
+			//Cavalry
+			
 			reg.Destination=currentTarget.Location;
 			currTown.removeOccupationAmount(reg);
 			reg.Location=currTown.Location;
@@ -306,6 +388,7 @@
 			
 			
 			currentState=WorldConfig.STATE_NONE;
+			clearTownBar();
 		}
 		
 		public function armyManagementCancelButtonClick(event:MouseEvent):void
@@ -316,10 +399,7 @@
 			}
 			currentState=WorldConfig.STATE_NONE;
 		}
-		
-		
-		
-		
+										
 		/*
 		* Event listener for a mouse down event in order to start the drag of the world map.
 		* This will be done by adjusting entire view and then calculating an offset in order to justify coordinates.
@@ -334,6 +414,7 @@
 				dragging=true;
 				worldView.startDrag();
 			}
+			trace(event.target);
 
 		}
 		
@@ -372,6 +453,7 @@
 			{
 				if(currentState==WorldConfig.STATE_NONE)
 				{
+					trace("Showing info");
 					currentTarget=currTown;
 					worldView.showTownInfo(currTown);
 
@@ -393,6 +475,45 @@
 				{
 					worldView.showWorkerManagement(currTown);
 					currentState=WorldConfig.STATE_SELECTING;
+					
+				}
+				else if(currentState==WorldConfig.STATE_AGENTS)
+				{
+					if(currTown.Occupier.totalType(SoldierType.AGENT)>=1)
+					{
+						var reg:Regiment = new Regiment("","",myPlayer.Side);
+						reg.addUnit(new Soldier(1,SoldierType.AGENT));
+						currTown.Occupier.removeRegiment(reg);
+						reg.Destination=currentTarget.Location;
+						reg.Location=currTown.Location;
+						reg.Intention=WorldConfig.AGENT;
+						sendRegiment(reg);
+						currentState=WorldConfig.STATE_NONE;
+						
+					}
+					else
+					{
+						//Some kind of dialog saying there are no agents in this town
+					}
+
+				}
+				else if(currentState==WorldConfig.STATE_POLITICIANS)
+				{
+					if(currTown.Occupier.totalType(SoldierType.POLITICIAN)>=1)
+					{						
+						var reg:Regiment = new Regiment("","",myPlayer.Side);
+						reg.addUnit(new Soldier(1,SoldierType.POLITICIAN));
+						currTown.Occupier.removeRegiment(reg);
+						reg.Destination=currentTarget.Location;
+						reg.Location=currTown.Location;
+						reg.Intention=WorldConfig.POLITICIAN;
+						sendRegiment(reg);
+						currentState=WorldConfig.STATE_NONE;
+					}
+					else
+					{
+						//Some kind of dialog saying there are no politicians in this town
+					}
 				}
 				
 			}
@@ -405,15 +526,7 @@
 		
 		
 		
-		/**
-		* The event listener for a mouse move event
-		**/
-		public function worldMouseMove(event:MouseEvent):void
-		{
-			
-			
-			
-		}
+		
 		
 		/*
 		* Performs the calculation to determine how many defenders will die
@@ -423,18 +536,24 @@
 		*/
 		private function battleFormula(attacker:Regiment,defender:Regiment):int
 		{
-			var amount:int=0;
+			var amount:Number=0;
 			amount=attacker.TotalAmount*
 				(
-				(attacker.TotalAmount*attacker.TotalAttack)
+				(attacker.TotalAttack)
 				/
-				(defender.TotalAmount*defender.TotalDefense)
+				(defender.TotalDefense)
 				);
+
 			amount=Math.ceil(amount);
-			if(amount>attacker.TotalAmount)
+			trace("Attack rating:"+attacker.TotalAmount*attacker.TotalAttack);
+			trace("Defense Rating:"+defender.TotalAmount*defender.TotalDefense);
+			trace("Amount!:"+amount);
+			if(amount>attacker.TotalAmount+attacker.totalType(SoldierType.CANNON))
 			{
-				amount=attacker.TotalAmount;
+				amount=attacker.TotalAmount+attacker.totalType(SoldierType.CANNON);
 			}
+			
+			trace("Final Amount!:"+amount);
 			return amount;
 		}
 		
@@ -449,10 +568,46 @@
 			{
 				var defenderLosses=battleFormula(attacker,defender);
 				var attackerLosses=battleFormula(defender,attacker);
+				//still need to determine the probability math for a normal curve for losses
 				attacker.incurLosses(attackerLosses);
 				defender.incurLosses(defenderLosses);
 			}
 			
+		}
+		
+		public function AttackTown(town:Town, attacker:Regiment):void
+		{
+			if(town.Occupier!=null)
+			{
+				var defender:Regiment=town.Occupier;
+				resolveBattle(attacker,defender);
+				trace("Attacker Remainder: "+attacker.TotalAmount);
+				trace("Defender Remainder: "+defender.TotalAmount);
+			}
+
+						
+			if(attacker.TotalAmount>0)
+			{
+				myPlayer.addTown(town);
+				town.Occupier=attacker;
+			}
+		}
+		
+		/**
+		* What to do when a regiment is reinforcing a town
+		*
+		*/
+		public function ReinforceTown(town:Town,reg:Regiment):void
+		{
+			if(town.Occupier!=null)
+			{
+				//add these troops to that regiment
+				town.Occupier.addRegiment(reg);
+			}
+			else
+			{
+				town.Occupier=reg;
+			}
 		}
 		
 		/** 
@@ -466,7 +621,7 @@
 			{
 				var reg:Regiment=regiments.Get(i).data;
 				var loc=new Point(reg.x,reg.y);
-				if(Point.distance(loc,reg.Destination)<0.5)
+				if(Point.distance(loc,reg.Destination)<(reg.Speed/Point.distance(reg.Location,reg.Destination))*Point.distance(reg.Location,reg.Destination))
 				{
 					//Regiment arrived at location now determine intentions
 					reg.Location=reg.Destination;
@@ -474,49 +629,65 @@
 					reg.resetDistance();
 					if(reg.Intention==WorldConfig.ATTACK)
 					{
-						var attacker:Regiment=reg;
-						if(town.Occupier!=null)
+						//if the town gets captured by you before you get there
+						if(town.Owner!=myPlayer.Name)
 						{
-							var defender:Regiment=town.Occupier;
-							resolveBattle(attacker,defender);
-							trace("Attacker Remainder: "+attacker.TotalAmount);
-							trace("Defender Remainder: "+defender.TotalAmount);
-						}
-
-						
-						if(attacker.TotalAmount>0)
-						{
-							town.conquer(attacker.Owner,attacker.Side);
-
-							town.Occupier=attacker;
-						}
-					}
-					else if(reg.Intention==WorldConfig.REINFORCE)
-					{
-						if(town.Occupier!=null)
-						{
-							//add these troops to that regiment
-							town.Occupier.addRegiment(reg);
+							AttackTown(town,reg);
 						}
 						else
 						{
-							town.Occupier=reg;
+							ReinforceTown(town,reg);
+						}
+						
+					}
+					else if(reg.Intention==WorldConfig.REINFORCE)
+					{
+						if(town.Owner!=myPlayer.Name)
+						{
+							AttackTown(town,reg);
+						}
+						else
+						{
+							ReinforceTown(town,reg);
 						}
 					}
 					else if(reg.Intention==WorldConfig.WORKER)
 					{
-						town.modifyWorkers(reg.TotalAmount);
+						if(town.Owner==myPlayer.Name)
+						{
+							town.modifyWorkers(reg.TotalAmount);
+						}
 					}
-					//reg.Destination=new Point(0,0);
+					else if(reg.Intention==WorldConfig.AGENT)
+					{
+						
+						if(town.Side!=myPlayer.Side)
+						{
+							//Need to change it to represent there is an agent
+							//Actually reduces how many resources are gained from town for all parties
+							myPlayer.addHalfTown(town);
+						}
+					}
+					else if(reg.Intention==WorldConfig.POLITICIAN)
+					{
+						if(town.Side==myPlayer.Side)
+						{
+							//Does not actually reduce the resources received from town
+							myPlayer.addHalfTown(town);
+						}
+					}
+					
+					
 					regiments.Remove(reg);
 					worldView.removeAsset(reg);
 					
 				}
 				else
 				{
-					//move this guy
+					//move this guy along the interpolation
 					var newLoc=Point.interpolate(reg.Destination,reg.Location,reg.DistanceTraveled);
-					reg.changeDistance(1/Point.distance(reg.Location,reg.Destination));
+					//Location refers to starting location
+					reg.changeDistance((reg.Speed/Point.distance(reg.Location,reg.Destination)));
 					reg.x=newLoc.x;
 					reg.y=newLoc.y;
 					i++;
@@ -530,9 +701,9 @@
 		* Constructor
 		* This is the first thing that gets called when it is instantiated.
 		*/
-		public function WorldMapCanvas():void
+		public function WorldMapCanvas(playerIn:Player=null):void
 		{
-			this.loadContents();
+			this.loadContents(playerIn);
 		}
 	}
 }
