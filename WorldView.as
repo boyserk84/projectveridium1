@@ -26,6 +26,9 @@
 			townInfoPane=new TownInfoPane();
 			workerManagement=new WorkerManagementScreen();
 
+
+
+
 			
 			
 			//Grab all of the cities from the server with their current owners
@@ -71,6 +74,15 @@
 			offset.x=offset.x+changeIn.x;
 			offset.y=offset.y+changeIn.y;
 		}
+		
+		public function setStartPoint(startIn:Point):void
+		{
+			this.x=-startIn.x;
+			this.y=-startIn.y;
+			offset.x=startIn.x;
+			offset.y=startIn.y;
+		}
+			
 					
 		public function drawAll():void
 		{

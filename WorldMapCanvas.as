@@ -29,10 +29,12 @@
 		
 		private var regiments:LinkedList;
 		private var currTown:Town;
+		private var secondTown:Town;
 		private var currentTarget:Town;
 		private var townInfoBar:TownInfoBar;
 		private var armyManagementScreen:ArmySelectionScreen;
 		private var currentState:int;
+		private var startPoint:Point;
 		
 		
 		//The old position of the mouse for the sake of movement distance
@@ -53,10 +55,6 @@
 			gameTimer.addEventListener(TimerEvent.TIMER,gameLoop);
 			regiments=new LinkedList();
 			myPlayer=playerIn;
-			if(myPlayer==null)
-			{
-				myPlayer=new Player("Rob","Robtacular",GameConfig.AMERICAN);
-			}
 			
 			
 
@@ -75,36 +73,53 @@
 
 					
 			//Will read all of the towns of the server in order to get them!
-			for(var i:int=0;i<5;++i)
+			for(var j:int=0;j<53;++j)
 			{
-				var temp2:Town=WorldConfig.getTownInfo(i);
+				var temp2:Town=WorldConfig.getTownInfo(j);
 				myMap.addTown(temp2);
-				temp2.MyDistrict=myMap.Districts[WorldConfig.getTownDistrict(i)];
+				trace(j);
+				temp2.MyDistrict=myMap.Districts[WorldConfig.getTownDistrict(j)];
 				temp2.MyDistrict.addTown(temp2);
 				
 				
 			}
-			//time for districts too!
+			
+			if(myPlayer==null)
+			{
+				myPlayer=new Player("Rob","Robtacular",GameConfig.AMERICAN);
+				var reg:Regiment=new Regiment("Regiment 1",myPlayer.Name,myPlayer.Side);
+				reg.addUnit(new Soldier(25,SoldierType.MINUTEMAN));
+				reg.addUnit(new Soldier(3,SoldierType.OFFICER));			
+				reg.addUnit(new Soldier(10,SoldierType.SHARPSHOOTER));
+				reg.addUnit(new Soldier(1,SoldierType.CANNON));
+				reg.addUnit(new Soldier(1,SoldierType.AGENT));
+				reg.addUnit(new Soldier(1,SoldierType.POLITICIAN));
+				reg.Location=myMap.Towns[0].Location;
+				myMap.Towns[0].Occupier=reg;
+				myMap.Towns[0].modifyWorkers(10);
+				myMap.Towns[0].conquer(myPlayer.Name,myPlayer.Side);
+				
+				startPoint=myMap.Towns[0].Location.clone();
+				
+				startPoint.x-=int(WorldConfig.INPUT_WIDTH/2);
+				startPoint.y-=int(WorldConfig.INPUT_HEIGHT/2);
+				
+				//startPoint.x-=int(GameConfig.SCREEN_WIDTH/2);
+				//startPoint.y-=int(GameConfig.SCREEN_HEIGHT/2);
+
+			}
+
 			
 			
 			enemyPlayer=new Player("Steve","Steve The Great!",GameConfig.BRITISH);
 
 			
-			var reg:Regiment=new Regiment("Regiment 1",myPlayer.Name,myPlayer.Side);
+			
 			var reg2:Regiment=new Regiment("Enemies",enemyPlayer.Name,enemyPlayer.Side);
-			reg.addUnit(new Soldier(25,SoldierType.MINUTEMAN));
-			reg.addUnit(new Soldier(3,SoldierType.OFFICER));			
-			reg.addUnit(new Soldier(10,SoldierType.SHARPSHOOTER));
-			reg.addUnit(new Soldier(1,SoldierType.CANNON));
-			reg.addUnit(new Soldier(1,SoldierType.AGENT));
-			reg.addUnit(new Soldier(1,SoldierType.POLITICIAN));
 			
 			reg2.addUnit(new Soldier(20,SoldierType.MINUTEMAN));
 
-			reg.Location=myMap.Towns[0].Location;
-			myMap.Towns[0].Occupier=reg;
-			myMap.Towns[0].modifyWorkers(10);
-			myMap.Towns[0].conquer(myPlayer.Name,myPlayer.Side);
+			
 			myMap.Towns[1].conquer(enemyPlayer.Name,enemyPlayer.Side);
 			reg2.Location=myMap.Towns[1].Location;
 			myMap.Towns[1].Occupier=reg2;
@@ -131,12 +146,12 @@
 			trace("ow?");
 
 			trace("or here");
-			//worldMap.x=-1892;
-			//worldMap.y=-679;
+			
 			this.worldView.addAsset(worldMap);
 			
 			this.worldView.addAssets(myMap.Towns);
-			
+			this.worldView.setStartPoint(startPoint);
+			//this.worldView.setStartPoint(new Point(-1892,-679));
 			worldView.addEventListener(MouseEvent.MOUSE_DOWN,worldMouseDown);
 			worldView.addEventListener(MouseEvent.MOUSE_UP,worldMouseUp);
 			worldView.addEventListener(MouseEvent.CLICK,worldMouseClick);
@@ -147,7 +162,7 @@
 			input.addEventListener(MouseEvent.MOUSE_OUT,worldMouseOut);
 			input.addEventListener(MouseEvent.CLICK,worldMouseClick);*/
 			
-			cityButton=new TriggerButton(640,526, GameConfig.CHANGE_WORLD);
+			cityButton=new TriggerButton(354,526, GameConfig.CHANGE_WORLD);
 			cityButton.addEventListener(MouseEvent.CLICK,cityButtonClick);
 
 			
@@ -173,8 +188,9 @@
 		
 		public function townEconomicButtonClick(event:MouseEvent):void
 		{
-			//Do military things
+			//Do economic things
 			townInfoBarEconomic(currTown);
+			secondTown=currTown;
 			
 			
 		}
@@ -185,33 +201,73 @@
 			
 			this.townInfoBar.sendWorkersButton.addEventListener(MouseEvent.CLICK,townSendWorkersButtonClick);
 			this.townInfoBar.sendAgentsButton.addEventListener(MouseEvent.CLICK,townSendAgentsButtonClick);
+			this.townInfoBar.releaseAgentsButton.addEventListener(MouseEvent.CLICK,townReleaseAgentsButtonClick);
 			this.townInfoBar.sendPoliticiansButton.addEventListener(MouseEvent.CLICK,townSendPoliticiansButtonClick);
-			townInfoBar.updateAttributesEconomic(currTown,myPlayer.Side);
-			if(currTown.Owner==myPlayer.Name)
+			this.townInfoBar.releasePoliticiansButton.addEventListener(MouseEvent.CLICK,townReleasePoliticiansButtonClick);
+			townInfoBar.updateAttributesEconomic(town,myPlayer.Side);
+			
+			
+			if(town.Owner==myPlayer.Name)
 			{
 				this.townInfoBar.sendAgentsButton.visible=false;
 				this.townInfoBar.sendAgentsButton.enabled=false;
 				this.townInfoBar.sendPoliticiansButton.visible=false;
 				this.townInfoBar.sendPoliticiansButton.enabled=false;
+				this.townInfoBar.releaseAgentsButton.visible=false;
+				this.townInfoBar.releaseAgentsButton.enabled=false;
+				this.townInfoBar.releasePoliticiansButton.visible=false;
+				this.townInfoBar.releasePoliticiansButton.enabled=false;
 				
 				this.townInfoBar.sendWorkersButton.visible=true;
 				this.townInfoBar.sendWorkersButton.enabled=true;
 			}
 			else
 			{
-				if(currTown.Side==myPlayer.Side)
+				//if the player already has a politician there or not
+				trace(myPlayer.HalfTowns.Contains(town));
+				if(myPlayer.HalfTowns.Contains(town))
 				{
-					this.townInfoBar.sendAgentsButton.visible=false;
-					this.townInfoBar.sendAgentsButton.enabled=false;
-					this.townInfoBar.sendPoliticiansButton.visible=true;
-					this.townInfoBar.sendPoliticiansButton.enabled=true;
+					//This means they have a politician there
+					if(town.Side==myPlayer.Side)
+					{
+						this.townInfoBar.sendPoliticiansButton.visible=false;
+						this.townInfoBar.sendPoliticiansButton.enabled=false;
+						this.townInfoBar.releasePoliticiansButton.visible=true;
+						this.townInfoBar.releasePoliticiansButton.enabled=true;
+						this.townInfoBar.releaseAgentsButton.visible=false;
+						this.townInfoBar.releaseAgentsButton.enabled=false;
+					}
+					//This means they have an agent there
+					else
+					{
+						this.townInfoBar.sendAgentsButton.visible=false;
+						this.townInfoBar.sendAgentsButton.enabled=false;
+						this.townInfoBar.releaseAgentsButton.visible=true;
+						this.townInfoBar.releaseAgentsButton.enabled=true;
+						this.townInfoBar.releasePoliticiansButton.visible=false;
+						this.townInfoBar.releasePoliticiansButton.enabled=false;
+					}
 				}
 				else
 				{
-					this.townInfoBar.sendAgentsButton.visible=true;
-					this.townInfoBar.sendAgentsButton.enabled=true;
-					this.townInfoBar.sendPoliticiansButton.visible=false;
-					this.townInfoBar.sendPoliticiansButton.enabled=false;
+					if(town.Side==myPlayer.Side)
+					{
+						this.townInfoBar.sendAgentsButton.visible=false;
+						this.townInfoBar.sendAgentsButton.enabled=false;
+						this.townInfoBar.sendPoliticiansButton.visible=true;
+						this.townInfoBar.sendPoliticiansButton.enabled=true;
+					}
+					else
+					{
+						this.townInfoBar.sendAgentsButton.visible=true;
+						this.townInfoBar.sendAgentsButton.enabled=true;
+						this.townInfoBar.sendPoliticiansButton.visible=false;
+						this.townInfoBar.sendPoliticiansButton.enabled=false;
+					}
+					this.townInfoBar.releasePoliticiansButton.visible=false;
+					this.townInfoBar.releasePoliticiansButton.enabled=false;
+					this.townInfoBar.releaseAgentsButton.visible=false;
+					this.townInfoBar.releaseAgentsButton.enabled=false;
 				}
 				this.townInfoBar.sendWorkersButton.visible=false;
 				this.townInfoBar.sendWorkersButton.enabled=false;
@@ -326,6 +382,27 @@
 			currentState=WorldConfig.STATE_POLITICIANS;
 		}
 		
+		public function townReleaseAgentsButtonClick(event:MouseEvent):void
+		{
+			secondTown.modifyAgents(-1);
+			myPlayer.HalfTowns.Remove(secondTown);
+			clearTownBar();
+			townInfoBarEconomic(secondTown);
+
+
+
+		}
+		
+		
+		public function townReleasePoliticiansButtonClick(event:MouseEvent):void
+		{
+			secondTown.modifyPoliticians(-1);
+			myPlayer.HalfTowns.Remove(secondTown);
+			clearTownBar();
+			townInfoBarEconomic(secondTown);
+
+		}
+		
 		public function workerManagementAcceptButtonClick(event:MouseEvent):void
 		{	
 			var reg:Regiment = new Regiment("","",myPlayer.Side);
@@ -378,6 +455,17 @@
 				reg.addUnit(new Soldier(armyManagementScreen.numOfficers(),SoldierType.OFFICER));
 			}
 			//Cavalry
+			
+			//Agents
+			if(armyManagementScreen.numAgents()>0)
+			{
+				reg.addUnit(new Soldier(armyManagementScreen.numAgents(),SoldierType.AGENT));
+			}
+			//Politicians
+			if(armyManagementScreen.numPoliticians()>0)
+			{
+				reg.addUnit(new Soldier(armyManagementScreen.numPoliticians(),SoldierType.POLITICIAN));
+			}
 			
 			reg.Destination=currentTarget.Location;
 			currTown.removeOccupationAmount(reg);
@@ -467,9 +555,12 @@
 				}
 				else if(currentState==WorldConfig.STATE_ATTACK)
 				{
-					armyManagementScreen.updateAttributes(currTown,WorldConfig.ATTACK);
-					currentState=WorldConfig.STATE_SELECTING;
-					this.addChild(armyManagementScreen);
+					if(currTown.Owner==myPlayer.Name)
+					{
+						armyManagementScreen.updateAttributes(currTown,WorldConfig.ATTACK);
+						currentState=WorldConfig.STATE_SELECTING;
+						this.addChild(armyManagementScreen);
+					}
 				}
 				else if(currentState==WorldConfig.STATE_WORKERS)
 				{
@@ -479,9 +570,10 @@
 				}
 				else if(currentState==WorldConfig.STATE_AGENTS)
 				{
+					var reg:Regiment = new Regiment("","",myPlayer.Side);
 					if(currTown.Occupier.totalType(SoldierType.AGENT)>=1)
 					{
-						var reg:Regiment = new Regiment("","",myPlayer.Side);
+						
 						reg.addUnit(new Soldier(1,SoldierType.AGENT));
 						currTown.Occupier.removeRegiment(reg);
 						reg.Destination=currentTarget.Location;
@@ -501,7 +593,7 @@
 				{
 					if(currTown.Occupier.totalType(SoldierType.POLITICIAN)>=1)
 					{						
-						var reg:Regiment = new Regiment("","",myPlayer.Side);
+						
 						reg.addUnit(new Soldier(1,SoldierType.POLITICIAN));
 						currTown.Occupier.removeRegiment(reg);
 						reg.Destination=currentTarget.Location;
@@ -588,6 +680,13 @@
 						
 			if(attacker.TotalAmount>0)
 			{
+				if(myPlayer.HalfTowns.Contains(town))
+				{
+					attacker.addUnit(new Soldier(town.Agents,SoldierType.AGENT));
+					town.modifyAgents(-town.Agents);
+					myPlayer.removeHalfTown(town);
+				}
+
 				myPlayer.addTown(town);
 				town.Occupier=attacker;
 			}
@@ -666,6 +765,14 @@
 							//Need to change it to represent there is an agent
 							//Actually reduces how many resources are gained from town for all parties
 							myPlayer.addHalfTown(town);
+							town.modifyAgents(1);
+						}
+						else
+						{
+							if(town.Occupier!=null)
+							{
+								town.Occupier.addRegiment(reg);
+							}
 						}
 					}
 					else if(reg.Intention==WorldConfig.POLITICIAN)
@@ -674,6 +781,7 @@
 						{
 							//Does not actually reduce the resources received from town
 							myPlayer.addHalfTown(town);
+							town.modifyPoliticians(1);
 						}
 					}
 					

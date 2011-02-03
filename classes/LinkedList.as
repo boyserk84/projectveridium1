@@ -59,6 +59,27 @@
 
 	
 		/*
+		* Returns true if the linked list contains the specified object
+		* @param1: the object to be checked
+		*/
+		public function Contains(objIn:*):Boolean
+		{
+			var node:Node=head;
+			while(node!=null)
+			{
+				if(node.data===objIn)
+				{
+					return true;
+				}
+				else
+				{
+					node=node.next;
+				}
+			}
+			return false;
+		}
+	
+		/*
 		* Returns the object at a specific index
 		* @param1: index - Index to find
 		*/

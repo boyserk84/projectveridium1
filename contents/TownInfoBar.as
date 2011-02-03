@@ -100,10 +100,20 @@
 			if(side==town.Side)
 			{
 				workersText.text=town.Workers.toString();
+				politiciansText.text=town.Politicians.toString();
+				politiciansText.visible=true;
+				politiciansTitleText.visible=true;
+				agentsTitleText.visible=false;
+				agentsText.visible=false;
 			}
 			else
 			{
 				workersText.text="?";
+				politiciansText.visible=false;
+				politiciansTitleText.visible=false;
+				agentsText.text=town.Agents.toString();
+				agentsTitleText.visible=true;
+				agentsText.visible=true;
 			}
 			ironText.text=town.Iron.toString();
 			woodText.text=town.Wood.toString();

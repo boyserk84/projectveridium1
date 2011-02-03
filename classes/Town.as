@@ -15,43 +15,46 @@
 		
 		//The side this town currently is on
 		private var side:int;
-		
-		
-		
-		//The player who owns this town
 
-		
-		
-		//How are we going to do battle?
 		
 		//How many workers are allocated to this town for resource production
 		private var workers:int;
 		//How much wood this town produces per tick
 		private var woodProduction:int;
+		//The unmodified version of how much this town produces
+		private var realWood:int;
 		//How much total wood this town is capable of producing
 		private var woodCap:int;
 		//How much extra capacity this town gives to your city
 		private var extraWoodCap:int;
 		//How much population this town produces
 		private var populationProduction:int;
+		//The unmodified population value
+		private var realPopulation:int;
 		//How much population this town is capable of producing
 		private var populationCap:int;
 		//How much extra population capacity this town gives a city
 		private var extraPopCap:int;
 		//How much iron this town produces
 		private var ironProduction:int;
+		//The unmodified version of how much iron this town produces
+		private var realIron:int;
 		//How much iron this town is capable of producing
 		private var ironCap:int;
 		//How much extra iron capacity this town provides your city
 		private var extraIronCap:int;
 		//How much food this town produces
 		private var foodProduction:int;
+		//The unmodified version of how much food this town produces
+		private var realFood:int;
 		//How much food this town is capable of producing
 		private var foodCap:int;
 		//How much extra food capacity this town gives you
 		private var extraFoodCap:int;
 		//How much money in taxes this town produces
 		private var moneyProduction:int;
+		//The unmodified version of how much money this town produces
+		private var realMoney:int;
 		//The name of this town for identification purposes
 		private var myName:String;
 		
@@ -66,15 +69,24 @@
 		//The occupying force
 		private var occupier:Regiment;
 		
+		//The towns reachable from this town, for the BFS!
+		private var neighbors:Array;
+		
+		
 		
 		public function Town(woodIn:int=0,moneyIn:int=0,popIn:int=0,ironIn:int=0,foodIn:int=0,locationIn:Point=null,nameIn:String="None",ownerIn:String="Renegade")
 		{
 			workers=0;
 			woodProduction=woodIn;
+			realWood=woodIn;
 			moneyProduction=moneyIn;
+			realMoney=moneyIn;
 			populationProduction=popIn;
+			realPopulation=popIn;
 			ironProduction=ironIn;
+			realIron=ironIn;
 			foodProduction=foodIn;
+			realFood=foodIn;
 			this.x=locationIn.x;
 			this.y=locationIn.y;
 			myLocation=locationIn;
@@ -88,89 +100,37 @@
 			
 		}
 		
-		public function get Wood():int
-		{
-			return woodProduction;
-		}
-		public function get WoodCap():int
-		{
-			return woodCap;
-		}
-		public function get ExtraWoodCap():int
-		{
-			return extraWoodCap;
-		}
-		public function get Money():int
-		{
-			return moneyProduction;			
-		}
-		
-		public function get Population():int
-		{
-			return populationProduction;
-		}
-		
-		public function get ExtraPopulationCap():int
-		{
-			return extraPopCap;
-		}
-		public function get Food():int
-		{
-			return foodProduction;
-		}
-		public function get ExtraFoodCap():int
-		{
-			return extraFoodCap;
-		}
-		public function get Iron():int
-		{
-			return ironProduction;
-		}
-		public function get ExtraIronCap():int
-		{
-			return extraIronCap;
-		}
+		public function get Wood():int{	return woodProduction;}
+		public function get WoodCap():int{	return woodCap;}
+		public function get ExtraWoodCap():int{	return extraWoodCap;}
+		public function get Money():int{	return moneyProduction;}
+		public function get Population():int{	return populationProduction;}
+		public function get ExtraPopulationCap():int{	return extraPopCap;}
+		public function get Food():int{	return foodProduction;}
+		public function get ExtraFoodCap():int{	return extraFoodCap;}
+		public function get Iron():int{	return ironProduction;}
+		public function get ExtraIronCap():int{	return extraIronCap;}
+		//The current owner of this Town.  What is the player key for the database going to be, names?
+		public function get Owner():String{	return owner;}
+		public function set Owner(value:String):void{	owner=value;}
+		public function get Side():int{	return side;}
+		public function get Name():String{	return myName;}
+		public function get Occupier():Regiment{	return occupier;}
+		public function set Occupier(value:Regiment):void{	occupier=value;}
+		public function get Workers():int{	return workers;}
+		public function get Agents():int{	return agents;}
+		public function set Agents(value:int):void{	agents=value;}
+		public function get Location():Point{	return myLocation;}
+		public function get Politicians():int{	return politicians;}
+		public function set Politicians(value:int):void{	politicians=value;}
+		public function get MyDistrict():District{	return myDistrict;}
+		public function set MyDistrict(value:District):void{	myDistrict=value;}
+		public function get Neightbors():Array{ return neighbors;}
 		
 		public function modifyWorkers(change:int=0):void
 		{
 			workers+=change;
 		}		
-		
-		public function get Location():Point
-		{
-			return myLocation;
-		}
-		
-		//The current owner of this Town.  What is the player key for the database going to be, names?
-		public function get Owner():String
-		{
-			return owner;
-		}
-		
-		public function set Owner(value:String):void
-		{
-			owner=value;
-		}
-		
-		public function get Side():int
-		{
-			return side;
-		}
-		
-		public function get Name():String
-		{
-			return myName;
-		}
-		
-		public function get Occupier():Regiment
-		{
-			return occupier;
-		}
-		
-		public function set Occupier(value:Regiment):void
-		{
-			occupier=value;
-		}
 		
 		public function removeOccupationAmount(reg:Regiment):void
 		{
@@ -180,43 +140,37 @@
 			}
 		}
 		
-		public function get Workers():int
-		{
-			return workers;
-		}
-		
-		public function get Agents():int
-		{
-			return agents;
-		}
-		public function set Agents(value:int):void
-		{
-			agents=value;
-		}
 		public function modifyAgents(value:int):void
 		{
+			if(agents==0)
+			{
+				underAgent();
+			}
 			agents+=value;
+			if(agents==0)
+			{
+				removeAgent();
+			}
 		}
-		public function get Politicians():int
+		
+		public function removeAgent():void
 		{
-			return politicians;
+			woodProduction=realWood;
+			ironProduction=realIron;
+			moneyProduction=realMoney;
+			populationProduction=realPopulation;
 		}
-		public function set Politicians(value:int):void
+		
+		public function underAgent():void
 		{
-			politicians=value;
+			woodProduction=woodProduction/2;
+			ironProduction=ironProduction/2;
+			moneyProduction=moneyProduction/2;
+			populationProduction=populationProduction/2;
 		}
 		public function modifyPoliticians(value:int):void
 		{
 			politicians+=value;
-		}
-		
-		public function get MyDistrict():District
-		{
-			return myDistrict;
-		}
-		public function set MyDistrict(value:District):void
-		{
-			myDistrict=value;
 		}
 			
 		public function conquer(owner:String,sideIn:int):void
@@ -234,7 +188,7 @@
 			}
 			side=sideIn;
 			trace(side);
-			myDistrict.checkOwnership();
+			//myDistrict.checkOwnership();
 			
 		}
 		
@@ -248,6 +202,12 @@
 			{
 				return 0;
 			}
+		}
+		
+		//Adds a reference of a town to the neighbors list
+		public function addNeighbor(town:Town):void
+		{
+			neighbors.add(town);
 		}
 		
 		
