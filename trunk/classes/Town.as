@@ -58,6 +58,11 @@
 		//The original Location of this town
 		private var myLocation:Point;
 		
+		//The number of agents in this town, can only be one, may allow more
+		private var agents:int;
+		//The number of politicians in this town, may allow more
+		private var politicians:int;
+		
 		//The occupying force
 		private var occupier:Regiment;
 		
@@ -77,6 +82,9 @@
 			owner=ownerIn;
 			occupier=null;
 			side=0;
+			agents=0;
+			politicians=0;
+			this.enabled=false;
 			
 		}
 		
@@ -175,6 +183,31 @@
 		public function get Workers():int
 		{
 			return workers;
+		}
+		
+		public function get Agents():int
+		{
+			return agents;
+		}
+		public function set Agents(value:int):void
+		{
+			agents=value;
+		}
+		public function modifyAgents(value:int):void
+		{
+			agents+=value;
+		}
+		public function get Politicians():int
+		{
+			return politicians;
+		}
+		public function set Politicians(value:int):void
+		{
+			politicians=value;
+		}
+		public function modifyPoliticians(value:int):void
+		{
+			politicians+=value;
 		}
 		
 		public function get MyDistrict():District

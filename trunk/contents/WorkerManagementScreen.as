@@ -19,6 +19,7 @@
 		
 		public function updateAttributes(town:Town):void
 		{
+			this.workersText.text="0";
 			this.totalWorkersText.text=town.Workers.toString();
 			
 			

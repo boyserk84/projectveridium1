@@ -7,10 +7,11 @@
 	public class SoldierType
 	{
 		// Constant Soldier & Worker Type
-		
-		public static const WORKER:int=1;
+
+
 		public static const NONE:int=0;
-		
+		public static const WORKER:int=1;
+
 		public static const MINUTEMAN:int=2;
 		public static const SHARPSHOOTER:int=3;
 		public static const OFFICER:int=4;
@@ -77,9 +78,9 @@
 			{
 				case MINUTEMAN:
 				{
-					weapon=10;
-					armor=10;
-					skill=10;
+					weapon=1;
+					armor=3;
+					skill=1;
 					requirement=BuildingType.BARRACK;
 					food=1;
 					money=1;
@@ -91,8 +92,8 @@
 				case SHARPSHOOTER:
 				{
 					weapon=10;
-					armor=10;
-					skill=10;
+					armor=1;
+					skill=1;
 					requirement=BuildingType.RANGE;
 					food=5;
 					money=1;
@@ -103,8 +104,8 @@
 				
 				case OFFICER:
 				{
-					weapon=10;
-					armor=10;
+					weapon=1;
+					armor=1;
 					skill=10;
 					requirement=BuildingType.OFFICER_SCHOOL;
 					food=5;
@@ -115,9 +116,9 @@
 				}
 				case CALVARY:
 				{
-					weapon=10;
-					armor=10;
-					skill=10;
+					weapon=5;
+					armor=5;
+					skill=3;
 					requirement = BuildingType.STABLES;
 					food=5;
 					money=1;
@@ -128,8 +129,8 @@
 				case CANNON:
 				{
 					weapon=10;
-					armor=10;
-					skill=10;
+					armor=5;
+					skill=1;
 					requirement = BuildingType.WORKSHOP;
 					food=5;
 					money=1;
@@ -141,7 +142,7 @@
 				{
 					weapon=10;
 					armor=10;
-					skill=10;
+					skill=1;
 					requirement = BuildingType.BOOT_CAMP;
 					food=5;
 					money=1;

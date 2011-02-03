@@ -17,6 +17,7 @@
 		private var offset:Point;
 		private var townInfoPane:TownInfoPane;
 		private var workerManagement:WorkerManagementScreen;
+		private var input:WorldMapCanvas;
 		
 		public function WorldView()
 		{
@@ -24,6 +25,7 @@
 			gameViewObjects=new Array();
 			townInfoPane=new TownInfoPane();
 			workerManagement=new WorkerManagementScreen();
+
 			
 			
 			//Grab all of the cities from the server with their current owners

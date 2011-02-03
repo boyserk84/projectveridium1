@@ -44,7 +44,7 @@
 			return weaponLevel;
 		}
 		
-		public function get SkillLevel():int
+		public function get Skill():int
 		{
 			return skillLevel;
 		}
