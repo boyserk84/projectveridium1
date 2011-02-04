@@ -26,7 +26,7 @@ This iteration will deal with the following features:
 
 || Task || Time Spent || Description ||
 || Task A || || Design DB corresponding to game data ||
-|| Task B || || Fetch data from DB via Php add to game (AS3) ||
+|| Task B || 4 hours || Fetch data from DB via Php add to game (AS3) ||
 || Task C || || Write data from game to DB ||
 
 = Multiplayer/Network Game Components =
