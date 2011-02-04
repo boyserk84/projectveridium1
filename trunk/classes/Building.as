@@ -28,6 +28,23 @@
 			//trace("Time " + time_to_build);
 		}
 		
+		/**
+		* Set this building to be underconstruction
+		*/
+		public function setConstruction():void
+		{
+			time_to_build = BuildingInfo.getInfo(type).Time;
+			release_req = 1;
+		}
+		
+		/**
+		* Set this building to be complete
+		*/
+		public function setComplete():void
+		{
+			release_req = 0;
+		}
+		
 		/*
 		* Change the internal location of this building
 		* @param1: xIn - The x-Coordinate to change to

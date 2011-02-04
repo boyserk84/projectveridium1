@@ -17,7 +17,7 @@
 	public class SpriteSheet extends MovieClip
 	{
 		private var object_Type:int;					// Corresponding to different category of images
-		private var children:Vector.<MovieClip>;		// derived objects (image objects)
+		private var children:Array;						// derived objects (image objects)
 		private var curr_image:int;						// Index corresponding to current image displayed
 		
 		/**
@@ -28,7 +28,7 @@
 		public function SpriteSheet(type:int, xLoc:int, yLoc:int):void
 		{
 			this.object_Type = type;
-			this.children = new Vector.<MovieClip>;
+			this.children = new Array();
 			this.x = xLoc;
 			this.y = yLoc;
 			this.curr_image = Images.DEFAULT_INDEX;
