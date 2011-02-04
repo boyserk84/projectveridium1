@@ -23,6 +23,9 @@ This iteration will deal with the following features:
 || Task C || || Design protocol of package sent/receive ||
 
 = Database/Server: Client/Server Interaction =
+= Issues: Passing facebook's data to as3 via php =
+Facebook API (fb:swf) is not working. Therefore, we decided to use
+object tag in html. In object and embed tags, we have to specify FlashVars in order to have values echoed by the php page to swf.
 
 || Task || Time Spent || Description ||
 || Task A || || Design DB corresponding to game data ||
