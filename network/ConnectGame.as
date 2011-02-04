@@ -24,6 +24,7 @@
 		
 		private var alreadyConnect:Boolean = false;
 		private var failedConnect:Boolean = false;
+		private var closedConnect:Boolean = false;
 		
 		/**
 		* Constructor
@@ -75,15 +76,16 @@
 		private function openConnect(event:Event):void
 		{
 			trace("Open connection:".concat(event));
-			Security.allowDomain("http://" + CONFIG.getHost() +"/");
+			//Security.allowDomain("http://" + CONFIG.getHost() +"/");
 			//xmlsocket://
-			Security.loadPolicyFile("http://"+ CONFIG.getHost() + "/crossdomain.xml");
+			//Security.loadPolicyFile("http://"+ CONFIG.getHost() + "/crossdomain.xml");
 			alreadyConnect = true;
 			
 		}
 		
 		public function isAlreadyConnect():Boolean { return alreadyConnect; }
 		public function isConnectFailed():Boolean { return failedConnect; }
+		public function isConnectionClosed():Boolean { return closedConnect;}
 		
 		/*
 		* Notification function: Connection terminated
@@ -91,6 +93,7 @@
 		private function endSocket(event:Event):void
 		{
 			trace("Close");
+			closedConnect = true;
 		}
 		
 		/**
@@ -100,6 +103,7 @@
 		{
 			trace("Unable to connect".concat(event));
 			failedConnect = true;
+			closedConnect= true;
 			//mySocket.connect(CONFIG.getHost(), CONFIG.getPort());
 		}
 		
