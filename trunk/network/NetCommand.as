@@ -37,7 +37,13 @@
 		
 		public static var REQUEST_CITY:int = 2001;
 		
+		/* Error Message to notify client */
+		public static var MSG_HEAD_FAIL:String = "Offline Gameplay!";
+		public static var MSG_BODY_FAIL:String = "You are currently in the offline gameplay mode. Nothing will be saved during this session.";
+		public static var MSG_HEAD_CLOSED:String = "Connection closed!";
+		public static var MSG_BODY_CLOSED:String = "Our server has encountered a problem. Please restart (F5) the application. Otherwise, you will be playing in the offline mode and nothing will be saved!";
 		
+		/* Decode Package */
 		private static var decode_pack:Array;		// Decode package data upon receive
 		
 		/* ONLY FOR DECODING RESPONSE FROM SERVER */
