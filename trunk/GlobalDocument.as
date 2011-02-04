@@ -41,6 +41,7 @@
 		
 		private var firstRequestSent:Boolean = false;		// Check if request has been sent
 		private var connectSet:Boolean = false;
+		private var firstNotifyCloseConnection:Boolean = false;
 		
 		
 		/* Load information from URL */
@@ -55,11 +56,36 @@
 			trace("Create GlobalDocument");
 			gotoAndStop(GameConfig.CITY_FRAME);
 			configuration = new NetConst(); // Load Network Configuration info
-			g_notify_win = new NotifyWindow(GameConfig.SCREEN_WIDTH/4,GameConfig.SCREEN_HEIGHT/4,1);
+			createNotifyWindow();
+			
+			this.addEventListener(Event.ENTER_FRAME, pollingCheck);
 			
 			loadIdFromWeb();
 			prepareConnect();
 			connectServer();
+		}
+		
+		/**
+		* Create a notification window of network status
+		*/
+		private function createNotifyWindow():void
+		{
+			g_notify_win = new NotifyWindow(GameConfig.SCREEN_WIDTH/4,GameConfig.SCREEN_HEIGHT/4,1);
+			g_notify_win.addEventToConfirmButton(MouseEvent.CLICK, function(){ g_notify_win.visible = false; } );
+			g_notify_win.addEventToCancelButton(MouseEvent.CLICK, function(){ g_notify_win.visible = false; } );
+		}
+		
+		/**
+		* Polling check if something happened to the server
+		*/
+		private function pollingCheck(event:Event):void
+		{
+			if (client.isConnectionClosed() && !firstNotifyCloseConnection)
+			{
+				g_notify_win.modifyMessage(NetCommand.MSG_HEAD_CLOSED,NetCommand.MSG_BODY_CLOSED);
+				g_notify_win.visible = true;
+				firstNotifyCloseConnection = true;
+			}
 		}
 		
 		/**
@@ -107,6 +133,7 @@
 			client = new ConnectGame(configuration);
 			client.bindId(profile.UserName);
 			client.bindPlayer(this.profile);
+			ClientConnector.client = this.client;
 		}
 		
 		/**
@@ -114,7 +141,7 @@
 		*/
 		private function connectServer()
 		{
-			trace("Connect to server");
+			//trace("Connect to server");
 			this.addEventListener(Event.ENTER_FRAME, loadingProgress);
 		}
 		
@@ -169,7 +196,9 @@
 						loadGameLayers();
 					}
 					
-				} 
+				} else {
+					msgInfo.text = "Loading Configuration file.";
+				}
 			} else {
 				// Loading Screen
 				//trace("Loading");
@@ -199,13 +228,12 @@
 			
 			if (client.isConnectFailed())
 			{
-				g_notify_win.addEventToConfirmButton(MouseEvent.CLICK, function(){ g_notify_win.visible = false; } );
-				g_notify_win.addEventToCancelButton(MouseEvent.CLICK, function(){ g_notify_win.visible = false; } );
-				g_notify_win.modifyMessage("Offline Gameplay","You are currently in the offline gameplay mode. Nothing will be saved during this session.");
+				g_notify_win.modifyMessage(NetCommand.MSG_HEAD_FAIL,NetCommand.MSG_BODY_FAIL);
+				g_notify_win.visible = true;
 			}
 			
 			this.addChild(g_notify_win);
-			g_notify_win.visible = true;
+			
 			
 			this.removeEventListener(Event.ENTER_FRAME, loadingProgress);
 		}

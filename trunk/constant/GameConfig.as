@@ -71,6 +71,7 @@
 		public static const RENEGADE=0;
 		public static const BRITISH=1;
 		public static const AMERICAN=2;
+		
 
 		
 	
