@@ -53,7 +53,7 @@
 			return FLAG;
 		}
 		
-		public function getHost():String { trace(HOST); return HOST; }
+		public function getHost():String { return HOST; }
 		public function getPort():int { return PORT; }
 		
 	}

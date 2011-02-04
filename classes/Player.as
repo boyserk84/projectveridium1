@@ -70,6 +70,10 @@
 		//The regiment this player has
 		private var regiments:LinkedList;
 		
+		/**
+		* @param: nameIn: Name
+		* @param: userNameIn: Facebook Id
+		*/
 		public function Player(nameIn:String="",usernameIn:String="",sideIn:int=1)
 		{
 			username=usernameIn;
@@ -86,7 +90,9 @@
 			woodCap = BuildingType.WOOD_CAP_INIT;
 		}
 		
-		public function get Name():String{	return username;}
+		public function get Name():String{	return myName;}
+		public function set Name(value:String):void { myName = value; } 
+		public function get UserName():String { return username;}
 		
 		public function addCity(city:City):void	{	this.city = city;}
 		
@@ -302,6 +308,11 @@
 		public function get Side():int
 		{
 			return side;
+		}
+		
+		public function set Side(value:int):void
+		{
+			side = value;
 		}
 		
 		/**

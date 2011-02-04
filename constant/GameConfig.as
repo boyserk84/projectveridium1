@@ -33,8 +33,8 @@
 		public static const OPAQUE = 1;
 		
 		// Game Map value
-		public static const MAX_CITY_COL = 5;
-		public static const MAX_CITY_ROW = 5;
+		public static const MAX_CITY_COL = 12;
+		public static const MAX_CITY_ROW = 12;
 		
 		// Mouse click commands and buttons (Trigger Buttons)
 		public static const COMM_ADD = 1;
@@ -52,9 +52,11 @@
 		public static const COMM_SWITCH_STAT = 12;
 		public static const COMM_HELP = 13;
 		
+		/** Trigger Buttons **/
 		public static const BUTTON_CONFIRM = 14;
 		public static const BUTTON_CANCEL = 15;
 		
+		/** Mouse Cursor **/
 		public static const CURSOR_SELECT = 1;
 		public static const CURSOR_REMOVE = 2;
 		
