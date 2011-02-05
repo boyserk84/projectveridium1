@@ -218,9 +218,9 @@
 		private function loadContents():void
 		{
 			gotoAndStop(GameConfig.CITY_FRAME);
-			if (profile.getCity()==null) trace ("PROFILE IS NULL");
+			//if (profile.getCity()==null) trace ("PROFILE IS NULL");
 			game = new GameCanvas(profile);
-			worldgame = new WorldMapCanvas;
+			worldgame = new WorldMapCanvas();
 			enableCity();
 		}
 		
