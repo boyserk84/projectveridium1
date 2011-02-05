@@ -39,6 +39,7 @@
 		public static var REQUEST_UPDATE_PROFILE:int = 2002;
 		public static var REQUEST_ADD_BUILDING:int = 2003;
 		public static var REQUEST_UPDATE_BUILDING:int = 2004;
+		public static var REQUEST_REMOVE_BUILDING:int = 2005;
 		
 		/* Error Message to notify client */
 		public static var MSG_HEAD_FAIL:String = "Offline Gameplay!";

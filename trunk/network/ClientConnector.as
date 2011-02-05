@@ -82,6 +82,20 @@
 		}
 		
 		/**
+		* Request remove Building from building list
+		*/
+		public static function requestRemoveBuilding(target:Building):void
+		{
+			var encode_pack:String =
+				NetCommand.REQUEST_REMOVE_BUILDING +
+				"x" + getProfile().UserName +
+				"x" + target.Location.x +
+				"x" + target.Location.y
+				;
+			requestWrite(encode_pack);
+		}
+		
+		/**
 		* request read or fetch data from the server
 		*/
 		public static function requestRead(raw_msg:String):void

@@ -159,6 +159,9 @@
 						
 			// (3) Update Menu Bar
 			menuBar.updateCityReq(BuildingManager.determineBuildingList(mcity));
+			
+			// (4) Update Server's building info of this client
+			ClientConnector.requestRemoveBuilding(tempBuilding);
 		}
 		
 		/**

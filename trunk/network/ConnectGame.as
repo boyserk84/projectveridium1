@@ -201,7 +201,12 @@
 		public function sendRequest(raw_data:String)
 		{
 			trace("Send Data");
-			mySocket.send(raw_data);
+			try {
+				mySocket.send(raw_data);
+			}  catch (e:Error)
+			{
+				// Log?
+			}
 		}
 	}
 }
