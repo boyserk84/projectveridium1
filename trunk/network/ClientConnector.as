@@ -41,6 +41,47 @@
 		}
 		
 		/**
+		* Request update building information to the server
+		*/
+		public static function requestWriteAddBuilding():void
+		{
+			var new_building:Building = getBuildingList().Get(getBuildingLength()-1).data;
+			var encode_pack:String = 
+				NetCommand.REQUEST_ADD_BUILDING + 
+				"x" + getProfile().UserName +
+				"x" + new_building.Location.x +
+				"x" + new_building.Location.y +
+				"x" + new_building.Type +
+				"x" + (new_building.isBuildingDone()?0:1)
+				;
+			requestWrite(encode_pack);
+
+			
+		}
+		
+		/**
+		* Request Update Profile's resource
+		*/
+		public static function requestUpdateProfileResources()
+		{
+			var encode_pack:String = 
+				NetCommand.REQUEST_UPDATE_PROFILE + 
+				"x" + getProfile().UserName +
+				"x" + getProfile().Side +
+				"x" + getProfile().Wood +
+				"x" + getProfile().WoodCap +
+				"x" + getProfile().Iron +
+				"x" + getProfile().IronCap +
+				"x" + getProfile().Money +
+				"x" + getProfile().Food +
+				"x" + getProfile().FoodCap +
+				"x" + getProfile().Population +
+				"x" + getProfile().PopulationCap
+				;
+			requestWrite(encode_pack);
+		}
+		
+		/**
 		* request read or fetch data from the server
 		*/
 		public static function requestRead(raw_msg:String):void

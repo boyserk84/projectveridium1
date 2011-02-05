@@ -594,6 +594,9 @@
 							profile.changePop(-BuildingInfo.getInfo(this.select_building).Population);
 							//profile.changeFood(BuildingInfo.getInfo(this.select_building));
 							++this.length_of_city;
+							
+							ClientConnector.requestUpdateProfileResources();
+							ClientConnector.requestWriteAddBuilding();
 						}
 
 						// (4) Update Menu Bar and update stat
