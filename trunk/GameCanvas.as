@@ -11,6 +11,7 @@
 	import constant.*;
 	import utilities.*;
 	import contents.ImgBuilding;
+	import network.ClientConnector;
 
 	/**
 	* gameCavas object
@@ -38,6 +39,8 @@
 		private var build_cursor:ImgBuilding;			// Cursor of building image
 		private var mouse:MouseCurs;					// Mouse cursor on tile
 		private var update_resources:Boolean = true;	// Notifier when need to update
+		
+		private var length_of_city:int;
 		
 		// Game Contents
 		private var mcity:City;
@@ -97,6 +100,8 @@
 			this.addEventListener("enterFrame",gameLoop);
 			timer.addObjectWithUpdate(mcity);	// Feed object that needs timer
 			initialize_Layers();
+			
+			
 			
 		}
 		
@@ -293,7 +298,6 @@
 		*/
 		public function cityMouseMove(event:MouseEvent):void
 		{
-			
 			//convert mouse coordinates from isometric back to normal
 			var ymouse = ((2*(event.stageY-GameConfig.TILE_INIT_Y)-(event.stageX-GameConfig.TILE_INIT_X))/2);
 			var xmouse = ((event.stageX-GameConfig.TILE_INIT_X)+ymouse);
@@ -505,6 +509,7 @@
 		{
 			this.notifyWin.visible = false;
 			removeGameBuilding(tempBuilding);
+			--this.length_of_city;
 		}
 		
 		
@@ -588,7 +593,7 @@
 							profile.changeIron(-BuildingInfo.getInfo(this.select_building).Iron);
 							profile.changePop(-BuildingInfo.getInfo(this.select_building).Population);
 							//profile.changeFood(BuildingInfo.getInfo(this.select_building));
-							
+							++this.length_of_city;
 						}
 
 						// (4) Update Menu Bar and update stat
@@ -610,11 +615,27 @@
 			
 		}
 		
+		/**
+		* Synchronize city with the server
+		* Basically, check local city with server city and update view.
+		*/
+		private function synchronizeCity()
+		{
+			if (length_of_city!=ClientConnector.getBuildingLength())
+			{
+				//trace("UPDATEAAAAAAAAAAAAAAAAAAAAAA");
+				theView.addBuildingList(ClientConnector.getBuildingList());
+				length_of_city = ClientConnector.getBuildingLength();
+			}
+		}
+		
 		/** 
 		* GameLoop: this is where things get updated constantly!
 		*/
 		public function gameLoop(event:Event):void
 		{
+			synchronizeCity();
+			
 			theView.Update();
 			headStat.updateTimerInfo(timer.stringCountDown);
 			
@@ -643,6 +664,8 @@
 				update_resources = true;
 			}
 			
+			//theView.addBuildingList(mcity.Buildings);
+			//trace("Total buildings: "+ mcity.Buildings.Length);
 			
 		}
 		
@@ -655,6 +678,7 @@
 			trace("gameCanvas contructor is loaded!");
 			this.profile = user;
 			this.mcity = profile.getCity();
+			this.length_of_city = profile.getCity().Buildings.Length;
 			this.loadContents();
 			//headStat.updateTimerInfo(timer.stringCountDown);
 			//this.gameLoop();

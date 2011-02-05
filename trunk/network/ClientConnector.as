@@ -1,4 +1,5 @@
 ﻿package network{
+	import classes.*;
 	
 	/**
 	* Static Wrapper Interface: Client Connector
@@ -9,6 +10,28 @@
 	{
 		public static var client:ConnectGame;
 		
+		/**
+		* Get player's profile
+		*/
+		public static function getProfile():Player
+		{
+			return client.profile;
+		}
+		
+		/**
+		* Get player's building list with in a city
+		*/
+		public static function getBuildingList():LinkedList
+		{
+			return client.profile.getCity().Buildings;
+		}
+		/**
+		* Get player's city's length
+		*/
+		public static function getBuildingLength():int
+		{
+			return client.profile.getCity().Buildings.Length;
+		}
 		/**
 		* request write or update data on the server
 		*/

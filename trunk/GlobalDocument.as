@@ -119,7 +119,8 @@
 					name_val = value_array[i];
 				}
 			}
-			profile = new Player(name_val,id);
+			profile = new Player("","596761244");
+			//profile = new Player(name_val,id);
 			
 			//trace(profile.UserName);
 			//profile = new Player(name_val,"123456789012345");
@@ -133,6 +134,7 @@
 			client = new ConnectGame(configuration);
 			client.bindId(profile.UserName);
 			client.bindPlayer(this.profile);
+			
 			ClientConnector.client = this.client;
 		}
 		
@@ -192,7 +194,10 @@
 						//trace("yes");
 						msgInfo.text = "Loading requested data and contents.";
 						loadProfile();
+						msgInfo.text = "Load player's profile.";
 						loadContents();
+						msgInfo.text = "Load player's contents.";
+						loadCity();
 						loadGameLayers();
 					}
 					
@@ -213,6 +218,7 @@
 		private function loadContents():void
 		{
 			gotoAndStop(GameConfig.CITY_FRAME);
+			if (profile.getCity()==null) trace ("PROFILE IS NULL");
 			game = new GameCanvas(profile);
 			worldgame = new WorldMapCanvas;
 			enableCity();
@@ -276,14 +282,25 @@
 		private function loadProfile():void
 		{
 			profile = client.profile;
+			profile.addCity(new City(0,0,GameConfig.MAX_CITY_COL,GameConfig.MAX_CITY_ROW));
 			trace("current wood is " + profile.Wood + " " + profile.Name)
 			// Set City	
-			profile.addCity(new City(0,0,GameConfig.MAX_CITY_COL,GameConfig.MAX_CITY_ROW));
+			
+			// Load list of building
 			//profile.getCity().addBuilding(new Building(new Rectangle(1,0,1,1),BuildingType.TOWN_SQUARE));
 		
 			// Set Town
 			
 			// Set Regiment
+			
+		}
+		
+		/**
+		* load City
+		*/
+		private function loadCity():void
+		{
+			client.sendRequest(NetCommand.REQUEST_CITY+"x"+ profile.UserName);
 			
 		}
 		

@@ -118,6 +118,7 @@
 		*/
 		private function receiveResponse(event:DataEvent)
 		{
+			trace("Receive data" + event.data);
 			// (1) Parse/dissect data upon receive
 			NetCommand.parseData(event.data);
 			
