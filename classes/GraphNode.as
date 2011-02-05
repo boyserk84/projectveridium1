@@ -7,6 +7,8 @@
 		private var neighbors:Array;
 		private var myTown:Town;
 		private var visited:Boolean;
+		private var myParent:GraphNode;
+		private var children:Array;
 		
 		public function GraphNode()
 		{
@@ -45,6 +47,26 @@
 		public function set Visited(value:Boolean):void
 		{
 			visited=value;
+		}
+		
+		public function get Children():Array
+		{
+			return children;
+		}
+		
+		public function set Children(value:Array):void
+		{
+			children=value;
+		}
+		
+		public function get Parent():GraphNode
+		{
+			return myParent;
+		}
+		
+		public function set Parent(value:GraphNode)
+		{
+			myParent=value;
 		}
 		
 		

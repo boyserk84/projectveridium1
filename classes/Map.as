@@ -6,6 +6,7 @@
 		private var districts:Array;
 		private var graphNodes:Array;
 		private var BFSqueue:Queue;
+		private var BFStree:BFSTree;
 		
 		public function Map()
 		{
@@ -26,10 +27,10 @@
 			for(var i:int =0;i<graphNodes.length;++i)
 			{
 				graphNodes[i].Visited=false;
+				graphNodes[i].Children=new Array();
+				graphNodes[i].Parent=null;
 			}
 		}
-		
-		
 		
 		public function addDistrict(districtIn:District):void
 		{
@@ -72,17 +73,24 @@
 			}
 		}
 		
+		public function get Tree():BFSTree
+		{
+			return BFStree;
+		}
+		
 		//Finds all of the nodes that can reach the selected town
 		//Will add functionality to have multiple lists of steps to get to the town
 		public function findValidNeighbors(nodeIn:GraphNode,playerIn:Player):Array
 		{
 			resetGraph();
 			BFSqueue=new Queue();
+			BFStree=new BFSTree(nodeIn,BFSqueue);
 			nodeIn.Visited=true;
 			for(var i:int=0;i<nodeIn.Neighbors.length;++i)
 			{
 				if(!(nodeIn.Neighbors[i].Visited))
 				{
+					BFStree.addChildren(nodeIn.Neighbors[i]);
 					BFSqueue.Enqueue(nodeIn.Neighbors[i]);
 				}
 				
@@ -90,14 +98,13 @@
 			return BFS(playerIn);
 		}
 		
-		
-		
 		private function BFS(playerIn:Player):Array
 		{
 			var nodeIn:GraphNode;
 			var validNeighbors:Array=new Array();
 			while(BFSqueue.Length>0)
 			{
+				BFStree.updateCurrent();
 				nodeIn=BFSqueue.Dequeue();
 				nodeIn.Visited=true;
 				//If they are not on the same side, stop immediatly
@@ -108,9 +115,11 @@
 				//This means this town is on the players side
 				else
 				{
+					trace("BFSqueue "+nodeIn.MyTown.Owner+" ,"+playerIn.UserName+": "+(nodeIn.MyTown.Owner==playerIn.UserName));
 					//This means they own this town so add it to the list
-					if(nodeIn.MyTown.Owner==playerIn.Name)
+					if(nodeIn.MyTown.Owner==playerIn.UserName)
 					{
+						
 						validNeighbors.push(nodeIn.MyTown);
 					}
 					//Add it to the list that can be stepped through
@@ -120,6 +129,8 @@
 						{
 							if(!(nodeIn.Neighbors[i].Visited))
 							{
+								BFStree.addChildren(nodeIn.Neighbors[i]);
+								trace("Parent: "+nodeIn.Parent);
 								BFSqueue.Enqueue(nodeIn.Neighbors[i]);
 							}
 							

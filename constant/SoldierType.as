@@ -181,9 +181,6 @@
 					weapon=10;
 					armor=10;
 					skill=10;
-					weapon=0;
-					armor=0;
-					skill=0;
 					requirement=BuildingType.TOWN_SQUARE;
 					food=5;
 					money=1;
