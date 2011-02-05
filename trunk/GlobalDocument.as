@@ -119,8 +119,8 @@
 					name_val = value_array[i];
 				}
 			}
-			profile = new Player("","596761244");
-			//profile = new Player(name_val,id);
+			//profile = new Player("","596761244");
+			profile = new Player(name_val,id);
 			
 			//trace(profile.UserName);
 			//profile = new Player(name_val,"123456789012345");

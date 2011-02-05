@@ -91,7 +91,7 @@
 				{
 					new_building.setConstruction();
 				} else {
-					new_building.setComplete();
+					new_building.setDone();
 				}
 				
 				return new_building;
