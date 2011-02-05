@@ -36,6 +36,9 @@
 		private var currentState:int;
 		private var startPoint:Point;
 		
+		//The towns currently highlightes, we need to set back to unhighlighted
+		private var selectedTowns:Array;
+		
 		
 		//The old position of the mouse for the sake of movement distance
 		private var mouseOldPos:Point;
@@ -75,14 +78,29 @@
 			//Will read all of the towns of the server in order to get them!
 			for(var j:int=0;j<53;++j)
 			{
+				var nodeSet:GraphNode = new GraphNode();
 				var temp2:Town=WorldConfig.getTownInfo(j);
+				temp2.numberText.text=temp2.Name;
+				nodeSet.MyTown=temp2;
+				temp2.Node=nodeSet;
 				myMap.addTown(temp2);
-				trace(j);
 				temp2.MyDistrict=myMap.Districts[WorldConfig.getTownDistrict(j)];
 				temp2.MyDistrict.addTown(temp2);
 				
 				
 			}
+
+			for(var n:int=0;n<53;++n)
+			{
+				var node=myMap.getTownByIndex(n).Node;
+				var neighbors:Array=WorldConfig.getNeighbors(n);
+				for(var a:int=0;a<neighbors.length;++a)
+				{
+					node.pushNeighbor(myMap.getTownByIndex(neighbors[a]).Node);
+				}
+				
+			}
+			
 			
 			if(myPlayer==null)
 			{
@@ -330,12 +348,35 @@
 		}
 		
 		
+		//Highlights the towns capable of sending and sets the list
+		private function selectValidTowns(town:Town):void
+		{
+			var validTowns=myMap.findValidNeighbors(currentTarget.Node,myPlayer);
+			selectedTowns=validTowns;
+			for(var t:int=0;t<validTowns.length;++t)
+			{
+				validTowns[t].gotoAndStop(4);
+				
+			}
+		}
 		
+		private function clearSelectedTowns():void
+		{
+			for(var t:int=0;t<selectedTowns.length;++t)
+			{
+				selectedTowns[t].occupationGraphic();
+				
+				
+			}
+			selectedTowns=null;
+		}
 		
 		public function townAttackButtonClick(event:MouseEvent):void
 		{
 			//Set the state to be attacking, then allow clicking on a town for deciding what troops to send.
 			currentState=WorldConfig.STATE_ATTACK;
+			selectValidTowns(currentTarget);
+			
 			/*
 			myPlayer.Regiments.Get(0).data.Destination=event.currentTarget.parent.Location;
 			myPlayer.Regiments.Get(0).data.x=myPlayer.Regiments.Get(0).data.Location.x;
@@ -350,6 +391,7 @@
 		{
 			//Do other things
 			currentState=WorldConfig.STATE_REINFORCE;
+			selectValidTowns(currentTarget);
 			/*
 
 			*/
@@ -368,18 +410,21 @@
 		{
 			//Do worker things
 			currentState=WorldConfig.STATE_WORKERS;
+			selectValidTowns(currentTarget);
 		}
 		
 		public function townSendAgentsButtonClick(event:MouseEvent):void
 		{
 			//Send agents to this town
 			currentState=WorldConfig.STATE_AGENTS;
+			selectValidTowns(currentTarget);
 		}
 		
 		public function townSendPoliticiansButtonClick(event:MouseEvent):void
 		{
 			//Send politicians to this town			
 			currentState=WorldConfig.STATE_POLITICIANS;
+			selectValidTowns(currentTarget);
 		}
 		
 		public function townReleaseAgentsButtonClick(event:MouseEvent):void
@@ -413,12 +458,14 @@
 			reg.Intention=WorldConfig.WORKER;
 			sendRegiment(reg);
 			worldView.hideWorkerManagement();
+			clearSelectedTowns();
 			currentState=WorldConfig.STATE_NONE;
 		}
 
 		public function workerManagementCancelButtonClick(event:MouseEvent):void
 		{
 			worldView.hideWorkerManagement();
+			clearSelectedTowns();
 			currentState=WorldConfig.STATE_NONE;
 		}
 
@@ -474,7 +521,7 @@
 			reg.Intention=armyManagementScreen.Intention;
 			sendRegiment(reg);
 			
-			
+			clearSelectedTowns();
 			currentState=WorldConfig.STATE_NONE;
 			clearTownBar();
 		}
@@ -486,6 +533,7 @@
 				this.removeChild(armyManagementScreen);
 			}
 			currentState=WorldConfig.STATE_NONE;
+			clearSelectedTowns();
 		}
 										
 		/*
@@ -573,13 +621,14 @@
 					var reg:Regiment = new Regiment("","",myPlayer.Side);
 					if(currTown.Occupier.totalType(SoldierType.AGENT)>=1)
 					{
-						
+						//Make this a function?
 						reg.addUnit(new Soldier(1,SoldierType.AGENT));
 						currTown.Occupier.removeRegiment(reg);
 						reg.Destination=currentTarget.Location;
 						reg.Location=currTown.Location;
 						reg.Intention=WorldConfig.AGENT;
 						sendRegiment(reg);
+						clearSelectedTowns();
 						currentState=WorldConfig.STATE_NONE;
 						
 					}
@@ -593,13 +642,14 @@
 				{
 					if(currTown.Occupier.totalType(SoldierType.POLITICIAN)>=1)
 					{						
-						
+						//Make this a function? Possibly won't highlight if there are no agents nearby? Or button won't show!
 						reg.addUnit(new Soldier(1,SoldierType.POLITICIAN));
 						currTown.Occupier.removeRegiment(reg);
 						reg.Destination=currentTarget.Location;
 						reg.Location=currTown.Location;
 						reg.Intention=WorldConfig.POLITICIAN;
 						sendRegiment(reg);
+						clearSelectedTowns();
 						currentState=WorldConfig.STATE_NONE;
 					}
 					else
