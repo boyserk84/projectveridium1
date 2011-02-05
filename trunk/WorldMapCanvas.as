@@ -25,6 +25,7 @@
 		private var dragging:Boolean;
 		private var myPlayer:Player;
 		private var enemyPlayer:Player;
+		private var allyPlayer:Player;
 		private var gameTimer:Timer;
 		
 		private var regiments:LinkedList;
@@ -66,7 +67,6 @@
 			for(var i:int=0;i<11;++i)
 			{
 				var clip:MovieClip=WorldSpriteInfo.getSprite(i);
-
 				clip.x=WorldConfig.getInfo(i).x;
 				clip.y=WorldConfig.getInfo(i).y;
 				myMap.addDistrict(District(clip));
@@ -105,7 +105,8 @@
 			if(myPlayer==null)
 			{
 				myPlayer=new Player("Rob","Robtacular",GameConfig.AMERICAN);
-				var reg:Regiment=new Regiment("Regiment 1",myPlayer.Name,myPlayer.Side);
+				allyPlayer=new Player("Nate","Nate Kem",GameConfig.AMERICAN);
+				var reg:Regiment=new Regiment("Regiment 1",myPlayer.UserName,myPlayer.Side);
 				reg.addUnit(new Soldier(25,SoldierType.MINUTEMAN));
 				reg.addUnit(new Soldier(3,SoldierType.OFFICER));			
 				reg.addUnit(new Soldier(10,SoldierType.SHARPSHOOTER));
@@ -115,7 +116,8 @@
 				reg.Location=myMap.Towns[0].Location;
 				myMap.Towns[0].Occupier=reg;
 				myMap.Towns[0].modifyWorkers(10);
-				myMap.Towns[0].conquer(myPlayer.Name,myPlayer.Side);
+				myMap.Towns[0].conquer(myPlayer.UserName,myPlayer.Side);
+				myMap.Towns[2].conquer(allyPlayer.UserName,allyPlayer.Side);
 				
 				startPoint=myMap.Towns[0].Location.clone();
 				
@@ -133,12 +135,12 @@
 
 			
 			
-			var reg2:Regiment=new Regiment("Enemies",enemyPlayer.Name,enemyPlayer.Side);
+			var reg2:Regiment=new Regiment("Enemies",enemyPlayer.UserName,enemyPlayer.Side);
 			
 			reg2.addUnit(new Soldier(20,SoldierType.MINUTEMAN));
 
 			
-			myMap.Towns[1].conquer(enemyPlayer.Name,enemyPlayer.Side);
+			myMap.Towns[1].conquer(enemyPlayer.UserName,enemyPlayer.Side);
 			reg2.Location=myMap.Towns[1].Location;
 			myMap.Towns[1].Occupier=reg2;
 
@@ -159,11 +161,8 @@
 
 			
 			//this.worldView.addAssets(myMap.Districts);	
-			trace("Hello!");
 			var worldMap:MovieClip=new WorldMap();
-			trace("ow?");
 
-			trace("or here");
 			
 			this.worldView.addAsset(worldMap);
 			
@@ -180,7 +179,7 @@
 			input.addEventListener(MouseEvent.MOUSE_OUT,worldMouseOut);
 			input.addEventListener(MouseEvent.CLICK,worldMouseClick);*/
 			
-			cityButton=new TriggerButton(354,526, GameConfig.CHANGE_WORLD);
+			cityButton=new TriggerButton(354,100, GameConfig.CHANGE_WORLD);
 			cityButton.addEventListener(MouseEvent.CLICK,cityButtonClick);
 
 			
@@ -196,6 +195,13 @@
 			
 		}
 		
+		
+		public function townInfoBarCancelButtonClick(event:MouseEvent):void
+		{
+			clearSelectedTowns();
+			hideTownInfoCancel();
+			currentState=WorldConfig.STATE_NONE;
+		}
 		
 		public function cityButtonClick(event:MouseEvent):void
 		{
@@ -222,10 +228,11 @@
 			this.townInfoBar.releaseAgentsButton.addEventListener(MouseEvent.CLICK,townReleaseAgentsButtonClick);
 			this.townInfoBar.sendPoliticiansButton.addEventListener(MouseEvent.CLICK,townSendPoliticiansButtonClick);
 			this.townInfoBar.releasePoliticiansButton.addEventListener(MouseEvent.CLICK,townReleasePoliticiansButtonClick);
+			this.townInfoBar.cancelButton.addEventListener(MouseEvent.CLICK,townInfoBarCancelButtonClick);
 			townInfoBar.updateAttributesEconomic(town,myPlayer.Side);
 			
 			
-			if(town.Owner==myPlayer.Name)
+			if(town.Owner==myPlayer.UserName)
 			{
 				this.townInfoBar.sendAgentsButton.visible=false;
 				this.townInfoBar.sendAgentsButton.enabled=false;
@@ -242,7 +249,6 @@
 			else
 			{
 				//if the player already has a politician there or not
-				trace(myPlayer.HalfTowns.Contains(town));
 				if(myPlayer.HalfTowns.Contains(town))
 				{
 					//This means they have a politician there
@@ -306,7 +312,8 @@
 			changeTownInfoBar(WorldConfig.TOWN_BAR_MILITARY);
 			this.townInfoBar.attackButton.addEventListener(MouseEvent.CLICK,townAttackButtonClick);
 			this.townInfoBar.reinforceButton.addEventListener(MouseEvent.CLICK,townReinforceButtonClick);
-			if(currTown.Owner==myPlayer.Name)
+						this.townInfoBar.cancelButton.addEventListener(MouseEvent.CLICK,townInfoBarCancelButtonClick);
+			if(currTown.Owner==myPlayer.UserName)
 			{
 				townInfoReinforce();
 			}
@@ -347,6 +354,18 @@
 			townInfoBar.gotoAndStop(frameIn);
 		}
 		
+		public function showTownInfoCancel():void
+		{
+			this.townInfoBar.cancelButton.visible=true;
+			this.townInfoBar.cancelButton.enabled=true;
+		}
+		
+		public function hideTownInfoCancel():void
+		{
+			this.townInfoBar.cancelButton.visible=false;
+			this.townInfoBar.cancelButton.enabled=false;
+		}
+		
 		
 		//Highlights the towns capable of sending and sets the list
 		private function selectValidTowns(town:Town):void
@@ -376,6 +395,7 @@
 			//Set the state to be attacking, then allow clicking on a town for deciding what troops to send.
 			currentState=WorldConfig.STATE_ATTACK;
 			selectValidTowns(currentTarget);
+			showTownInfoCancel();
 			
 			/*
 			myPlayer.Regiments.Get(0).data.Destination=event.currentTarget.parent.Location;
@@ -392,6 +412,7 @@
 			//Do other things
 			currentState=WorldConfig.STATE_REINFORCE;
 			selectValidTowns(currentTarget);
+			showTownInfoCancel();
 			/*
 
 			*/
@@ -411,6 +432,7 @@
 			//Do worker things
 			currentState=WorldConfig.STATE_WORKERS;
 			selectValidTowns(currentTarget);
+			showTownInfoCancel();
 		}
 		
 		public function townSendAgentsButtonClick(event:MouseEvent):void
@@ -418,6 +440,7 @@
 			//Send agents to this town
 			currentState=WorldConfig.STATE_AGENTS;
 			selectValidTowns(currentTarget);
+			showTownInfoCancel();
 		}
 		
 		public function townSendPoliticiansButtonClick(event:MouseEvent):void
@@ -425,6 +448,7 @@
 			//Send politicians to this town			
 			currentState=WorldConfig.STATE_POLITICIANS;
 			selectValidTowns(currentTarget);
+			showTownInfoCancel();
 		}
 		
 		public function townReleaseAgentsButtonClick(event:MouseEvent):void
@@ -450,15 +474,23 @@
 		
 		public function workerManagementAcceptButtonClick(event:MouseEvent):void
 		{	
-			var reg:Regiment = new Regiment("","",myPlayer.Side);
-			reg.addUnit(new Soldier(worldView.WorkerManagement.numWorkers(),SoldierType.WORKER));
-			currTown.modifyWorkers(-worldView.WorkerManagement.numWorkers());
-			reg.Destination=currentTarget.Location;
-			reg.Location=currTown.Location;
-			reg.Intention=WorldConfig.WORKER;
-			sendRegiment(reg);
+			if(worldView.WorkerManagement.numWorkers()>0)
+			{
+				var reg:Regiment = new Regiment("",myPlayer.UserName,myPlayer.Side);
+				reg.addUnit(new Soldier(worldView.WorkerManagement.numWorkers(),SoldierType.WORKER));
+				currTown.modifyWorkers(-worldView.WorkerManagement.numWorkers());
+				//Determine the waypoints for this regiment
+				reg.Waypoints=myMap.Tree.backwardsTraversal(currTown.Node);
+				//Burn the first one because its the starting point of the search
+				reg.Waypoints.pop();
+				reg.Destination=reg.Waypoints.pop().Location;
+				reg.Location=currTown.Location;
+				reg.Intention=WorldConfig.WORKER;
+				sendRegiment(reg);
+			}
 			worldView.hideWorkerManagement();
 			clearSelectedTowns();
+			hideTownInfoCancel();
 			currentState=WorldConfig.STATE_NONE;
 		}
 
@@ -466,6 +498,7 @@
 		{
 			worldView.hideWorkerManagement();
 			clearSelectedTowns();
+			hideTownInfoCancel();
 			currentState=WorldConfig.STATE_NONE;
 		}
 
@@ -514,14 +547,20 @@
 				reg.addUnit(new Soldier(armyManagementScreen.numPoliticians(),SoldierType.POLITICIAN));
 			}
 			
-			reg.Destination=currentTarget.Location;
+			//Determine the waypoints for this regiment
+			reg.Waypoints=myMap.Tree.backwardsTraversal(currTown.Node);
+			//Burn the first one because its the starting point of the search
+			reg.Waypoints.pop();
+			reg.Destination=reg.Waypoints.pop().Location;
+			
 			currTown.removeOccupationAmount(reg);
 			reg.Location=currTown.Location;
-			reg.Owner=myPlayer.Name;
+			reg.Owner=myPlayer.UserName;
 			reg.Intention=armyManagementScreen.Intention;
 			sendRegiment(reg);
 			
 			clearSelectedTowns();
+			hideTownInfoCancel();
 			currentState=WorldConfig.STATE_NONE;
 			clearTownBar();
 		}
@@ -534,6 +573,7 @@
 			}
 			currentState=WorldConfig.STATE_NONE;
 			clearSelectedTowns();
+			hideTownInfoCancel();
 		}
 										
 		/*
@@ -550,7 +590,7 @@
 				dragging=true;
 				worldView.startDrag();
 			}
-			trace(event.target);
+			
 
 		}
 		
@@ -589,74 +629,99 @@
 			{
 				if(currentState==WorldConfig.STATE_NONE)
 				{
-					trace("Showing info");
 					currentTarget=currTown;
 					worldView.showTownInfo(currTown);
 
 				}
-				else if(currentState==WorldConfig.STATE_REINFORCE)
+				else
 				{
-					armyManagementScreen.updateAttributes(currTown,WorldConfig.REINFORCE);
-					currentState=WorldConfig.STATE_SELECTING;
-					this.addChild(armyManagementScreen);
-
-				}
-				else if(currentState==WorldConfig.STATE_ATTACK)
-				{
-					if(currTown.Owner==myPlayer.Name)
-					{
-						armyManagementScreen.updateAttributes(currTown,WorldConfig.ATTACK);
-						currentState=WorldConfig.STATE_SELECTING;
-						this.addChild(armyManagementScreen);
-					}
-				}
-				else if(currentState==WorldConfig.STATE_WORKERS)
-				{
-					worldView.showWorkerManagement(currTown);
-					currentState=WorldConfig.STATE_SELECTING;
-					
-				}
-				else if(currentState==WorldConfig.STATE_AGENTS)
-				{
-					var reg:Regiment = new Regiment("","",myPlayer.Side);
-					if(currTown.Occupier.totalType(SoldierType.AGENT)>=1)
-					{
-						//Make this a function?
-						reg.addUnit(new Soldier(1,SoldierType.AGENT));
-						currTown.Occupier.removeRegiment(reg);
-						reg.Destination=currentTarget.Location;
-						reg.Location=currTown.Location;
-						reg.Intention=WorldConfig.AGENT;
-						sendRegiment(reg);
-						clearSelectedTowns();
-						currentState=WorldConfig.STATE_NONE;
+						if(selectedTowns.indexOf(currTown)<0)
+						{
+							//Dont do anything!
+						}
+						else if(currentState==WorldConfig.STATE_REINFORCE)
+						{
+							armyManagementScreen.updateAttributes(currTown,WorldConfig.REINFORCE);
+							currentState=WorldConfig.STATE_SELECTING;
+							this.addChild(armyManagementScreen);
+		
+						}
+						else if(currentState==WorldConfig.STATE_ATTACK)
+						{
+							if(currTown.Owner==myPlayer.UserName)
+							{
+								armyManagementScreen.updateAttributes(currTown,WorldConfig.ATTACK);
+								currentState=WorldConfig.STATE_SELECTING;
+								this.addChild(armyManagementScreen);
+							}
+						}
+						else if(currentState==WorldConfig.STATE_WORKERS)
+						{
+							worldView.showWorkerManagement(currTown);
+							currentState=WorldConfig.STATE_SELECTING;
+							
+						}
+						else if(currentState==WorldConfig.STATE_AGENTS)
+						{
+							var reg:Regiment = new Regiment("","",myPlayer.Side);
+							if(currTown.Occupier.totalType(SoldierType.AGENT)>=1)
+							{
+								//Make this a function?
+								reg.addUnit(new Soldier(1,SoldierType.AGENT));
+								currTown.Occupier.removeRegiment(reg);
+								//Determine the waypoints for this regiment
+								reg.Waypoints=myMap.Tree.backwardsTraversal(currTown.Node);
+								//Burn the first one because its the starting point of the search
+								reg.Waypoints.pop();
+								reg.Destination=reg.Waypoints.pop().Location;
+			
+								reg.Location=currTown.Location;
+								reg.Intention=WorldConfig.AGENT;
+								sendRegiment(reg);
+								clearSelectedTowns();
+								hideTownInfoCancel();
+								currentState=WorldConfig.STATE_NONE;
+								
+							}
+							else
+							{
+								//Some kind of dialog saying there are no agents in this town
+							}
+		
+						}
+						else if(currentState==WorldConfig.STATE_POLITICIANS)
+						{
+							if(currTown.Occupier!=null)
+							{
+								var reg:Regiment = new Regiment("","",myPlayer.Side);
+								if(currTown.Occupier.totalType(SoldierType.POLITICIAN)>=1)
+								{						
+									//Make this a function? Possibly won't highlight if there are no agents nearby? Or button won't show!
+									reg.addUnit(new Soldier(1,SoldierType.POLITICIAN));
+									currTown.Occupier.removeRegiment(reg);
+									//Determine the waypoints for this regiment
+									reg.Waypoints=myMap.Tree.backwardsTraversal(currTown.Node);
+									//Burn the first one because its the starting point of the search
+									reg.Waypoints.pop();
+									reg.Destination=reg.Waypoints.pop().Location;
+									
+									reg.Location=currTown.Location;
+									reg.Intention=WorldConfig.POLITICIAN;
+									sendRegiment(reg);
+									clearSelectedTowns();
+									hideTownInfoCancel();
+									currentState=WorldConfig.STATE_NONE;
+								}
+								else
+								{
+									//Some kind of dialog saying there are no politicians in this town
+								}
+							}
+						}//end of part of selected towns if
 						
-					}
-					else
-					{
-						//Some kind of dialog saying there are no agents in this town
-					}
-
-				}
-				else if(currentState==WorldConfig.STATE_POLITICIANS)
-				{
-					if(currTown.Occupier.totalType(SoldierType.POLITICIAN)>=1)
-					{						
-						//Make this a function? Possibly won't highlight if there are no agents nearby? Or button won't show!
-						reg.addUnit(new Soldier(1,SoldierType.POLITICIAN));
-						currTown.Occupier.removeRegiment(reg);
-						reg.Destination=currentTarget.Location;
-						reg.Location=currTown.Location;
-						reg.Intention=WorldConfig.POLITICIAN;
-						sendRegiment(reg);
-						clearSelectedTowns();
-						currentState=WorldConfig.STATE_NONE;
-					}
-					else
-					{
-						//Some kind of dialog saying there are no politicians in this town
-					}
-				}
+					
+				}//end of no action if
+				
 				
 			}
 			else
@@ -772,74 +837,82 @@
 				var loc=new Point(reg.x,reg.y);
 				if(Point.distance(loc,reg.Destination)<(reg.Speed/Point.distance(reg.Location,reg.Destination))*Point.distance(reg.Location,reg.Destination))
 				{
-					//Regiment arrived at location now determine intentions
+					//Regiment arrived at a location now determine if final destination
 					reg.Location=reg.Destination;
-					var town:Town=myMap.findTownByLocation(reg.Destination.x,reg.Destination.y);
+
 					reg.resetDistance();
-					if(reg.Intention==WorldConfig.ATTACK)
+					if(reg.Waypoints.length!=0)
 					{
-						//if the town gets captured by you before you get there
-						if(town.Owner!=myPlayer.Name)
-						{
-							AttackTown(town,reg);
-						}
-						else
-						{
-							ReinforceTown(town,reg);
-						}
-						
+						reg.Destination=reg.Waypoints.pop().Location;
 					}
-					else if(reg.Intention==WorldConfig.REINFORCE)
+					else
 					{
-						if(town.Owner!=myPlayer.Name)
+						var town:Town=myMap.findTownByLocation(reg.Destination.x,reg.Destination.y);
+						if(reg.Intention==WorldConfig.ATTACK)
 						{
-							AttackTown(town,reg);
-						}
-						else
-						{
-							ReinforceTown(town,reg);
-						}
-					}
-					else if(reg.Intention==WorldConfig.WORKER)
-					{
-						if(town.Owner==myPlayer.Name)
-						{
-							town.modifyWorkers(reg.TotalAmount);
-						}
-					}
-					else if(reg.Intention==WorldConfig.AGENT)
-					{
-						
-						if(town.Side!=myPlayer.Side)
-						{
-							//Need to change it to represent there is an agent
-							//Actually reduces how many resources are gained from town for all parties
-							myPlayer.addHalfTown(town);
-							town.modifyAgents(1);
-						}
-						else
-						{
-							if(town.Occupier!=null)
+							//if the town gets captured by you before you get there
+							if(town.Owner!=myPlayer.UserName)
 							{
-								town.Occupier.addRegiment(reg);
+								AttackTown(town,reg);
+							}
+							else
+							{
+								ReinforceTown(town,reg);
+							}
+							
+						}
+						else if(reg.Intention==WorldConfig.REINFORCE)
+						{
+							if(town.Owner!=myPlayer.UserName)
+							{
+								AttackTown(town,reg);
+							}
+							else
+							{
+								ReinforceTown(town,reg);
 							}
 						}
-					}
-					else if(reg.Intention==WorldConfig.POLITICIAN)
-					{
-						if(town.Side==myPlayer.Side)
+						else if(reg.Intention==WorldConfig.WORKER)
 						{
-							//Does not actually reduce the resources received from town
-							myPlayer.addHalfTown(town);
-							town.modifyPoliticians(1);
+							if(town.Owner==myPlayer.UserName)
+							{
+								town.modifyWorkers(reg.TotalAmount);
+							}
 						}
-					}
-					
-					
-					regiments.Remove(reg);
-					worldView.removeAsset(reg);
-					
-				}
+						else if(reg.Intention==WorldConfig.AGENT)
+						{
+							
+							if(town.Side!=myPlayer.Side)
+							{
+								//Need to change it to represent there is an agent
+								//Actually reduces how many resources are gained from town for all parties
+								myPlayer.addHalfTown(town);
+								town.modifyAgents(1);
+							}
+							else
+							{
+								if(town.Occupier!=null)
+								{
+									town.Occupier.addRegiment(reg);
+								}
+							}
+						}
+						else if(reg.Intention==WorldConfig.POLITICIAN)
+						{
+							if(town.Side==myPlayer.Side)
+							{
+								//Does not actually reduce the resources received from town
+								myPlayer.addHalfTown(town);
+								town.modifyPoliticians(1);
+							}
+						}
+						
+						
+						regiments.Remove(reg);
+						worldView.removeAsset(reg);
+						
+					}//reach waypoint if
+				}//reach destination if
 				else
 				{
 					//move this guy along the interpolation

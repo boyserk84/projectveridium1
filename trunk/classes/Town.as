@@ -181,6 +181,7 @@
 			
 		public function conquer(owner:String,sideIn:int):void
 		{
+			trace("Town owner: "+owner);
 			this.owner=owner;
 			side=sideIn;
 			occupationGraphic();

@@ -19,6 +19,8 @@
 		
 		public function updateAttributesMilitary(town:Town,side:int):void
 		{
+			cancelButton.visible=false;
+			cancelButton.enabled=false;
 			
 			townLocation=town.Location;
 			nameText.text=town.Name;
@@ -76,6 +78,8 @@
 		
 		public function updateAttributesEconomic(town:Town,side:int):void
 		{
+			cancelButton.visible=false;
+			cancelButton.enabled=false;
 			townLocation=town.Location;
 			nameText.text=town.Name.toString();
 			ownerText.text=town.Owner.toString();

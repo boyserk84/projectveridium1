@@ -14,6 +14,8 @@
 		private var myLocation:Point;
 		//The current destination of this Regiment
 		private var destination:Point;
+		//The points this Regiment needs to travel through to get to its destination
+		private var waypoints:Array;
 		//The username of the owner of this regiment
 		private var owner:String;
 		//The side this regiment is on
@@ -283,6 +285,16 @@
 		public function get Side():int
 		{
 			return side;
+		}
+		
+		public function get Waypoints():Array
+		{
+			return waypoints;
+		}
+		
+		public function set Waypoints(value:Array):void
+		{
+			waypoints=value;
 		}
 		
 		

@@ -41,6 +41,14 @@
 			return null;
 		}
 		
+		public function Peek():*
+		{
+			if(head.next!=null)
+			{
+				return head.next.data;
+			}
+		}
+		
 		public function get Length():int
 		{
 			return length;
