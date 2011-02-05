@@ -15,6 +15,9 @@
 		
 		//The side this town currently is on
 		private var side:int;
+		
+		//The GraphNode this town belongs too for starting BFS
+		private var graphNode:GraphNode;
 
 		
 		//How many workers are allocated to this town for resource production
@@ -125,7 +128,8 @@
 		public function set Politicians(value:int):void{	politicians=value;}
 		public function get MyDistrict():District{	return myDistrict;}
 		public function set MyDistrict(value:District):void{	myDistrict=value;}
-		public function get Neightbors():Array{ return neighbors;}
+		public function set Node(value:GraphNode):void{	graphNode=value;}
+		public function get Node():GraphNode{	return graphNode;}
 		
 		public function modifyWorkers(change:int=0):void
 		{
@@ -139,6 +143,8 @@
 				occupier.removeRegiment(reg);
 			}
 		}
+		
+		
 		
 		public function modifyAgents(value:int):void
 		{
@@ -176,20 +182,30 @@
 		public function conquer(owner:String,sideIn:int):void
 		{
 			this.owner=owner;
-			if(sideIn==GameConfig.BRITISH)
+			side=sideIn;
+			occupationGraphic();
+			trace(side);
+			//myDistrict.checkOwnership();
+			
+		}
+		
+		//Changes the graphic to be whatever side is occupying this town
+		public function occupationGraphic():void
+		{
+			if(side==GameConfig.BRITISH)
 			{
 				gotoAndStop(WorldConfig.BRITISH_OCCUPANCY);
 
 			}
-			else
+			else if(side==GameConfig.AMERICAN)
 			{
 				gotoAndStop(WorldConfig.AMERICAN_OCCUPANCY);
 
 			}
-			side=sideIn;
-			trace(side);
-			//myDistrict.checkOwnership();
-			
+			else
+			{
+				gotoAndStop(0);
+			}
 		}
 		
 		public function occupierType(type:int):int
