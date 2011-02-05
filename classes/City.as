@@ -75,8 +75,12 @@
 		public function addBuilding(buildingIn:Building=null):void
 		{
 			//requirements[buildingIn.Type]=++requirements[buildingIn.Type];
-			temp_req[buildingIn.Type]=++temp_req[buildingIn.Type];
-			
+			if (buildingIn.Type==BuildingType.TOWN_SQUARE)
+			{
+				requirements[buildingIn.Type] = ++requirements[buildingIn.Type]
+			} else {
+				temp_req[buildingIn.Type]=++temp_req[buildingIn.Type];
+			}
 			buildings.Add(buildingIn);
 			trace("Length of Buildings:" + buildings.Length);
 		}
@@ -130,6 +134,7 @@
 		*/
 		public function hasMoreTownSquare():Boolean
 		{
+			trace("Town Square left" + requirements[BuildingType.TOWN_SQUARE]);
 			if (requirements[BuildingType.TOWN_SQUARE] > 1) return true;
 			else return false;
 		}

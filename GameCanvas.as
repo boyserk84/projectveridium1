@@ -622,7 +622,7 @@
 		}
 		
 		/**
-		* Synchronize city with the server
+		* Synchronize city with the server (using for first time loading)
 		* Basically, check local city with server city and update view.
 		*/
 		private function synchronizeCity()
@@ -663,6 +663,8 @@
 				headStat.updateInfo(profile);
 				popUpStat.updateInfo(profile);
 				update_resources = false;
+				
+				ClientConnector.requestUpdateProfileResources();
 			}
 			
 			if (timer.stringCountDown==timer.MAX_MINS_STRING()) // Reset Counting

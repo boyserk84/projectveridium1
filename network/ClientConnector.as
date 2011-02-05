@@ -52,7 +52,7 @@
 				"x" + new_building.Location.x +
 				"x" + new_building.Location.y +
 				"x" + new_building.Type +
-				"x" + (new_building.isBuildingDone()?0:1)
+				"x0" // + (new_building.isBuildingDone()?0:1)
 				;
 			requestWrite(encode_pack);
 

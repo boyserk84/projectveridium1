@@ -45,6 +45,14 @@
 			release_req = 0;
 		}
 		
+		/**
+		* Set this building to be finished
+		*/
+		public function setDone():void
+		{
+			time_to_build = 0;
+		}
+		
 		/*
 		* Change the internal location of this building
 		* @param1: xIn - The x-Coordinate to change to
