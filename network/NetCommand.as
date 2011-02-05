@@ -89,6 +89,7 @@
 				} else {
 					new_building.setComplete();
 				}
+				
 				return new_building;
 			}
 			return null;
