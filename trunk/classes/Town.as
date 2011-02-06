@@ -121,7 +121,20 @@
 		public function get Name():String{	return myName;}
 		public function get Occupier():Regiment{	return occupier;}
 		public function set Occupier(value:Regiment):void{	occupier=value;}
-		public function get Workers():int{	return workers;}
+		
+		public function get Workers():int
+		{	
+			if(occupier!=null)
+			{
+				return occupier.totalType(SoldierType.WORKER);
+			}
+			else
+			{
+		
+				return 0;
+			}
+		}
+		public function set Workers(value:int):void{	workers=value;}
 		public function get Agents():int{	return agents;}
 		public function set Agents(value:int):void{	agents=value;}
 		public function get Location():Point{	return myLocation;}

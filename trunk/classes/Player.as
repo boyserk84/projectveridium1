@@ -192,8 +192,12 @@
 		
 		public function changeWorkers(value:int):void
 		{
-			if (value+workers >= 0 && value+workers+population <= populationCap){
+			trace("Available " + value+workers+AvailablePop);
+			if (AvailablePop - value >= 0 && value+workers >=0)
+			{
+			//if (value+workers >= 0 && value+workers+AvailablePop <= populationCap){
 				workers +=value;
+				trace("Worker after" + workers);
 			}
 		}
 		

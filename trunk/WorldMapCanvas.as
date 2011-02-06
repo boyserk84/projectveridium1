@@ -143,6 +143,7 @@
 				{
 					myPlayer.WorldCityLocation.Occupier=myPlayer.Regiments.Get(0).data;
 				}
+				myPlayer.WorldCityLocation.Workers=myPlayer.AmountWorkers;
 				
 				
 				startPoint=myPlayer.WorldCityLocation.Location.clone();

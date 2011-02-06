@@ -242,8 +242,11 @@
 					{
 						if (unit_type==SoldierType.WORKER)
 						{
+							trace("Add Workers");
 							profile.changeWorkers(1);
 						} else {
+							
+							trace("add soldiers");
 							profile.changeSoldiers(1);
 						}
 						
