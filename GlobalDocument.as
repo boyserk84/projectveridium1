@@ -27,6 +27,7 @@
 		
 		/** Game Data **/
 		public var profile:Player;				// Player
+		public var profile_name:String;			// Player's name
 		
 		/** Global game objects **/
 		public var game:GameCanvas;
@@ -119,6 +120,7 @@
 					name_val = value_array[i];
 				}
 			}
+			this.profile_name = name;
 			profile = new Player("","596761244");
 			//profile = new Player(name_val,id);
 			
@@ -221,7 +223,7 @@
 			//if (profile.getCity()==null) trace ("PROFILE IS NULL");
 			game = new GameCanvas(profile);
 			worldgame = new WorldMapCanvas(profile);
-			trace("After GD "+profile.Regiments.Length);
+			//trace("After GD "+profile.Regiments.Length);
 			enableCity();
 		}
 		
@@ -283,7 +285,8 @@
 		private function loadProfile():void
 		{
 			profile = client.profile;
-			trace("GD "+profile.Regiments.Length);
+			profile.Name = this.profile_name;
+			//trace("GD "+profile.Regiments.Length);
 			profile.addCity(new City(0,0,GameConfig.MAX_CITY_COL,GameConfig.MAX_CITY_ROW));
 			trace("current wood is " + profile.Wood + " " + profile.Name)
 			// Set City	

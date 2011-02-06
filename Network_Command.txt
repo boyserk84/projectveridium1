@@ -8,8 +8,8 @@ IIIIIIIIIIIIIII x CCCC   x LocationX x LocationY x Type x Construction x TotalBu
  0         1        2             3        4        5             6              7
  
 RESPONSE_PROFILE
-IIIIIIIIIIIIIII x CCCC x Side x wood x woodcap x iron x ironcap x money x food x foodCap x pop x popCap
- 0                  1     2      3       4        5        6       7       8      9        10     11
+IIIIIIIIIIIIIII x CCCC x Side x wood x woodcap x iron x ironcap x money x food x foodCap x pop x popCap x citylocation
+ 0                  1     2      3       4        5        6       7       8      9        10     11           12
  
  
  

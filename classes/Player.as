@@ -13,6 +13,7 @@
 		
 		//The town on the worldmap where the city is located
 		private var worldCityLocation:Town;
+		private var city_local:int;
 		
 		//The side this player is on
 		private var side:int;
@@ -166,6 +167,10 @@
 		public function set ExtraPopulationCap(value:int){ extraPopulationCap=value;}
 		public function set AgentCap(value:int){ agentsCap=value;}
 		public function set PoliticiansCap(value:int) { politiciansCap=value;}
+		public function set CityLocation(value:int) { city_local = value; }
+		
+		public function get CityLocation():int { return city_local; }
+		
 		
 		public function get WorldCityLocation():Town
 		{
@@ -192,12 +197,12 @@
 		
 		public function changeWorkers(value:int):void
 		{
-			trace("Available " + value+workers+AvailablePop);
+			//trace("Available " + value+workers+AvailablePop);
 			if (AvailablePop - value >= 0 && value+workers >=0)
 			{
 			//if (value+workers >= 0 && value+workers+AvailablePop <= populationCap){
 				workers +=value;
-				trace("Worker after" + workers);
+				//trace("Worker after" + workers);
 			}
 		}
 		
