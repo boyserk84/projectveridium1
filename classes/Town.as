@@ -90,6 +90,12 @@
 			realIron=ironIn;
 			foodProduction=foodIn;
 			realFood=foodIn;
+			
+			//Need to set the caps in constructor!
+			foodCap=15;
+			ironCap=15;
+			woodCap=15;
+			
 			this.x=locationIn.x;
 			this.y=locationIn.y;
 			myLocation=locationIn;
@@ -103,15 +109,45 @@
 			
 		}
 		
-		public function get Wood():int{	return woodProduction;}
+		public function get Wood():int
+		{	
+			if(woodProduction+Workers>woodCap)
+			{
+				return woodCap;
+			}
+			else
+			{
+				return woodProduction+Workers;
+			}
+		}
 		public function get WoodCap():int{	return woodCap;}
 		public function get ExtraWoodCap():int{	return extraWoodCap;}
 		public function get Money():int{	return moneyProduction;}
 		public function get Population():int{	return populationProduction;}
 		public function get ExtraPopulationCap():int{	return extraPopCap;}
-		public function get Food():int{	return foodProduction;}
+		public function get Food():int
+		{
+			if(foodProduction+Workers>foodCap)
+			{
+				return foodCap;
+			}
+			else
+			{
+				return foodProduction+Workers;
+			}
+		}
 		public function get ExtraFoodCap():int{	return extraFoodCap;}
-		public function get Iron():int{	return ironProduction;}
+		public function get Iron():int{	
+			if(ironProduction+Workers>ironCap)
+			{
+				return ironCap;
+			}
+			else
+			{
+				
+				return ironProduction+Workers;
+			}
+		}
 		public function get IronCap():int { return ironCap; }
 		public function get ExtraIronCap():int{	return extraIronCap;}
 		//The current owner of this Town.  What is the player key for the database going to be, names?

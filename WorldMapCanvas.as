@@ -502,7 +502,8 @@
 			{
 				var reg:Regiment = new Regiment("",myPlayer.UserName,myPlayer.Side);
 				reg.addUnit(new Soldier(worldView.WorkerManagement.numWorkers(),SoldierType.WORKER));
-				currTown.modifyWorkers(-worldView.WorkerManagement.numWorkers());
+//				currTown.modifyWorkers(-worldView.WorkerManagement.numWorkers())
+				currTown.Occupier.removeRegiment(reg);
 				//Determine the waypoints for this regiment
 				reg.Waypoints=myMap.Tree.backwardsTraversal(currTown.Node);
 				//Burn the first one because its the starting point of the search
@@ -900,7 +901,15 @@
 						{
 							if(town.Owner==myPlayer.UserName)
 							{
-								town.modifyWorkers(reg.TotalAmount);
+								if(town.Occupier!=null)
+								{
+									
+									town.Occupier.addRegiment(reg);
+								}
+								else
+								{
+									town.Occupier=reg;
+								}
 							}
 						}
 						else if(reg.Intention==WorldConfig.AGENT)
