@@ -134,9 +134,9 @@
 			{
 				
 				//This is going to be loaded in from the database so no need to set
-				myPlayer.WorldCityLocation=myMap.Towns[0];
-				myPlayer.addTown(myMap.Towns[0]);
-				trace(myMap.Towns[0].Side);
+				myPlayer.WorldCityLocation=myMap.Towns[myPlayer.CityLocation];
+				myPlayer.addTown(myMap.Towns[myPlayer.CityLocation]);
+
 				
 				
 				if(myPlayer.Regiments.Get(0).data!=null)
