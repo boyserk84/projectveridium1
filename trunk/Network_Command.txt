@@ -8,10 +8,16 @@ IIIIIIIIIIIIIII x CCCC   x LocationX x LocationY x Type x Construction x TotalBu
  0         1        2             3        4        5             6              7
  
 RESPONSE_PROFILE
-IIIIIIIIIIIIIII x CCCC x Side x wood x woodcap x iron x ironcap x money x food x foodCap x pop x popCap x citylocation
- 0                  1     2      3       4        5        6       7       8      9        10     11           12
+IIIIIIIIIIIIIII x CCCC x Side x wood x woodcap x iron x ironcap x money x food x foodCap x pop x popCap x citylocation x gameId
+ 0                  1     2      3       4        5        6       7       8      9        10     11           12          13
+
+RESPONSE_TOWN
+IIIIIIIIIIIIIII x CCCC x TownId x Regiment x gameId x TotalTown
+ 0                  1       2        3          4        5
  
- 
+REQUEST_TOWN
+CCCC x IIIIIIIIIII x GameId
+ 0        1            2
  
 REQUEST_ADD_BUILDING
 CCCC x IIIIIIIIIII x LocationX x LocationY x Type x Construction 
@@ -24,5 +30,5 @@ CCCC x IIIIIIIIIII x LocationX x LocationY
  0         1            2           3 
  
 REQUEST_UPDATE_PROFILE
-CCCC X IIIIIIIIIIII x Side x wood x woodcap x iron x ironcap x money x food x foodcap x pop x popCap
- 0         1            2      3      4        5         6       7        8    9         10     11 
+CCCC X IIIIIIIIIIII x Side x wood x woodcap x iron x ironcap x money x food x foodcap x pop x popCap x cityLocation x gameId
+ 0         1            2      3      4        5         6       7        8    9         10     11          12         13

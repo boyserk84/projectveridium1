@@ -31,6 +31,7 @@
 		public static var RESPONSE_PROFILE:int = 1111;
 		
 		public static var RESPONSE_BUILDING:int = 1002;
+		public static var RESPONSE_TOWN:int = 1003;
 		
 		/* Client requests to server */
 		public static var REQUEST_PROFILE:int = 2000;
@@ -40,6 +41,7 @@
 		public static var REQUEST_ADD_BUILDING:int = 2003;
 		public static var REQUEST_UPDATE_BUILDING:int = 2004;
 		public static var REQUEST_REMOVE_BUILDING:int = 2005;
+		public static var REQUEST_TOWN:int = 2006;
 		
 		/* Error Message to notify client */
 		public static var MSG_HEAD_FAIL:String = "Offline Gameplay!";
@@ -127,10 +129,19 @@
 				new_Player.Population = int(decode_pack[10]);
 				new_Player.PopulationCap = int(decode_pack[11]);
 				new_Player.CityLocation = int(decode_pack[12]);
+				new_Player.GameId = (decode_pack[13]);
 				//trace("Pack " + new_Player.Wood);
 				return new_Player;
 			}
 			return null;
+		}
+		
+		public static function getTownInfoNode():void
+		{
+			if (isNotEmptyPackage())
+			{
+				//TODO: RETURN TOWNINFONODE OBJECT
+			}
 		}
 		
 		/**

@@ -11,6 +11,9 @@
 		//The city belonging to this player
 		private var city:City;
 		
+		// Game that this player is in
+		private var gameid:String;
+		
 		//The town on the worldmap where the city is located
 		private var worldCityLocation:Town;
 		private var city_local:int;
@@ -93,7 +96,8 @@
 			ironCap = BuildingType.IRON_CAP_INIT;
 			woodCap = BuildingType.WOOD_CAP_INIT;
 		}
-		
+		public function get GameId():String { return gameid; }
+		public function set GameId(value:String) { gameid = value; }
 		public function get Name():String{	return myName;}
 		public function set Name(value:String):void { myName = value; } 
 		public function get UserName():String { return username;}

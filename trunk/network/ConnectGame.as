@@ -142,6 +142,11 @@
 							//this.profile.getCity().Buildings.Get(profile.getCity().Buildings.Length-1).data.setComplete();
 						break;
 						
+						case NetCommand.RESPONSE_TOWN.toString():
+							//TODO FIND THE WAY TO PASS INFO TO WORLDMAP
+						
+						break;
+						
 						// Receive Player's profile object
 						// ONLY LOAD THE FIRST TIME
 						case NetCommand.RESPONSE_PROFILE.toString():
