@@ -11,6 +11,9 @@
 		//The city belonging to this player
 		private var city:City;
 		
+		//The town on the worldmap where the city is located
+		private var worldCityLocation:Town;
+		
 		//The side this player is on
 		private var side:int;
 		
@@ -164,6 +167,16 @@
 		public function set AgentCap(value:int){ agentsCap=value;}
 		public function set PoliticiansCap(value:int) { politiciansCap=value;}
 		
+		public function get WorldCityLocation():Town
+		{
+			return worldCityLocation;
+		}
+		
+		public function set WorldCityLocation(value:Town)
+		{
+			worldCityLocation=value;
+		}
+		
 		
 		public function get AmountSoldiers():int
 		{
@@ -206,7 +219,7 @@
 		public function addTown(newTown:Town):void
 		{
 			towns.Add(newTown);
-			towns.Get(towns.Length-1).data.conquer(username,side);
+			newTown.conquer(username,side);
 		}
 		
 		/**

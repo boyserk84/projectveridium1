@@ -104,6 +104,7 @@
 			
 			if(myPlayer==null)
 			{
+				trace("Were still here");
 				myPlayer=new Player("Rob","Robtacular",GameConfig.AMERICAN);
 				allyPlayer=new Player("Nate","Nate Kem",GameConfig.AMERICAN);
 				var reg:Regiment=new Regiment("Regiment 1",myPlayer.UserName,myPlayer.Side);
@@ -118,15 +119,36 @@
 				myMap.Towns[0].modifyWorkers(10);
 				myMap.Towns[0].conquer(myPlayer.UserName,myPlayer.Side);
 				myMap.Towns[2].conquer(allyPlayer.UserName,allyPlayer.Side);
-				
 				startPoint=myMap.Towns[0].Location.clone();
 				
 				startPoint.x-=int(WorldConfig.INPUT_WIDTH/2);
 				startPoint.y-=int(WorldConfig.INPUT_HEIGHT/2);
 				
+				
 				//startPoint.x-=int(GameConfig.SCREEN_WIDTH/2);
 				//startPoint.y-=int(GameConfig.SCREEN_HEIGHT/2);
 
+			}
+			else
+			{
+				
+				//This is going to be loaded in from the database so no need to set
+				myPlayer.WorldCityLocation=myMap.Towns[0];
+				myPlayer.addTown(myMap.Towns[0]);
+				trace(myMap.Towns[0].Side);
+				
+				
+				if(myPlayer.Regiments.Get(0).data!=null)
+				{
+					myPlayer.WorldCityLocation.Occupier=myPlayer.Regiments.Get(0).data;
+				}
+				
+				
+				startPoint=myPlayer.WorldCityLocation.Location.clone();
+				
+				startPoint.x-=int(WorldConfig.INPUT_WIDTH/2);
+				startPoint.y-=int(WorldConfig.INPUT_HEIGHT/2);
+				
 			}
 
 			
