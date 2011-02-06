@@ -378,9 +378,9 @@
 			var w_cap:int, i_cap:int, f_cap:int, p_cap:int;
 			for (var i:int = 0; i < towns.Length ;++i)
 			{
-				w_cap += towns.Get(i).data.WoodCap;
-				i_cap += towns.Get(i).data.IronCap;
-				f_cap += towns.Get(i).data.FoodCap;
+				w_cap += towns.Get(i).data.ExtraWoodCap;
+				i_cap += towns.Get(i).data.ExtraIronCap;
+				f_cap += towns.Get(i).data.ExtraFoodCap;
 				p_cap += towns.Get(i).data.ExtraPopulationCap;
 			}
 			extraWoodCap = w_cap;
@@ -392,7 +392,7 @@
 		/**
 		* Update all towns' resources
 		*/
-		private function updateAllTownResources():void
+		public function updateAllTownResources():void
 		{
 			var w:int,iron:int,f:int,p:int;
 			for (var i:int = 0; i < towns.Length ;++i)
@@ -407,7 +407,6 @@
 			changeFood(f);
 			changePop(p);
 		}
-		
 		
 
 
