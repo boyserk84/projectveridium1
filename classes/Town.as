@@ -112,6 +112,7 @@
 		public function get Food():int{	return foodProduction;}
 		public function get ExtraFoodCap():int{	return extraFoodCap;}
 		public function get Iron():int{	return ironProduction;}
+		public function get IronCap():int { return ironCap; }
 		public function get ExtraIronCap():int{	return extraIronCap;}
 		//The current owner of this Town.  What is the player key for the database going to be, names?
 		public function get Owner():String{	return owner;}

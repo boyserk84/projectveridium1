@@ -234,8 +234,6 @@
 			// Check requirement
 			if (mcity.Requirements[node.Requirement] > 0)
 			{
-				
-				
 				// check if there is enough population to allocate
 				if (profile.AvailablePop > 0)
 				{
@@ -259,6 +257,10 @@
 						// Update Stat
 						popUpStat.updateInfo(profile);
 						headStat.updateInfo(profile);
+						
+						// update data on server
+						ClientConnector.requestUpdateProfileResources();
+						
 					} else {
 						// If not enough resource, notify a player
 						alertPopUpNotify(event.stageX, event.stageY);
@@ -598,6 +600,7 @@
 							//profile.changeFood(BuildingInfo.getInfo(this.select_building));
 							++this.length_of_city;
 							
+							// (5) Send request to update server
 							ClientConnector.requestUpdateProfileResources();
 							ClientConnector.requestWriteAddBuilding();
 						}
@@ -623,6 +626,7 @@
 		
 		/**
 		* Synchronize city with the server (using for first time loading)
+		*
 		* Basically, check local city with server city and update view.
 		*/
 		private function synchronizeCity()
@@ -660,6 +664,8 @@
 				profile.changeIron(mcity.Iron);
 				profile.changeFood(mcity.Food);
 				profile.changePop(mcity.Pop);
+				profile.updateAllTownResources();
+				
 				headStat.updateInfo(profile);
 				popUpStat.updateInfo(profile);
 				update_resources = false;

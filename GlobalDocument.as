@@ -119,8 +119,8 @@
 					name_val = value_array[i];
 				}
 			}
-			//profile = new Player("","596761244");
-			profile = new Player(name_val,id);
+			profile = new Player("","596761244");
+			//profile = new Player(name_val,id);
 			
 			//trace(profile.UserName);
 			//profile = new Player(name_val,"123456789012345");
@@ -220,7 +220,8 @@
 			gotoAndStop(GameConfig.CITY_FRAME);
 			//if (profile.getCity()==null) trace ("PROFILE IS NULL");
 			game = new GameCanvas(profile);
-			worldgame = new WorldMapCanvas();
+			worldgame = new WorldMapCanvas(profile);
+			trace("After GD "+profile.Regiments.Length);
 			enableCity();
 		}
 		
@@ -282,6 +283,7 @@
 		private function loadProfile():void
 		{
 			profile = client.profile;
+			trace("GD "+profile.Regiments.Length);
 			profile.addCity(new City(0,0,GameConfig.MAX_CITY_COL,GameConfig.MAX_CITY_ROW));
 			trace("current wood is " + profile.Wood + " " + profile.Name)
 			// Set City	

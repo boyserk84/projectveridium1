@@ -171,11 +171,14 @@
 		private function getTotalSoldiersOfType(group:LinkedList,type:int):int
 		{
 			var total_soldiers:int = 0;
+			//trace(group.Length);
 			for (var i:int=0; i < group.Length; ++i)
 			{
 				total_soldiers += group.Get(i).data.totalType(type);
+				//trace("Reg: " + i +" Gte ttoata " + total_soldiers + " Type: " + type);
 			}
 			
+			//trace("Total Soliders : " + total_soldiers);
 			return total_soldiers;
 		}
 		

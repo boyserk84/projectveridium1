@@ -119,6 +119,7 @@
 				myMap.Towns[0].modifyWorkers(10);
 				myMap.Towns[0].conquer(myPlayer.UserName,myPlayer.Side);
 				myMap.Towns[2].conquer(allyPlayer.UserName,allyPlayer.Side);
+				myPlayer.addRegiment(reg);
 				startPoint=myMap.Towns[0].Location.clone();
 				
 				startPoint.x-=int(WorldConfig.INPUT_WIDTH/2);
@@ -169,7 +170,7 @@
 			
 
 			
-			myPlayer.addRegiment(reg);
+			
 			enemyPlayer.addRegiment(reg2);
 			
 			this.worldView.TownInfo.economicButton.addEventListener(MouseEvent.CLICK,townEconomicButtonClick);
