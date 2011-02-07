@@ -88,6 +88,7 @@
 		*/
 		public function updateCityReq(arr:Array)
 		{
+			//trace("Update City Req Menu System");
 			all_icons.updateCityBuiltList(arr);
 		}
 		

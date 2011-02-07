@@ -138,7 +138,7 @@
 					{
 						// Receive Building object
 						case NetCommand.RESPONSE_BUILDING.toString():	
-							this.profile.getCity().addBuilding(NetCommand.getBuildingObject());
+							this.profile.getCity().addImmediateBuilding(NetCommand.getBuildingObject());
 							//this.profile.getCity().Buildings.Get(profile.getCity().Buildings.Length-1).data.setComplete();
 						break;
 						

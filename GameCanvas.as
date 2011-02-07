@@ -40,6 +40,8 @@
 		private var mouse:MouseCurs;					// Mouse cursor on tile
 		private var update_resources:Boolean = true;	// Notifier when need to update
 		
+		private var show_Notify_win:Boolean = false;	// Pop Notify for resources
+		
 		private var length_of_city:int;
 		
 		// Game Contents
@@ -101,8 +103,6 @@
 			timer.addObjectWithUpdate(mcity);	// Feed object that needs timer
 			initialize_Layers();
 			
-			
-			
 		}
 		
 		/**
@@ -137,13 +137,26 @@
 			this.menuBar.addExtFuncTo(GameConfig.COMM_STAT_POP, MouseEvent.CLICK, showStat);
 			this.menuBar.addExtFuncTo(GameConfig.COMM_HELP, MouseEvent.CLICK, helpButtonClick );
 			this.popUpStat.addExtFuncToButtons(GameConfig.COMM_PLUS_SIGN, MouseEvent.CLICK,addToStat);
+			this.popUpStat.addExtFuncToButtons(GameConfig.COMM_PLUS_SIGN, MouseEvent.MOUSE_MOVE, hideNotifyRequirePopUp);
+			//this.popUpStat.addExtFuncToButtons(GameConfig.COMM_PLUS_SIGN, MouseEvent.MOUSE_OVER, showSoldierRequirePopUp);
 			this.popUpStat.addExtFuncToButtons(GameConfig.COMM_MINUS_SIGN, MouseEvent.CLICK, removeFromStat);
 			this.popUpStat.addExtFuncToButtons(GameConfig.COMM_SWITCH_STAT, MouseEvent.CLICK, switchStat);
 			this.notifyWin.addEventToConfirmButton(MouseEvent.CLICK, proceedRemove);
 			this.notifyWin.addEventToCancelButton(MouseEvent.CLICK, disableNotifyWin);
 		}
 		
-
+		/**
+		* Hide Notification required resources pop up windows
+		* @param event: MouseEvent
+		*/
+		private function hideNotifyRequirePopUp(event:MouseEvent):void
+		{
+			if (show_Notify_win ==true)
+			{
+				pop_buildingInfo.visible = false;
+				show_Notify_win = false;
+			}
+		}
 		
 		/**
 		* Remove a building from a game
@@ -216,10 +229,15 @@
 		*/
 		private function alertPopUpNotify(x:Number, y:Number):void
 		{
-			pop_buildingInfo.visible = true;
-			pop_buildingInfo.x = x - 100;
-			pop_buildingInfo.y = y - 65;
-			pop_buildingInfo.gotoAndStop(Images.POP_REQUIRE_BUILD);
+			// if has not been shown yet
+			if (show_Notify_win==false)
+			{
+				pop_buildingInfo.visible = true;
+				pop_buildingInfo.x = x - 100;
+				pop_buildingInfo.y = y - 120/*65*/;
+				pop_buildingInfo.gotoAndStop(Images.POP_REQUIRE_BUILD);
+				show_Notify_win = true;
+			}
 		}
 		
 		/**
@@ -636,10 +654,13 @@
 		{
 			if (length_of_city!=ClientConnector.getBuildingLength())
 			{
-				//trace("UPDATEAAAAAAAAAAAAAAAAAAAAAA");
+				//trace("UPDATEAAAAAAAAAAAAAAAAAAAAAA" + ClientConnector.getBuildingLength());
 				theView.addBuildingList(ClientConnector.getBuildingList());
+				menuBar.updateCityReq(BuildingManager.determineBuildingList(mcity));
+				headStat.updateInfo(profile);
 				length_of_city = ClientConnector.getBuildingLength();
-			}
+			} 
+			
 		}
 		
 		/** 
@@ -697,6 +718,7 @@
 			this.mcity = profile.getCity();
 			this.length_of_city = profile.getCity().Buildings.Length;
 			this.loadContents();
+			
 			//headStat.updateTimerInfo(timer.stringCountDown);
 			//this.gameLoop();
 		}

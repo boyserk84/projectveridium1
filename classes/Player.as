@@ -194,7 +194,7 @@
 		
 		public function changeSoldiers(value:int):void
 		{
-			if (soldiers+value >= 0 && soldiers+value+population <= populationCap){
+			if (AvailablePop - value >=0 && value+soldiers >= 0){
 				soldiers += value;
 			} 
 		}
@@ -204,7 +204,6 @@
 			//trace("Available " + value+workers+AvailablePop);
 			if (AvailablePop - value >= 0 && value+workers >=0)
 			{
-			//if (value+workers >= 0 && value+workers+AvailablePop <= populationCap){
 				workers +=value;
 				//trace("Worker after" + workers);
 			}
