@@ -85,6 +85,17 @@
 			trace("Length of Buildings:" + buildings.Length);
 		}
 		
+		/**
+		* Add a building to the building list and affect building requirement list immediately
+		* (Use for network update)
+		* @param: buildingIn: Building Object
+		*/
+		public function addImmediateBuilding(buildingIn:Building=null):void
+		{
+			requirements[buildingIn.Type] = ++ requirements[buildingIn.Type];
+			buildings.Add(buildingIn);
+		}
+		
 		/*
 		* Removes a specific building from the building list
 		* @param1: buildingIn - the building to be removed

@@ -262,7 +262,7 @@
 					{
 						//trace("not shown at " + i);
 						this.icon_children[i].alpha = GameConfig.HALF_TRANSPARENT;
-					}
+					} 
 				}
 			}//for
 		}
