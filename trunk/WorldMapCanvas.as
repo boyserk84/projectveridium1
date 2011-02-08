@@ -3,6 +3,7 @@
 	import flash.display.Stage;
 	import flash.geom.Rectangle;
 	import flash.geom.Point;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import classes.*;
 	import constant.*;
@@ -978,6 +979,16 @@
 		public function WorldMapCanvas(playerIn:Player=null):void
 		{
 			this.loadContents(playerIn);
+			this.addEventListener("enterFrame",WorldMapLoop);
 		}
+		
+		/**
+		* Anything that needs to be updated periodically should be placed here.
+		*/
+		private function WorldMapLoop(event:Event):void
+		{
+			
+		}
+		
 	}
 }
