@@ -76,7 +76,9 @@
 				"x" + getProfile().Food +
 				"x" + getProfile().FoodCap +
 				"x" + getProfile().Population +
-				"x" + getProfile().PopulationCap
+				"x" + getProfile().PopulationCap +
+				"x" + getProfile().CityLocation +
+				"x" + getProfile().GameId
 				;
 			requestWrite(encode_pack);
 		}

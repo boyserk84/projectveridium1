@@ -136,12 +136,20 @@
 			return null;
 		}
 		
-		public static function getTownInfoNode():void
+		/**
+		* get TownInfoNode object upon received responses from server
+		* @return TownInfoNode
+		*/
+		public static function getTownInfoNode():TownInfoNode
 		{
 			if (isNotEmptyPackage())
 			{
-				//TODO: RETURN TOWNINFONODE OBJECT
+				//trace("Receive Town Id: " + decode_pack[2] + " owned by " + decode_pack[5]);
+				var node:TownInfoNode = new TownInfoNode
+					(decode_pack[5], decode_pack[3], decode_pack[4], decode_pack[2]);
+				return node;
 			}
+			return null;
 		}
 		
 		/**

@@ -20,6 +20,8 @@
 		
 		public var profile:Player;
 		
+		public var townPlayer:Array;
+		
 		private var profilePackageArrive:Boolean = false;
 		
 		private var alreadyConnect:Boolean = false;
@@ -67,6 +69,15 @@
 		public function bindId(id:String):void
 		{
 			this.id = id;
+		}
+		
+		/**
+		* Binding array that holds townInfoNode info to this socket connection
+		* @param town_array: List of town array
+		*/
+		public function bindPlayerTown(town_array:Array):void
+		{
+			this.townPlayer = town_array;
 		}
 		
 		
@@ -142,9 +153,9 @@
 							//this.profile.getCity().Buildings.Get(profile.getCity().Buildings.Length-1).data.setComplete();
 						break;
 						
+						// Receive info of all towns from the same gameId
 						case NetCommand.RESPONSE_TOWN.toString():
-							//TODO FIND THE WAY TO PASS INFO TO WORLDMAP
-						
+							this.townPlayer.push(NetCommand.getTownInfoNode());
 						break;
 						
 						// Receive Player's profile object
@@ -206,7 +217,7 @@
 		*/
 		public function sendRequest(raw_data:String)
 		{
-			trace("Send Data");
+			trace("Send Data".concat(raw_data));
 			try {
 				mySocket.send(raw_data);
 			}  catch (e:Error)
