@@ -17,6 +17,7 @@
 	*/
 	public class WorldMapCanvas extends MovieClip
 	{
+		private var alltownsInfoNode:Array;		// all towns information retreived from server
 		
 		private var input:IOHandler;
 		private var worldView:WorldView;
@@ -217,6 +218,15 @@
 			gameTimer.start();
 			
 			
+		}
+		
+		/**
+		* Retrieve townInfo Nodes of all within the same game id
+		* @param : arr_node: Array of TownInfoNode type object
+		*/
+		public function loadTownsData(arr_node:Array):void
+		{
+			this.alltownsInfoNode = arr_node;
 		}
 		
 		

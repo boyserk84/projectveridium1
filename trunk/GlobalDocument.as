@@ -28,6 +28,8 @@
 		/** Game Data **/
 		public var profile:Player;				// Player
 		public var profile_name:String;			// Player's name
+		public var townPlayer:Array;			// List of towns this player has
+		
 		
 		/** Global game objects **/
 		public var game:GameCanvas;
@@ -56,6 +58,7 @@
 		{
 			trace("Create GlobalDocument");
 			gotoAndStop(GameConfig.CITY_FRAME);
+			townPlayer = new Array();
 			configuration = new NetConst(); // Load Network Configuration info
 			createNotifyWindow();
 			
@@ -122,6 +125,7 @@
 			}
 			this.profile_name = name;
 			profile = new Player("","596761244");
+			// CHANGE BACK TO BELOW LINE
 			//profile = new Player(name_val,id);
 			
 			//trace(profile.UserName);
@@ -136,6 +140,7 @@
 			client = new ConnectGame(configuration);
 			client.bindId(profile.UserName);
 			client.bindPlayer(this.profile);
+			client.bindPlayerTown(this.townPlayer);
 			
 			ClientConnector.client = this.client;
 		}
@@ -200,6 +205,9 @@
 						loadContents();
 						msgInfo.text = "Load player's contents.";
 						loadCity();
+						msgInfo.text = "Load City's contents.";
+						loadAllTowns();
+						msgInfo.text = "Load Town's contents.";
 						loadGameLayers();
 					}
 					
@@ -223,6 +231,7 @@
 			//if (profile.getCity()==null) trace ("PROFILE IS NULL");
 			game = new GameCanvas(profile);
 			worldgame = new WorldMapCanvas(profile);
+			worldgame.loadTownsData(townPlayer);
 			//trace("After GD "+profile.Regiments.Length);
 			enableCity();
 		}
@@ -306,7 +315,14 @@
 		private function loadCity():void
 		{
 			client.sendRequest(NetCommand.REQUEST_CITY+"x"+ profile.UserName);
-			
+		}
+		
+		/**
+		* Load all towns within the same Game's ID
+		*/
+		private function loadAllTowns():void
+		{
+			client.sendRequest(NetCommand.REQUEST_TOWN+"x"+profile.UserName+"x"+profile.GameId);
 		}
 		
 		/**
