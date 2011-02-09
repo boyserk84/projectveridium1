@@ -148,6 +148,7 @@
 				//trace("Receive Town Id: " + decode_pack[2] + " owned by " + decode_pack[5]);
 				var node:TownInfoNode = new TownInfoNode
 					(decode_pack[5], decode_pack[3], decode_pack[4], decode_pack[2] ,decode_pack[6]);
+				node.TotalTowns = decode_pack[7];
 				return node;
 			}
 			return null;

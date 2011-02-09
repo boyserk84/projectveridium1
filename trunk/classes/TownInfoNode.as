@@ -13,6 +13,8 @@
 		private var gameId:String;				// Game ID
 		private var townId:int;					// Town Id
 		
+		private var total_towns:int;			// Number of total towns should this id have
+		
 		/**
 		* Constructor
 		* @param ownerIdIn : Owner Id of this town
@@ -26,7 +28,8 @@
 			townId = townIn;
 			side = sideIn;
 		}
-		
+		public function get TotalTowns():int { return total_towns; }
+		public function set TotalTowns(value:int) { total_towns = value; }
 		public function get OwnerId():String { return ownerId; }
 		public function get RegimentId():int { return regimentId; }
 		//public function get Reg():Regiment { return regiment; }

@@ -206,10 +206,17 @@
 						msgInfo.text = "Load player's contents.";
 						loadCity();
 						msgInfo.text = "Load City's contents.";
+						
+						
+					}
+					
+					if (client.isTownArrived())
+					{
 						loadAllTowns();
 						msgInfo.text = "Load Town's contents.";
-						loadGameLayers();
 					}
+					
+					loadGameLayers();
 					
 				} else {
 					msgInfo.text = "Loading Configuration file.";
