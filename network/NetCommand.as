@@ -66,6 +66,18 @@
 		}
 		
 		/**
+		* Check if data inside the package is empty
+		*/
+		public static function isEmptyData():Boolean
+		{
+			if (decode_pack[2]=='NULL')
+			{
+				return true;
+			}
+			return false;
+		}
+		
+		/**
 		* Flush data
 		*/
 		public static function freeData():void
@@ -87,7 +99,7 @@
 		*/
 		public static function getBuildingObject():Building
 		{
-			if (isNotEmptyPackage())
+			if (isNotEmptyPackage() && !isEmptyData())
 			{
 				var new_building:Building = new Building(new Rectangle(decode_pack[2],decode_pack[3],1,1),decode_pack[4]);
 				if (decode_pack[5].toString()=="1")
@@ -116,7 +128,7 @@
 		*/
 		public static function getPlayerObject():Player
 		{
-			if (isNotEmptyPackage())
+			if (isNotEmptyPackage() && !isEmptyData())
 			{
 				var new_Player:Player = new Player("No Name",getId());
 				new_Player.Side = int(decode_pack[2]);
@@ -143,7 +155,7 @@
 		*/
 		public static function getTownInfoNode():TownInfoNode
 		{
-			if (isNotEmptyPackage())
+			if (isNotEmptyPackage() && !isEmptyData())
 			{
 				//trace("Receive Town Id: " + decode_pack[2] + " owned by " + decode_pack[5]);
 				var node:TownInfoNode = new TownInfoNode

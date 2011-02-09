@@ -163,9 +163,12 @@
 						// Receive Building object
 						case NetCommand.RESPONSE_BUILDING.toString():	
 							var new_building:Building = NetCommand.getBuildingObject();
-							this.profile.getCity().addImmediateBuilding(new_building);
+							if (new_building != null)
+							{
+								this.profile.getCity().addImmediateBuilding(new_building);
 							
-							trace("Receive Building");
+								trace("Receive Building");
+							}
 							cityPackageArrive = true;
 							
 							//this.profile.getCity().Buildings.Get(profile.getCity().Buildings.Length-1).data.setComplete();

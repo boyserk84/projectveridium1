@@ -35,3 +35,7 @@ CCCC x IIIIIIIIIII x LocationX x LocationY
 REQUEST_UPDATE_PROFILE
 CCCC X IIIIIIIIIIII x Side x wood x woodcap x iron x ironcap x money x food x foodcap x pop x popCap x cityLocation x gameId
  0         1            2      3      4        5         6       7        8    9         10     11          12         13
+ 
+RESPONSE_NO_DATA
+CCCC X IIIIIIIIIIII x NULL
+ 0         1           2 
