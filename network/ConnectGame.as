@@ -23,6 +23,7 @@
 		public var townPlayer:Array;
 		
 		private var profilePackageArrive:Boolean = false;
+		private var townPackageArrive:Boolean = false;
 		
 		private var alreadyConnect:Boolean = false;
 		private var failedConnect:Boolean = false;
@@ -123,6 +124,11 @@
 			return profilePackageArrive;
 		}
 		
+		public function isTownArrived():Boolean
+		{
+			return townPackageArrive;
+		}
+		
 		/**
 		* Receive a server's response
 		* @param event: Data Event received from server
@@ -156,6 +162,10 @@
 						// Receive info of all towns from the same gameId
 						case NetCommand.RESPONSE_TOWN.toString():
 							this.townPlayer.push(NetCommand.getTownInfoNode());
+							if (this.townPlayer.length == NetCommand.getTownInfoNode().TotalTowns)
+							{
+								townPackageArrive = true;
+							}
 						break;
 						
 						// Receive Player's profile object
