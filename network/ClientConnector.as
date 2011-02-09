@@ -98,6 +98,27 @@
 		}
 		
 		/**
+		* Request update town info on the town_info list
+		* @param: target: Town that needs a request
+		* @param: reg: Regiment that's going to be in this town
+		*/
+		public static function requestConquerTown(target:Town, reg:Regiment):void
+		{
+			//REQUEST_UPDATE_TOWN
+			//CCCC x IIIIIIIIIII x TownId x Regiment x gameId x ownerId
+ 			// 0        1            2         3         4         5
+			var encode_pack:String =
+				NetCommand.REQUEST_UPDATE_TOWN + 
+				"x" + getProfile().UserName + 
+				"x" + "townId(target.Name)" +
+				"x" + "regimentId" +
+				"x" + getProfile().GameId
+				"x" + getProfile().UserName
+				;
+			requestWrite(encode_pack);
+		}
+		
+		/**
 		* request read or fetch data from the server
 		*/
 		public static function requestRead(raw_msg:String):void
