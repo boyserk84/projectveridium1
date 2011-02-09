@@ -32,6 +32,7 @@
 		
 		public static var RESPONSE_BUILDING:int = 1002;
 		public static var RESPONSE_TOWN:int = 1003;
+		public static var RESPONSE_REGIMENT:int = 1004;
 		
 		/* Client requests to server */
 		public static var REQUEST_PROFILE:int = 2000;
@@ -43,6 +44,7 @@
 		public static var REQUEST_REMOVE_BUILDING:int = 2005;
 		public static var REQUEST_TOWN:int = 2006;
 		public static var REQUEST_UPDATE_TOWN:int = 2007;
+		public static var REQUEST_REGIMENT:int = 2008;
 		
 		/* Error Message to notify client */
 		public static var MSG_HEAD_FAIL:String = "Offline Gameplay!";
@@ -166,6 +168,21 @@
 			return null;
 		}
 		
+		/**
+		* get RegimentInfoNode object upon receive reponses from server
+		* @return RegimentInfoNode
+		*/
+		public static function getRegimentInfo():Regiment
+		{
+			if (isNotEmptyPackage() && !isEmptyData())
+			{
+				var reg:RegimentInfoNode = new Regiment(decode[2],decode_pack[6],decode_pack[16]);
+				
+				
+				return reg;
+			}
+			return null;
+		}
 		/**
 		* Get Facebook Id upon receive
 		*/

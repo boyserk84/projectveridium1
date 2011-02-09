@@ -14,6 +14,18 @@ IIIIIIIIIIIIIII x CCCC x Side x wood x woodcap x iron x ironcap x money x food x
 RESPONSE_TOWN
 IIIIIIIIIIIIIII x CCCC x TownId x Regiment x gameId x ownerId x Side x TotalTown
  0                  1       2        3          4        5        6     7
+
+RESPONSE_NO_DATA
+CCCC X IIIIIIIIIIII x NULL
+ 0         1           2 
+
+RESPONSE_REGIMENT
+IIIIIIIIIIIIIII X CCCC X REG_ID X Town_ID x Des_Town_ID x inTransit x Owner_Id x minman x sharpshooter x officer x calvary x cannon x scout x agent x politician x worker x Side x TotalRegiment 
+ 0                 1       2         3           4            5            6       7         8             9         10        11      12       13       14           15      16        17
+ 
+REQUEST_REGIMENT
+CCCC X IIIIIIIIIII x ownerId
+ 0        1            2
  
 REQUEST_TOWN
 CCCC x IIIIIIIIIII x GameId
@@ -35,11 +47,6 @@ CCCC x IIIIIIIIIII x LocationX x LocationY
 REQUEST_UPDATE_PROFILE
 CCCC X IIIIIIIIIIII x Side x wood x woodcap x iron x ironcap x money x food x foodcap x pop x popCap x cityLocation x gameId
  0         1            2      3      4        5         6       7        8    9         10     11          12         13
- 
-RESPONSE_NO_DATA
-CCCC X IIIIIIIIIIII x NULL
- 0         1           2 
-
 REQUEST_ATTACK
 CCCC X IIIIIIIIIIII X source_town_id X destination_town_id X regiment_id X gameId X expected_time_offset
  0         1                 2                3                   4           5             6
@@ -47,3 +54,5 @@ CCCC X IIIIIIIIIIII X source_town_id X destination_town_id X regiment_id X gameI
 REQUEST_REINFORCE
 CCCC X IIIIIIIIIII X source_town_id X destination _town_id X regiment_id X gameId X expected_time_offset
  0        1               2                  3                     4          5             6
+
+
