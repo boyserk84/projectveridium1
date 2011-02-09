@@ -5,7 +5,7 @@ NOTE:
  **buildId = append by server for duplicate checking on the client's side
  **TotalBuilding = sanity check for total of buildings
 IIIIIIIIIIIIIII x CCCC   x LocationX x LocationY x Type x Construction x TotalBuilding x buildId
- 0         1        2             3        4        5             6              7
+ 0         1        2             3        4        5             6              7         8
  
 RESPONSE_PROFILE
 IIIIIIIIIIIIIII x CCCC x Side x wood x woodcap x iron x ironcap x money x food x foodCap x pop x popCap x citylocation x gameId
