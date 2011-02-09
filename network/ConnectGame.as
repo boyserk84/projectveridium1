@@ -24,6 +24,7 @@
 		
 		private var profilePackageArrive:Boolean = false;
 		private var townPackageArrive:Boolean = false;
+		private var cityPackageArrive:Boolean = false;
 		
 		private var alreadyConnect:Boolean = false;
 		private var failedConnect:Boolean = false;
@@ -129,6 +130,12 @@
 			return townPackageArrive;
 		}
 		
+		public function isCityArrived():Boolean
+		{
+			//trace("City has " + cityPackageArrive);
+			return cityPackageArrive;
+		}
+		
 		/**
 		* Receive a server's response
 		* @param event: Data Event received from server
@@ -155,7 +162,12 @@
 					{
 						// Receive Building object
 						case NetCommand.RESPONSE_BUILDING.toString():	
-							this.profile.getCity().addImmediateBuilding(NetCommand.getBuildingObject());
+							var new_building:Building = NetCommand.getBuildingObject();
+							this.profile.getCity().addImmediateBuilding(new_building);
+							
+							trace("Receive Building");
+							cityPackageArrive = true;
+							
 							//this.profile.getCity().Buildings.Get(profile.getCity().Buildings.Length-1).data.setComplete();
 						break;
 						
@@ -229,7 +241,7 @@
 		{
 			trace("Send Data".concat(raw_data));
 			try {
-				mySocket.send(raw_data);
+				mySocket.send(raw_data.concat('K'));
 			}  catch (e:Error)
 			{
 				// Log?

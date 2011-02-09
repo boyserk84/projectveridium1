@@ -45,6 +45,7 @@
 		private var firstRequestSent:Boolean = false;		// Check if request has been sent
 		private var connectSet:Boolean = false;
 		private var firstNotifyCloseConnection:Boolean = false;
+		private var firstLoadProfile:Boolean = false;
 		
 		
 		/* Load information from URL */
@@ -124,7 +125,8 @@
 				}
 			}
 			this.profile_name = name;
-			profile = new Player("","596761244");
+			//profile = new Player("","596761244");
+			profile = new Player("","787012494");
 			// CHANGE BACK TO BELOW LINE
 			//profile = new Player(name_val,id);
 			
@@ -196,28 +198,30 @@
 					msgInfo.text = "Waitng for response.";
 					
 					// if data has been arrived
-					if (client.isDataArrived())	
+					if (client.isDataArrived() && !firstLoadProfile)	
 					{
-						//trace("yes");
+						trace("yes");
 						msgInfo.text = "Loading requested data and contents.";
 						loadProfile();
 						msgInfo.text = "Load player's profile.";
-						loadContents();
-						msgInfo.text = "Load player's contents.";
-						loadCity();
-						msgInfo.text = "Load City's contents.";
-						
-						
+						sendRequestCity();
+						msgInfo.text = "Send request of City's contents.";
+						firstLoadProfile = true;
+					}
+					
+					if (client.isCityArrived())
+					{
+						sendRequestAllTowns();
+						msgInfo.text = "Send request of  Town's contents.";
 					}
 					
 					if (client.isTownArrived())
 					{
-						loadAllTowns();
-						msgInfo.text = "Load Town's contents.";
+						msgInfo.text = "Load player's contents.";
+						loadContents();
+						msgInfo.text = "Load Game Layers.";
+						loadGameLayers();
 					}
-					
-					loadGameLayers();
-					
 				} else {
 					msgInfo.text = "Loading Configuration file.";
 				}
@@ -319,7 +323,7 @@
 		/**
 		* load City
 		*/
-		private function loadCity():void
+		private function sendRequestCity():void
 		{
 			client.sendRequest(NetCommand.REQUEST_CITY+"x"+ profile.UserName);
 		}
@@ -327,7 +331,7 @@
 		/**
 		* Load all towns within the same Game's ID
 		*/
-		private function loadAllTowns():void
+		private function sendRequestAllTowns():void
 		{
 			client.sendRequest(NetCommand.REQUEST_TOWN+"x"+profile.UserName+"x"+profile.GameId);
 		}
