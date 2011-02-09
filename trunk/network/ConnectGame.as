@@ -25,6 +25,7 @@
 		private var profilePackageArrive:Boolean = false;
 		private var townPackageArrive:Boolean = false;
 		private var cityPackageArrive:Boolean = false;
+		private var regimentPackageArrive:Boolean = false;
 		
 		private var alreadyConnect:Boolean = false;
 		private var failedConnect:Boolean = false;
@@ -134,6 +135,11 @@
 		{
 			//trace("City has " + cityPackageArrive);
 			return cityPackageArrive;
+		}
+		
+		public function isRegimentArrived():Boolean
+		{
+			return regimentPackageArrive;
 		}
 		
 		/**

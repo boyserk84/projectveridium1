@@ -321,7 +321,7 @@
 		}
 		
 		/**
-		* load City
+		* Send request for all buildings within a city
 		*/
 		private function sendRequestCity():void
 		{
@@ -329,11 +329,19 @@
 		}
 		
 		/**
-		* Load all towns within the same Game's ID
+		* Send request for all towns within the same Game's ID
 		*/
 		private function sendRequestAllTowns():void
 		{
 			client.sendRequest(NetCommand.REQUEST_TOWN+"x"+profile.UserName+"x"+profile.GameId);
+		}
+		
+		/**
+		* Send request for regiment data
+		*/
+		private function sendRequestRegiment():void
+		{
+			client.sendRequest(NetCommand.REQUEST_REGIMENT+"x"+profile.UserName);
 		}
 		
 		/**
