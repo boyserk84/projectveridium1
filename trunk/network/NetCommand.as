@@ -42,6 +42,7 @@
 		public static var REQUEST_UPDATE_BUILDING:int = 2004;
 		public static var REQUEST_REMOVE_BUILDING:int = 2005;
 		public static var REQUEST_TOWN:int = 2006;
+		public static var REQUEST_UPDATE_TOWN:int = 2007;
 		
 		/* Error Message to notify client */
 		public static var MSG_HEAD_FAIL:String = "Offline Gameplay!";
@@ -146,7 +147,7 @@
 			{
 				//trace("Receive Town Id: " + decode_pack[2] + " owned by " + decode_pack[5]);
 				var node:TownInfoNode = new TownInfoNode
-					(decode_pack[5], decode_pack[3], decode_pack[4], decode_pack[2]);
+					(decode_pack[5], decode_pack[3], decode_pack[4], decode_pack[2] ,decode_pack[6]);
 				return node;
 			}
 			return null;

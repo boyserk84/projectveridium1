@@ -660,7 +660,6 @@
 				headStat.updateInfo(profile);
 				length_of_city = ClientConnector.getBuildingLength();
 			} 
-			
 		}
 		
 		/** 
