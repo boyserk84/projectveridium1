@@ -47,12 +47,7 @@ CCCC x IIIIIIIIIII x LocationX x LocationY
 REQUEST_UPDATE_PROFILE
 CCCC X IIIIIIIIIIII x Side x wood x woodcap x iron x ironcap x money x food x foodcap x pop x popCap x cityLocation x gameId
  0         1            2      3      4        5         6       7        8    9         10     11          12         13
-REQUEST_ATTACK
-CCCC X IIIIIIIIIIII X source_town_id X destination_town_id X regiment_id X gameId X expected_time_offset
- 0         1                 2                3                   4           5             6
 
-REQUEST_REINFORCE
-CCCC X IIIIIIIIIII X source_town_id X destination _town_id X regiment_id X gameId X expected_time_offset
- 0        1               2                  3                     4          5             6
-
-
+REQUEST_ACTION
+CCCC X IIIIIIIIIIII X action X source_town_id X destination_town_id X regiment_id X gameId X expected_time_offset
+ 0         1             2           3                  4                  5           6            7                   
