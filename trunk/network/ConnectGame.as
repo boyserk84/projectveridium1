@@ -18,15 +18,18 @@
 		
 		private var id:String;					// Identitiy of client
 		
-		public var profile:Player;
+		/** Game Objects **/
+		public var profile:Player;				// Player's profile object
+		public var townPlayer:Array;			// Array of townInfoNode
+		public var regimentPlayer:Array;		// Array of RegimentInfoNode
 		
-		public var townPlayer:Array;
-		
+		/** Network data receiver flags **/
 		private var profilePackageArrive:Boolean = false;
 		private var townPackageArrive:Boolean = false;
 		private var cityPackageArrive:Boolean = false;
 		private var regimentPackageArrive:Boolean = false;
 		
+		/** Networking Connection flags **/
 		private var alreadyConnect:Boolean = false;
 		private var failedConnect:Boolean = false;
 		private var closedConnect:Boolean = false;
@@ -76,11 +79,20 @@
 		
 		/**
 		* Binding array that holds townInfoNode info to this socket connection
-		* @param town_array: List of town array
+		* @param town_array: List of town
 		*/
 		public function bindPlayerTown(town_array:Array):void
 		{
 			this.townPlayer = town_array;
+		}
+		
+		/**
+		* Binding array that holds RegimentInfoNode info to this socket connection
+		* @param reg_array: List of regiment
+		*/
+		public function bindPlayerRegiment(reg_array:Array):void
+		{
+			this.regimentPlayer = reg_array;
 		}
 		
 		
@@ -182,10 +194,14 @@
 						
 						// Receive info of all towns from the same gameId
 						case NetCommand.RESPONSE_TOWN.toString():
-							this.townPlayer.push(NetCommand.getTownInfoNode());
-							if (this.townPlayer.length == NetCommand.getTownInfoNode().TotalTowns)
+							var new_town:TownInfoNode = NetCommand.getTownInfoNode();
+							if (new_town != null)
 							{
-								townPackageArrive = true;
+								this.townPlayer.push(new_town);
+							}
+							if (this.townPlayer.length == new_town.TotalTowns)
+							{
+									townPackageArrive = true;
 							}
 						break;
 						
@@ -198,7 +214,20 @@
 							this.profile = NetCommand.getPlayerObject();
 							this.profile.Name = nameIn;
 							profilePackageArrive = true;
-							trace("Receive " + this.profile.Wood);
+							//trace("Receive " + this.profile.Wood);
+						break;
+						
+						// Receive Player's all regiments
+						case NetCommand.RESPONSE_REGIMENT.toString():
+							var new_reg:RegimentInfoNode = NetCommand.getRegimentInfoNode()
+							if (new_reg != null)
+							{
+								this.regimentPlayer.push(new_reg);
+							}
+							if (this.regimentPlayer.length == new_reg.TotalRegiments)
+							{
+								regimentPackageArrive = true;
+							}
 						break;
 						
 					}

@@ -45,6 +45,8 @@
 		public static var REQUEST_TOWN:int = 2006;
 		public static var REQUEST_UPDATE_TOWN:int = 2007;
 		public static var REQUEST_REGIMENT:int = 2008;
+		public static var REQUEST_UPDATE_REGIMENT:int = 2009;
+		public static var REQUEST_CREATE_REGIMENT:int = 2010;
 		
 		/* Error Message to notify client */
 		public static var MSG_HEAD_FAIL:String = "Offline Gameplay!";
@@ -172,12 +174,24 @@
 		* get RegimentInfoNode object upon receive reponses from server
 		* @return RegimentInfoNode
 		*/
-		public static function getRegimentInfo():Regiment
+		public static function getRegimentInfoNode():RegimentInfoNode
 		{
 			if (isNotEmptyPackage() && !isEmptyData())
 			{
-				var reg:RegimentInfoNode = new Regiment(decode[2],decode_pack[6],decode_pack[16]);
+				var reg:RegimentInfoNode = new RegimentInfoNode
+				(decode_pack[2], decode_pack[6], decode_pack[3], decode_pack[4],decode_pack[5]);
 				
+				reg.Minute = int(decode_pack[7]);
+				reg.Sharp = int(decode_pack[8]);
+				reg.Officer = int(decode_pack[9]);
+				reg.Cal = int(decode_pack[10]);
+				reg.Cannon = int(decode_pack[11]);
+				reg.Scout = int(decode_pack[12]);
+				reg.Agent = int(decode_pack[13]);
+				reg.Politician = int(decode_pack[14]);
+				reg.Worker = int(decode_pack[15]);
+				reg.Side = int(decode_pack[16]);
+				reg.TotalRegiments = int(decode_pack[17]);
 				
 				return reg;
 			}

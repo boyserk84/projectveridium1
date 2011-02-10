@@ -19,6 +19,7 @@
 	public class WorldMapCanvas extends MovieClip
 	{
 		private var alltownsInfoNode:Array;		// all towns information retreived from server
+		private var allRegimentInfoNode:Array;	// all regiment information retrieved from server
 		
 		private var input:IOHandler;
 		private var worldView:WorldView;
@@ -228,6 +229,15 @@
 		public function loadTownsData(arr_node:Array):void
 		{
 			this.alltownsInfoNode = arr_node;
+		}
+		
+		/**
+		* Retrieve regimentInfo Nodes of all
+		* @param : arr_reg: Array of regimentInfoNode belong to this player
+		*/
+		public function loadRegimentsData(arr_reg:Array):void
+		{
+			this.allRegimentInfoNode = arr_reg;
 		}
 		
 		

@@ -29,6 +29,7 @@
 		public var profile:Player;				// Player
 		public var profile_name:String;			// Player's name
 		public var townPlayer:Array;			// List of towns this player has
+		public var regimentPlayer:Array;		// List of regiments this player has
 		
 		
 		/** Global game objects **/
@@ -42,10 +43,13 @@
 		public var client:ConnectGame;
 		private var configuration:NetConst;
 		
+		/** Network Request Flags **/
 		private var firstRequestSent:Boolean = false;		// Check if request has been sent
 		private var connectSet:Boolean = false;
 		private var firstNotifyCloseConnection:Boolean = false;
 		private var firstLoadProfile:Boolean = false;
+		private var townRequestSent:Boolean = false;
+		private var regimentRequestSent:Boolean = false;
 		
 		
 		/* Load information from URL */
@@ -60,6 +64,7 @@
 			trace("Create GlobalDocument");
 			gotoAndStop(GameConfig.CITY_FRAME);
 			townPlayer = new Array();
+			regimentPlayer = new Array();
 			configuration = new NetConst(); // Load Network Configuration info
 			createNotifyWindow();
 			
@@ -143,6 +148,7 @@
 			client.bindId(profile.UserName);
 			client.bindPlayer(this.profile);
 			client.bindPlayerTown(this.townPlayer);
+			client.bindPlayerRegiment(this.regimentPlayer);
 			
 			ClientConnector.client = this.client;
 		}
@@ -195,7 +201,7 @@
 						}
 					}
 					
-					msgInfo.text = "Waitng for response.";
+					msgInfo.text = "Waitng for server response.";
 					
 					// if data has been arrived
 					if (client.isDataArrived() && !firstLoadProfile)	
@@ -209,13 +215,21 @@
 						firstLoadProfile = true;
 					}
 					
-					if (client.isCityArrived())
+					if (client.isCityArrived() && !townRequestSent)
 					{
 						sendRequestAllTowns();
-						msgInfo.text = "Send request of  Town's contents.";
+						msgInfo.text = "Send request of Town's contents.";
+						townRequestSent = true;
 					}
 					
-					if (client.isTownArrived())
+					if (client.isTownArrived() && !regimentRequestSent)
+					{
+						sendRequestRegiment();
+						msgInfo.text = "Send request of Regiment's contents.";
+						regimentRequestSent = true;
+					}
+					
+					if (client.isRegimentArrived())
 					{
 						msgInfo.text = "Load player's contents.";
 						loadContents();
