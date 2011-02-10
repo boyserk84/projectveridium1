@@ -198,11 +198,12 @@
 							if (new_town != null)
 							{
 								this.townPlayer.push(new_town);
-							}
-							if (this.townPlayer.length == new_town.TotalTowns)
-							{
+								if (this.townPlayer.length == new_town.TotalTowns)
+								{
 									townPackageArrive = true;
-							}
+								}
+							} else { regimentPackageArrive = true; }
+							
 						break;
 						
 						// Receive Player's profile object
@@ -223,11 +224,12 @@
 							if (new_reg != null)
 							{
 								this.regimentPlayer.push(new_reg);
-							}
-							if (this.regimentPlayer.length == new_reg.TotalRegiments)
-							{
-								regimentPackageArrive = true;
-							}
+								if (this.regimentPlayer.length == new_reg.TotalRegiments)
+								{
+									regimentPackageArrive = true;
+								}
+							} else { regimentPackageArrive = true; }
+							
 						break;
 						
 					}
