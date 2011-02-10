@@ -118,6 +118,21 @@
 			requestWrite(encode_pack);
 		}
 		
+		
+		public static function requestUpdateRegiment():void
+		{
+			var encode_pack:String = 
+				NetCommand.REQUEST_UPDATE_REGIMENT +
+				"x"
+				;
+			requestWrite(encode_pack);
+		}
+		
+		public static function requestCreateRegiment():void
+		{
+			
+		}
+		
 		/**
 		* request read or fetch data from the server
 		*/
