@@ -10,7 +10,7 @@
 		public static const TOWN_INFO_OFFSET_X=-50;
 		public static const TOWN_INFO_OFFSET_Y=-125;
 		
-		public static const INPUT_WIDTH=766-275;
+		public static const INPUT_WIDTH=766;
 		public static const INPUT_HEIGHT=612;
 		
 		public static const WORLD_INIT_X=382;

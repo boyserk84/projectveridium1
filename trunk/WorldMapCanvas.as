@@ -26,7 +26,7 @@
 		
 		private var input:IOHandler;
 		private var worldView:WorldView;
-		private var cityButton:TriggerButton;
+		private var cityButton:CityButton;
 		private var myMap:Map;
 		private var dragging:Boolean;
 		private var myPlayer:Player;
@@ -177,7 +177,7 @@
 			
 			//this.worldView.addAssets(myMap.Districts);	
 			var worldMap:MovieClip=new WorldMap();
-
+			trace("=========================WM "+worldMap.width+","+worldMap.height);
 			
 			this.worldView.addAsset(worldMap);
 			
@@ -194,7 +194,9 @@
 			input.addEventListener(MouseEvent.MOUSE_OUT,worldMouseOut);
 			input.addEventListener(MouseEvent.CLICK,worldMouseClick);*/
 			
-			cityButton=new TriggerButton(354,100, GameConfig.CHANGE_WORLD);
+			cityButton=new CityButton();
+			cityButton.x=0;
+			cityButton.y=497;
 			cityButton.addEventListener(MouseEvent.CLICK,cityButtonClick);
 
 			
@@ -685,7 +687,9 @@
 				//Burn the first one because its the starting point of the search
 				reg.Waypoints.pop();
 				reg.Destination=reg.Waypoints.pop().Location;
+				reg.DestinationTownId=targetTown.Id;
 				reg.Location=currTown.Location;
+				reg.TownId=currTown.Id;
 				reg.Intention=WorldConfig.WORKER;
 				sendRegiment(reg);
 			}
@@ -753,6 +757,8 @@
 			//Burn the first one because its the starting point of the search
 			reg.Waypoints.pop();
 			reg.Destination=reg.Waypoints.pop().Location;
+			reg.DestinationTownId=targetTown.Id;
+			reg.TownId=currTown.Id;
 			
 			currTown.removeOccupationAmount(reg);
 			reg.Location=currTown.Location;
@@ -787,9 +793,9 @@
 			//worldView.hideTownInfo();
 			if(town==null)
 			{
-				mouseOldPos=new Point(event.stageX,event.stageY);
-				dragging=true;
-				worldView.startDrag();
+					mouseOldPos=new Point(worldView.x,worldView.y);
+					dragging=true;
+					worldView.startDrag(false,new Rectangle(-2234,-1871,2234,1871));
 			}
 			
 
@@ -799,8 +805,13 @@
 		{
 			if(dragging)
 			{
-				mouseOldPos.x=mouseOldPos.x-event.stageX;
-				mouseOldPos.y=mouseOldPos.y-event.stageY;
+				var x
+				if((worldView.x<2234&&worldView.x>-2234)&&(worldView.y<1871&&worldView.y>-1871))					
+				{
+				
+				}
+				mouseOldPos.x=mouseOldPos.x-worldView.x;
+				mouseOldPos.y=mouseOldPos.y-worldView.y;
 				worldView.changeOffset(mouseOldPos);
 				worldView.stopDrag();
 				dragging=false;
@@ -811,8 +822,8 @@
 		{
 			if(dragging)
 			{
-				mouseOldPos.x=mouseOldPos.x-event.stageX;
-				mouseOldPos.y=mouseOldPos.y-event.stageY;
+				mouseOldPos.x=mouseOldPos.x-worldView.x;
+				mouseOldPos.y=mouseOldPos.y-worldView.y;
 				worldView.changeOffset(mouseOldPos);
 				worldView.stopDrag();
 				dragging=false;
@@ -875,9 +886,11 @@
 								//Burn the first one because its the starting point of the search
 								reg.Waypoints.pop();
 								reg.Destination=reg.Waypoints.pop().Location;
-			
+								reg.DestinationTownId=targetTown.Id;
 								reg.Location=currTown.Location;
+								reg.TownId=currTown.Id;
 								reg.Intention=WorldConfig.AGENT;
+								
 								sendRegiment(reg);
 								clearSelectedTowns();
 								hideTownInfoCancel();
@@ -905,8 +918,9 @@
 									//Burn the first one because its the starting point of the search
 									reg2.Waypoints.pop();
 									reg2.Destination=reg2.Waypoints.pop().Location;
-									
+									reg2.DestinationTownId=targetTown.Id;
 									reg2.Location=currTown.Location;
+									reg2.TownId=currTown.Id;
 									reg2.Intention=WorldConfig.POLITICIAN;
 									sendRegiment(reg2);
 									clearSelectedTowns();
