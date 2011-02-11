@@ -90,7 +90,7 @@
 			myName=nameIn;
 			regiments=new LinkedList();
 			var reg:Regiment=new Regiment("",usernameIn,sideIn)
-			reg.Id=0;
+			reg.Id="0";
 			regiments.Add(reg);
 			
 			side=sideIn;
