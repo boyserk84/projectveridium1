@@ -687,9 +687,9 @@
 				//Burn the first one because its the starting point of the search
 				reg.Waypoints.pop();
 				reg.Destination=reg.Waypoints.pop().Location;
-				reg.DestinationTownId=targetTown.Id;
+				reg.DestinationTownId=currentTarget.ID;
 				reg.Location=currTown.Location;
-				reg.TownId=currTown.Id;
+				reg.TownId=currTown.ID;
 				reg.Intention=WorldConfig.WORKER;
 				sendRegiment(reg);
 			}
@@ -757,8 +757,8 @@
 			//Burn the first one because its the starting point of the search
 			reg.Waypoints.pop();
 			reg.Destination=reg.Waypoints.pop().Location;
-			reg.DestinationTownId=targetTown.Id;
-			reg.TownId=currTown.Id;
+			reg.DestinationTownId=currentTarget.ID;
+			reg.TownId=currTown.ID;
 			
 			currTown.removeOccupationAmount(reg);
 			reg.Location=currTown.Location;
@@ -886,9 +886,9 @@
 								//Burn the first one because its the starting point of the search
 								reg.Waypoints.pop();
 								reg.Destination=reg.Waypoints.pop().Location;
-								reg.DestinationTownId=targetTown.Id;
+								reg.DestinationTownId=currentTarget.ID;
 								reg.Location=currTown.Location;
-								reg.TownId=currTown.Id;
+								reg.TownId=currTown.ID;
 								reg.Intention=WorldConfig.AGENT;
 								
 								sendRegiment(reg);
@@ -918,9 +918,9 @@
 									//Burn the first one because its the starting point of the search
 									reg2.Waypoints.pop();
 									reg2.Destination=reg2.Waypoints.pop().Location;
-									reg2.DestinationTownId=targetTown.Id;
+									reg2.DestinationTownId=currentTarget.ID;
 									reg2.Location=currTown.Location;
-									reg2.TownId=currTown.Id;
+									reg2.TownId=currTown.ID;
 									reg2.Intention=WorldConfig.POLITICIAN;
 									sendRegiment(reg2);
 									clearSelectedTowns();

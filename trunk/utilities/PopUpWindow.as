@@ -182,6 +182,11 @@
 			return total_soldiers;
 		}
 		
+		private function getTotalSoldiersInFirstRegiment(group:LinkedList, type:int):int
+		{
+			return group.Get(0).data.totalType(type);
+		}
+		
 		/**
 		* Return total numbers of all soldiers
 		* @param: LinkedList of regiment
@@ -205,14 +210,14 @@
 		*/
 		private function updateSoldiersInfo(profile:Player):void
 		{
-			this.minInfo.text = getTotalSoldiersOfType(profile.Regiments, SoldierType.MINUTEMAN).toString();
-			this.sharpInfo.text = getTotalSoldiersOfType(profile.Regiments, SoldierType.SHARPSHOOTER).toString();
-			this.officerInfo.text = getTotalSoldiersOfType(profile.Regiments, SoldierType.OFFICER).toString();
-			this.calInfo.text = getTotalSoldiersOfType(profile.Regiments, SoldierType.CALVARY).toString();
-			this.cannonInfo.text = getTotalSoldiersOfType(profile.Regiments, SoldierType.CANNON).toString();
-			this.scoutInfo.text = getTotalSoldiersOfType(profile.Regiments, SoldierType.SCOUT).toString();
-			this.agentInfo.text = getTotalSoldiersOfType(profile.Regiments, SoldierType.AGENT).toString();
-			this.polInfo.text = getTotalSoldiersOfType(profile.Regiments, SoldierType.POLITICIAN).toString();
+			this.minInfo.text = getTotalSoldiersInFirstRegiment(profile.Regiments, SoldierType.MINUTEMAN).toString();
+			this.sharpInfo.text =getTotalSoldiersInFirstRegiment(profile.Regiments, SoldierType.SHARPSHOOTER).toString();
+			this.officerInfo.text = getTotalSoldiersInFirstRegiment(profile.Regiments, SoldierType.OFFICER).toString();
+			this.calInfo.text = getTotalSoldiersInFirstRegiment(profile.Regiments, SoldierType.CALVARY).toString();
+			this.cannonInfo.text = getTotalSoldiersInFirstRegiment(profile.Regiments, SoldierType.CANNON).toString();
+			this.scoutInfo.text = getTotalSoldiersInFirstRegiment(profile.Regiments, SoldierType.SCOUT).toString();
+			this.agentInfo.text = getTotalSoldiersInFirstRegiment(profile.Regiments, SoldierType.AGENT).toString();
+			this.polInfo.text = getTotalSoldiersInFirstRegiment(profile.Regiments, SoldierType.POLITICIAN).toString();
 		}
 		
 		/**
