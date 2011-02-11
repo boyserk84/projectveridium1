@@ -89,7 +89,10 @@
 			username=usernameIn;
 			myName=nameIn;
 			regiments=new LinkedList();
-			regiments.Add(new Regiment("",usernameIn,sideIn));
+			var reg:Regiment=new Regiment("",usernameIn,sideIn)
+			reg.Id=0;
+			regiments.Add(reg);
+			
 			side=sideIn;
 			total_towns = 0;
 			towns = new LinkedList();
