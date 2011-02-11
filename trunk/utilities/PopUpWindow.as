@@ -157,9 +157,9 @@
 		*/
 		private function updatePopulationInfo(profile:Player):void
 		{
-			this.soldiersInfo.text = profile.AmountSoldiers.toString();
+			this.soldiersInfo.text = profile.AmountSoldiersAtCity.toString();
 			this.workersInfo.text = profile.AmountWorkers.toString();
-			this.comInfo.text = (profile.Population - (profile.AmountSoldiers + profile.AmountWorkers)).toString();
+			this.comInfo.text = (profile.Population - ( int(soldiersInfo.text) + int(workersInfo.text) )).toString();
 			this.popInfo.text = profile.Population.toString();
 		}
 		
@@ -180,6 +180,23 @@
 			
 			//trace("Total Soliders : " + total_soldiers);
 			return total_soldiers;
+		}
+		
+		/**
+		* Return total numbers of all soldiers
+		* @param: LinkedList of regiment
+		* @return : Total numbers of all soldiers
+		*/
+		private function getAllTotalSoldiers(group:LinkedList):int
+		{
+			return getTotalSoldiersOfType(group, SoldierType.MINUTEMAN)+
+			getTotalSoldiersOfType(group, SoldierType.SHARPSHOOTER)+
+			getTotalSoldiersOfType(group, SoldierType.OFFICER)+
+			getTotalSoldiersOfType(group, SoldierType.CALVARY)+
+			getTotalSoldiersOfType(group, SoldierType.CANNON)+
+			getTotalSoldiersOfType(group, SoldierType.SCOUT)+
+			getTotalSoldiersOfType(group, SoldierType.AGENT)+
+			getTotalSoldiersOfType(group, SoldierType.POLITICIAN);
 		}
 		
 		/**

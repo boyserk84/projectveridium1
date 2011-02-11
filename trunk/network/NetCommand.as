@@ -65,7 +65,7 @@
 		private static var COMMAND_INDEX:int = 1;
 		private static var ID_INDEX:int = 0;
 		
-		private static var CITY_BUILDING_LENGTH:int = 0;
+		//private static var CITY_BUILDING_LENGTH:int = 0;
 		
 		/*
 		* Parse and decode package data upon receive
@@ -119,16 +119,16 @@
 				} else {
 					new_building.setDone();
 				}
-				CITY_BUILDING_LENGTH = decode_pack[7];
+				//CITY_BUILDING_LENGTH = decode_pack[7];
 				return new_building;
 			}
 			return null;
 		}
 		
-		public static function getBuildingLength():int
+/*		public static function getBuildingLength():int
 		{
 			return CITY_BUILDING_LENGTH;
-		}
+		}*/
 		
 		/**
 		* Checking if a pakcage is not empty
@@ -204,6 +204,8 @@
 				reg.Worker = int(decode_pack[15]);
 				reg.Side = int(decode_pack[16]);
 				reg.TotalRegiments = int(decode_pack[17]);
+				
+				
 				
 				return reg;
 			}
