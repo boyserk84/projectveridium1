@@ -277,11 +277,18 @@
 				
 				myMap.Towns[infoNode.TownId].Occupier=newReg;
 				newReg.Location=myMap.Towns[infoNode.TownId].Location;
-				newReg.Id=infoNode.Id;
 				newReg.Destination=myMap.Towns[infoNode.DestinationId].Location;
+				newReg.Id=infoNode.Id;
 				if(infoNode.OwnerId==myPlayer.UserName)
 				{
-					myPlayer.Regiments.Add(newReg);
+					if(newReg.Id==0)
+					{
+						myPlayer.Regiments.Get(0).data=newReg;
+					}
+					else
+					{
+						myPlayer.Regiments.Add(newReg);
+					}
 				}
 				//If its moving calculate where it needs to walk along
 				if(infoNode.inTransit)
@@ -377,6 +384,8 @@
 			message+="x"+myPlayer.GameId.toString();
 			//Now we have to calculate the time
 			var time:int=0;
+			var primeDistance:int=Point.distance(regIn.Location,regIn.Destination);
+			time+=primeDistance/regIn.Speed;
 			for(var i:int=0;i<regIn.Waypoints.length-1;++i)
 			{
 				//Take distance over speed steps
@@ -384,7 +393,8 @@
 				time+=distance/regIn.Speed;
 				
 			}
-			message+="x"+(time*(1/1000)).toString();
+			trace("Time to get there: "+time);
+			message+="x"+(time).toString();
 			
 			ClientConnector.requestWrite(message);
 		}
@@ -1123,7 +1133,7 @@
 					//move this guy along the interpolation
 					var newLoc=Point.interpolate(reg.Destination,reg.Location,reg.DistanceTraveled);
 					//Location refers to starting location
-					reg.changeDistance((reg.Speed/Point.distance(reg.Location,reg.Destination)));
+					reg.changeDistance((reg.Speed/Point.distance(reg.Location,reg.Destination))/10);
 					reg.x=newLoc.x;
 					reg.y=newLoc.y;
 					i++;
