@@ -1,5 +1,6 @@
 ﻿package network{
 	import classes.*;
+	import constant.*;
 	
 	/**
 	* Static Wrapper Interface: Client Connector
@@ -110,21 +111,36 @@
 			var encode_pack:String =
 				NetCommand.REQUEST_UPDATE_TOWN + 
 				"x" + getProfile().UserName + 
-				"x" + "townId(target.Name)" +
-				"x" + "regimentId" +
+				"x" + target.ID.toString() +
+				"x" + reg.Id.toString() +
 				"x" + getProfile().GameId
 				"x" + getProfile().UserName
 				;
 			requestWrite(encode_pack);
 		}
 		
-		
-		public static function requestUpdateRegiment():void
+		/**
+		* Request update regiment
+		* @param: Reg: regiment object
+		*/
+		public static function requestUpdateRegiment(reg:Regiment):void
 		{
-			var encode_pack:String = 
-				NetCommand.REQUEST_UPDATE_REGIMENT +
-				"x"
-				;
+			var encode_pack:String= NetCommand.REQUEST_UPDATE_REGIMENT +
+				"x" + reg.Owner + 
+				"x" + reg.Owner +
+				"x" + reg.Id.toString() +
+				"x" + reg.TownId +
+				"x" + reg.DestinationTownId.toString() +
+				"x" + reg.InTransit.toString() +
+				"x" + reg.totalType(SoldierType.MINUTEMAN).toString() +
+				"x" + reg.totalType(SoldierType.SHARPSHOOTER).toString() +
+				"x" + reg.totalType(SoldierType.OFFICER).toString() +
+				"x" + reg.totalType(SoldierType.CALVARY).toString() +
+				"x" + reg.totalType(SoldierType.CANNON).toString()+
+				"x" + reg.totalType(SoldierType.SCOUT).toString() +
+				"x" + reg.totalType(SoldierType.AGENT).toString()+
+				"x" + reg.totalType(SoldierType.POLITICIAN).toString() +
+				"x" + reg.totalType(SoldierType.WORKER).toString();
 			requestWrite(encode_pack);
 		}
 		

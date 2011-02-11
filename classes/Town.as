@@ -75,7 +75,7 @@
 		//The towns reachable from this town, for the BFS!
 		private var neighbors:Array;
 		
-		private var id:int;
+		private var id:int;	// Townid
 		
 		
 		

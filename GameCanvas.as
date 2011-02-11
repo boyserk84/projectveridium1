@@ -281,6 +281,7 @@
 						
 						// update data on server
 						ClientConnector.requestUpdateProfileResources();
+						ClientConnector.requestUpdateRegiment(profile.Regiments.Get(0).data);
 						
 					} else {
 						// If not enough resource, notify a player
@@ -316,6 +317,7 @@
 			}
 			profile.removeSoldierFromRegiment(new Soldier(1, unit_type ));
 			popUpStat.updateInfo(profile);
+			
 		}
 		
 		/**
@@ -669,8 +671,11 @@
 		{
 			synchronizeCity();
 			
+			popUpStat.updateInfo(profile);
+			
 			theView.Update();
 			headStat.updateTimerInfo(timer.stringCountDown);
+			
 			
 			// Update city's capacity when specific types of building are finished.
 			if (mcity.Requirements[BuildingType.WAREHOUSE] > 0 ||

@@ -112,6 +112,7 @@
 			}
 		}
 		
+		// MOVE THIS TO CLIENT CONNECTOR
 		private function updateRegimentDB():void
 		{
 				var message:String="2009";

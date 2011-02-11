@@ -89,7 +89,7 @@
 			username=usernameIn;
 			myName=nameIn;
 			regiments=new LinkedList();
-			regiments.Add(new Regiment("",nameIn,sideIn));
+			regiments.Add(new Regiment("",usernameIn,sideIn));
 			side=sideIn;
 			total_towns = 0;
 			towns = new LinkedList();
@@ -192,7 +192,13 @@
 		
 		public function get AmountSoldiers():int
 		{
-			return soldiers;
+			return allSoldiersAmount();
+		}
+		
+		public function get AmountSoldiersAtCity():int
+		{
+			//trace("Amoutn SOldddddfaerardsa "+ allSoldiersAmountAt(SoldierType.CITY_REGIMENT_INDEX) );
+			return allSoldiersAmountAt(SoldierType.CITY_REGIMENT_INDEX);
 		}
 		
 		public function changeSoldiers(value:int):void
@@ -208,11 +214,17 @@
 			if (AvailablePop - value >= 0 && value+workers >=0)
 			{
 				workers +=value;
-				//trace("Worker after" + workers);
+				trace("Worker after" + workers);
 			}
 		}
 		
-		public function get AmountWorkers():int { return workers;}
+		public function get AmountWorkers():int 
+		{ 
+			workers = soldierAmount(SoldierType.WORKER);
+			return workers;
+		}
+		
+		
 		public function get Regiments():LinkedList { return regiments;}
 		
 		public function get HalfTowns():LinkedList { return halfTowns;}
@@ -386,6 +398,54 @@
 		}
 		
 		/**
+		* Return all soldiers at a particular regiment
+		* @param city_index: Regiment index
+		*/
+		public function allSoldiersAmountAt(city_index:int):int
+		{
+			return regiments.Get(city_index).data.totalType(SoldierType.MINUTEMAN)+
+			regiments.Get(city_index).data.totalType(SoldierType.SHARPSHOOTER)+
+			regiments.Get(city_index).data.totalType(SoldierType.OFFICER)+
+			regiments.Get(city_index).data.totalType(SoldierType.CALVARY)+
+			regiments.Get(city_index).data.totalType(SoldierType.CANNON)+
+			regiments.Get(city_index).data.totalType(SoldierType.SCOUT)+
+			regiments.Get(city_index).data.totalType(SoldierType.AGENT)+
+			regiments.Get(city_index).data.totalType(SoldierType.POLITICIAN);
+		}
+		
+		/**
+		* Return all workers at a particular regiment
+		* @param : reg_index: Regiment index
+		*/
+		public function allWokersAmountAt(reg_index:int):int
+		{
+		trace("all workers amoutn at " + regiments.Get(reg_index).data.totalType(SoldierType.WORKER));
+			return regiments.Get(reg_index).data.totalType(SoldierType.WORKER);
+		}
+		
+		/**
+		* Return the toal amount of soldiers across the entire map
+		*/
+		public function allSoldiersAmount():int
+		{
+			var total:int=0;
+			for(var i:int=0;i<regiments.Length;++i)
+			{
+				total+=
+				regiments.Get(i).data.totalType(SoldierType.MINUTEMAN)+
+				regiments.Get(i).data.totalType(SoldierType.SHARPSHOOTER)+
+				regiments.Get(i).data.totalType(SoldierType.OFFICER)+
+				regiments.Get(i).data.totalType(SoldierType.CALVARY)+
+				regiments.Get(i).data.totalType(SoldierType.CANNON)+
+				regiments.Get(i).data.totalType(SoldierType.SCOUT)+
+				regiments.Get(i).data.totalType(SoldierType.AGENT)+
+				regiments.Get(i).data.totalType(SoldierType.POLITICIAN)
+				;
+			}
+			return total;
+		}
+		
+		/**
 		* Update all towns' capacity
 		*/
 		private function updateAllTownCapacity():void
@@ -416,6 +476,14 @@
 				iron += towns.Get(i).data.Iron;
 				f += towns.Get(i).data.Food;
 				p += towns.Get(i).data.Population;
+			}
+			
+			for (var i:int = 0; i < halfTowns.Length ;++i)
+			{
+				w += halfTowns.Get(i).data.Wood;
+				iron += halfTowns.Get(i).data.Iron;
+				f += halfTowns.Get(i).data.Food;
+				p += halfTowns.Get(i).data.Population;
 			}
 			changeWood(w);
 			changeIron(iron);
