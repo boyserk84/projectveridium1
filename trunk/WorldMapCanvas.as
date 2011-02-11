@@ -621,6 +621,7 @@
 		{
 			regiment.x=regiment.Location.x;
 			regiment.y=regiment.Location.y;
+			regiment.InTransit=1;
 			var message:String = constructRegimentMessage(regiment,WorldConfig.MSG_CREATE);
 			ClientConnector.requestWrite(message);
 			sendActionMessage(regiment);
