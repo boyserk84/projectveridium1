@@ -19,6 +19,7 @@
 		//What frames to goto for towns for either occupancy to illustrate on the world map
 		public static const AMERICAN_OCCUPANCY=2;
 		public static const BRITISH_OCCUPANCY=3;
+		public static const HOME_CITY=5;
 		
 		//Intention of regiments
 		public static const NONE=0;
@@ -42,6 +43,11 @@
 		public static const STATE_SELECTING=4;
 		public static const STATE_AGENTS=5;
 		public static const STATE_POLITICIANS=6;
+		
+		//WorldCanvas Regiment message intentions
+		public static const MSG_CREATE=0;
+		public static const MSG_REMOVE=1;
+		public static const MSG_UPDATE=2;
 		
 		
 		

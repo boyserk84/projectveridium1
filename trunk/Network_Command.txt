@@ -24,9 +24,22 @@ IIIIIIIIIIIIIII X CCCC X REG_ID X Town_ID x Des_Town_ID x inTransit x Owner_Id x
  0                 1       2         3           4            5            6       7         8             9         10        11      12       13       14           15      16        17
  
 REQUEST_REGIMENT
-CCCC X IIIIIIIIIII x ownerId
- 0        1            2
+CCCC X IIIIIIIIIII X Owner_Id 
+ 0        1            2 
  
+REQUEST_UPDATE_REGIMENT
+CCCC X IIIIIIIIIIII X Owner_Id X REG_ID X Town_Id X Des_Town_ID X inTransit X minman X Sharpshooters X officer X cavalry X cannon X scout X agent X Politician X worker 
+0        1            2          3        4           5             6          7           8            9        10         11       12     13        14         15  
+
+REQUEST_CREATE_REGIMENT
+CCCC X IIIIIIIIIIII X Owner_Id X REG_ID X Town_Id X Des_Town_ID X inTransit X minman X Sharpshooters X officer X cavalry X cannon X scout X agent X Politician X worker 
+0        1            2          3        4           5             6          7           8            9        10         11       12     13        14         15  
+
+REQUEST_REMOVE_REGIMENT
+CCCC X IIIIIIIIIIII X REG_ID
+  0           1          2
+
+
 REQUEST_TOWN
 CCCC x IIIIIIIIIII x GameId
  0        1            2
@@ -50,4 +63,6 @@ CCCC X IIIIIIIIIIII x Side x wood x woodcap x iron x ironcap x money x food x fo
 
 REQUEST_ACTION
 CCCC X IIIIIIIIIIII X action X source_town_id X destination_town_id X regiment_id X gameId X expected_time_offset
- 0         1             2           3                  4                  5           6            7                   
+ 0         1             2           3                  4                  5           6            7            
+
+

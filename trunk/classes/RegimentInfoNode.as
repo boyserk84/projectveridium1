@@ -8,7 +8,7 @@
 	public class RegimentInfoNode
 	{
 		
-		private var regiment_id:int;
+		private var regiment_id:String;
 		private var owner_id:String;
 		private var town_id:String;
 		private var des_town_id:String;
@@ -29,7 +29,7 @@
 		* @param: des_town: Destination Town
 		* @param: in_transit: Is this regiment currently moving?
 		*/
-		public function RegimentInfoNode(reg_id:int, owner:String, town:String, des_town:String, in_transit:int)
+		public function RegimentInfoNode(reg_id:String, owner:String, town:String, des_town:String, in_transit:int)
 		{
 			regiment_id = reg_id;
 			owner_id = owner;
@@ -51,7 +51,7 @@
 		public function set Side(value:int):void { side = value; }
 		public function set TotalRegiments(value:int):void { total_reg = value; }
 		
-		public function get Id():int { return regiment_id; }
+		public function get Id():String { return regiment_id; }
 		public function get OwnerId():String { return owner_id;}
 		public function get TownId():String { return town_id; }
 		public function get DestinationId():String { return des_town_id; } 

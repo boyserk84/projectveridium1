@@ -2,6 +2,7 @@
 	import constant.BuildingType;
 	import constant.SoldierType;
 	
+	
 	public class Player
 	{
 		//The "username" of this player
@@ -76,6 +77,8 @@
 		
 		//The regiment this player has
 		private var regiments:LinkedList;
+		
+		
 		
 		/**
 		* @param: nameIn: Name

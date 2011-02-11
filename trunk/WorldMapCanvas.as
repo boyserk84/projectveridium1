@@ -11,7 +11,10 @@
 	import flash.events.TimerEvent;
 	import contents.TownInfoBar;
 	import contents.ArmySelectionScreen;
+	import classes.TownInfoNode;
 	import utilities.TriggerButton;
+	import network.ClientConnector;
+	import network.NetCommand;
 	/**
 	* WorldMapCavas object
 	*	- handle all game logic and game contents for WorldMap
@@ -48,6 +51,7 @@
 		private var mouseOldPos:Point;
 		/**
 		* Load all contents to the canvas
+		*
 		*/
 		public function loadContents(playerIn:Player=null):void
 		{
@@ -83,15 +87,16 @@
 			{
 				var nodeSet:GraphNode = new GraphNode();
 				var temp2:Town=WorldConfig.getTownInfo(j);
+				temp2.ID=j;
 				temp2.numberText.text=temp2.Name;
 				nodeSet.MyTown=temp2;
 				temp2.Node=nodeSet;
 				myMap.addTown(temp2);
 				temp2.MyDistrict=myMap.Districts[WorldConfig.getTownDistrict(j)];
+				
 				temp2.MyDistrict.addTown(temp2);
-				
-				
 			}
+			
 
 			for(var n:int=0;n<53;++n)
 			{
@@ -223,23 +228,166 @@
 		}
 		
 		/**
+		* Retrieve regimentInfo Nodes of all the regiments with the same game_id and what towns they belong too
+		* @param1: The array of regiments
+		*/
+		public function loadRegimentsData(arr_reg:Array):void
+		{
+			trace("======================================Regiments");
+			for(var i:int=0;i<arr_reg.length;++i)
+			{
+				var infoNode:RegimentInfoNode=arr_reg[i];
+				var newReg:Regiment=new Regiment("",infoNode.OwnerId,infoNode.Side);
+				//Add the soldiers
+				trace("Here is my soldiers!:"+infoNode.Minute);
+				if(infoNode.Minute>0)
+				{
+					newReg.addUnit(new Soldier(infoNode.Minute,SoldierType.MINUTEMAN));
+				}
+				
+				if(infoNode.Sharp>0)
+				{
+					newReg.addUnit(new Soldier(infoNode.Sharp,SoldierType.SHARPSHOOTER));
+				}
+				
+				if(infoNode.Officer>0)
+				{
+					newReg.addUnit(new Soldier(infoNode.Officer,SoldierType.OFFICER));
+				}
+				
+				if(infoNode.Cannon>0)
+				{
+					newReg.addUnit(new Soldier(infoNode.Cannon,SoldierType.CANNON));
+				}
+				
+				if(infoNode.Agent>0)
+				{
+					newReg.addUnit(new Soldier(infoNode.Agent,SoldierType.AGENT));
+				}
+				
+				if(infoNode.Politician>0)
+				{
+					newReg.addUnit(new Soldier(infoNode.Politician,SoldierType.POLITICIAN));
+				}
+				
+				if(infoNode.Worker>0)
+				{
+					newReg.addUnit(new Soldier(infoNode.Worker,SoldierType.WORKER));
+				}
+				
+				myMap.Towns[infoNode.TownId].Occupier=newReg;
+				newReg.Location=myMap.Towns[infoNode.TownId].Location;
+				newReg.Id=infoNode.Id;
+				newReg.Destination=myMap.Towns[infoNode.DestinationId].Location;
+				if(infoNode.OwnerId==myPlayer.UserName)
+				{
+					myPlayer.Regiments.Add(newReg);
+				}
+				//If its moving calculate where it needs to walk along
+				if(infoNode.inTransit)
+				{
+				
+				}
+				
+				
+				
+				
+			}
+		}
+		
+		/**
 		* Retrieve townInfo Nodes of all within the same game id
 		* @param : arr_node: Array of TownInfoNode type object
 		*/
 		public function loadTownsData(arr_node:Array):void
 		{
 			this.alltownsInfoNode = arr_node;
-		}
+			trace("===========================Loading Town stuff!");
+			if(arr_node!=null)
+			{
+				trace("Array is not null! Length:"+arr_node.length);
+				for(var m:int=0;m<arr_node.length;++m)
+				{
+						var townInfo:Town=myMap.Towns[arr_node[m].TownId];
+						trace("Town Name: "+townInfo.Name);
+						
+						townInfo.Owner=arr_node[m].OwnerId;
+						townInfo.Side=arr_node[m].Side;
+						townInfo.occupationGraphic();
+						trace("Town Thang:"+(int(arr_node[m].TownId)==myPlayer.CityLocation));
+						if(int(arr_node[m].TownId)==myPlayer.CityLocation)
+						{
+							myPlayer.addTown(townInfo);
+							townInfo.setGraphic(WorldConfig.HOME_CITY);
+						}
+						trace(townInfo.Name);
+						
+				}
+			}
+		}		
 		
-		/**
-		* Retrieve regimentInfo Nodes of all
-		* @param : arr_reg: Array of regimentInfoNode belong to this player
-		*/
-		public function loadRegimentsData(arr_reg:Array):void
+		private function constructRegimentMessage(regIn:Regiment,intention:int):String
 		{
-			this.allRegimentInfoNode = arr_reg;
+				var message:String="";
+				switch(intention)
+				{
+					case WorldConfig.MSG_CREATE:
+						message+=NetCommand.REQUEST_CREATE_REGIMENT.toString();
+					break
+					
+					case WorldConfig.MSG_REMOVE:
+						return NetCommand.REQUEST_REMOVE_REGIMENT.toString()+"x"+myPlayer.UserName+"x"+regIn.Id;
+					break;
+					
+					case WorldConfig.MSG_UPDATE:
+						message+=NetCommand.REQUEST_UPDATE_REGIMENT.toString();
+					break;
+				}
+				message+=("x"+myPlayer.UserName);
+				message+=("x"+myPlayer.UserName);
+				message+="x"+regIn.Id.toString();
+				message+="x"+regIn.TownId.toString();
+				message+="x"+regIn.DestinationTownId.toString();
+				message+="x"+regIn.InTransit.toString();
+				message+="x"+regIn.totalType(SoldierType.MINUTEMAN).toString();
+				message+="x"+regIn.totalType(SoldierType.SHARPSHOOTER).toString();
+				message+="x"+regIn.totalType(SoldierType.OFFICER).toString();
+				message+="x"+regIn.totalType(SoldierType.CALVARY).toString();
+				message+="x"+regIn.totalType(SoldierType.CANNON).toString();
+				message+="x"+regIn.totalType(SoldierType.SCOUT).toString();
+				message+="x"+regIn.totalType(SoldierType.AGENT).toString();
+				message+="x"+regIn.totalType(SoldierType.POLITICIAN).toString();
+				message+="x"+regIn.totalType(SoldierType.WORKER).toString();
+				
+				
+				return message;
+				
+				
+		
 		}
 		
+		private function sendActionMessage(regIn:Regiment):void
+		{
+			var message:String = NetCommand.REQUEST_CREATE_ACTION.toString();
+			message+="x"+myPlayer.UserName.toString();
+			message+="x"+regIn.Intention.toString();
+			message+="x"+regIn.TownId.toString();
+			message+="x"+regIn.DestinationTownId.toString();
+			message+="x"+regIn.Id.toString();
+			message+="x"+myPlayer.GameId.toString();
+			//Now we have to calculate the time
+			var time:int=0;
+			for(var i:int=0;i<regIn.Waypoints.length-1;++i)
+			{
+				//Take distance over speed steps
+				var distance:int=Point.distance(regIn.Waypoints[i],regIn.Waypoints[i+1]);
+				time+=distance/regIn.Speed;
+				
+			}
+			message+="x"+(time*(1/1000)).toString();
+			
+			ClientConnector.requestWrite(message);
+		}
 		
 		public function townInfoBarCancelButtonClick(event:MouseEvent):void
 		{
@@ -467,6 +615,9 @@
 		{
 			regiment.x=regiment.Location.x;
 			regiment.y=regiment.Location.y;
+			var message:String = constructRegimentMessage(regiment,WorldConfig.MSG_CREATE);
+			ClientConnector.requestWrite(message);
+			sendActionMessage(regiment);
 			regiments.Add(regiment);
 			worldView.addAsset(regiment);
 			
@@ -523,8 +674,8 @@
 			{
 				var reg:Regiment = new Regiment("",myPlayer.UserName,myPlayer.Side);
 				reg.addUnit(new Soldier(worldView.WorkerManagement.numWorkers(),SoldierType.WORKER));
-//				currTown.modifyWorkers(-worldView.WorkerManagement.numWorkers())
 				currTown.Occupier.removeRegiment(reg);
+				
 				//Determine the waypoints for this regiment
 				reg.Waypoints=myMap.Tree.backwardsTraversal(currTown.Node);
 				//Burn the first one because its the starting point of the search
@@ -739,21 +890,21 @@
 						{
 							if(currTown.Occupier!=null)
 							{
-								var reg:Regiment = new Regiment("","",myPlayer.Side);
+								var reg2:Regiment = new Regiment("","",myPlayer.Side);
 								if(currTown.Occupier.totalType(SoldierType.POLITICIAN)>=1)
 								{						
 									//Make this a function? Possibly won't highlight if there are no agents nearby? Or button won't show!
-									reg.addUnit(new Soldier(1,SoldierType.POLITICIAN));
-									currTown.Occupier.removeRegiment(reg);
+									reg2.addUnit(new Soldier(1,SoldierType.POLITICIAN));
+									currTown.Occupier.removeRegiment(reg2);
 									//Determine the waypoints for this regiment
-									reg.Waypoints=myMap.Tree.backwardsTraversal(currTown.Node);
+									reg2.Waypoints=myMap.Tree.backwardsTraversal(currTown.Node);
 									//Burn the first one because its the starting point of the search
-									reg.Waypoints.pop();
-									reg.Destination=reg.Waypoints.pop().Location;
+									reg2.Waypoints.pop();
+									reg2.Destination=reg2.Waypoints.pop().Location;
 									
-									reg.Location=currTown.Location;
-									reg.Intention=WorldConfig.POLITICIAN;
-									sendRegiment(reg);
+									reg2.Location=currTown.Location;
+									reg2.Intention=WorldConfig.POLITICIAN;
+									sendRegiment(reg2);
 									clearSelectedTowns();
 									hideTownInfoCancel();
 									currentState=WorldConfig.STATE_NONE;

@@ -4,6 +4,9 @@
 	import flash.display.MovieClip;
 	import constant.WorldConfig;
 	import constant.SoldierType;
+	import constant.GUID;
+	import network.ClientConnector;
+	
 	public class Regiment extends MovieClip
 	{
 		//The units in this platoon as represented by the "Soldier" class
@@ -23,6 +26,13 @@
 		//What the regiment is intending to do what it reaches its destination
 		private var intention:int;
 		
+		//Networking variables
+		private var id:String;
+		private var townId:int;
+		private var desTownId:int;
+		private var inTransit:int;
+		
+		
 		//How far the regiment has traveled
 		private var distanceTraveled:Number;
 		//How fast the regiment travels
@@ -40,6 +50,7 @@
 			side=sideIn;
 			intention=WorldConfig.NONE;
 			speed=1;
+			id=GUID.create();
 		}
 		
 		public function addRegiment(regIn:Regiment):void
@@ -54,9 +65,14 @@
 		{
 			for(var i:int=0;i<regIn.Units.Length;++i)
 			{
-				removeUnit(regIn.Units.Get(i).data);
+				removeUnit(regIn.Units.Get(i).data,true);
 			}
-		}
+			
+			if(regIn.Units.Length>0)
+			{
+				updateRegimentDB();
+			}
+		}		
 		
 		//Add a unit to this Platoon
 		public function addUnit(unitIn:Soldier):void
@@ -75,7 +91,7 @@
 		}
 		
 		//Remove a unit from this Platoon
-		public function removeUnit(unitIn:Soldier):void
+		public function removeUnit(unitIn:Soldier,removeReg:Boolean=false):void
 		{
 			for(var i:int=0;i<units.Length;++i)
 			{
@@ -85,15 +101,40 @@
 					if(units.Get(i).data.Amount<=0)
 					{
 						units.Remove(units.Get(i).data);
+						
+					}
+					if(!removeReg)
+					{
+						updateRegimentDB();
 					}
 					return;
 				}
 			}
 		}
 		
+		private function updateRegimentDB():void
+		{
+				var message:String="2009";
+				message+=("x"+owner);
+				message+=("x"+owner);
+				message+="x"+id.toString();
+				message+="x"+townId.toString();
+				message+="x"+desTownId.toString();
+				message+="x"+inTransit.toString();
+				message+="x"+totalType(SoldierType.MINUTEMAN).toString();
+				message+="x"+totalType(SoldierType.SHARPSHOOTER).toString();
+				message+="x"+totalType(SoldierType.OFFICER).toString();
+				message+="x"+totalType(SoldierType.CALVARY).toString();
+				message+="x"+totalType(SoldierType.CANNON).toString();
+				message+="x"+totalType(SoldierType.SCOUT).toString();
+				message+="x"+totalType(SoldierType.AGENT).toString();
+				message+="x"+totalType(SoldierType.POLITICIAN).toString();
+				message+="x"+totalType(SoldierType.WORKER).toString();
+				
+				ClientConnector.requestWrite(message);
+		}
 		
-		
-		//Here is the problem!
+		//Here is the problem! And it is going to be done on the server side now Past Rob!
 		public function incurLosses(amountIn:int):void
 		{
 			while(amountIn>0)
@@ -177,6 +218,46 @@
 		public function set Intention(value:int):void
 		{
 			intention=value;
+		}
+		
+		public function get TownId():int
+		{
+			return townId;
+		}
+		
+		public function set TownId(value:int):void
+		{
+			townId=value;
+		}
+		
+		public function get DestinationTownId():int
+		{
+			return desTownId;
+		}
+		
+		public function set DestinationTownId(value:int):void
+		{
+			desTownId=value;
+		}
+		
+		public function get Id():String
+		{
+			return id;
+		}
+		
+		public function set Id(value:String):void
+		{
+			id=value;
+		}
+		
+		public function set InTransit(value:int):void
+		{
+			inTransit=value;
+		}
+		
+		public function get InTransit():int
+		{
+			return inTransit;
 		}
 		
 		

@@ -47,6 +47,10 @@
 		public static var REQUEST_REGIMENT:int = 2008;
 		public static var REQUEST_UPDATE_REGIMENT:int = 2009;
 		public static var REQUEST_CREATE_REGIMENT:int = 2010;
+		public static var REQUEST_REMOVE_REGIMENT:int = 2011;
+		
+		public static var REQUEST_CREATE_ACTION:int = 3000;
+	
 		
 		/* Error Message to notify client */
 		public static var MSG_HEAD_FAIL:String = "Offline Gameplay!";
@@ -60,6 +64,9 @@
 		/* ONLY FOR DECODING RESPONSE FROM SERVER */
 		private static var COMMAND_INDEX:int = 1;
 		private static var ID_INDEX:int = 0;
+		
+		private static var CITY_BUILDING_LENGTH:int = 0;
+		
 		/*
 		* Parse and decode package data upon receive
 		* @param raw_data: Data in format mentioned above.
@@ -112,10 +119,15 @@
 				} else {
 					new_building.setDone();
 				}
-				
+				CITY_BUILDING_LENGTH = decode_pack[7];
 				return new_building;
 			}
 			return null;
+		}
+		
+		public static function getBuildingLength():int
+		{
+			return CITY_BUILDING_LENGTH;
 		}
 		
 		/**
