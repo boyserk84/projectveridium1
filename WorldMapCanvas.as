@@ -163,24 +163,7 @@
 
 			
 			
-			enemyPlayer=new Player("Steve","Steve The Great!",GameConfig.BRITISH);
-
 			
-			
-			var reg2:Regiment=new Regiment("Enemies",enemyPlayer.UserName,enemyPlayer.Side);
-			
-			reg2.addUnit(new Soldier(20,SoldierType.MINUTEMAN));
-
-			
-			myMap.Towns[1].conquer(enemyPlayer.UserName,enemyPlayer.Side);
-			reg2.Location=myMap.Towns[1].Location;
-			myMap.Towns[1].Occupier=reg2;
-
-			
-
-			
-			
-			enemyPlayer.addRegiment(reg2);
 			
 			this.worldView.TownInfo.economicButton.addEventListener(MouseEvent.CLICK,townEconomicButtonClick);
 			this.worldView.TownInfo.militaryButton.addEventListener(MouseEvent.CLICK,townMilitaryButtonClick);
@@ -282,7 +265,7 @@
 				
 				if(infoNode.OwnerId==myPlayer.UserName)
 				{
-					if(newReg.Id==0)
+					if(newReg.Id=="0")
 					{
 						myPlayer.Regiments.Get(0).data=newReg;
 					}
