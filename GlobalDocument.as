@@ -130,8 +130,8 @@
 				}
 			}
 			this.profile_name = name;
-			//profile = new Player("","596761244");
-			profile = new Player("","787012494");
+			profile = new Player("","596761244");
+			//profile = new Player("","787012494");
 			// CHANGE BACK TO BELOW LINE
 			//profile = new Player(name_val,id);
 			
@@ -257,6 +257,7 @@
 			game = new GameCanvas(profile);
 			worldgame = new WorldMapCanvas(profile);
 			worldgame.loadTownsData(townPlayer);
+			worldgame.loadRegimentsData(regimentPlayer);
 			//trace("After GD "+profile.Regiments.Length);
 			enableCity();
 		}

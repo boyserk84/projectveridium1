@@ -75,6 +75,8 @@
 		//The towns reachable from this town, for the BFS!
 		private var neighbors:Array;
 		
+		private var id:int;
+		
 		
 		
 		public function Town(woodIn:int=0,moneyIn:int=0,popIn:int=0,ironIn:int=0,foodIn:int=0,locationIn:Point=null,nameIn:String="None",ownerIn:String="Renegade")
@@ -125,6 +127,9 @@
 		public function get Money():int{	return moneyProduction;}
 		public function get Population():int{	return populationProduction;}
 		public function get ExtraPopulationCap():int{	return extraPopCap;}
+
+		public function get ID():int{ return id;}
+		public function set ID(value:int):void{	id=value;}
 		public function get Food():int
 		{
 			if(foodProduction+Workers>foodCap)
@@ -154,9 +159,11 @@
 		public function get Owner():String{	return owner;}
 		public function set Owner(value:String):void{	owner=value;}
 		public function get Side():int{	return side;}
+		public function set Side(value:int){ side=value;}
 		public function get Name():String{	return myName;}
 		public function get Occupier():Regiment{	return occupier;}
-		public function set Occupier(value:Regiment):void{	occupier=value;}
+		public function set Occupier(value:Regiment):void{	occupier=value;
+															occupier.TownId=id;}
 		
 		public function get Workers():int
 		{	
@@ -194,6 +201,10 @@
 			}
 		}
 		
+		public function setGraphic(frameIn:int):void
+		{
+			gotoAndStop(frameIn);
+		}
 		
 		
 		public function modifyAgents(value:int):void
@@ -231,7 +242,6 @@
 			
 		public function conquer(owner:String,sideIn:int):void
 		{
-			trace("Town owner: "+owner);
 			this.owner=owner;
 			side=sideIn;
 			occupationGraphic();
@@ -252,6 +262,10 @@
 			{
 				gotoAndStop(WorldConfig.AMERICAN_OCCUPANCY);
 
+			}
+			else if(side==GameConfig.HOME_CITY)
+			{
+				gotoAndStop(WorldConfig.HOME_CITY);
 			}
 			else
 			{
