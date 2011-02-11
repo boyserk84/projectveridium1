@@ -279,6 +279,7 @@
 				newReg.Location=myMap.Towns[infoNode.TownId].Location;
 				newReg.Destination=myMap.Towns[infoNode.DestinationId].Location;
 				newReg.Id=infoNode.Id;
+				
 				if(infoNode.OwnerId==myPlayer.UserName)
 				{
 					if(newReg.Id==0)
@@ -340,7 +341,7 @@
 				{
 					case WorldConfig.MSG_CREATE:
 						message+=NetCommand.REQUEST_CREATE_REGIMENT.toString();
-					break
+					break;
 					
 					case WorldConfig.MSG_REMOVE:
 						return NetCommand.REQUEST_REMOVE_REGIMENT.toString()+"x"+myPlayer.UserName+"x"+regIn.Id;
