@@ -24,7 +24,6 @@
 			
 			townLocation=town.Location;
 			nameText.text=town.Name;
-			ownerText.text=town.Owner;
 			switch(town.Side)
 			{
 				case GameConfig.BRITISH:
@@ -53,6 +52,7 @@
 					officersText.text=town.Occupier.totalType(SoldierType.OFFICER).toString();
 					agentsText.text=town.Occupier.totalType(SoldierType.AGENT).toString();
 					politiciansText.text=town.Occupier.totalType(SoldierType.POLITICIAN).toString();
+
 				}
 				else
 				{
@@ -63,6 +63,7 @@
 					agentsText.text="0";
 					politiciansText.text="0";
 				}
+				ownerText.text="Ally";
 			}
 			else
 			{
@@ -72,6 +73,7 @@
 				officersText.text="?";
 				agentsText.text="?";
 				politiciansText.text="?";
+				ownerText.text="Enemy";
 			}
 			
 		}
