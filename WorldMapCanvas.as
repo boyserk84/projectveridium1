@@ -303,11 +303,13 @@
 						trace("Town Name: "+townInfo.Name);
 						
 						townInfo.Owner=arr_node[m].OwnerId;
+						
 						townInfo.Side=arr_node[m].Side;
 						townInfo.occupationGraphic();
 						trace("Town Thang:"+(int(arr_node[m].TownId)==myPlayer.CityLocation));
 						if(int(arr_node[m].TownId)==myPlayer.CityLocation)
 						{
+							
 							myPlayer.addTown(townInfo);
 							townInfo.setGraphic(WorldConfig.HOME_CITY);
 						}
@@ -499,14 +501,22 @@
 			changeTownInfoBar(WorldConfig.TOWN_BAR_MILITARY);
 			this.townInfoBar.attackButton.addEventListener(MouseEvent.CLICK,townAttackButtonClick);
 			this.townInfoBar.reinforceButton.addEventListener(MouseEvent.CLICK,townReinforceButtonClick);
-						this.townInfoBar.cancelButton.addEventListener(MouseEvent.CLICK,townInfoBarCancelButtonClick);
+			this.townInfoBar.cancelButton.addEventListener(MouseEvent.CLICK,townInfoBarCancelButtonClick);
+			
 			if(currTown.Owner==myPlayer.UserName)
 			{
 				townInfoReinforce();
 			}
 			else
 			{
-				townInfoAttack();
+				if(currTown.Side!=myPlayer.Side)
+				{
+					townInfoAttack();
+				}
+				else
+				{
+					townInfoReinforce();
+				}
 			}
 			this.townInfoBar.updateAttributesMilitary(currTown,myPlayer.Side);
 			
