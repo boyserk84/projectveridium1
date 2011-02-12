@@ -81,10 +81,28 @@
 				case BuildingType.BOOT_CAMP:
 					this.children.push(new ImgBuilding(this.x, this.y, BuildingType.BOOT_CAMP));
 					break;
+				case BuildingType.OFFICER_SCHOOL:
+					this.children.push(new ImgBuilding(this.x, this.y, BuildingType.OFFICER_SCHOOL));
+					break;
 				
 				case BuildingType.STABLES:
 					this.children.push(new ImgBuilding(this.x, this.y, BuildingType.STABLES));
 					break;
+				case BuildingType.WATCH_TOWER:
+					this.children.push(new ImgBuilding(this.x, this.y, BuildingType.WATCH_TOWER));
+					break;
+					
+				case BuildingType.AMBUSH:
+					this.children.push(new ImgBuilding(this.x, this.y, BuildingType.AMBUSH));
+					break;
+				case BuildingType.OUTPOST:
+					this.children.push(new ImgBuilding(this.x, this.y, BuildingType.OUTPOST));
+					break;
+					
+				case BuildingType.WAY_POINT:
+					this.children.push(new ImgBuilding(this.x, this.y, BuildingType.WAY_POINT));
+					break;
+					
 				case BuildingType.FARM:
 					this.children.push(new ImgBuilding(this.x,this.y, BuildingType.FARM));
 					break;

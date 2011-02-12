@@ -51,12 +51,14 @@
 		*/
 		public static function hasResourceToBuild(buildingType:int, wood:int, iron:int, money:int, pop:int)
 		{
+			//trace("Has resource of type : " + buildingType);
 			var node:BuildingInfoNode = BuildingInfo.getInfo(buildingType);
 			if (node.Wood <= wood && node.Iron <= iron && node.Money <= money && node.Population <= pop)
 			{
 				//trace("Enough");
 				return true;
 			}
+			//trace("Return damn it");
 			return false;
 		}
 		
