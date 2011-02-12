@@ -18,6 +18,7 @@
 		public static const FOOD_PRODUCT:int = 15;
 		public static const WOOD_PRODUCT:int = 10;
 		public static const POP_PRODUCT:int = 5;
+		public static const MONEY_PRODUCT:int = 6;
 		
 		/* Incremental value of max. (cap) storage value per building */
 		public static const EXTRA_STORAGE= 5;

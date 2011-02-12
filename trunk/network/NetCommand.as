@@ -113,6 +113,7 @@
 			if (isNotEmptyPackage() && !isEmptyData())
 			{
 				var new_building:Building = new Building(new Rectangle(decode_pack[2],decode_pack[3],1,1),decode_pack[4]);
+				//trace("Networking Building Type add in " + decode_pack[4]);
 				if (decode_pack[5].toString()=="1")
 				{
 					new_building.setConstruction();

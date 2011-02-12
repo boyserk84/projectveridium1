@@ -82,7 +82,8 @@
 				temp_req[buildingIn.Type]=++temp_req[buildingIn.Type];
 			}
 			buildings.Add(buildingIn);
-			trace("Length of Buildings:" + buildings.Length);
+			trace("Length of Buildings: " + buildings.Length);
+			trace("Just add Building: " + buildingIn.Type + " and there already " + requirements[buildingIn.Type]);
 		}
 		
 		/**
@@ -93,6 +94,7 @@
 		public function addImmediateBuilding(buildingIn:Building=null):void
 		{
 			requirements[buildingIn.Type] = ++ requirements[buildingIn.Type];
+			buildingIn.releaseBuildingToCity();
 			buildings.Add(buildingIn);
 		}
 		
@@ -198,6 +200,12 @@
 		public function get Food():int
 		{
 			return requirements[BuildingType.FARM] * BuildingType.FOOD_PRODUCT;
+		}
+		
+		public function get Money():int
+		{
+			trace("Give out Money for : ".concat(requirements[BuildingType.MARKET] * BuildingType.MONEY_PRODUCT));
+			return requirements[BuildingType.MARKET] * BuildingType.MONEY_PRODUCT;
 		}
 		
 		/**

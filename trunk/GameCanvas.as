@@ -373,7 +373,12 @@
 				} else 
 				if (this.command == GameConfig.COMM_ADD)
 				{
-					this.build_cursor.visible = true;
+					if (this.select_building!=-1)
+					{
+						this.build_cursor.visible = true;
+					} else {
+						this.build_cursor.visible = false;
+					}
 					//trace("Move Coords: "+xmouse+" , "+ymouse);
 					this.build_cursor.x = (((xmouse-ymouse)*GameConfig.TILE_HEIGHT)+GameConfig.TILE_INIT_X);
 					this.build_cursor.y = (((xmouse+ymouse)*GameConfig.TILE_HEIGHT/2)-(GameConfig.TILE_HEIGHT/2)+GameConfig.TILE_INIT_Y);
@@ -397,23 +402,34 @@
 			// check requirement, retrive info from city
 			var build_list:Array = BuildingManager.determineBuildingList(mcity);
 			
-			//trace(event.currentTarget.getBuildingType);
+			var building_select = event.currentTarget;
+			//trace("Building Type to building" + building_select.getBuildingType);
 			
 			// if met basic requirement
-			if (build_list[event.currentTarget.getBuildingType])
+			if (build_list[building_select.getBuildingType])
 			{
 				// if met resources requirement
-				if (BuildingManager.hasResourceToBuild(event.currentTarget.getBuildingType,profile.Wood, profile.Iron, profile.Money, profile.Population))
+				if (BuildingManager.hasResourceToBuild(building_select.getBuildingType,profile.Wood, profile.Iron, profile.Money, profile.Population))
 				{
-					this.select_building = event.currentTarget.getBuildingType;
+					//trace("I'm about to build " + building_select.getBuildingType);
+					this.select_building = building_select.getBuildingType;
 					//trace("build now " + this.select_building);					
-					this.build_cursor.changeType(event.currentTarget.getBuildingType);
+					this.build_cursor.changeType(building_select.getBuildingType);
 					this.mouse.visible= false;
 
 				} else {
+					//trace("Not Enough Resources");
+					// SHOW Warning: Not Enough resources
 					alertPopUpNotify(event.stageX,event.stageY);
+					pop_buildingInfo.gotoAndStop(4); // Because of reusing pop-up
 					pop_buildingInfo.reqInfo.text = "Not enough resources";
+					
 					this.command = GameConfig.COMM_SELECT;
+					
+					// Preventing accidentally build
+					this.select_building = -1;
+					this.build_cursor.visible = false;
+					this.mouse.visible = true;
 				}
 			} else {
 				this.command = GameConfig.COMM_SELECT;
@@ -606,26 +622,29 @@
 
 					if (mcity.isValid(gamePos.x, gamePos.y))
 					{
-						// (1) Check resources if enough
-						if (BuildingManager.hasResourceToBuild(this.select_building,profile.Wood, profile.Iron, profile.Money, profile.Population))
+						if (this.select_building != -1)
 						{
-							// (2) add building to the city
-							mcity.addBuilding(new Building(new Rectangle(gamePos.x,gamePos.y,1,1),this.select_building));
-							
-							// (3) Add new building list to View
-							theView.addBuildingList(mcity.Buildings);
-							
-							// (4) Deduct resources
-							profile.changeWood(-BuildingInfo.getInfo(this.select_building).Wood);
-							profile.changeMoney(-BuildingInfo.getInfo(this.select_building).Money);
-							profile.changeIron(-BuildingInfo.getInfo(this.select_building).Iron);
-							profile.changePop(-BuildingInfo.getInfo(this.select_building).Population);
-							//profile.changeFood(BuildingInfo.getInfo(this.select_building));
-							++this.length_of_city;
-							
-							// (5) Send request to update server
-							ClientConnector.requestUpdateProfileResources();
-							ClientConnector.requestWriteAddBuilding();
+							// (1) Check resources if enough
+							if (BuildingManager.hasResourceToBuild(this.select_building,profile.Wood, profile.Iron, profile.Money, profile.Population))
+							{
+								// (2) add building to the city
+								mcity.addBuilding(new Building(new Rectangle(gamePos.x,gamePos.y,1,1),this.select_building));
+								
+								// (3) Add new building list to View
+								theView.addBuildingList(mcity.Buildings);
+								
+								// (4) Deduct resources
+								profile.changeWood(-BuildingInfo.getInfo(this.select_building).Wood);
+								profile.changeMoney(-BuildingInfo.getInfo(this.select_building).Money);
+								profile.changeIron(-BuildingInfo.getInfo(this.select_building).Iron);
+								profile.changePop(-BuildingInfo.getInfo(this.select_building).Population);
+								//profile.changeFood(BuildingInfo.getInfo(this.select_building));
+								++this.length_of_city;
+								
+								// (5) Send request to update server
+								ClientConnector.requestUpdateProfileResources();
+								ClientConnector.requestWriteAddBuilding();
+							}
 						}
 
 						// (4) Update Menu Bar and update stat
@@ -692,6 +711,7 @@
 				profile.changeIron(mcity.Iron);
 				profile.changeFood(mcity.Food);
 				profile.changePop(mcity.Pop);
+				profile.changeMoney(mcity.Money);
 				profile.updateAllTownResources();
 				
 				headStat.updateInfo(profile);

@@ -472,13 +472,14 @@
 		*/
 		public function updateAllTownResources():void
 		{
-			var w:int,iron:int,f:int,p:int;
+			var w:int,iron:int,f:int,p:int, m:int;
 			for (var i:int = 0; i < towns.Length ;++i)
 			{
 				w += towns.Get(i).data.Wood;
 				iron += towns.Get(i).data.Iron;
 				f += towns.Get(i).data.Food;
 				p += towns.Get(i).data.Population;
+				m += towns.Get(i).data.Money;
 			}
 			
 			for (var i:int = 0; i < halfTowns.Length ;++i)
@@ -487,11 +488,13 @@
 				iron += halfTowns.Get(i).data.Iron;
 				f += halfTowns.Get(i).data.Food;
 				p += halfTowns.Get(i).data.Population;
+				m += halfTowns.Get(i).data.Money;
 			}
 			changeWood(w);
 			changeIron(iron);
 			changeFood(f);
 			changePop(p);
+			changeMoney(m);
 		}
 		
 
