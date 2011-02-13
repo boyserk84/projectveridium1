@@ -28,6 +28,12 @@
 		private var townPackageArrive:Boolean = false;
 		private var cityPackageArrive:Boolean = false;
 		private var regimentPackageArrive:Boolean = false;
+		private var eventActionArrive:Boolean = false;
+		
+		/** Server's reponse string message **/
+		private var messageReceived:String;
+		private var messageHeader:String;
+		
 		
 		/** Networking Connection flags **/
 		private var alreadyConnect:Boolean = false;
@@ -112,6 +118,14 @@
 		public function isAlreadyConnect():Boolean { return alreadyConnect; }
 		public function isConnectFailed():Boolean { return failedConnect; }
 		public function isConnectionClosed():Boolean { return closedConnect;}
+		public function isActionEventReceived():Boolean { return eventActionArrive; }
+		
+		/* Confirm that Action event has been received*/
+		public function confirmReceiveEvent():void { eventActionArrive = false; }
+		
+		/** Reset Network Data Flag **/
+		public function resetTownsFlag():void { townPackageArrive = false; }
+		public function resetRegimentsFlag():void { regimentPackageArrive = false; }
 		
 		/*
 		* Notification function: Connection terminated
@@ -179,16 +193,22 @@
 					// (2.1.2) Action Event processed
 					case NetCommand.RESPONSE_BATTLE.toString():
 					
+					trace("Response Battle");
 					// (2.1.2.1) Check gameId
 					if (NetCommand.isEventGameIdSame(profile.GameId));
 					{
+						trace("Yes same game");
 						// (2.1.2.2) Check Type of Action
 						switch (NetCommand.getActionType())
 						{
 							case NetCommand.ACTION_ATTACK:
+								trace("Attack event received");
 								if (NetCommand.getEventResult())
 								{
 									// Notify Client for winning
+									messageReceived = "Your troop has captured the town#" + ". From now on, you will receive resources from this town.";
+									messageHeader = "Congratulation ! your troop has captured the town!";
+									eventActionArrive = true;
 								}
 							
 							break;
@@ -197,6 +217,10 @@
 								if (!NetCommand.getEventResult())
 								{
 									// Notify client for fail to reinforce
+									messageReceived = "Your reinforcement has been ambushed and eliminated by the enemy.";
+									messageHeader = "Your reinforcement has been eliminated!";
+									eventActionArrive = true;
+									
 								}
 							break;
 							
@@ -205,6 +229,9 @@
 								if (!NetCommand.getEventResult())
 								{
 									// Notify client for fail to send workers
+									messageReceived = "Your workers have been ambushed and eliminated by the enemy.";
+									messageHeader = "Oh no! Your wokers have been eliminated!";
+									eventActionArrive = true;
 								}
 							break;
 							
@@ -230,6 +257,8 @@
 						// (2.1.2.3) Send Request for Town and Regiment
 						sendRequest(NetCommand.REQUEST_TOWN+"x"+profile.UserName+"x"+profile.GameId);
 						sendRequest(NetCommand.REQUEST_REGIMENT+"x"+profile.UserName);
+						
+						
 					}
 					break;
 				}
@@ -313,6 +342,16 @@
 			NetCommand.freeData();
 		}
 		
+		public function gameMsgHeader():String
+		{
+			return messageHeader;
+		}
+		
+		public function gameMsg():String
+		{
+			return messageReceived;
+		}
+		
 		/**
 		* Checking if the package received belongs to all clients
 		* @return True if the package belongs to all.
@@ -321,11 +360,11 @@
 		{
 			switch (NetCommand.getCommand())
 			{
-				case NetCommand.RESPONSE_MSG:
+				case NetCommand.RESPONSE_MSG.toString():
 					return true;
 				break;
 				
-				case NetCommand.RESPONSE_BATTLE:
+				case NetCommand.RESPONSE_BATTLE.toString():
 					return true;
 				// Add more
 				
