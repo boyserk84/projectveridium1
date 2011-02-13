@@ -31,6 +31,9 @@
 		
 		/** NOTIFICATION WINDOW **/
 		public static const PANEL_CONFIRM:int = 1;
+		public static const PANEL_WINNER:int = 2;
+		public static const PANEL_LOSER:int = 3;
+		
 		
 		/** POP UP BUILDING INFO WINDOW **/
 		public static const POP_TIME_REMAIN:int = 1;

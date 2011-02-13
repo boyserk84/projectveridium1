@@ -12,6 +12,7 @@
 	import classes.*;
 	import constant.BuildingType;
 	import contents.*;
+	import constant.Images;
 	import constant.GameConfig;
 	import flash.geom.Rectangle;
 	import network.*;
@@ -37,7 +38,8 @@
 		public var worldgame:WorldMapCanvas;
 		
 		/* Global Notification windows */
-		private var g_notify_win:NotifyWindow;
+		private var g_notify_win:NotifyWindow;			// Network message
+		private var gameNotify_win:NotifyWindow;		// Game server message
 		
 		/* Network Component */
 		public var client:ConnectGame;
@@ -67,12 +69,43 @@
 			regimentPlayer = new Array();
 			configuration = new NetConst(); // Load Network Configuration info
 			createNotifyWindow();
+			createNotifyGameWindow();
 			
 			this.addEventListener(Event.ENTER_FRAME, pollingCheck);
 			
 			loadIdFromWeb();
 			prepareConnect();
 			connectServer();
+			this.addEventListener(Event.ENTER_FRAME, pollingGameServerMessage);
+		}
+		
+		/**
+		* Polling check if game server sent any message to client
+		*/
+		private function pollingGameServerMessage(event:Event):void
+		{
+			if (client.isActionEventReceived())
+			{
+				gameNotify_win.modifyMessage(client.gameMsgHeader(),client.gameMsgHeader());
+				gameNotify_win.visible = true;
+				client.confirmReceiveEvent();
+			} 
+			
+			if (client.isTownArrived())
+			{
+				// Insert new towns info
+				trace("Insert new towns info");
+				worldgame.loadTownsData(townPlayer);	
+				client.resetTownsFlag();
+			}
+			
+			if (client.isRegimentArrived())
+			{
+				// Insert new regiments info
+				trace("insert new regiments info");
+				worldgame.loadRegimentsData(regimentPlayer);
+				client.resetRegimentsFlag();
+			}
 		}
 		
 		/**
@@ -80,9 +113,18 @@
 		*/
 		private function createNotifyWindow():void
 		{
-			g_notify_win = new NotifyWindow(GameConfig.SCREEN_WIDTH/4,GameConfig.SCREEN_HEIGHT/4,1);
+			g_notify_win = new NotifyWindow(GameConfig.SCREEN_WIDTH/4,GameConfig.SCREEN_HEIGHT/4,Images.PANEL_CONFIRM);
 			g_notify_win.addEventToConfirmButton(MouseEvent.CLICK, function(){ g_notify_win.visible = false; } );
 			g_notify_win.addEventToCancelButton(MouseEvent.CLICK, function(){ g_notify_win.visible = false; } );
+		}
+		
+		/**
+		* Create a notification window of game's event from server
+		*/
+		private function createNotifyGameWindow():void
+		{
+			gameNotify_win = new NotifyWindow(GameConfig.SCREEN_WIDTH/4, GameConfig.SCREEN_HEIGHT/4,Images.PANEL_WINNER);
+			gameNotify_win.addEventToConfirmButton(MouseEvent.CLICK, function() { gameNotify_win.visible = false; });
 		}
 		
 		/**
@@ -131,9 +173,9 @@
 			}
 			this.profile_name = name;
 			//profile = new Player("","596761244");
-			profile = new Player("","787012494");
+			//profile = new Player("","787012494");
 			// CHANGE BACK TO BELOW LINE
-			//profile = new Player(name_val,id);
+			profile = new Player(name_val,id);
 			
 			//trace(profile.UserName);
 			//profile = new Player(name_val,"123456789012345");
@@ -276,10 +318,21 @@
 				g_notify_win.visible = true;
 			}
 			
+			this.addChild(gameNotify_win);
 			this.addChild(g_notify_win);
 			
+			resetNetworkFlags();
 			
 			this.removeEventListener(Event.ENTER_FRAME, loadingProgress);
+		}
+		
+		/**
+		* Reset Network flags for towns and reigments data
+		*/
+		private function resetNetworkFlags():void
+		{
+			client.resetTownsFlag();
+			client.resetRegimentsFlag();
 		}
 		
 		/**

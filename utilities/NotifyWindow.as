@@ -1,6 +1,7 @@
 ﻿package utilities {
 	import flash.display.MovieClip;
 	import constant.GameConfig;
+	import constant.Images;
 	
 	/**
 	* Notification windows (A window panel with message, Confirm and cancel buttons)
@@ -24,10 +25,17 @@
 			this.y = y;
 			this.visible = false;
 			// Location and type of button
-			confirmButton = new TriggerButton(this.width/6,50+this.height/2,GameConfig.BUTTON_CONFIRM);
-			cancelButton = new TriggerButton(20+this.width/2,50+this.height/2,GameConfig.BUTTON_CANCEL);
+			
+			if (type_win ==Images.PANEL_CONFIRM)
+			{
+				confirmButton = new TriggerButton(this.width/6,50+this.height/2,GameConfig.BUTTON_CONFIRM);
+				cancelButton = new TriggerButton(20+this.width/2,50+this.height/2,GameConfig.BUTTON_CANCEL);
+				this.addChild(cancelButton);
+			} else if (type_win == Images.PANEL_WINNER || type_win == Images.PANEL_LOSER) {
+				confirmButton = new TriggerButton(70 + this.width/6,50+this.height/2,GameConfig.BUTTON_CONFIRM);
+			}
+			
 			this.addChild(confirmButton);
-			this.addChild(cancelButton);
 		}
 		
 		/**
