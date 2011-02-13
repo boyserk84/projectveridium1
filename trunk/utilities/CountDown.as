@@ -151,5 +151,13 @@
 			return "0:01";
 		}
 		
+		public function triggerEveryNSeconds(n_sec:Number):Boolean
+		{
+			if (secondsLeft%n_sec == 0)
+			return true;
+			else
+			return false;
+		}
+		
 	}
 }

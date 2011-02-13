@@ -222,6 +222,7 @@
 			for(var i:int=0;i<arr_reg.length;++i)
 			{
 				var infoNode:RegimentInfoNode=arr_reg[i];
+				//trace("infoNod Loaddss " + infoNode.DestinationId);
 				var newReg:Regiment=new Regiment("",infoNode.OwnerId,infoNode.Side);
 				//Add the soldiers
 				trace("Here is my soldiers!:"+infoNode.Minute);
@@ -262,7 +263,10 @@
 				
 				myMap.Towns[infoNode.TownId].Occupier=newReg;
 				newReg.Location=myMap.Towns[infoNode.TownId].Location;
-				newReg.Destination=myMap.Towns[infoNode.DestinationId].Location;
+				
+				//trace("infoNod des " + infoNode.DestinationId);
+ 				newReg.Destination=myMap.Towns[infoNode.DestinationId].Location;
+
 				newReg.Id=infoNode.Id;
 				
 				if(infoNode.OwnerId==myPlayer.UserName)

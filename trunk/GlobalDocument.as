@@ -131,9 +131,9 @@
 			}
 			this.profile_name = name;
 			//profile = new Player("","596761244");
-			//profile = new Player("","787012494");
+			profile = new Player("","787012494");
 			// CHANGE BACK TO BELOW LINE
-			profile = new Player(name_val,id);
+			//profile = new Player(name_val,id);
 			
 			//trace(profile.UserName);
 			//profile = new Player(name_val,"123456789012345");

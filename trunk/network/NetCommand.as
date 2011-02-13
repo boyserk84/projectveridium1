@@ -33,8 +33,10 @@
 		public static var RESPONSE_BUILDING:int = 1002;
 		public static var RESPONSE_TOWN:int = 1003;
 		public static var RESPONSE_REGIMENT:int = 1004;
+		public static var RESPONSE_BATTLE:int = 1005;
 		
 		/* Client requests to server */
+		public static var REQUEST_PING:int = 1999;
 		public static var REQUEST_PROFILE:int = 2000;
 		
 		public static var REQUEST_CITY:int = 2001;
@@ -51,6 +53,13 @@
 		
 		public static var REQUEST_CREATE_ACTION:int = 3000;
 	
+		/* ACTION EVENT from server */
+		public static var ACTION_ATTACK:int = 1;
+		public static var ACTION_REINFORCE:int = 2;
+		public static var ACTION_WORKER:int = 3;
+		public static var ACTION_SPY:int = 4;
+		public static var ACTION_POLITICIAN:int = 5;
+		public static var ACTION_SCOUT:int = 6;
 		
 		/* Error Message to notify client */
 		public static var MSG_HEAD_FAIL:String = "Offline Gameplay!";
@@ -193,7 +202,7 @@
 			{
 				var reg:RegimentInfoNode = new RegimentInfoNode
 				(decode_pack[2], decode_pack[6], decode_pack[3], decode_pack[4],decode_pack[5]);
-				
+				//trace("decode_pack 4 : " + decode_pack[4]);
 				reg.Minute = int(decode_pack[7]);
 				reg.Sharp = int(decode_pack[8]);
 				reg.Officer = int(decode_pack[9]);
@@ -205,13 +214,53 @@
 				reg.Worker = int(decode_pack[15]);
 				reg.Side = int(decode_pack[16]);
 				reg.TotalRegiments = int(decode_pack[17]);
-				
-				
-				
 				return reg;
 			}
 			return null;
 		}
+		
+		/**
+		* getBattle result upon receive response from server
+		*/
+		public static function getEventResult():Boolean
+		{
+			if (isNotEmptyPackage() && !isEmptyData())
+			{
+				if (int(decode_pack[5])==1)
+				{
+					return true;
+				}
+				else { return false; }
+			} else return false;
+		}
+		
+		/**
+		* Return Event-Action Type
+		*/
+		public static function getActionType():int
+		{
+			if (isNotEmptyPackage() && !isEmptyData())
+			{
+				return int(decode_pack[4]);
+			}
+			else { return -1; }
+		}
+		
+		/**
+		* Checking if Action Event result has the same game Id
+		* @param: profile_gameid: Game's Id
+		*/
+		public static function isEventGameIdSame(profile_gameid:String):Boolean
+		{
+			if (isNotEmptyPackage() && !isEmptyData())
+			{
+				if (decode_pack[6]==profile_gameid)
+				{
+					return true;
+				} else return false;
+			} else { return false; }
+		}
+		
 		/**
 		* Get Facebook Id upon receive
 		*/

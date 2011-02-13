@@ -23,6 +23,13 @@ RESPONSE_REGIMENT
 IIIIIIIIIIIIIII X CCCC X REG_ID X Town_ID x Des_Town_ID x inTransit x Owner_Id x minman x sharpshooter x officer x calvary x cannon x scout x agent x politician x worker x Side x TotalRegiment 
  0                 1       2         3           4            5            6       7         8             9         10        11      12       13       14           15      16        17
  
+RESPONSE_BATTLE
+IIIIIIIIIIIIIII x CCCC x OwnerId x DestinationTown x ActionType x result x GameId
+ 0                  1       2           3              4             5      6
+
+REQUEST_PING
+CCCC x IIIIIIIIIII
+ 0        1
 REQUEST_REGIMENT
 CCCC X IIIIIIIIIII X Owner_Id 
  0        1            2 
