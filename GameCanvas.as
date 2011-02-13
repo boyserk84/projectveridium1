@@ -22,6 +22,7 @@
 		
 		private var theView:View;			// View
 		private var timer:CountDown;		// Count Down Timer
+		private var alreadyTick:Boolean = false;	// Flag for timer ticking
 		private var input:IOHandler;		// IO Handler (receiving input)
 		private var profile:Player;			// Player's profile
 		
@@ -726,9 +727,30 @@
 				update_resources = true;
 			}
 			
+			pingServerEvery(10);
+			
 			//theView.addBuildingList(mcity.Buildings);
 			//trace("Total buildings: "+ mcity.Buildings.Length);
 			
+		}
+		
+		/**
+		* Ping server back to trigger aciton-event queue every N seconds
+		* @param : second: Number of seconds
+		*/
+		private function pingServerEvery(second:Number):void
+		{
+			if (timer.triggerEveryNSeconds(second))
+			{
+				if (!alreadyTick)
+				{
+					alreadyTick = true;
+					ClientConnector.pingToServer();
+				}
+				
+			} else {
+				alreadyTick = false;
+			}
 		}
 		
 		/**

@@ -167,7 +167,72 @@
 			// (2) Check if package is for all
 			if (isPackageForAll())
 			{
-				// (2.1) Process the package
+				switch(NetCommand.getCommand())
+				{
+					// (2.1) Process the package
+					
+					//(2.1.1) Server Admin Message
+					case NetCommand.RESPONSE_MSG.toString():
+				
+					break;
+				
+					// (2.1.2) Action Event processed
+					case NetCommand.RESPONSE_BATTLE.toString():
+					
+					// (2.1.2.1) Check gameId
+					if (NetCommand.isEventGameIdSame(profile.GameId));
+					{
+						// (2.1.2.2) Check Type of Action
+						switch (NetCommand.getActionType())
+						{
+							case NetCommand.ACTION_ATTACK:
+								if (NetCommand.getEventResult())
+								{
+									// Notify Client for winning
+								}
+							
+							break;
+							
+							case NetCommand.ACTION_REINFORCE:
+								if (!NetCommand.getEventResult())
+								{
+									// Notify client for fail to reinforce
+								}
+							break;
+							
+							case NetCommand.ACTION_WORKER:
+							
+								if (!NetCommand.getEventResult())
+								{
+									// Notify client for fail to send workers
+								}
+							break;
+							
+							case NetCommand.ACTION_SPY:
+							
+							break
+							
+							case NetCommand.ACTION_POLITICIAN:
+							
+							break;
+							
+							case NetCommand.ACTION_SCOUT:
+							
+							break;
+							
+							default:
+							
+							break;
+							
+							
+						}
+						
+						// (2.1.2.3) Send Request for Town and Regiment
+						sendRequest(NetCommand.REQUEST_TOWN+"x"+profile.UserName+"x"+profile.GameId);
+						sendRequest(NetCommand.REQUEST_REGIMENT+"x"+profile.UserName);
+					}
+					break;
+				}
 				
 			} else {
 			
@@ -197,10 +262,15 @@
 							var new_town:TownInfoNode = NetCommand.getTownInfoNode();
 							if (new_town != null)
 							{
-								this.townPlayer.push(new_town);
-								if (this.townPlayer.length == new_town.TotalTowns)
+								// Check if it is the same gameId
+								if (new_town.GameId == profile.GameId)
 								{
-									townPackageArrive = true;
+									this.townPlayer.push(new_town);
+								
+									if (this.townPlayer.length == new_town.TotalTowns)
+									{
+										townPackageArrive = true;
+									}
 								}
 							} else { regimentPackageArrive = true; }
 							
@@ -254,6 +324,9 @@
 				case NetCommand.RESPONSE_MSG:
 					return true;
 				break;
+				
+				case NetCommand.RESPONSE_BATTLE:
+					return true;
 				// Add more
 				
 				default:

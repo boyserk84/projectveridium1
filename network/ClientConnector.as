@@ -150,6 +150,14 @@
 		}
 		
 		/**
+		* Ping to server to trigger Action Event Queue
+		*/
+		public static function pingToServer():void
+		{
+			requestWrite(NetCommand.REQUEST_PING + "x" + getProfile().UserName);
+		}
+		
+		/**
 		* request read or fetch data from the server
 		*/
 		public static function requestRead(raw_msg:String):void
