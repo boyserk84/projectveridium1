@@ -24,7 +24,7 @@
 			offset=new Point(0,0);
 			gameViewObjects=new Array();
 			townInfoPane=new TownInfoPane();
-			workerManagement=new WorkerManagementScreen();
+			
 
 
 
@@ -41,10 +41,7 @@
 			return townInfoPane;
 		}
 		
-		public function get WorkerManagement():WorkerManagementScreen
-		{
-			return workerManagement;
-		}
+		
 		
 		public function addAssets(assetsIn:Array):void
 		{
@@ -98,14 +95,6 @@
 			this.addChild(townInfoPane);			
 		}
 		
-		public function showWorkerManagement(townIn:Town):void
-		{
-			workerManagement.updateAttributes(townIn);
-			workerManagement.x=(townIn.x)+WorldConfig.TOWN_INFO_OFFSET_X;
-			workerManagement.y=(townIn.y)+WorldConfig.TOWN_INFO_OFFSET_Y;
-			this.addChild(workerManagement);			
-		}
-		
 		public function hideTownInfo():void
 		{
 			if(this.contains(townInfoPane))
@@ -114,14 +103,7 @@
 			}
 		}
 		
-		public function hideWorkerManagement():void
-		{
-			if(this.contains(workerManagement))
-			{
-				this.removeChild(workerManagement);
-			}
-											  
-		}
+		
 		
 		
 		

@@ -11,6 +11,7 @@
 	import flash.events.TimerEvent;
 	import contents.TownInfoBar;
 	import contents.ArmySelectionScreen;
+	import contents.WorkerManagementScreen;
 	import classes.TownInfoNode;
 	import utilities.TriggerButton;
 	import network.ClientConnector;
@@ -40,6 +41,7 @@
 		private var currentTarget:Town;
 		private var townInfoBar:TownInfoBar;
 		private var armyManagementScreen:ArmySelectionScreen;
+		private var workerManagement:WorkerManagementScreen;
 		private var currentState:int;
 		private var startPoint:Point;
 		
@@ -59,6 +61,7 @@
 			this.worldView=new WorldView();
 			this.townInfoBar=new TownInfoBar();
 			this.armyManagementScreen=new ArmySelectionScreen();
+			workerManagement=new WorkerManagementScreen(253,5);
 			townInfoBar.x=GameConfig.SCREEN_WIDTH-275;
 			townInfoBar.y=0;
 			myMap=new Map();
@@ -166,8 +169,8 @@
 			
 			this.worldView.TownInfo.economicButton.addEventListener(MouseEvent.CLICK,townEconomicButtonClick);
 			this.worldView.TownInfo.militaryButton.addEventListener(MouseEvent.CLICK,townMilitaryButtonClick);
-			this.worldView.WorkerManagement.acceptButton.addEventListener(MouseEvent.CLICK,workerManagementAcceptButtonClick);
-			this.worldView.WorkerManagement.cancelButton.addEventListener(MouseEvent.CLICK,workerManagementCancelButtonClick);
+			this.workerManagement.acceptButton.addEventListener(MouseEvent.CLICK,workerManagementAcceptButtonClick);
+			this.workerManagement.cancelButton.addEventListener(MouseEvent.CLICK,workerManagementCancelButtonClick);
 			
 			armyManagementScreen.acceptButton.addEventListener(MouseEvent.CLICK,armyManagementAcceptButtonClick);
 			armyManagementScreen.cancelButton.addEventListener(MouseEvent.CLICK,armyManagementCancelButtonClick);
@@ -420,17 +423,18 @@
 			changeTownInfoBar(WorldConfig.TOWN_BAR_ECONOMIC);
 			
 			this.townInfoBar.sendWorkersButton.addEventListener(MouseEvent.CLICK,townSendWorkersButtonClick);
-			this.townInfoBar.sendAgentsButton.addEventListener(MouseEvent.CLICK,townSendAgentsButtonClick);
+			/*this.townInfoBar.sendAgentsButton.addEventListener(MouseEvent.CLICK,townSendAgentsButtonClick);
 			this.townInfoBar.releaseAgentsButton.addEventListener(MouseEvent.CLICK,townReleaseAgentsButtonClick);
 			this.townInfoBar.sendPoliticiansButton.addEventListener(MouseEvent.CLICK,townSendPoliticiansButtonClick);
 			this.townInfoBar.releasePoliticiansButton.addEventListener(MouseEvent.CLICK,townReleasePoliticiansButtonClick);
+			*/
 			this.townInfoBar.cancelButton.addEventListener(MouseEvent.CLICK,townInfoBarCancelButtonClick);
 			townInfoBar.updateAttributesEconomic(town,myPlayer.Side);
 			
 			
 			if(town.Owner==myPlayer.UserName)
 			{
-				this.townInfoBar.sendAgentsButton.visible=false;
+				/*this.townInfoBar.sendAgentsButton.visible=false;
 				this.townInfoBar.sendAgentsButton.enabled=false;
 				this.townInfoBar.sendPoliticiansButton.visible=false;
 				this.townInfoBar.sendPoliticiansButton.enabled=false;
@@ -438,7 +442,7 @@
 				this.townInfoBar.releaseAgentsButton.enabled=false;
 				this.townInfoBar.releasePoliticiansButton.visible=false;
 				this.townInfoBar.releasePoliticiansButton.enabled=false;
-				
+				*/
 				this.townInfoBar.sendWorkersButton.visible=true;
 				this.townInfoBar.sendWorkersButton.enabled=true;
 			}
@@ -450,44 +454,51 @@
 					//This means they have a politician there
 					if(town.Side==myPlayer.Side)
 					{
-						this.townInfoBar.sendPoliticiansButton.visible=false;
+						/*this.townInfoBar.sendPoliticiansButton.visible=false;
 						this.townInfoBar.sendPoliticiansButton.enabled=false;
 						this.townInfoBar.releasePoliticiansButton.visible=true;
 						this.townInfoBar.releasePoliticiansButton.enabled=true;
 						this.townInfoBar.releaseAgentsButton.visible=false;
 						this.townInfoBar.releaseAgentsButton.enabled=false;
+						*/
 					}
 					//This means they have an agent there
 					else
 					{
+						/*
 						this.townInfoBar.sendAgentsButton.visible=false;
 						this.townInfoBar.sendAgentsButton.enabled=false;
 						this.townInfoBar.releaseAgentsButton.visible=true;
 						this.townInfoBar.releaseAgentsButton.enabled=true;
 						this.townInfoBar.releasePoliticiansButton.visible=false;
 						this.townInfoBar.releasePoliticiansButton.enabled=false;
+						*/
 					}
 				}
 				else
 				{
 					if(town.Side==myPlayer.Side)
 					{
-						this.townInfoBar.sendAgentsButton.visible=false;
+						/*this.townInfoBar.sendAgentsButton.visible=false;
 						this.townInfoBar.sendAgentsButton.enabled=false;
 						this.townInfoBar.sendPoliticiansButton.visible=true;
 						this.townInfoBar.sendPoliticiansButton.enabled=true;
+						*/
 					}
 					else
 					{
-						this.townInfoBar.sendAgentsButton.visible=true;
+						/*this.townInfoBar.sendAgentsButton.visible=true;
 						this.townInfoBar.sendAgentsButton.enabled=true;
 						this.townInfoBar.sendPoliticiansButton.visible=false;
 						this.townInfoBar.sendPoliticiansButton.enabled=false;
+						*/
 					}
+					/*
 					this.townInfoBar.releasePoliticiansButton.visible=false;
 					this.townInfoBar.releasePoliticiansButton.enabled=false;
 					this.townInfoBar.releaseAgentsButton.visible=false;
 					this.townInfoBar.releaseAgentsButton.enabled=false;
+					*/
 				}
 				this.townInfoBar.sendWorkersButton.visible=false;
 				this.townInfoBar.sendWorkersButton.enabled=false;
@@ -570,6 +581,23 @@
 			this.townInfoBar.cancelButton.enabled=false;
 		}
 		
+		public function showWorkerManagement(townIn:Town):void
+		{
+			workerManagement.updateAttributes(townIn);
+			this.addChild(workerManagement);			
+		}
+		
+		
+		
+		public function hideWorkerManagement():void
+		{
+			if(this.contains(workerManagement))
+			{
+				this.removeChild(workerManagement);
+			}
+											  
+		}
+		
 		
 		//Highlights the towns capable of sending and sets the list
 		private function selectValidTowns(town:Town):void
@@ -593,6 +621,8 @@
 			}
 			selectedTowns=null;
 		}
+		
+		
 		
 		public function townAttackButtonClick(event:MouseEvent):void
 		{
@@ -682,10 +712,10 @@
 		
 		public function workerManagementAcceptButtonClick(event:MouseEvent):void
 		{	
-			if(worldView.WorkerManagement.numWorkers()>0)
+			if(workerManagement.numWorkers()>0)
 			{
 				var reg:Regiment = new Regiment("",myPlayer.UserName,myPlayer.Side);
-				reg.addUnit(new Soldier(worldView.WorkerManagement.numWorkers(),SoldierType.WORKER));
+				reg.addUnit(new Soldier(workerManagement.numWorkers(),SoldierType.WORKER));
 				currTown.Occupier.removeRegiment(reg);
 				
 				//Determine the waypoints for this regiment
@@ -699,7 +729,7 @@
 				reg.Intention=WorldConfig.WORKER;
 				sendRegiment(reg);
 			}
-			worldView.hideWorkerManagement();
+			hideWorkerManagement();
 			clearSelectedTowns();
 			hideTownInfoCancel();
 			currentState=WorldConfig.STATE_NONE;
@@ -707,7 +737,7 @@
 
 		public function workerManagementCancelButtonClick(event:MouseEvent):void
 		{
-			worldView.hideWorkerManagement();
+			hideWorkerManagement();
 			clearSelectedTowns();
 			hideTownInfoCancel();
 			currentState=WorldConfig.STATE_NONE;
@@ -756,6 +786,11 @@
 			if(armyManagementScreen.numPoliticians()>0)
 			{
 				reg.addUnit(new Soldier(armyManagementScreen.numPoliticians(),SoldierType.POLITICIAN));
+			}
+			//Cavalry
+			if(armyManagementScreen.numCavalry()>0)
+			{
+				reg.addUnit(new Soldier(armyManagementScreen.numCavalry(),SoldierType.CALVARY));
 			}
 			
 			//Determine the waypoints for this regiment
@@ -875,7 +910,7 @@
 						}
 						else if(currentState==WorldConfig.STATE_WORKERS)
 						{
-							worldView.showWorkerManagement(currTown);
+							showWorkerManagement(currTown);
 							currentState=WorldConfig.STATE_SELECTING;
 							
 						}

@@ -29,8 +29,8 @@
 		public static const OPAQUE = 1;
 		
 		// Game Map value
-		public static const MAX_CITY_COL = 11;
-		public static const MAX_CITY_ROW = 11;
+		public static const MAX_CITY_COL = 10;
+		public static const MAX_CITY_ROW = 10;
 		
 		// Mouse click commands and buttons (Trigger Buttons)
 		public static const COMM_ADD = 1;

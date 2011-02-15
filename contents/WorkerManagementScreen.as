@@ -10,9 +10,11 @@
 		
 		
 		
-		public function WorkerManagementScreen()
+		public function WorkerManagementScreen(xIn:int,yIn:int)
 		{
 			this.workersText.text="0";
+			this.x=xIn;
+			this.y=yIn;
 
 			this.workersText.addEventListener(Event.CHANGE,textChangedEvent);
 		}
