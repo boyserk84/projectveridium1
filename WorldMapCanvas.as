@@ -88,7 +88,6 @@
 				var nodeSet:GraphNode = new GraphNode();
 				var temp2:Town=WorldConfig.getTownInfo(j);
 				temp2.ID=j;
-				temp2.numberText.text=temp2.Name;
 				nodeSet.MyTown=temp2;
 				temp2.Node=nodeSet;
 				myMap.addTown(temp2);
@@ -308,7 +307,7 @@
 						trace("Town Name: "+townInfo.Name);
 						
 						townInfo.Owner=arr_node[m].OwnerId;
-						
+						trace("The side that is coming in! "+arr_node[m].Side);
 						townInfo.Side=arr_node[m].Side;
 						townInfo.occupationGraphic();
 						trace("Town Thang:"+(int(arr_node[m].TownId)==myPlayer.CityLocation));
