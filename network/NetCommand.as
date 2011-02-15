@@ -247,6 +247,18 @@
 		}
 		
 		/**
+		* Return Event-Action destination town
+		*/
+		public static function getDestinationTown():int
+		{
+			if (isNotEmptyPackage() && !isEmptyData())
+			{
+				return int(decode_pack[3]);
+			}
+			else { return -1; }
+		}
+		
+		/**
 		* Checking if Action Event result has the same game Id
 		* @param: profile_gameid: Game's Id
 		*/

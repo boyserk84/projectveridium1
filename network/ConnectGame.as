@@ -193,45 +193,58 @@
 					// (2.1.2) Action Event processed
 					case NetCommand.RESPONSE_BATTLE.toString():
 					
-					trace("Response Battle");
-					// (2.1.2.1) Check gameId
+					//trace("Response Battle");
+					// (2.1.2.1) Check gameId and facebook's ID
 					if (NetCommand.isEventGameIdSame(profile.GameId));
 					{
-						trace("Yes same game");
+						//trace("Yes same game");
 						// (2.1.2.2) Check Type of Action
 						switch (NetCommand.getActionType())
 						{
 							case NetCommand.ACTION_ATTACK:
-								trace("Attack event received");
+								//trace("Attack event received");
+
 								if (NetCommand.getEventResult())
 								{
-									// Notify Client for winning
-									messageReceived = "Your troop has captured the town#" + ". From now on, you will receive resources from this town.";
-									messageHeader = "Congratulation ! your troop has captured the town!";
+									if (NetCommand.getId() == profile.UserName)
+									{
+										// Notify Client for winning
+										messageReceived = "Your troop has captured the town#" + NetCommand.getDestinationTown() + ". From now on, you will receive resources from this town.";
+										messageHeader = "Congratulation ! your troop has captured the town!";
+										
+									} else {
+										messageReceived = "Town#" +NetCommand.getDestinationTown()+ " has been conquered.";
+										messageHeader = "Town #" + NetCommand.getDestinationTown() +" has been captured!";
+									}
 									eventActionArrive = true;
 								}
+								
 							
 							break;
 							
 							case NetCommand.ACTION_REINFORCE:
-								if (!NetCommand.getEventResult())
+								if (NetCommand.getId() == profile.UserName)
 								{
-									// Notify client for fail to reinforce
-									messageReceived = "Your reinforcement has been ambushed and eliminated by the enemy.";
-									messageHeader = "Your reinforcement has been eliminated!";
-									eventActionArrive = true;
-									
+									if (!NetCommand.getEventResult())
+									{
+										// Notify client for fail to reinforce
+										messageReceived = "Your reinforcement has been ambushed and eliminated by the enemy.";
+										messageHeader = "Your reinforcement has been eliminated at town#" + NetCommand.getDestinationTown() + "!";
+										eventActionArrive = true;
+									}
 								}
 							break;
 							
 							case NetCommand.ACTION_WORKER:
-							
-								if (!NetCommand.getEventResult())
+								if (NetCommand.getId() == profile.UserName)
 								{
-									// Notify client for fail to send workers
-									messageReceived = "Your workers have been ambushed and eliminated by the enemy.";
-									messageHeader = "Oh no! Your wokers have been eliminated!";
-									eventActionArrive = true;
+									if (!NetCommand.getEventResult())
+									{
+										// Notify client for fail to send workers
+										messageReceived = "Your workers have been ambushed and eliminated by the enemy.";
+										messageHeader = "Oh no! Your wokers have been eliminated at town#" + NetCommand.getDestinationTown() + "!";
+										eventActionArrive = true;
+									}
 								}
 							break;
 							
