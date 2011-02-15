@@ -306,13 +306,16 @@
 						var townInfo:Town=myMap.Towns[arr_node[m].TownId];
 						trace("Town Name: "+townInfo.Name);
 						
-						townInfo.Owner=arr_node[m].OwnerId;
+						
 						trace("The side that is coming in! "+arr_node[m].Side);
 						townInfo.Side=arr_node[m].Side;
 						townInfo.occupationGraphic();
 						trace("Town Thang:"+(int(arr_node[m].TownId)==myPlayer.CityLocation));
-
-						myPlayer.addTown(townInfo);
+						townInfo.Owner=arr_node[m].OwnerId;
+						if(townInfo.Owner==myPlayer.UserName)
+						{
+							myPlayer.addTown(townInfo);
+						}
 						if(int(arr_node[m].TownId)==myPlayer.CityLocation)
 						{
 							townInfo.setGraphic(WorldConfig.HOME_CITY);
