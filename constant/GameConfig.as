@@ -16,12 +16,8 @@
 /*		public static const SCREEN_WIDTH:int = 550;
 		public static const SCREEN_HEIGHT:int = 440;
 		*/
-		public static const TILE_INIT_X:int = 350;
-		public static const TILE_INIT_Y:int = 60;
-		/*
-		public static const TILE_INIT_X:int = 260;
-		public static const TILE_INIT_Y:int = 100;
-		*/
+		public static const TILE_INIT_X:int = 359;//350;
+		public static const TILE_INIT_Y:int = 165;//60;
 		
 		// Tile dimension
 		public static const TILE_WIDTH:int = 64;
@@ -33,8 +29,8 @@
 		public static const OPAQUE = 1;
 		
 		// Game Map value
-		public static const MAX_CITY_COL = 12;
-		public static const MAX_CITY_ROW = 12;
+		public static const MAX_CITY_COL = 11;
+		public static const MAX_CITY_ROW = 11;
 		
 		// Mouse click commands and buttons (Trigger Buttons)
 		public static const COMM_ADD = 1;
