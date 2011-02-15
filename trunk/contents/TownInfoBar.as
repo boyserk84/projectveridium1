@@ -84,7 +84,6 @@
 			cancelButton.enabled=false;
 			townLocation=town.Location;
 			nameText.text=town.Name.toString();
-			ownerText.text=town.Owner.toString();
 			switch(town.Side)
 			{
 				case GameConfig.BRITISH:
@@ -106,20 +105,12 @@
 			if(side==town.Side)
 			{
 				workersText.text=town.Workers.toString();
-				politiciansText.text=town.Politicians.toString();
-				politiciansText.visible=true;
-				politiciansTitleText.visible=true;
-				agentsTitleText.visible=false;
-				agentsText.visible=false;
+				ownerText.text="Ally";
 			}
 			else
 			{
 				workersText.text="?";
-				politiciansText.visible=false;
-				politiciansTitleText.visible=false;
-				agentsText.text=town.Agents.toString();
-				agentsTitleText.visible=true;
-				agentsText.visible=true;
+				ownerText.text="Enemy";
 			}
 			ironText.text=town.Iron.toString();
 			woodText.text=town.Wood.toString();

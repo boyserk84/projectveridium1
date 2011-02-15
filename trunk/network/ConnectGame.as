@@ -230,8 +230,8 @@
 										// Notify client for fail to reinforce
 										messageReceived = "Your reinforcement has been ambushed and eliminated by the enemy.";
 										messageHeader = "Your reinforcement has been eliminated at town#" + NetCommand.getDestinationTown() + "!";
-										eventActionArrive = true;
 									}
+									eventActionArrive = true;
 								}
 							break;
 							
@@ -243,8 +243,8 @@
 										// Notify client for fail to send workers
 										messageReceived = "Your workers have been ambushed and eliminated by the enemy.";
 										messageHeader = "Oh no! Your wokers have been eliminated at town#" + NetCommand.getDestinationTown() + "!";
-										eventActionArrive = true;
 									}
+									eventActionArrive = true;
 								}
 							break;
 							

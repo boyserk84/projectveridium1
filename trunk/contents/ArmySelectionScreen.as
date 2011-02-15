@@ -42,6 +42,11 @@
 			this.politiciansMinusButton.addEventListener(MouseEvent.CLICK,politiciansMinusButtonClick);
 			this.politiciansText.addEventListener(Event.CHANGE,politiciansTextChangedEvent);
 			
+			this.cavalryPlusButton.addEventListener(MouseEvent.CLICK,cavalryPlusButtonClick);
+			this.cavalryMinusButton.addEventListener(MouseEvent.CLICK,cavalryMinusButtonClick);
+			this.cavalryText.addEventListener(Event.CHANGE,cavalryTextChangedEvent);
+			
+			
 			
 			
 
@@ -55,12 +60,14 @@
 			this.cannonsText.text="0";
 			this.agentsText.text="0";
 			this.politiciansText.text="0";
+			this.cavalryText.text="0";
 			this.totalMinuteMenText.text=town.occupierType(SoldierType.MINUTEMAN).toString();
 			this.totalOfficersText.text=town.occupierType(SoldierType.OFFICER).toString();
 			this.totalSharpshootersText.text=town.occupierType(SoldierType.SHARPSHOOTER).toString();
 			this.totalCannonsText.text=town.occupierType(SoldierType.CANNON).toString();
 			this.totalAgentsText.text=town.occupierType(SoldierType.AGENT).toString();
 			this.totalPoliticiansText.text=town.occupierType(SoldierType.POLITICIAN).toString();
+			this.totalCavalryText.text=town.occupierType(SoldierType.CALVARY).toString();
 			this.intention=intentionIn;
 			
 			
@@ -311,6 +318,51 @@
 		{
 			return int(politiciansText.text);
 		}
+		
+		//Events for Cavalry
+		public function cavalryPlusButtonClick(event:MouseEvent):void
+		{
+			var num:int=int(this.cavalryText.text)+1;
+			if(num>int(totalCavalryText.text))
+			{
+				num=int(totalCavalryText.text);
+			}
+			this.cavalryText.text=num.toString();
+			
+		}
+		
+		public function cavalryMinusButtonClick(event:MouseEvent):void
+		{
+			var num:int=int(this.cavalryText.text)-1;
+			if(num<0)
+			{
+				num=0;
+			}
+			this.cavalryText.text=num.toString();
+		}
+		
+		public function cavalryTextChangedEvent(event:Event):void
+		{
+			var num:int=int(event.currentTarget.text);
+			if(num>int(totalCavalryText.text))
+			{
+				event.currentTarget.text=totalCavalryText.text;
+			}
+			if(num<0)
+			{
+				event.currentTarget.text=0;
+			}
+			
+		}
+		
+		public function numCavalry():int
+		{
+			return int(cavalryText.text);
+		}
+		
+		
+		
+		
 		
 		public function get Intention():int
 		{

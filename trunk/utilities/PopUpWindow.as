@@ -26,10 +26,10 @@
 		
 		
 		/* Internal Dependency display */
-		private var TOP_RIGHT:int = 0;
-		private var AT_ALLOCATE:int = 75;
-		private var ADD_LOCATE_X:int = 140;
-		private var REMOVE_LOCATE_Y:int = 160;
+		private var TOP_RIGHT:int = 5;
+		private var AT_ALLOCATE:int = 60;
+		private var ADD_LOCATE_X:int = 120;
+		private var REMOVE_LOCATE_Y:int = 140;
 		
 		/**
 		* Constructor
