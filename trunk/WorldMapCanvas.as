@@ -177,7 +177,6 @@
 			
 			//this.worldView.addAssets(myMap.Districts);	
 			var worldMap:MovieClip=new WorldMap();
-			trace("=========================WM "+worldMap.width+","+worldMap.height);
 			
 			this.worldView.addAsset(worldMap);
 			
@@ -313,10 +312,10 @@
 						townInfo.Side=arr_node[m].Side;
 						townInfo.occupationGraphic();
 						trace("Town Thang:"+(int(arr_node[m].TownId)==myPlayer.CityLocation));
+
+						myPlayer.addTown(townInfo);
 						if(int(arr_node[m].TownId)==myPlayer.CityLocation)
 						{
-							
-							myPlayer.addTown(townInfo);
 							townInfo.setGraphic(WorldConfig.HOME_CITY);
 						}
 						trace(townInfo.Name);
