@@ -26,7 +26,7 @@
 		
 		
 		/* Internal Dependency display */
-		private var TOP_RIGHT:int = 5;
+		private var TOP_RIGHT:int = 4;
 		private var AT_ALLOCATE:int = 60;
 		private var ADD_LOCATE_X:int = 120;
 		private var REMOVE_LOCATE_Y:int = 140;
@@ -67,8 +67,8 @@
 			constructSwitchIcon();
 			
 			/* For stat screen */
-			add_worker = new TriggerButton(ADD_LOCATE_X, 30, GameConfig.COMM_PLUS_SIGN);
-			remove_worker = new TriggerButton(REMOVE_LOCATE_Y, 30, GameConfig.COMM_MINUS_SIGN);
+			add_worker = new TriggerButton(ADD_LOCATE_X, 20, GameConfig.COMM_PLUS_SIGN);
+			remove_worker = new TriggerButton(REMOVE_LOCATE_Y, 20, GameConfig.COMM_MINUS_SIGN);
 			
 			this.addChild(add_worker);
 			this.addChild(remove_worker);

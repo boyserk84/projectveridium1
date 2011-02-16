@@ -72,13 +72,13 @@
 				{
 					case BuildingType.MIL_TYPE:
 						temp_count = mil_count % Images.MAX_ICON_PER_PAGE;
-						this.icon_children.push(new ImgBuildingIcon(60+(temp_count*92),35,BuildingType.TOWN_SQUARE + i));
+						this.icon_children.push(new ImgBuildingIcon(140+(temp_count*92),35,BuildingType.TOWN_SQUARE + i));
 						++mil_count;
 						this.icon_mil.push(i);
 					break;
 					case BuildingType.CIVIL_TYPE:
 						temp_count = civil_count % Images.MAX_ICON_PER_PAGE;
-						this.icon_children.push(new ImgBuildingIcon(60+(temp_count*92),35,BuildingType.TOWN_SQUARE + i));
+						this.icon_children.push(new ImgBuildingIcon(140+(temp_count*92),35,BuildingType.TOWN_SQUARE + i));
 						++civil_count;
 						this.icon_civil.push(i);
 					break;
