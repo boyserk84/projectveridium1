@@ -100,7 +100,7 @@
 			
 			// Main button
 			index_removeButton = 0;
-			this.children.push(new TriggerButton(500,0, GameConfig.COMM_REMOVE));
+			this.children.push(new TriggerButton(240,-310, GameConfig.COMM_REMOVE));
 			index_changeButton = 1;
 			this.children.push(new TriggerButton(645,55, GameConfig.CHANGE_WORLD));
 			
@@ -108,19 +108,19 @@
 			this.all_icons = new ImgMenu(0,0,buildable_icons);
 			this.children.push(all_icons);
 			index_nextButton = 3;
-			this.children.push(new TriggerButton(440,75, GameConfig.COMM_NEXT));
+			this.children.push(new TriggerButton(500,75, GameConfig.COMM_NEXT));
 			index_prevButton = 4;
-			this.children.push(new TriggerButton(25, 75, GameConfig.COMM_PREV));
+			this.children.push(new TriggerButton(40, 75, GameConfig.COMM_PREV));
 			index_milButton = 5;
 			index_civButton = 6;
 			index_cancelButton = 7;
 			index_statButton = 8;
 			index_helpButton = 9;
-			this.children.push(new TriggerButton(15, 10, GameConfig.COMM_MIL_LIST));
-			this.children.push(new TriggerButton(150, 10, GameConfig.COMM_CIV_LIST));
-			this.children.push(new TriggerButton(500,50, GameConfig.COMM_CANCEL));
-			this.children.push(new TriggerButton(650,-10, GameConfig.COMM_STAT_POP));
-			this.children.push(new TriggerButton(550,50, GameConfig.COMM_HELP));
+			this.children.push(new TriggerButton(40, -25, GameConfig.COMM_MIL_LIST));
+			this.children.push(new TriggerButton(190, -25, GameConfig.COMM_CIV_LIST));
+			this.children.push(new TriggerButton(120,-330, GameConfig.COMM_CANCEL));
+			this.children.push(new TriggerButton(550,5, GameConfig.COMM_STAT_POP));
+			this.children.push(new TriggerButton(685,-100, GameConfig.COMM_HELP));
 			
 			
 			// Add external function
