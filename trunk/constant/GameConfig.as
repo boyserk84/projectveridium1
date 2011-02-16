@@ -69,6 +69,9 @@
 		public static const AMERICAN=2;
 		public static const RENEGADE=3;
 		
+		//For events
+		public static const NUM_EVENTS=11;
+		
 
 		
 	

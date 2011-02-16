@@ -32,6 +32,8 @@
 		private var pop_buildingInfo:popupInfo		// Pop Up building info
 		private var notifyWin:NotifyWindow;			// Notification window
 		
+		private var historyNotify:NotifyWindow;		//Notification window for History
+		
 
 		
 		private var command:int;			// Current command of the mouse-click
@@ -83,6 +85,13 @@
 			pop_buildingInfo.visible = false;
 		}
 		
+		
+		public function historyNotifyWindowInitialize(value:NotifyWindow):void
+		{
+			historyNotify=value;
+			checkTimetable();
+		}
+		
 		/**
 		* Load all contents to the canvas
 		*/
@@ -103,7 +112,6 @@
 			this.addEventListener("enterFrame",gameLoop);
 			timer.addObjectWithUpdate(mcity);	// Feed object that needs timer
 			initialize_Layers();
-			
 		}
 		
 		/**
@@ -719,7 +727,11 @@
 				popUpStat.updateInfo(profile);
 				update_resources = false;
 				
+				profile.ElapsedTime+=60;
+				checkTimetable();
+				
 				ClientConnector.requestUpdateProfileResources();
+				
 			}
 			
 			if (timer.stringCountDown==timer.MAX_MINS_STRING()) // Reset Counting
@@ -752,6 +764,163 @@
 				alreadyTick = false;
 			}
 		}
+		
+		public function historyMsg(header:String,msg:String):void
+		{
+			
+			historyNotify.headerInfo.text=header;
+			historyNotify.messageInfo.text=msg;
+			historyNotify.visible=true;
+			
+			
+		}
+		
+		/**
+		* Determine if an event needs to happen
+		*
+		*/
+		public function checkTimetable()
+		{
+			var msgString:String;
+			trace("================EVENT COUNT!: "+profile.EventCount);
+			//Now determine if any events have passed and if they have happened before
+			if(profile.ElapsedTime>=((3*30)+19)&&profile.EventCount<=0)
+			{
+				//Lexington and Concord (4/19/1775)
+				profile.EventCount+=1;
+				//Add resources
+				msgString="Recently loyalist soldiers opened fire on a group of revolutionaries killing many and sparking an eruption of conflict throughout the rest of the day.  In response to this outbreak a caravan of resources has been dispatched to every city in the colonies.";
+				historyMsg("EXTRA! The Shot Heard 'Round the World! April, 19 1775",msgString);
+				return;
+				
+			}
+			
+			if(profile.ElapsedTime>=((5*30)+15)&&profile.EventCount<=1)
+			{
+				//George Washington named Commander in Chief (6/15/1775)
+				profile.EventCount+=1;
+				//Add troops
+				msgString="The Continental Congress has recently announced a Commander for the newly formed Continental Army has been found.  George Washington, a statesman from Virginia, has chosen not to comment on his newly appointed position.  In response to this announcement men are taking up arms in flocks in accordance to their respective beliefs!";
+				historyMsg("Commander Found June, 15 1775",msgString);
+				return;
+			}
+			
+			if(profile.ElapsedTime>=((5*30)+17)&&profile.EventCount<=2)
+			{
+				//Battle Bunker Hill (6/17/1775)
+				profile.EventCount+=1;
+				//troops
+				msgString="The bloody battle of Bradley Hill, nicknamed Bunker Hill due to the entrenchment the revolutionaries held, has recently come to a close prompting an uprise in the number of enlistedmen throughout the armies of the colonies and His Majesty the King.";
+				historyMsg("Bloody Battle of Bunker Hill Comes to Close June, 17 1775",msgString);
+				return;
+			}
+			
+			if(profile.ElapsedTime>=(365+(6*30)+5)&&profile.EventCount<=3)
+			{
+				//Declaration of Independence adopted (7/4/1776)
+				profile.EventCount+=1;
+				//resources
+				msgString="The Continental Congress has recently met and announced the adoption of the Declaration of Independence describing the desire to be independent from the reign of King George.  This announcement has caused an uproar of support from the supporters of both the revolutionaries and the loyalist through very generous donations!";
+				historyMsg("The Colonies Wish to be Independent July, 4 1776",msgString);
+				return;
+			}
+			
+			if(profile.ElapsedTime>=(365+(7*30)+20)&&profile.EventCount<=4)
+			{
+				//Arrival of 30,000 troops in New York Harbor (8/20/1776)
+				profile.EventCount+=1;
+				//British troops
+				//American resources
+				msgString="A large dispatch of loyalist soldiers has landed in the New York harbor further reinforcing His Majesty's army.  There is a report, however, of a small portion of resources being stolen from this shipment although the captain of the convoy has declined any comment.";
+				historyMsg("More Troops Mean More Fighting August, 20 1776",msgString);
+				return;
+			}
+			
+			if(profile.ElapsedTime>=((2*365)+(6*30)+27)&&profile.EventCount<=5)
+			{
+				//Lafayette arrives in Philadelphia (7/27/1777)
+				profile.EventCount+=1;
+				msgString="A French dispatch arrived recently in Philadelphia to negotiate a treaty between the French and the Revolutionaries.  With him he brought a bounty of supplies.";
+				historyMsg("French in the Colonies July, 27 1777",msgString);
+				return;
+			}
+			
+			if(profile.ElapsedTime>=((2*365)+(8*30)+11)&&profile.EventCount<=6)
+			{
+				//British success at the Battle of Brandywine, PA (9/11/1777)
+				profile.EventCount+=1;
+				msgString="The Loyalist dispatch was able to defeat the Revolutionary resistance at Brandywine, Pennsylvania this morning.";
+				historyMsg("Battle of Brandywine, PA September, 11 1777",msgString);
+				return;
+			}
+			
+			if(profile.ElapsedTime>=((3*365)+(30)+6)&&profile.EventCount<=7)
+			{
+				//The French Alliance (2/6/1778)
+				profile.EventCount+=1;
+				msgString="The French recently announced an alliance between the Revolutionaries and themselves.";
+				historyMsg("French Alliance February, 6 1778",msgString);
+				return;
+			}
+			
+			if(profile.ElapsedTime>=((3*365)+(5*30)+28)&&profile.EventCount<=8)
+			{
+				//Washington fights to draw at Battle of Monmouth (6/28/1778)
+				profile.EventCount+=1;
+				msgString="Washington fights hard not losing any ground at the Battle of Monmouth today.";
+				historyMsg("Battle of Monmouth June, 28 1778",msgString);
+				return;
+			}
+			
+			if(profile.ElapsedTime>=((4*365)+(11*30)+22)&&profile.EventCount<=9)
+			{
+				//Coldest winter of the war (12/22/1779)
+				profile.EventCount+=1;
+				msgString="Temperatures have reached a record low marking the coldest winter of the war.  Populations everywhere are lending a hand and donating whatever useful resources they have to give their support.";
+				historyMsg("Brrrr...It's Cold in Here December, 22 1779",msgString);
+				return;
+			}
+			
+			if(profile.ElapsedTime>=((5*365)+(4*30)+12)&&profile.EventCount<=10)
+			{
+				//British capture Charleston, SC (5/12/1780)
+				profile.EventCount+=1;
+				msgString="Charleston, South Carolina fell to Loyalist hands today.";
+				historyMsg("Charleston Falls May, 12 1780",msgString);
+				return;
+			}
+			
+			if(profile.ElapsedTime>=((5*365)+(6*30)+11)&&profile.EventCount<=11)
+			{
+				//French troops arrive to aid American cause (7/11/1780)
+				profile.EventCount+=1;
+				msgString="The French finally deliver on their promised support with the arrival of a French regiment and ships filled with supplies.";
+				historyMsg("The French Are Back, Finally July, 11 1780",msgString);
+				return;
+			}
+			
+			if(profile.ElapsedTime>=((6*365)+1)&&profile.EventCount<=12)
+			{
+				//Mutiny of unpaid soldiers at Pennsylvania (1/1/1781)
+				profile.EventCount+=1;
+				msgString="A regiment in Pennsylvania recently mutinied due to such a large debt of back pay.  This lack of any monetarial compensation seems to be a problem plaguing both sides of this war.";
+				historyMsg("No Pay, No Play January, 1 1781",msgString);
+				return;
+				
+			}	
+			
+			
+			if(profile.ElapsedTime>=((6*365)+(9*30)+19)&&profile.EventCount<=13)
+			{
+				//Americans fully surround Yorktown (10/19/1781)
+				profile.EventCount+=1;
+				msgString="The city of Yorktown, one of the last remaining Loyalist strongholds, has been surrounded completely by the efforts of both French and Revolutionary forces.  This will hopefully mark the coming of an end to a long and bloody war.";
+				historyMsg("Yorktown Falls October, 19 1781",msgString);
+				return;
+			}
+			
+		}
+		
 		
 		/**
 		*	Constructor

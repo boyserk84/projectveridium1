@@ -14,21 +14,21 @@
 		
 		/* Rate of production of buildings within the city
 		*/
-		public static const IRON_PRODUCT:int = 5;
-		public static const FOOD_PRODUCT:int = 15;
-		public static const WOOD_PRODUCT:int = 10;
-		public static const POP_PRODUCT:int = 5;
-		public static const MONEY_PRODUCT:int = 6;
+		public static const IRON_PRODUCT:int = 1;
+		public static const FOOD_PRODUCT:int = 1;
+		public static const WOOD_PRODUCT:int = 1;
+		public static const POP_PRODUCT:int = 1;
+		public static const MONEY_PRODUCT:int = 1;
 		
 		/* Incremental value of max. (cap) storage value per building */
 		public static const EXTRA_STORAGE= 5;
 		public static const EXTRA_POP_STORAGE = 10;
 		
 		/* Initial maximum storages of each type of resources */
-		public static const IRON_CAP_INIT:int = 40;
-		public static const FOOD_CAP_INIT:int = 40;
-		public static const WOOD_CAP_INIT:int = 40;
-		public static const POP_CAP_INIT:int = 100;
+		public static const IRON_CAP_INIT:int =10;
+		public static const FOOD_CAP_INIT:int = 10;
+		public static const WOOD_CAP_INIT:int = 10;
+		public static const POP_CAP_INIT:int = 15;
 
 
 		/*
@@ -56,36 +56,36 @@
 		public static const AMBUSH:int=14;
 		
 		/* Name corresponding to each miltary building */
-		public static const N_BARRACK:String = "Barrack";
+		public static const N_BARRACK:String = "Barracks";
 		public static const N_ARMORY:String = "Armory";
 		public static const N_RANGE:String ="Shooting Range";
-		public static const N_SNIPER_SCHOOL:String = "Sniper School";
+		public static const N_SNIPER_SCHOOL:String = "Espionage";
 		public static const N_FORGE:String = "Forge";
 		public static const N_WORKSHOP:String = "Workshop";
-		public static const N_FOUNDRY:String= "Foundry";
-		public static const N_BOOT_CAMP:String= "Boot camp";
+		public static const N_FOUNDRY:String= "Debate School";
+		public static const N_BOOT_CAMP:String= "Boot Camp";
 		public static const N_STABLES:String = "Stables";
 		public static const N_OFFICER_SCHOOL:String= "Officer Academy";
 		public static const N_OUTPOST:String="Outpost";
 		public static const N_WATCH_TOWER:String="Watch Tower";
-		public static const N_WAY_POINT:String="Way point";
+		public static const N_WAY_POINT:String="Way Point";
 		public static const N_AMBUSH:String="Ambush";
 		
 		/* Description of each miltary building */
-		public static const D_BARRACK:String = "Training soldiers";
-		public static const D_ARMORY:String = "Training Armory";
-		public static const D_RANGE:String ="Training Shooting Range";
-		public static const D_SNIPER_SCHOOL:String = "Training Sniper School";
-		public static const D_FORGE:String = "Training Forge";
-		public static const D_WORKSHOP:String = "Training Workshop";
-		public static const D_FOUNDRY:String= "Training Foundry";
-		public static const D_BOOT_CAMP:String= "Training Boot camp";
-		public static const D_STABLES:String = "Training Stables";
-		public static const D_OFFICER_SCHOOL:String= "Training Officer Academy";
-		public static const D_OUTPOST:String="Training Outpost";
-		public static const D_WATCH_TOWER:String="Training Watch Tower";
-		public static const D_WAY_POINT:String="Training Way point";
-		public static const D_AMBUSH:String="Training Ambush";
+		public static const D_BARRACK:String = "Allows your militia to train minutemen.  Requires a Town Square";
+		public static const D_ARMORY:String = "Allows your city to make better weaponry. Requires a Barracks.";
+		public static const D_RANGE:String ="Allows your city to train sharpshooters.  Requires an Armory.";
+		public static const D_SNIPER_SCHOOL:String = "Allows your city to train Agents.  Requires a Shooting Range.";
+		public static const D_FORGE:String = "Allows your city to craft stronger metals.  Requires a Barracks.";
+		public static const D_WORKSHOP:String = "Allows your city to create Cannons.  Requires a Forge.";
+		public static const D_FOUNDRY:String= "Allows your city to train Politicians.  Requires a Workshop.";
+		public static const D_BOOT_CAMP:String= "Allows you to further train your soldiers.  Requires a Barracks.";
+		public static const D_STABLES:String = "Allows your city to train Cavalry.  Requires a Boot Camp.";
+		public static const D_OFFICER_SCHOOL:String= "Allows your city to train Officers.  Requires a Stables.";
+		public static const D_OUTPOST:String="Allows your city to become stronger.";
+		public static const D_WATCH_TOWER:String="Allows your city to see enemies coming a mile away.";
+		public static const D_WAY_POINT:String="Invites commoners to stop at your city.";
+		public static const D_AMBUSH:String="Reminds your soldiers what ambush means.";
 		
 		
 		/* Time it takes to build each military building */
@@ -141,11 +141,11 @@
 		
 		/* Description corresponding to each civilian building */
 		public static const D_TOWN_SQUARE:String = "Your capital city.";
-		public static const D_FARM:String = "Provide food for your city.";
-		public static const D_SAWMILL:String = "Provide wood for your city.";
-		public static const D_BLACKSMITH:String = "Provide iron for your city";
-		public static const D_WAREHOUSE:String = "Increase over capacity of resrouces.";
-		public static const D_STOCKPILE:String = "Provide Stockpile";
+		public static const D_FARM:String = "Provides food for your city.";
+		public static const D_SAWMILL:String = "Provides wood for your city.";
+		public static const D_BLACKSMITH:String = "Provides iron for your city";
+		public static const D_WAREHOUSE:String = "Increases overall capacity of your city's resources.";
+		public static const D_STOCKPILE:String = "Increases economics of cities.";
 		public static const D_MARKET:String = "Exchange and trade with your neighbors. More money.";
 		public static const D_HOUSE:String = "Provide housing for your people to prevent overcrowding.";
 		

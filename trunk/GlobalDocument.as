@@ -40,6 +40,7 @@
 		/* Global Notification windows */
 		private var g_notify_win:NotifyWindow;			// Network message
 		private var gameNotify_win:NotifyWindow;		// Game server message
+		private var historyNotify:NotifyWindow;
 		
 		/* Network Component */
 		public var client:ConnectGame;
@@ -125,7 +126,14 @@
 		{
 			gameNotify_win = new NotifyWindow(GameConfig.SCREEN_WIDTH/4, GameConfig.SCREEN_HEIGHT/4,Images.PANEL_WINNER);
 			gameNotify_win.addEventToConfirmButton(MouseEvent.CLICK, function() { gameNotify_win.visible = false; });
+			historyNotify = new NotifyWindow(GameConfig.SCREEN_WIDTH/4, GameConfig.SCREEN_HEIGHT/4,3);
+			historyNotify.addEventToConfirmButton(MouseEvent.CLICK, function() { historyNotify.visible = false; });
+			historyNotify.visible = false;
+			
+			
 		}
+		
+		
 		
 		/**
 		* Polling check if something happened to the server
@@ -172,11 +180,11 @@
 				}
 			}
 			this.profile_name = name;
-			//profile = new Player("","596761244");
+			profile = new Player("","596761244");
 			//profile = new Player("","787012494");
 			
 			// CHANGE BACK TO BELOW LINE
-			profile = new Player(name_val,id);
+			//profile = new Player(name_val,id);
 			
 			//trace(profile.UserName);
 			//profile = new Player(name_val,"123456789012345");
@@ -298,6 +306,7 @@
 			gotoAndStop(GameConfig.CITY_FRAME);
 			//if (profile.getCity()==null) trace ("PROFILE IS NULL");
 			game = new GameCanvas(profile);
+			game.historyNotifyWindowInitialize(historyNotify);
 			worldgame = new WorldMapCanvas(profile);
 			worldgame.loadTownsData(townPlayer);
 			worldgame.loadRegimentsData(regimentPlayer);
@@ -321,6 +330,7 @@
 			
 			this.addChild(gameNotify_win);
 			this.addChild(g_notify_win);
+			this.addChild(historyNotify);
 			
 			resetNetworkFlags();
 			

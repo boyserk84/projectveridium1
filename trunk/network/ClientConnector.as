@@ -79,7 +79,8 @@
 				"x" + getProfile().Population +
 				"x" + getProfile().PopulationCap +
 				"x" + getProfile().CityLocation +
-				"x" + getProfile().GameId
+				"x" + getProfile().GameId + 
+				"x" + getProfile().EventCount
 				;
 			requestWrite(encode_pack);
 		}

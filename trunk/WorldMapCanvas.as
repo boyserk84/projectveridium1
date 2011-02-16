@@ -321,7 +321,7 @@
 						}
 						if(int(arr_node[m].TownId)==myPlayer.CityLocation)
 						{
-							townInfo.setGraphic(WorldConfig.HOME_CITY);
+							townInfo.cityGraphic();
 						}
 						trace(townInfo.Name);
 						
@@ -615,7 +615,14 @@
 		{
 			for(var t:int=0;t<selectedTowns.length;++t)
 			{
-				selectedTowns[t].occupationGraphic();
+				if(selectedTowns[t].ID!=myPlayer.CityLocation)
+				{
+					selectedTowns[t].occupationGraphic();
+				}
+				else
+				{
+					selectedTowns[t].cityGraphic();
+				}
 				
 				
 			}
