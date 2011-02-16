@@ -727,7 +727,7 @@
 				popUpStat.updateInfo(profile);
 				update_resources = false;
 				
-				profile.ElapsedTime+=60;
+				profile.ElapsedTime+=1;
 				checkTimetable();
 				
 				ClientConnector.requestUpdateProfileResources();

@@ -169,7 +169,10 @@
 				new_Player.PopulationCap = int(decode_pack[11]);
 				new_Player.CityLocation = int(decode_pack[12]);
 				new_Player.GameId = (decode_pack[13]);
-				new_Player.ElapsedTime = (decode_pack[14]);
+				new_Player.ElapsedTime = (int)(decode_pack[14]);
+				//Convert it to days
+				new_Player.ElapsedTime = new_Player.ElapsedTime/120;
+				
 				new_Player.EventCount = (int)(decode_pack[15]);
 				
 				trace("======THE ELAPSED TIME! " + new_Player.ElapsedTime);

@@ -11,7 +11,7 @@
 		public static const WORLD_INIT_X:int=0;
 		public static const WORLD_INIT_Y:int=0;
 		
-		public static const TIME_MINS_RESPAWN:int = 1;
+		public static const TIME_MINS_RESPAWN:int = 2;
 
 /*		public static const SCREEN_WIDTH:int = 550;
 		public static const SCREEN_HEIGHT:int = 440;
