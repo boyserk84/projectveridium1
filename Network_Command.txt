@@ -8,8 +8,8 @@ IIIIIIIIIIIIIII x CCCC   x LocationX x LocationY x Type x Construction x TotalBu
  0                 1        2             3        4        5             6              7      
  
 RESPONSE_PROFILE
-IIIIIIIIIIIIIII x CCCC x Side x wood x woodcap x iron x ironcap x money x food x foodCap x pop x popCap x citylocation x gameId
- 0                  1     2      3       4        5        6       7       8      9        10     11           12          13     
+IIIIIIIIIIIIIII x CCCC x Side x wood x woodcap x iron x ironcap x money x food x foodCap x pop x popCap x citylocation x gameId x currentElapsedTime x event_count
+ 0                  1     2      3       4        5        6       7       8      9        10     11           12          13             14		    15
 
 RESPONSE_TOWN
 IIIIIIIIIIIIIII x CCCC x TownId x Regiment x gameId x ownerId x Side x TotalTown

@@ -78,7 +78,7 @@
 		private var id:int;	// Townid
 		
 		
-		
+		//wood, money, pop,iron,food
 		public function Town(woodIn:int=0,moneyIn:int=0,popIn:int=0,ironIn:int=0,foodIn:int=0,locationIn:Point=null,nameIn:String="None",ownerIn:String="Renegade")
 		{
 			workers=0;
@@ -263,9 +263,23 @@
 				gotoAndStop(WorldConfig.AMERICAN_OCCUPANCY);
 
 			}
-			else if(side==GameConfig.HOME_CITY)
+			else
 			{
-				gotoAndStop(WorldConfig.HOME_CITY);
+				gotoAndStop(0);
+			}
+		}
+		
+		public function cityGraphic():void
+		{
+			if(side==GameConfig.BRITISH)
+			{
+				gotoAndStop(WorldConfig.BRITISH_CITY);
+
+			}
+			else if(side==GameConfig.AMERICAN)
+			{
+				gotoAndStop(WorldConfig.AMERICAN_CITY);
+
 			}
 			else
 			{

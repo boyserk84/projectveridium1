@@ -169,6 +169,11 @@
 				new_Player.PopulationCap = int(decode_pack[11]);
 				new_Player.CityLocation = int(decode_pack[12]);
 				new_Player.GameId = (decode_pack[13]);
+				new_Player.ElapsedTime = (decode_pack[14]);
+				new_Player.EventCount = (int)(decode_pack[15]);
+				
+				trace("======THE ELAPSED TIME! " + new_Player.ElapsedTime);
+				
 				//trace("Pack " + new_Player.Wood);
 				return new_Player;
 			}

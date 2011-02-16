@@ -33,6 +33,7 @@
 		public static const PANEL_CONFIRM:int = 1;
 		public static const PANEL_WINNER:int = 2;
 		public static const PANEL_LOSER:int = 3;
+		public static const PANEL_HISTORY:int = 4;
 		
 		
 		/** POP UP BUILDING INFO WINDOW **/

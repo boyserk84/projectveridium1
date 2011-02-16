@@ -19,7 +19,8 @@
 		//What frames to goto for towns for either occupancy to illustrate on the world map
 		public static const AMERICAN_OCCUPANCY=2;
 		public static const BRITISH_OCCUPANCY=3;
-		public static const HOME_CITY=5;
+		public static const AMERICAN_CITY=5;
+		public static const BRITISH_CITY=6;
 		
 		//Intention of regiments
 		public static const NONE=0;
@@ -95,133 +96,133 @@
 			{
 				//Maine
 				case 0:
-					return new Town(3,100,5,10,100,new Point(2088,550),"0");
+					return new Town(1,1,1,1,1,new Point(2088,550),"Ellsworth");
 				case 1:
-					return new Town(3,100,5,10,100,new Point(2023,488),"1");
+					return new Town(1,1,1,1,1,new Point(2023,488),"Caribou");
 				case 2:
-					return new Town(3,100,5,10,100,new Point(2011,557),"2");
+					return new Town(1,1,1,1,1,new Point(2011,557),"Millinocket");
 				case 3:
-				return new Town(3,100,5,10,100,new Point(1918,592),"3");
+				return new Town(1,1,1,1,1,new Point(1918,592),"Greenville");
 				case 4:
-				return new Town(3,100,5,10,100,new Point(1972,638),"4");
+				return new Town(1,1,1,1,1,new Point(1972,638),"Augusta");
 				
 				//NewHampshire/Connnecticut?
 				case 5:
-				return new Town(3,100,5,10,100,new Point(1883,690),"5");
+				return new Town(1,1,1,1,1,new Point(1883,690),"Berlin");
 				case 6:
-				return new Town(3,100,5,10,100,new Point(1919,766),"6");
+				return new Town(1,1,1,1,1,new Point(1919,766),"Concord");
 				case 7:
-				return new Town(3,100,5,10,100,new Point(1866,766),"7");
+				return new Town(1,1,1,1,1,new Point(1866,766),"Lebanon");
 				
 				//Massachusettes
 				case 8:
-				return new Town(3,100,5,10,100,new Point(1921,843),"8");
+				return new Town(1,1,1,1,1,new Point(1921,843),"Boston");
 				case 9:
-				return new Town(3,100,5,10,100,new Point(1830,871),"9");
+				return new Town(1,1,1,1,1,new Point(1830,871),"Springfield");
 				
 				//Random place below Mass
 				case 10:
-				return new Town(3,100,5,10,100,new Point(1890,913),"10");
+				return new Town(1,1,1,1,1,new Point(1890,913),"Norwich");
 				case 11:
-				return new Town(3,100,5,10,100,new Point(1835,940),"11");
+				return new Town(1,1,1,1,1,new Point(1835,940),"Hartford");
 				
 				//New York
 				case 12:
-				return new Town(3,100,5,10,100,new Point(1790,671),"12");
+				return new Town(1,1,1,1,1,new Point(1790,671),"Tupper Lake");
 				case 13:
-				return new Town(3,100,5,10,100,new Point(1775,779),"13");
+				return new Town(1,1,1,1,1,new Point(1775,779),"Albany");
 				case 14:
-				return new Town(3,100,5,10,100,new Point(1739,856),"14");
+				return new Town(1,1,1,1,1,new Point(1739,856),"Hudson");
 				case 15:
-				return new Town(3,100,5,10,100,new Point(1686,706),"15");
+				return new Town(1,1,1,1,1,new Point(1686,706),"Watertown");
 				case 16:
-				return new Town(3,100,5,10,100,new Point(1645,806),"16");
+				return new Town(1,1,1,1,1,new Point(1645,806),"Oswego");
 				case 17:
-				return new Town(3,100,5,10,100,new Point(1736,927),"17");
+				return new Town(1,1,1,1,1,new Point(1736,927),"Poughkeepsie");
 				case 18:
-				return new Town(3,100,5,10,100,new Point(1777,970),"18");
+				return new Town(1,1,1,1,1,new Point(1777,970),"New York");
 				case 19:
-				return new Town(3,100,5,10,100,new Point(1593,893),"19");
+				return new Town(1,1,1,1,1,new Point(1593,893),"Syracuse");
 				case 20:
-				return new Town(3,100,5,10,100,new Point(1469,947),"20");
+				return new Town(1,1,1,1,1,new Point(1469,947),"Buffalo");
 				
-				//Rhode Island
+				//New Jersey
 				case 21:
-				return new Town(3,100,5,10,100,new Point(1766,1032),"21");
+				return new Town(1,1,1,1,1,new Point(1766,1032),"Trenton");
 				case 22:
-				return new Town(3,100,5,10,100,new Point(1765,1147),"22");
+				return new Town(1,1,1,1,1,new Point(1765,1147),"Atlantic City");
 				
 				//PEnnsylvania
 				case 23:
-				return new Town(3,100,5,10,100,new Point(1691,1059),"23");
+				return new Town(1,1,1,1,1,new Point(1691,1059),"Philadelphia");
 				case 24:
-				return new Town(3,100,5,10,100,new Point(1623,999),"24");
+				return new Town(1,1,1,1,1,new Point(1623,999),"Scranton");
 				case 25:
-				return new Town(3,100,5,10,100,new Point(1599,1126),"25");
+				return new Town(1,1,1,1,1,new Point(1599,1126),"York");
 				case 26:
-				return new Town(3,100,5,10,100,new Point(1526,1068),"26");
+				return new Town(1,1,1,1,1,new Point(1526,1068),"Clearfield");
 				case 27:
-				return new Town(3,100,5,10,100,new Point(1433,1161),"27");
+				return new Town(1,1,1,1,1,new Point(1433,1161),"Pittsburgh");
 				case 28:
-				return new Town(3,100,5,10,100,new Point(1422,1034),"28");
+				return new Town(1,1,1,1,1,new Point(1422,1034),"Oil City");
 				
 				//Maryland
 				case 29:
-				return new Town(3,100,5,10,100,new Point(1622,1201),"29");
+				return new Town(1,1,1,1,1,new Point(1622,1201),"Baltimore");
 				case 30:
-				return new Town(3,100,5,10,100,new Point(1725,1220),"30");
+				return new Town(1,1,1,1,1,new Point(1725,1220),"Dover");
 				case 31:
-				return new Town(3,100,5,10,100,new Point(1751,1270),"31");
+				return new Town(1,1,1,1,1,new Point(1751,1270),"Snow Hill");
 				
 				//Virginia
 				case 32:
-				return new Town(3,100,5,10,100,new Point(1615,1332),"32");
+				return new Town(1,1,1,1,1,new Point(1615,1332),"Richmond");
 				case 33:
-				return new Town(3,100,5,10,100,new Point(1566,1426),"33");
+				return new Town(1,1,1,1,1,new Point(1566,1426),"Lawernceville");
 				case 34:
-				return new Town(3,100,5,10,100,new Point(1531,1242),"34");
+				return new Town(1,1,1,1,1,new Point(1531,1242),"Romney");
 				case 35:
-				return new Town(3,100,5,10,100,new Point(1480,1360),"35");
+				return new Town(1,1,1,1,1,new Point(1480,1360),"Farmville");
 				case 36:
-				return new Town(3,100,5,10,100,new Point(1406,1259),"36");
+				return new Town(1,1,1,1,1,new Point(1406,1259),"Lynchburg");
 				case 37:
-				return new Town(3,100,5,10,100,new Point(1327,1382),"37");
+				return new Town(1,1,1,1,1,new Point(1327,1382),"Hinton");
 				case 38:
-				return new Town(3,100,5,10,100,new Point(1364,1453),"38");
+				return new Town(1,1,1,1,1,new Point(1364,1453),"Hillsville");
 				
 				//North Carolina
 				case 39:
-				return new Town(3,100,5,10,100,new Point(1684,1532),"39");
+				return new Town(1,1,1,1,1,new Point(1684,1532),"Greenville");
 				case 40:
-				return new Town(3,100,5,10,100,new Point(1628,1653),"40");
+				return new Town(1,1,1,1,1,new Point(1628,1653),"Jacksonville");
 				case 41:
-				return new Town(3,100,5,10,100,new Point(1520,1500),"41");
+				return new Town(1,1,1,1,1,new Point(1520,1500),"Greensboro");
 				case 42:
-				return new Town(3,100,5,10,100,new Point(1472,1609),"42");
+				return new Town(1,1,1,1,1,new Point(1472,1609),"Charlotte");
 				case 43:
-				return new Town(3,100,5,10,100,new Point(1316,1605),"43");
+				return new Town(1,1,1,1,1,new Point(1316,1605),"Asheville");
 				
 				//South Carolina
 				case 44:
-				return new Town(3,100,5,10,100,new Point(1497,1687),"44");
+				return new Town(1,1,1,1,1,new Point(1497,1687),"Cheraw");
 				case 45:
-				return new Town(3,100,5,10,100,new Point(1549,1730),"45");
+				return new Town(1,1,1,1,1,new Point(1549,1730),"Myrtle Beach");
 				case 46:
-				return new Town(3,100,5,10,100,new Point(1482,1784),"46");
+				return new Town(1,1,1,1,1,new Point(1482,1784),"St Stephen");
 				case 47:
-				return new Town(3,100,5,10,100,new Point(1370,1712),"47");
+				return new Town(1,1,1,1,1,new Point(1370,1712),"Spartanburg");
 				
 				//Georgia
 				case 48:
-				return new Town(3,100,5,10,100,new Point(1315,1801),"48");
+				return new Town(1,1,1,1,1,new Point(1315,1801),"Athens");
 				case 49:
-				return new Town(3,100,5,10,100,new Point(1400,1907),"49");
+				return new Town(1,1,1,1,1,new Point(1400,1907),"Savannah");
 				case 50:
-				return new Town(3,100,5,10,100,new Point(1251,1858),"50");
+				return new Town(1,1,1,1,1,new Point(1251,1858),"Atlanta");
 				case 51:
-				return new Town(3,100,5,10,100,new Point(1367,2017),"51");
+				return new Town(1,1,1,1,1,new Point(1367,2017),"Valdosta");
 				case 52:
-				return new Town(3,100,5,10,100,new Point(1229,1970),"52");
+				return new Town(1,1,1,1,1,new Point(1229,1970),"Albany");
 
 
 

@@ -209,11 +209,11 @@
 									if (NetCommand.getId() == profile.UserName)
 									{
 										// Notify Client for winning
-										messageReceived = "Your troop has captured the town#" + NetCommand.getDestinationTown() + ". From now on, you will receive resources from this town.";
-										messageHeader = "Congratulation ! your troop has captured the town!";
+										messageReceived = "Your troop has captured the town #" + NetCommand.getDestinationTown() + ". From now on, you will receive resources from this town.";
+										messageHeader = "Congratulations! Your troop has captured the town!";
 										
 									} else {
-										messageReceived = "Town#" +NetCommand.getDestinationTown()+ " has been conquered.";
+										messageReceived = "Town #" +NetCommand.getDestinationTown()+ " has been captured.";
 										messageHeader = "Town #" + NetCommand.getDestinationTown() +" has been captured!";
 									}
 									eventActionArrive = true;
@@ -229,7 +229,7 @@
 									{
 										// Notify client for fail to reinforce
 										messageReceived = "Your reinforcement has been ambushed and eliminated by the enemy.";
-										messageHeader = "Your reinforcement has been eliminated at town#" + NetCommand.getDestinationTown() + "!";
+										messageHeader = "Your reinforcement has been eliminated at town #" + NetCommand.getDestinationTown() + "!";
 									}
 									eventActionArrive = true;
 								}

@@ -22,6 +22,10 @@
 		//The side this player is on
 		private var side:int;
 		
+		//The amount of time that has elapsed since the game started
+		//This is in seconds
+		private var elapsedTime:int;
+		
 		//How much wood this player has on hand
 		private var wood:int;
 		//The current wood capacity this player's tech level allows
@@ -68,6 +72,9 @@
 		//How many total agents and politicians this player can have
 		private var agentsCap:int;
 		private var politiciansCap:int;
+		
+		//The events that have passed
+		private var eventCount:int;
 		
 		//The towns you own
 		private var towns:LinkedList;
@@ -148,6 +155,12 @@
 		public function get AgentsCap():int{	return agentsCap;}
 		public function get PoliticiansCap():int{	return politiciansCap;}
 		
+		//The timing functionality
+		public function get ElapsedTime():int{	return elapsedTime;}
+		public function set ElapsedTime(value:int):void{	elapsedTime=value;}
+		public function get EventCount():int{	return eventCount;}
+		public function set EventCount(value:int):void{	eventCount=value;}
+		
 
 		
 		public function set Wood(value:int) { wood = value; }
@@ -226,7 +239,6 @@
 			workers = soldierAmount(SoldierType.WORKER);
 			return workers;
 		}
-		
 		
 		public function get Regiments():LinkedList { return regiments;}
 		
