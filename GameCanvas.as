@@ -97,7 +97,7 @@
 		*/
 		public function loadContents():void
 		{
-			trace("loadContents"); 
+			//trace("loadContents"); 
 
 			this.command = GameConfig.COMM_SELECT;
 			
@@ -269,11 +269,11 @@
 					{
 						if (unit_type==SoldierType.WORKER)
 						{
-							trace("Add Workers");
+							//trace("Add Workers");
 							profile.changeWorkers(1);
 						} else {
 							
-							trace("add soldiers");
+							//trace("add soldiers");
 							profile.changeSoldiers(1);
 						}
 						
@@ -403,7 +403,7 @@
 		**/
 		public function addButtonClick(event:MouseEvent):void
 		{
-			trace("Add button clicked!");
+			//trace("Add button clicked!");
 
 			this.command=GameConfig.COMM_ADD;
 			this.mouse.gotoAndStop(GameConfig.CURSOR_SELECT);
@@ -510,7 +510,7 @@
 		**/
 		public function removeButtonClick(event:MouseEvent):void
 		{
-			trace("Remove button clicked");
+			//trace("Remove button clicked");
 			this.build_cursor.visible = false;
 			this.command=GameConfig.COMM_REMOVE;
 			this.mouse.gotoAndStop(GameConfig.CURSOR_REMOVE);
@@ -542,7 +542,7 @@
 		public function worldButtonClick(event:MouseEvent):void
 		{
 			//changes the frame to world map view
-			trace("World button clicked!");
+			//trace("World button clicked!");
 			//MovieClip(parent).gotoAndStop(GameConfig.WORLD_FRAME);
 			MovieClip(parent).switchGame();
 		}
@@ -782,7 +782,7 @@
 		public function checkTimetable()
 		{
 			var msgString:String;
-			trace("================EVENT COUNT!: "+profile.EventCount);
+			//trace("================EVENT COUNT!: "+profile.EventCount);
 			//Now determine if any events have passed and if they have happened before
 			if(profile.ElapsedTime>=((3*30)+19)&&profile.EventCount<=0)
 			{
@@ -928,7 +928,7 @@
 		*/
 		public function GameCanvas(user:Player):void
 		{
-			trace("gameCanvas contructor is loaded!");
+			//trace("gameCanvas contructor is loaded!");
 			this.profile = user;
 			this.mcity = profile.getCity();
 			this.length_of_city = profile.getCity().Buildings.Length;
