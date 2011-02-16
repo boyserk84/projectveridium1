@@ -43,7 +43,7 @@
 			icon_civil = new Array();
 			constructBound();
 			constructSUBMENU();
-			trace("Create a sub-menu");
+			//trace("Create a sub-menu");
 		}
 		
 		/**

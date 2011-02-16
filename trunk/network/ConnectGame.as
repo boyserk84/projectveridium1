@@ -107,7 +107,7 @@
 		*/
 		private function openConnect(event:Event):void
 		{
-			trace("Open connection:".concat(event));
+			//trace("Open connection:".concat(event));
 			//Security.allowDomain("http://" + CONFIG.getHost() +"/");
 			//xmlsocket://
 			//Security.loadPolicyFile("http://"+ CONFIG.getHost() + "/crossdomain.xml");
@@ -132,7 +132,7 @@
 		*/
 		private function endSocket(event:Event):void
 		{
-			trace("Close");
+			//trace("Close");
 			closedConnect = true;
 		}
 		
@@ -141,7 +141,7 @@
 		*/
 		private function errorReport(event:Event):void
 		{
-			trace("Unable to connect".concat(event));
+			//trace("Unable to connect".concat(event));
 			failedConnect = true;
 			closedConnect= true;
 			//mySocket.connect(CONFIG.getHost(), CONFIG.getPort());
@@ -174,7 +174,7 @@
 		*/
 		private function receiveResponse(event:DataEvent)
 		{
-			trace("Receive data" + event.data);
+			//trace("Receive data" + event.data);
 			// (1) Parse/dissect data upon receive
 			NetCommand.parseData(event.data);
 			
@@ -281,7 +281,7 @@
 				// (2.2) Check if package belongs to this client
 				if (isMyPackage())
 				{
-					trace("This is my package received");
+					//trace("This is my package received");
 					// Process the package base command
 					switch (NetCommand.getCommand())
 					{
@@ -292,7 +292,7 @@
 							{
 								this.profile.getCity().addImmediateBuilding(new_building);
 							
-								trace("Receive Building");
+								//trace("Receive Building");
 							}
 							cityPackageArrive = true;
 							
@@ -321,7 +321,7 @@
 						// Receive Player's profile object
 						// ONLY LOAD THE FIRST TIME
 						case NetCommand.RESPONSE_PROFILE.toString():
-							trace("Get Player");
+							//trace("Get Player");
 							var nameIn:String = this.profile.Name;	// save name
 							this.profile = null;
 							this.profile = NetCommand.getPlayerObject();
@@ -404,7 +404,7 @@
 		*/
 		public function sendRequest(raw_data:String)
 		{
-			trace("Send Data".concat(raw_data));
+			//trace("Send Data".concat(raw_data));
 			try {
 				mySocket.send(raw_data.concat('K'));
 			}  catch (e:Error)

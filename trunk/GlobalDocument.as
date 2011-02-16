@@ -54,23 +54,30 @@
 		private var townRequestSent:Boolean = false;
 		private var regimentRequestSent:Boolean = false;
 		
+		private var bg:background;
 		
 		/* Load information from URL */
 		private var loader:URLLoader = new URLLoader();
-		
 		
 		/*
 		* Default constructor
 		*/
 		public function GlobalDocument()
 		{
-			trace("Create GlobalDocument");
+			//trace("Create GlobalDocument");
+			bg = new background;
+			bg.height = 500;
+			this.addChild(bg);
+			
 			gotoAndStop(GameConfig.CITY_FRAME);
 			townPlayer = new Array();
 			regimentPlayer = new Array();
 			configuration = new NetConst(); // Load Network Configuration info
 			createNotifyWindow();
 			createNotifyGameWindow();
+			
+			
+			
 			
 			this.addEventListener(Event.ENTER_FRAME, pollingCheck);
 			
@@ -95,16 +102,28 @@
 			if (client.isTownArrived())
 			{
 				// Insert new towns info
-				trace("Insert new towns info");
-				worldgame.loadTownsData(townPlayer);	
+				//trace("Insert new towns info");
+				
+				/** If there is error within Town, then problem would probably be here. **/
+				try {
+					worldgame.loadTownsData(townPlayer);
+				} catch (e:Error)
+				{
+					trace(e);
+				}
 				client.resetTownsFlag();
 			}
 			
 			if (client.isRegimentArrived())
 			{
 				// Insert new regiments info
-				trace("insert new regiments info");
-				worldgame.loadRegimentsData(regimentPlayer);
+				//trace("insert new regiments info");
+				try {
+					worldgame.loadRegimentsData(regimentPlayer);
+				} catch (e:Error)
+				{
+					trace(e);
+				}
 				client.resetRegimentsFlag();
 			}
 		}
@@ -180,8 +199,8 @@
 				}
 			}
 			this.profile_name = name;
-			profile = new Player("","596761244");
-			//profile = new Player("","787012494");
+			//profile = new Player("","596761244");
+			profile = new Player("","787012494");
 			
 			// CHANGE BACK TO BELOW LINE
 			//profile = new Player(name_val,id);
@@ -334,6 +353,7 @@
 			
 			resetNetworkFlags();
 			
+			this.removeChild(bg);
 			this.removeEventListener(Event.ENTER_FRAME, loadingProgress);
 		}
 		
@@ -387,7 +407,7 @@
 			profile.Name = this.profile_name;
 			//trace("GD "+profile.Regiments.Length);
 			profile.addCity(new City(0,0,GameConfig.MAX_CITY_COL,GameConfig.MAX_CITY_ROW));
-			trace("current wood is " + profile.Wood + " " + profile.Name)
+			//trace("current wood is " + profile.Wood + " " + profile.Name)
 			// Set City	
 			
 			// Load list of building

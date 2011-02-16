@@ -25,9 +25,9 @@
 		public static const EXTRA_POP_STORAGE = 10;
 		
 		/* Initial maximum storages of each type of resources */
-		public static const IRON_CAP_INIT:int =10;
+		public static const IRON_CAP_INIT:int =20;
 		public static const FOOD_CAP_INIT:int = 10;
-		public static const WOOD_CAP_INIT:int = 10;
+		public static const WOOD_CAP_INIT:int = 20;
 		public static const POP_CAP_INIT:int = 15;
 
 
@@ -89,8 +89,8 @@
 		
 		
 		/* Time it takes to build each military building */
-		public static const SEC_BARRACK:int = 10;
-		public static const SEC_ARMORY:int = 180;
+		public static const SEC_BARRACK:int = 60;
+		public static const SEC_ARMORY:int = 150;
 		public static const SEC_RANGE:int = 180;
 		public static const SEC_SNIPER_SCHOOL:int = 240;
 		public static const SEC_FORGE:int = 240;
@@ -121,13 +121,13 @@
 		
 		/* Time it takes to build each civilian building*/
 		public static const SEC_TOWN_SQUARE:int = 5;
-		public static const SEC_FARM:int = 30;
+		public static const SEC_FARM:int = 120;
 		public static const SEC_SAWMILL:int = 120;
-		public static const SEC_BLACKSMITH:int = 300;
-		public static const SEC_WAREHOUSE:int = 180;
+		public static const SEC_BLACKSMITH:int = 120;
+		public static const SEC_WAREHOUSE:int = 300;
 		public static const SEC_STOCKPILE:int = 240;
 		public static const SEC_MARKET:int = 180;
-		public static const SEC_HOUSE:int = 30;
+		public static const SEC_HOUSE:int = 120;
 		
 		/* Name corresponding to each civilian building */
 		public static const N_TOWN_SQUARE:String = "Town Square";

@@ -21,6 +21,7 @@
 		public static const BRITISH_OCCUPANCY=3;
 		public static const AMERICAN_CITY=5;
 		public static const BRITISH_CITY=6;
+		public static const IN_COMBAT=7;
 		
 		//Intention of regiments
 		public static const NONE=0;

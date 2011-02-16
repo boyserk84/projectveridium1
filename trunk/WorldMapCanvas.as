@@ -114,7 +114,7 @@
 			
 			if(myPlayer==null)
 			{
-				trace("Were still here");
+				//trace("Were still here");
 				myPlayer=new Player("Rob","Robtacular",GameConfig.AMERICAN);
 				allyPlayer=new Player("Nate","Nate Kem",GameConfig.AMERICAN);
 				var reg:Regiment=new Regiment("Regiment 1",myPlayer.UserName,myPlayer.Side);
@@ -219,14 +219,14 @@
 		*/
 		public function loadRegimentsData(arr_reg:Array):void
 		{
-			trace("======================================Regiments");
+			//trace("======================================Regiments");
 			for(var i:int=0;i<arr_reg.length;++i)
 			{
 				var infoNode:RegimentInfoNode=arr_reg[i];
 				//trace("infoNod Loaddss " + infoNode.DestinationId);
 				var newReg:Regiment=new Regiment("",infoNode.OwnerId,infoNode.Side);
 				//Add the soldiers
-				trace("Here is my soldiers!:"+infoNode.Minute);
+				//trace("Here is my soldiers!:"+infoNode.Minute);
 				if(infoNode.Minute>0)
 				{
 					newReg.addUnit(new Soldier(infoNode.Minute,SoldierType.MINUTEMAN));
@@ -300,20 +300,20 @@
 		public function loadTownsData(arr_node:Array):void
 		{
 			this.alltownsInfoNode = arr_node;
-			trace("===========================Loading Town stuff!");
+			//trace("===========================Loading Town stuff!");
 			if(arr_node!=null)
 			{
-				trace("Array is not null! Length:"+arr_node.length);
+				//trace("Array is not null! Length:"+arr_node.length);
 				for(var m:int=0;m<arr_node.length;++m)
 				{
 						var townInfo:Town=myMap.Towns[arr_node[m].TownId];
-						trace("Town Name: "+townInfo.Name);
+						//trace("Town Name: "+townInfo.Name);
 						
 						
-						trace("The side that is coming in! "+arr_node[m].Side);
+						//trace("The side that is coming in! "+arr_node[m].Side);
 						townInfo.Side=arr_node[m].Side;
 						townInfo.occupationGraphic();
-						trace("Town Thang:"+(int(arr_node[m].TownId)==myPlayer.CityLocation));
+						//trace("Town Thang:"+(int(arr_node[m].TownId)==myPlayer.CityLocation));
 						townInfo.Owner=arr_node[m].OwnerId;
 						if(townInfo.Owner==myPlayer.UserName)
 						{
@@ -389,7 +389,7 @@
 				time+=distance/regIn.Speed;
 				
 			}
-			trace("Time to get there: "+time);
+			//trace("Time to get there: "+time);
 			message+="x"+(time).toString();
 			
 			ClientConnector.requestWrite(message);
@@ -1015,15 +1015,15 @@
 				);
 
 			amount=Math.ceil(amount);
-			trace("Attack rating:"+attacker.TotalAmount*attacker.TotalAttack);
-			trace("Defense Rating:"+defender.TotalAmount*defender.TotalDefense);
-			trace("Amount!:"+amount);
+			//trace("Attack rating:"+attacker.TotalAmount*attacker.TotalAttack);
+			//trace("Defense Rating:"+defender.TotalAmount*defender.TotalDefense);
+			//trace("Amount!:"+amount);
 			if(amount>attacker.TotalAmount+attacker.totalType(SoldierType.CANNON))
 			{
 				amount=attacker.TotalAmount+attacker.totalType(SoldierType.CANNON);
 			}
 			
-			trace("Final Amount!:"+amount);
+			//trace("Final Amount!:"+amount);
 			return amount;
 		}
 		
@@ -1051,8 +1051,8 @@
 			{
 				var defender:Regiment=town.Occupier;
 				resolveBattle(attacker,defender);
-				trace("Attacker Remainder: "+attacker.TotalAmount);
-				trace("Defender Remainder: "+defender.TotalAmount);
+				//trace("Attacker Remainder: "+attacker.TotalAmount);
+				//trace("Defender Remainder: "+defender.TotalAmount);
 			}
 
 						
@@ -1114,7 +1114,7 @@
 						if(reg.Intention==WorldConfig.ATTACK)
 						{
 							//if the town gets captured by you before you get there
-							if(town.Owner!=myPlayer.UserName)
+							/*if(town.Owner!=myPlayer.UserName)
 							{
 								AttackTown(town,reg);
 							}
@@ -1122,10 +1122,12 @@
 							{
 								ReinforceTown(town,reg);
 							}
-							
+							*/
+							//town.setGraphic(WorldConfig.IN_COMBAT);
 						}
 						else if(reg.Intention==WorldConfig.REINFORCE)
 						{
+							/*
 							if(town.Owner!=myPlayer.UserName)
 							{
 								AttackTown(town,reg);
@@ -1134,9 +1136,12 @@
 							{
 								ReinforceTown(town,reg);
 							}
+							*/
+							//town.setGraphic(WorldConfig.IN_COMBAT);
 						}
 						else if(reg.Intention==WorldConfig.WORKER)
 						{
+							/*
 							if(town.Owner==myPlayer.UserName)
 							{
 								if(town.Occupier!=null)
@@ -1149,10 +1154,12 @@
 									town.Occupier=reg;
 								}
 							}
+							*/
+							//town.setGraphic(WorldConfig.IN_COMBAT);
 						}
 						else if(reg.Intention==WorldConfig.AGENT)
 						{
-							
+							/*
 							if(town.Side!=myPlayer.Side)
 							{
 								//Need to change it to represent there is an agent
@@ -1167,15 +1174,20 @@
 									town.Occupier.addRegiment(reg);
 								}
 							}
+							*/
+//							town.setGraphic(WorldConfig.IN_COMBAT);
 						}
 						else if(reg.Intention==WorldConfig.POLITICIAN)
 						{
+							/*
 							if(town.Side==myPlayer.Side)
 							{
 								//Does not actually reduce the resources received from town
 								myPlayer.addHalfTown(town);
 								town.modifyPoliticians(1);
 							}
+							*/
+							//town.setGraphic(WorldConfig.IN_COMBAT);
 						}
 						
 						
