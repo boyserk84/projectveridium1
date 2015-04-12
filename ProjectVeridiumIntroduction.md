@@ -1,0 +1,33 @@
+# Introduction #
+
+Virtual World with ActionScript3.
+
+# Details #
+
+# Feature #
+
+Basic GamePlay
+
+**Feature 1** : Add/Remove building(s) to the city.
+
+**Feature 2** : Allocate population into different categories: Workers, Soldiers and Commoners.
+
+**Feature 3** : Capturing Towns.
+
+**Feature 4** : NPC in the Town object.
+
+**Feature 5** : Dispensing resources to city and town. (Rate of production)
+
+# Iteration #
+[NewPage](.md): displaying things on the screen. (View)
+Create a game structure and framework. (Controller)
+Create special data types for game. (Model)
+
+[Iteration2 ](.md): adding/remove graphic/sprite from the screen. (View)
+adding/remove buildings to the city (Model) **Feature 1**
+
+Iteration3: sorting algorithm for isometric view. (View)
+
+Iteration4:
+
+Iteration5:

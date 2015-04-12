@@ -1,0 +1,47 @@
+#Server side and Client integration
+# Iteration#6 #
+This iteration will deal with the following features:
+
+- Integrate a game into FACEBOOK Apps
+
+- Fetching data from MYSQL
+
+- Writing dynamically created data from game to MYSQL
+
+- Multiplayer integration
+
+# FaceBook API Tasks #
+
+| Task | Time Spent | Description |
+|:-----|:-----------|:------------|
+| Task A | 2 hours| Fetch basic information from facebook profile |
+| Task B | 1 hour | Embedded request invitation page to facebook app |
+| Task C | 1 hour | Authentication using facebook API |
+
+# Network/Socket: Setup game server and server script #
+| Task A | 2 hours | Setup local testing server with Linux |
+|:-------|:--------|:--------------------------------------|
+| Task B | 4 hours | Setup basic server scripts to handle incoming and outgoing connections |
+| Task C |  | Design protocol of package sent/receive |
+
+# Database/Server: Client/Server Interaction #
+# Issues: Passing facebook's data to as3 via php #
+Facebook API (fb:swf) is not working. Therefore, we decided to use
+object tag in html. In object and embed tags, we have to specify FlashVars in order to have values echoed by the php page to swf.
+
+| Task | Time Spent | Description |
+|:-----|:-----------|:------------|
+| Task A |  | Design DB corresponding to game data |
+| Task B | 4 hours | Fetch data from DB via Php add to game (AS3) |
+| Task C |  | Write data from game to DB |
+
+# Multiplayer/Network Game Components #
+| Task A | | Integrate socket and command protocol into a city-game |
+|:-------|:|:-------------------------------------------------------|
+| Task B |  | Integrate socket and command protocal into a worldmap-game |
+
+# Interface of responding from Server #
+| Task A | | (Game) Event triggered once receive info from server |
+|:-------|:|:-----------------------------------------------------|
+| Task B |  | Admin message triggered once receive from server |
+| Task C |  | Notify winning or losing for the battle |

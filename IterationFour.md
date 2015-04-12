@@ -1,0 +1,63 @@
+# Iteration#4 #
+We will deal with contents and logic within a game.
+
+- Battlefield gameplay (how to determine winner and looser)
+
+- Allocation and deallocation of different type of soldiers
+
+- Allocation and deallocation of different type of workers
+
+- Resources distribution and reproduction within a period of time
+
+- Timer and how often you get resources (5 minutes)
+
+# Design on soldiers allocation #
+
+Approach#1 Upgrade soldiers in a progressional manner
+
+All soldiers will initially have a "level#1" status, so called "minute-man". Then you can allocate a certain amount of "level#1" soldiers to "level#2". Let's say we have x amount of "level#2" soldiers after the upgrade. Then to be able to upgrade soldiers to "level#3", we can only upgrade for x amount, which is the amount of "level#2" soldiers. Basically, each soldier must be going through level#1 and so on before reaching the highest level.
+
+Approach#2 Command and Conquer soldiers allocation style
+
+Basically, once certain type of buildings is built, a certain type of soliders is enabled to be trained/drafted. For instance, "barrack" allows a player to train a minute-man. Once, "forge" is built, the player can train a higher level soldier immediately without having soldiers been through "minute-man" status like approach#1.
+
+We decided to use Approach#2.
+# Enable soldiers to be able to be upgraded #
+
+To be able to upgrade soldiers, each player must build certain types of buildings. Some higher level buildings will enable each player to train soldiers to higher level.
+
+# Soldier type ideas #
+
+-Minute-Man: Most basic soldier, supposed to be used as fodder.
+
+-Sharp-Shooter: A high attack soldier with very little defense, relatively expensive to build, supposed to sprinkle in ranks to increase losses of other side.
+
+-Officer: Decreases marching times as well as food consumption of armies, i.e. high skill rating.  Supposed usage is to allow armies to march farther and faster.
+
+-Calvary: Fast unit for fast hits.
+
+-Cannon: High attack with relatively high defense, allows for more than 1-1 kills in the case of breaking defense.
+
+-Scout: low attack and defense, allows to scout the strength of forces in towns.
+
+-Agent: Can collect the resources from enemy towns without having to own, although steals from enemy so they can find out.
+
+-Politician: Can collect the resources from friendly towns without having to own.
+
+# Battlefield algorithm/formula #
+Defenders who will die during the battle field
+is equal to | (# of attackers) x ( (# of attackers) x attack value ) / (# of defenders x defense value) |
+|:------------------------------------------------------------------------------------------|
+
+
+# Soldier (Unit) design #
+
+Each soldier will have attack and defense values. Each type of soliders will have different attack and defense values.
+# Tasks #
+| Task | Time Spent | Description |
+|:-----|:-----------|:------------|
+| Task A | 3 hours | Battlefield formula/algorithm: attacker and defender |
+| Task B |  | Determine different attack and defense values based on type of soldiers |
+| Task C | 2 hours | Implement count-down timer for every 5 mins |
+| Task D | 1 hour | Display resources given within the city |
+| Task E | 1 hour | Give out resources every 5 minute and set maximum capacity if resources exceed their limit |

@@ -1,0 +1,49 @@
+# Iteration1 : #
+- Displaying things on the screen. (View)
+
+- Create a game structure and framework. (Controller)
+
+- Create special data types for game. (Model)
+
+
+# View Design Concept #
+
+#1 Approach: Using adapter pattern.
+For example, "Building" is a game object, which is a model.
+We create an adapter called "sprite" to handle a view and representation of the building object. Sprite (adapter) will keep track of different representation of building such as tent, fortress, barrack. Each representation is basically either sprite (graphic) or movie clip object. What Sprite (adapter) does is to get information from "Building" object such as type of building (barrack vs. fortress etc...) then create an object that has an image reprenstation of the type of building (barrack vs. fortress). Then feed "Sprite" to View to process.
+
+
+#2 Approach: "Building", which is a game object, only keeps track of frame index corresponding to the spritesheet. Then feed this number to View. Then view creates an object called "sprite" or "spritesheet", which is to draw part of the entire spritesheet.
+
+
+# Tasks #
+|Task | Time spent | Description |
+|:----|:-----------|:------------|
+| Task A |  | Draw part of image on moveclip |
+| Task B |  | Represent/Instantiate the same type of image object, but with different part of the image|
+| Task C |  | Load external image as a spritesheet |
+| Task D |  | Moving the image object's location without mess up representational part of the image |
+
+
+# #What we actually implement: #
+
+We're using "Strategy" design pattern. We have "SpriteSheet" object to manage all representation of the game object, "Building" object. Each representation is basically either sprite (graphic) or movie clip object. The "SpriteSheet" will keep track of how many images needed and what to be displayed based on type of the building. "SpriteSheet" will hold different graphical objects that are used for representing different type of buildings. Once the "SpriteSheet" is instantiated, it will determine which graphical objects need to be used. Most graphical objects are quite similar, but vary a little in term of visual representation.
+
+Meanwhile, View object will act as an interface and controller of the view. Basically, we need to feed "Building" objects to "View" and then "View" will extract relevant information (such as X,Y coordinate and type of object) from each "Building" object and then create a "SpriteSheet" corresponding to type of the "Building" object.
+
+In term of View Object, besides creating corresponding "SpriteSheet" and reprensentation of the "Building" object, it also controls how things should be displayed on the screen. In this case, we want all game objects to be displayed into an isometric perspective. Therefore, we need a sort algorithm in order to ensure everything being displayed correctly and also we need to make sure that it's fast enough. We decided to use a comparator to sort our list of game objects, "building". It is easier and faster if used in the earlier stage every time we add and remove new object into the view.
+
+# Tasks #
+| Task   | Time spent | Description |
+|:-------|:-----------|:------------|
+| Task A | 5 hours | Construct SpriteSheet object to manage all image objects |
+| Task B | 2 hours | Integrate with Building and other game objects with View object |
+
+# Tasks (View Object) #
+
+|Task | Time spent | Description |
+|:----|:-----------|:------------|
+| Task C | 2 hours | View: Display one block building in an isometric manner. |
+| Task D | 1 hours | View: Display multi-blocks building in an isometric manner. |
+| Task E | 2 hours | View: Sort algorithm based on game (X,Y) coordinate |
+| Task F |  | View: (Test) display in the correct order after add and remove |

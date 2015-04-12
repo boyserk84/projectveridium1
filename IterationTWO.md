@@ -1,0 +1,49 @@
+# Iteration2 #
+
+- Integrating I/O input (event handler) to View
+
+- Add and remove buildings to the actual game by mouse-clicking
+
+- View of menu
+
+- "WorldMap" and "City" are integrated into separate gamecanvas objects.
+
+
+# Design: VIEW with I/O input #
+The basic concept of integrating event handler or I/O input with the VIEW is to have an input from mouse-clicking, which is X and Y values of current mouse-pointer. From there, X and Y values are fed into a method in "VIEW". That method will determine which 'tile' is being clicked on and (X,Y) initial view position of the 'tile'. Thereafter, game object will decide if the 'tile' is being occupied. If it is available, then proceed to add buildings to the "city" object. Then update a list of buildings and feed into VIEW.
+
+# Design: GameCanvas #
+From this point, we decided to have 3 game canvas objects: city, worldmap and gameCanvas.
+What "gameCanvas" is just a basic controller for "city" and "worldmap" canvas. Each canvas will hold game objects and representation for itself. For instance, "worldmap" will only hold a visualization of the worldmap, worldmap game objects, and how users would interact to it without dealing with "city". Meanwhile, "city" will do the same, but hold a visualization of the city in an isometric manner. With this approach, we think it suits actionscript and flash better and limit a scope of each game management/play.
+
+# Tasks #
+
+| Tasks | Timespent | Description |
+|:------|:----------|:------------|
+| Task A | 3 hours | (View) Translate (X,Y) of mouseclicking to nth tile |
+| Task B | 5 hours | (View) Add a building into a city by mouse clicking |
+| Task C | 1 hours | Prevent adding a building into an occupied tile when click |
+| Task D | 3 hours | (View) Remove a building from a city by mouse clicking |
+| Task E | 2 hours | Highlight selected tile when mouse hover over or click (Rob) |
+| Task F | 2 hours | Implement a complete event handler/MOUSE I/O listener |
+
+# Issues #
+
+# #1 (SOLVED) Redesign event handler #
+We discovered that when we attached mouse event handler to the gamecanvas. It is only triggered when gamecanvas is actually clicked on. Therefore, all children (visual) that has been appended after won't be affected. For instance, when we have a gamecanvas and later we add a city to it. Suppose the city has a building located at (10,10) to (15,10). When we click at (12,10), the event handler does not respond (although it should). However, when we click at (9,9) it actually does respond. Therefore, we conclude that  the event handler only respond to the current and below level of the current object. Because of this issue, we redesign the event handler. We have created a class object called "IOHandler", which basically acts as an invisible mask, wrapping around the entire gamecanvas so that the event handler responds to all the triggered events.
+
+# #2 (Solved) Determining the current tile based on (X,Y) of mouse click. #
+Feeding (X,Y) of the mouse click position still does not translate into a correct tile nth position.
+It seems like "collision detection" is a bit of a problem in the isometric view.
+
+Approach#1 Using hitArea with event handler of each representation of an object.
+Basically, we draw a new shape of hit area and assign it to the core image object.
+Then we attach event handler such as mouse click to it to check if the event.target is the same as the shape we draw for hit area. The downside is that we have to restruct and duplciate method to all of our design for each image representation.
+
+Approach#2 Write an entire new collision detection.
+Less work in term of restructuring the objects. Just focus on collision detection. However, the downside is that it will get more complicated in itself or have to try to find a work-around solution.
+
+Approach#3: (CURRENT SOLUTION) We use "hittestPoint", the built-in collision detection by flash, and it works to some certain extents.
+
+# #3 (VIEW) Sorting buildings with more than one dimension #
+With one dimension, the order of being displayed is easy. However, when it comes to multiple-dimension buildings, things get more complicated. The building with multiple dimension and locates behind may need to be drawn later.

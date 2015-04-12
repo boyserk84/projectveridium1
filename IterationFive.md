@@ -1,0 +1,26 @@
+#Advanced Game Mechanics and Features.
+# Iteration#5 #
+
+# Building a building on a city. #
+
+All advanced city gameplay mechanic and user interface will be implemented on this iteration.
+
+Note:
+
+Timer (Count-Down) is used for measuring how long it would take to build each building. Once the building is done constructed, the flag will set and give out a permission to requirement list in the city.
+For the building type that increases city's capacity, the flag will set out and cap(s) is updated immediately.
+
+
+
+| Task | Time Spent | Description |
+|:-----|:-----------|:------------|
+| Task A | 3 hours | Taking times to build a building. |
+| Task B | 2 hours | Display building requirement when mouse over. |
+| Task C | 1 hour | Display remaining time before building is finished when mouse over. |
+| Task D | 4 hours| Display soldiers allocation menu when mouse clicking at stat. |
+| Task E | 3 hours | Disable resources given until required building is completed. |
+| Task F | 1 hour | Change image from construction to normal once it finishes building. |
+| Task G | 3 hours | Update the correct values of requirement when building is complete. |
+| Task H | 1 hour | Update the capacity when certain buildings are finished |
+| Task J | 1 hour | Prevent user from remove only last remaining town square. |
+| Task K | 1 hour | Confirmation on remove building from the city |

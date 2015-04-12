@@ -1,0 +1,31 @@
+# Iteration#3 #
+# Basic GamePlay Contents #
+- Finalize game contents (List of buildings).
+
+- Advanced Menu System: Choose what you can build from the list of buildings.
+
+- Resources calculation and allocation.
+
+- Design and implement "User Interface" with complete menu for city and worldmap.
+
+
+# Tasks #
+
+| Tasks | Time spent | Description |
+|:------|:-----------|:------------|
+| Task A |  | Finalize game contents (Design) |
+| Task B | 6 hours | Advanced Menu System: Pagination of list of buildings |
+| Task C | 3 hours | Advanced Menu System: Click at the building on the menu |
+| Task D | 1.5 hours | Advanced Menu System: Prevent clicking if not enough resources |
+| Task E | 2 hours | Advanced Menu System: Switch between category of building |
+| Task F | 0.5 hours | Tab of building category on the menu |
+| Task G | 3 hours | Show buildings corresponding to each type once tab is clicked. |
+| Task H | 0.5 hours | Cancel button (Switch to select mode) |
+| Task I | 0.5 hours | Stat Pop Up Windows (Stat of population allocaiton) |
+| Task J | 0.5 hours | Display player's profile (resources) on the screen |
+
+
+| Task K | | Pop-Up Window: increase/decrease player's pop |
+|:-------|:|:----------------------------------------------|
+| Task L |  | Pop-Up Window: New windows for allocate soldiers (type)|
+| Task M |  | Pop-Up Window: New windows for allocate workers (type) |
